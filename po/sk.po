@@ -7,32 +7,119 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf\n"
-"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=dconf-"
-"editor&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-03-05 19:23+0000\n"
-"PO-Revision-Date: 2017-03-12 22:03+0100\n"
-"Last-Translator: Dušan Kazik <prescott66@gmail.com>\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
+"POT-Creation-Date: 2020-03-10 08:26+0000\n"
+"PO-Revision-Date: 2020-03-24 15:03+0100\n"
+"Last-Translator: Peter Mráz <etkinator@gmail.com>\n"
 "Language-Team: Slovak <gnome-sk-list@gnome.org>\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 1 : (n>=2 && n<=4) ? 2 : 0;\n"
-"X-Generator: Poedit 1.8.11\n"
+"X-Generator: Poedit 2.3\n"
 
-#: editor/bookmarks.ui:19
-msgid "Bookmark this Location"
-msgstr "Pridať toto umiestnenie do záložiek"
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the second is "Credits"
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the name of the view, displayed in the headerbar
+#: editor/about-list.vala:44 editor/base-headerbar.vala:310
+msgid "About"
+msgstr "O programe"
 
-#: editor/bookmarks.ui:34
-msgid "Location bookmarked"
-msgstr "Umiestnenie sa nachádza v záložkách"
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the first is "About"
+#: editor/about-list.vala:46
+msgid "Credits"
+msgstr "Zásluhy"
 
-#: editor/bookmarks.ui:35
-msgid "Toggle to bookmark this location"
-msgstr "Prepnutím pridáte toto umiestnenie do záložiek"
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of the link to the GPL license; TODO better text, as in the usual about dialog
+#: editor/about-list.vala:135
+msgid ""
+"GNU General Public License\n"
+"version 3 or later"
+msgstr ""
+"GNU General Public License\n"
+"verzia 3 alebo neskoršia"
 
-#: editor/bookmarks.ui:84
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the header of the programmers names
+#: editor/about-list.vala:154
+msgid "Creators"
+msgstr "Tvorcovia"
+
+#. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the header of the translators names
+#: editor/about-list.vala:166
+msgid "Translators"
+msgstr "Prekladatelia"
+
+#. Translators: menu entry of the pathbar menu
+#: editor/adaptative-pathbar.vala:251
+msgid "Copy current path"
+msgstr "Kopírovať aktuálnu cestu"
+
+#. Translators: menu entry of the pathbar menu (not displayed for now)
+#. Translators: "open" action in the right-click menu on a "show folder info" row
+#: editor/adaptative-pathbar.vala:264 editor/key-list-box-row.vala:475
+msgid "Show properties"
+msgstr "Zobraziť vlastnosti"
+
+#. Translators: there are three related actions: "use", "reuse" and "pause"; displayed in the hamburger menu at night
+#: editor/adaptative-window.vala:149
+msgid "Pause night mode"
+msgstr "Pozastaviť nočný režim"
+
+#. Translators: there are three related actions: "use", "reuse" and "pause"; displayed in the hamburger menu at night
+#: editor/adaptative-window.vala:153
+msgid "Reuse night mode"
+msgstr "Obnoviť nočný režim"
+
+#. Translators: there are three related actions: "use", "reuse" and "pause"; displayed in the hamburger menu at night
+#: editor/adaptative-window.vala:157
+msgid "Use night mode"
+msgstr "Použiť nočný režim"
+
+#. Translators: accessible name of the hamburger menu
+#: editor/base-headerbar.ui:113
+msgid "Actions"
+msgstr "Akcie"
+
+#. Translators: accessible description of the hamburger menu
+#: editor/base-headerbar.ui:115
+msgid "Current view actions"
+msgstr "Aktuálne akcie zobrazenia"
+
+#. Translators: usual menu entry of the hamburger menu
+#: editor/base-headerbar.vala:116
+msgid "Keyboard Shortcuts"
+msgstr "Klávesové skratky"
+
+#. Translators: on really small windows, the bookmarks popover is replaced by an in-window view; here is the name of the view, displayed in the headerbar
+#. Translators: accessible name of the button for opening the bookmarks popover
+#. Translators: header displayed in the keys list during a search only; indicates that the following results are found in the user bookmarks
+#: editor/bookmarks-headerbar.vala:159 editor/bookmarks.ui:131
+#: editor/registry-search.vala:552
+msgid "Bookmarks"
+msgstr "Záložky"
+
+#. Translators: hamburger menu entry on small windows (not used in current design)
+#: editor/bookmarks-headerbar.vala:254
+msgid "Hide bookmarks"
+msgstr "Skryť záložky"
+
+#. Translators: hamburger menu entry on small windows, to unbookmark the currently browsed path
+#: editor/bookmarks-headerbar.vala:259
+msgid "Unbookmark"
+msgstr "Zrušiť záložku"
+
+#. Translators: hamburger menu entry on small windows, to bookmark the currently browsed path
+#: editor/bookmarks-headerbar.vala:262
+msgid "Bookmark"
+msgstr "Vložiť záložku"
+
+#. Translators: hamburger menu entry on small windows, to show the bookmarks list
+#: editor/bookmarks-headerbar.vala:265
+msgid "Show bookmarks"
+msgstr "Zobraziť záložky"
+
+#. Translators: placeholder text of the bookmarks list, displayed when the user has no bookmarks
+#: editor/bookmarks-list.vala:32
 msgid ""
 "Bookmarks will\n"
 "be added here"
@@ -40,21 +127,84 @@ msgstr ""
 "Tu sa budú\n"
 "pridávať záložky"
 
-#: editor/bookmarks.ui:113
-msgid "Bookmarks"
-msgstr "Záložky"
+#. Translators: label of one of the two buttons of the bookmarks list, to switch between using the bookmarks and editing the list; the second is "Edit"
+#: editor/bookmarks-list.vala:36
+msgid "Use"
+msgstr "Použiť"
 
-#: editor/bookmarks.ui:114
+#. Translators: label of one of the two buttons of the bookmarks list, to switch between using the bookmarks and editing the list; the first is "Use"
+#: editor/bookmarks-list.vala:38
+msgid "Edit"
+msgstr "Upraviť"
+
+#. Translators: accessible name of the switch for bookmarking current path in the bookmarks popover
+#: editor/bookmarks.ui:69
+msgid "Location bookmarked"
+msgstr "Umiestnenie sa nachádza v záložkách"
+
+#. Translators: accessible description of the switch for bookmarking current path in the bookmarks popover
+#: editor/bookmarks.ui:71
+msgid "Toggle to bookmark this location"
+msgstr "Prepnutím pridáte toto umiestnenie do záložiek"
+
+#. Translators: text that might appear in the bookmarks popover in place of the switch and its label
+#: editor/bookmarks.ui:96
+msgid "The bookmarks list is not editable."
+msgstr "Zoznam záložiek nie je upraviteľný."
+
+#. Translators: accessible description of the button for opening the bookmarks popover
+#: editor/bookmarks.ui:133
 msgid "Manage your bookmarks"
 msgstr "Spravuje vaše záložky"
 
-#: editor/bookmark.ui:30
-msgid "Remove"
-msgstr "Odstrániť"
+#. Translators: label of the switch in the bookmarks popover, when searching
+#: editor/bookmarks.vala:404
+msgid "Bookmark this Search"
+msgstr "Pridá toto vyhľadávanie do záložiek"
 
-#: editor/bookmark.ui:31
-msgid "Remove this bookmark"
-msgstr "Odstráni túto záložku"
+#. Translators: label of the switch in the bookmarks popover, when browsing
+#: editor/bookmarks.vala:407
+msgid "Bookmark this Location"
+msgstr "Pridá toto umiestnenie do záložiek"
+
+#. Translators: on really small windows, name of the view when showing a folder properties, displayed in the headerbar
+#: editor/browser-headerbar.vala:165
+msgid "Properties"
+msgstr "Vlastnosti"
+
+#. Translators: text of an infobar to sort again the keys list ("refresh" only, no "reload")
+#: editor/browser-view.vala:81
+msgid "Sort preferences have changed. Do you want to refresh the view?"
+msgstr "Predvoľby usporiadania boli zmenené. Chcete obnoviť zobrazenie?"
+
+#. Translators: button of an infobar to sort again the keys list ("refresh" only, no "reload")
+#. Translators: accessible name of the "refresh" button that is linked with the search entry on large windows
+#: editor/browser-view.vala:84 editor/pathentry.ui:90
+msgid "Refresh"
+msgstr "Obnoviť"
+
+#. Translators: text of an infobar to reload the keys list because of a new key (for example)
+#: editor/browser-view.vala:87
+msgid "This folder content has changed. Do you want to reload the view?"
+msgstr "Obsah tohto priečinka bol zmenený. Chcete znovu načítať zobrazenie?"
+
+#. Translators: button of an infobar to reload the keys list because of a new key (for example)
+#. Translators: button of an infobar to reload the key properties because something has changed
+#: editor/browser-view.vala:90 editor/browser-view.vala:96
+msgid "Reload"
+msgstr "Znovu načítať"
+
+#. Translators: text of an infobar to reload the key properties because something has changed
+#: editor/browser-view.vala:93
+msgid "This key’s properties have changed. Do you want to reload the view?"
+msgstr "Vlastnosti tohto kľúča boli zmenené. Chcete znovu načítať zobrazenie?"
+
+#. Translators: command-line message, when the user uses the backward/forward buttons of the mouse
+#: editor/browser-window.vala:906
+msgid ""
+"The same mouse button is set for going backward and forward. Doing nothing."
+msgstr ""
+"Rovnaké tlačidlo myši je nastavené pre pohyb vpred aj späť. Neurobí sa nič."
 
 #: editor/ca.desrt.dconf-editor.appdata.xml.in:9
 msgid "Dconf Editor"
@@ -82,73 +232,93 @@ msgstr ""
 "Priama úprava vašej konfigurácie je pokročilá funkcia a môže spôsobiť "
 "nesprávnu funkčnosť aplikácií."
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:25
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:31
 msgid "Browse the keys used by installed applications"
 msgstr "Prehliadajte kľúče použité nainštalovanými aplikáciami"
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:29
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:35
 msgid "Read keys descriptions and edit their values"
 msgstr "Prečítajte popisy kľúčov a upravujte ich hodnoty"
 
 #. a translatable version of project_group
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:45
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:50
 msgid "The GNOME Project"
 msgstr "Projekt GNOME"
 
-#: editor/ca.desrt.dconf-editor.desktop.in:3 editor/dconf-editor.ui:6
-#: editor/dconf-editor.vala:73 editor/dconf-editor.vala:147
+#. Translators: application name, as used in the window manager, the window title, the about dialog...
+#: editor/ca.desrt.dconf-editor.desktop.in:3 editor/dconf-editor.vala:21
 msgid "dconf Editor"
 msgstr "Editor systému dconf"
 
-#: editor/ca.desrt.dconf-editor.desktop.in:4
+#. Translators: a GenericName that gives the application goal, as defined in the desktop file spec
+#: editor/ca.desrt.dconf-editor.desktop.in:5
 msgid "Configuration editor for dconf"
 msgstr "Editor konfigurácie systému dconf"
 
 # about dialog desc
-#: editor/ca.desrt.dconf-editor.desktop.in:5 editor/dconf-editor.vala:149
+#. Translators: a Comment that gives the application function, as defined in the desktop file spec
+#: editor/ca.desrt.dconf-editor.desktop.in:7
 msgid "Directly edit your entire configuration database"
 msgstr "Priama úprava celej vašej databázy nastavení"
 
-#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-#: editor/ca.desrt.dconf-editor.desktop.in:7
+#. Translators: some search Keywords to find this application, as defined in the desktop file spec. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#: editor/ca.desrt.dconf-editor.desktop.in:9
 msgid "settings;configuration;"
 msgstr "nastavenia;konfigurácia;"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:18
+#. Translators: summary of a settings key, see 'dconf-editor /org/gnome/iagno/automatic-night-mode'
+#: editor/ca.desrt.dconf-editor.gschema.xml:89
+msgid "A flag to follow system night light"
+msgstr "Príznak pre rešpektovanie nočného osvetlenia zo systému"
+
+#. Translators: description of a settings key, see 'dconf-editor /org/gnome/iagno/automatic-night-mode'
+#: editor/ca.desrt.dconf-editor.gschema.xml:91
+msgid "Use GNOME night light setting to activate night-mode."
+msgstr ""
+"Na aktivovanie nočného režimu sa použijú nastavenia nočného osvetlenia z "
+"prostredia GNOME."
+
+#. see AdaptativeWindow.width-request at data/ui/adaptative-window.ui:22
+#. range min="350"/ FIXME
+#. Translators: summary of a settings key, see 'dconf-editor /org/gnome/iagno/window-width'
+#: editor/ca.desrt.dconf-editor.gschema.xml:98
 msgid "The width of the window"
 msgstr "Šírka okna"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:19
+#. Translators: summary of a settings key, see 'dconf-editor /org/gnome/iagno/window-width'
+#: editor/ca.desrt.dconf-editor.gschema.xml:100
 msgid "The width of the main window in pixels."
 msgstr "Šírka hlavného okna v pixeloch."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:23
+#. see AdaptativeWindow.height-request at data/ui/adaptative-window.ui:21
+#. range min="284"/ FIXME
+#. Translators: summary of a settings key, see 'dconf-editor /org/gnome/iagno/window-height'
+#: editor/ca.desrt.dconf-editor.gschema.xml:107
 msgid "The height of the window"
 msgstr "Výška okna"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:24
+#. Translators: description of a settings key, see 'dconf-editor /org/gnome/iagno/window-height'
+#: editor/ca.desrt.dconf-editor.gschema.xml:109
 msgid "The height of the main window in pixels."
 msgstr "Výška hlavného okna v pixeloch."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:28
-#: editor/ca.desrt.dconf-editor.gschema.xml:29
+#. Translators: summary of a settings key, see 'dconf-editor /org/gnome/iagno/window-is-maximized'
+#: editor/ca.desrt.dconf-editor.gschema.xml:114
 msgid "A flag to enable maximized mode"
 msgstr "Príznak, ktorý povolí režim maximalizovaného okna"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:33
-msgid "A list of bookmarked paths"
-msgstr "Zoznam ciest pridaných do záložiek"
+#. Translators: description of a settings key, see 'dconf-editor /org/gnome/iagno/window-is-maximized'
+#: editor/ca.desrt.dconf-editor.gschema.xml:116
+msgid "If “true”, the main window starts in maximized mode."
+msgstr "Ak je hodnota „true”, hlavné okno sa otvorí v maximalizovanom režime."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:34
-msgid "Contains all paths bookmarked by the user as an array of strings."
-msgstr ""
-"Obsahuje všetky cesty pridané do záložiek používateľom ako pole reťazcov."
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:38
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/restore-view'
+#: editor/ca.desrt.dconf-editor.gschema.xml:138
 msgid "A flag to restore the last view"
 msgstr "Príznak, ktorý obnoví posledné zobrazenie"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:39
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/restore-view'
+#: editor/ca.desrt.dconf-editor.gschema.xml:140
 msgid ""
 "If “true”, Dconf Editor tries at launch to navigate to the path described in "
 "the “saved-view” key."
@@ -156,11 +326,29 @@ msgstr ""
 "Ak je hodnota „true”, editor systému Dconf sa pokúsi po spustení naviesť na "
 "cestu popísanú v kľúči „saved-view”."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:43
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/saved-pathbar-path'
+#: editor/ca.desrt.dconf-editor.gschema.xml:145
+msgid "A path to restore the pathbar state"
+msgstr "Cesta pre obnovenie stavu panelu s adresou"
+
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/saved-pathbar-path'
+#: editor/ca.desrt.dconf-editor.gschema.xml:147
+msgid ""
+"If the “restore-view” key is set to “true”, and if the path requested at "
+"startup is a parent path of this one, Dconf Editor tries to restore the "
+"pathbar state at this path."
+msgstr ""
+"Ak je kľúč „restore-view” nastavený na „true” a ak je cesta vyžiadaná pri "
+"spustení rodičovskou cestou tejto, editor systému Dconf sa pokúsi obnoviť "
+"stav panelu s adresou na túto cestu."
+
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/saved-view'
+#: editor/ca.desrt.dconf-editor.gschema.xml:152
 msgid "A path to restore the last view"
 msgstr "Cesta na obnovenie posledného zobrazenia"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:44
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/saved-view'
+#: editor/ca.desrt.dconf-editor.gschema.xml:154
 msgid ""
 "If the “restore-view” key is set to “true”, Dconf Editor tries at launch to "
 "navigate to this path."
@@ -168,11 +356,13 @@ msgstr ""
 "Ak je kľúč „restore-view” nastavený na „true”, editor systému Dconf sa "
 "pokúsi po spustení presunúť na túto cestu."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:48
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/show-warning'
+#: editor/ca.desrt.dconf-editor.gschema.xml:159
 msgid "Show initial warning"
 msgstr "Zobraziť počiatočné upozornenie"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:49
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/show-warning'
+#: editor/ca.desrt.dconf-editor.gschema.xml:161
 msgid ""
 "If “true”, Dconf Editor opens a popup when launched reminding the user to be "
 "careful."
@@ -180,27 +370,23 @@ msgstr ""
 "Ak je hodnota „true”, editor systému Dconf otvorí po spustení vyskakovacie "
 "okno, ktoré upozorní používateľa, aby bol opatrný."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:53
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/small-keys-list-rows'
+#: editor/ca.desrt.dconf-editor.gschema.xml:166
 msgid "A flag to enable small rows for keys list"
 msgstr "Príznak, ktorý povolí malé riadky pre zoznam kľúčov"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:54
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/small-keys-list-rows'
+#: editor/ca.desrt.dconf-editor.gschema.xml:168
 msgid "If “true”, the keys list use smaller rows."
 msgstr "Ak je hodnota „true”, zoznam kľúčov bude používať menšie riadky."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:58
-msgid "A flag to enable small rows for bookmarks list"
-msgstr "Príznak, ktorý povolí malé riadky pre zoznam poznámok"
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:59
-msgid "If “true”, the bookmarks list use smaller rows."
-msgstr "Ak je hodnota „true”, zoznam poznámok bude používať menšie riadky."
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:68
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/behaviour'
+#: editor/ca.desrt.dconf-editor.gschema.xml:173
 msgid "Change the behaviour of a key value change request"
 msgstr "Správanie zmeny kľúča pri požiadavke na zmenu"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:69
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/behaviour'
+#: editor/ca.desrt.dconf-editor.gschema.xml:175
 msgid ""
 "The “unsafe” value is discouraged: for keys that have a non-special-cased "
 "type, it updates the key value each time something changes in the entry, so "
@@ -211,33 +397,56 @@ msgid ""
 "change path whereas the second dismiss it. The “always-delay” value adds "
 "each change in delay mode, allowing to apply multiple keys at once."
 msgstr ""
-"Hodnota  „unsafe” (nebezpečné) sa neodporúča, u kľúčov, ktoré nemajú "
-"špeciálny význam, sa hodnota kľúča zmení pri každej zmene vstupu, takže môže "
-"obsahovať aj prechodné stavy.  Hodnota  „safe” (bezpečné) , si vyžaduje v "
+"Hodnota „unsafe” (nebezpečné) sa neodporúča: u kľúčov, ktoré nemajú "
+"špeciálny význam, sa hodnota kľúča zmení pri každej zmene položky, takže "
+"môže obsahovať aj prechodné stavy. Hodnota „safe” (bezpečné) , si vyžaduje v "
 "tomto prípade vyžaduje potvrdenie, no umožňuje okamžité zmeny pre logické "
-"hodnoty, logické hodnoty s ničím, vymenovania hodnôt a príznaky. Hodnoty  "
-"„always-confirm-implicit” (vždy potvrdiť implicitne) a  „always-confirm-"
+"hodnoty, logické hodnoty s ničím, vymenovania hodnôt a príznaky. Hodnoty "
+"„always-confirm-implicit” (vždy potvrdiť implicitne) a „always-confirm-"
 "explicit” (vždy potvrdiť explicitne) si vždy vyžiadajú potvrdenie, no prvá "
-"aplikuje zmeny ak prejdete na iné miesto, druhá nie. Hodnota  „always-"
+"aplikuje zmeny ak prejdete na iné miesto, druhá nie. Hodnota „always-"
 "delay” (vždy počkať) pridá každú zmenu do režimu čakania, čo umožňuje zmeniť "
 "viacero kľúčov naraz."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:73
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/sort-case-sensitive'
+#: editor/ca.desrt.dconf-editor.gschema.xml:180
 msgid "A flag to sort keys list case-sensitively"
 msgstr "Príznak, ktorý usporiada zoznam kľúčov podľa veľkosti písmen"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:74
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/sort-case-sensitive'
+#: editor/ca.desrt.dconf-editor.gschema.xml:182
 msgid ""
 "GSettings doesn’t allow keys to use upper-case in their names, but "
 "installation paths of schemas can. If “true”, the keys list is sorted case-"
 "sensitively, with in usual order upper-case folders first."
 msgstr ""
+"GSettings neumožňuje v názvoch kľúčov použiť veľké písmená, no inštalačné "
+"cesty schém áno. Ak je hodnota „true”, zoradenie zoznamu kľúčov zohľadní "
+"veľkosť písmen s obvyklým radením zložiek s veľkými písmenami na začiatok."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:85
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-use-extra-buttons'
+#: editor/ca.desrt.dconf-editor.gschema.xml:187
+msgid "Use “Back” and “Forward” mouse button events"
+msgstr "Použiť udalosti tlačidiel myši „Dozadu“ a „Dopredu“"
+
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-use-extra-buttons'
+#: editor/ca.desrt.dconf-editor.gschema.xml:189
+msgid ""
+"For users with mice that have buttons for “Forward” and “Back”, this key "
+"will determine if any action is taken inside of a browser window when either "
+"is pressed."
+msgstr ""
+"Pre používateľov s myšou, ktorá má tlačidlá „dopredu“ a „dozadu“, tento kľúč "
+"určí, či sa vykoná nejaká akcia  v okne prehliadača, keď je niektoré z nich "
+"stlačené."
+
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-back-buttons'
+#: editor/ca.desrt.dconf-editor.gschema.xml:195
 msgid "Mouse button to activate the “Back” command in browser window"
 msgstr "Tlačidlo myši aktivujúce príkaz „dozadu“ v okne prehliadača"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:86
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-back-buttons'
+#: editor/ca.desrt.dconf-editor.gschema.xml:197
 msgid ""
 "For users with mice that have buttons for “Forward” and “Back”, this key "
 "will set which button activates the “Back” command in a browser window. "
@@ -247,11 +456,13 @@ msgstr ""
 "nastaví, ktoré tlačidlo aktivuje príkaz „dozadu“ v okne prehliadača. Možné "
 "sú hodnoty medzi 6 a 14."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:91
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-forward-buttons'
+#: editor/ca.desrt.dconf-editor.gschema.xml:203
 msgid "Mouse button to activate the “Forward” command in browser window"
 msgstr "Tlačidlo myši aktivujúce príkaz „dopredu“ v okne prehliadača"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:92
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-forward-buttons'
+#: editor/ca.desrt.dconf-editor.gschema.xml:205
 msgid ""
 "For users with mice that have buttons for “Forward” and “Back”, this key "
 "will set which button activates the “Forward” command in a browser window. "
@@ -261,21 +472,124 @@ msgstr ""
 "nastaví, ktoré tlačidlo aktivuje príkaz „dopredu“ v okne prehliadača. Možné "
 "sú hodnoty medzi 6 a 14."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:98
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/refresh-settings-schema-source'
+#: editor/ca.desrt.dconf-editor.gschema.xml:210
+msgid "A flag to check for added or removed schemas"
+msgstr "Príznak pre kontrolu pridaných alebo odstránených schém"
+
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/refresh-settings-schema-source'
+#: editor/ca.desrt.dconf-editor.gschema.xml:212
+msgid ""
+"Dconf Editor can monitor if schemas are added or removed from the multiple "
+"possible locations. That’s done by checking every three seconds if the "
+"schemas list has changed. As this way to do is suboptimal, this function can "
+"be disabled by setting this flag to “false”. Note that this option will be "
+"removed when a better way to do things is found."
+msgstr ""
+"Editor systému Dconf môže sledovať, či sú schémy pridané alebo odstránené z "
+"viacerých možných umiestnení. Vykonáva sa to tak, že sa každé tri sekundy "
+"kontroluje, či sa zoznam schém nezmenil.  Keďže tento spôsob nie je "
+"najvhodnejší, je možné túto funkciu vypnúť nastavením tohto príznaku na "
+"„false”. Upozorňujeme, že táto voľba bude odstránená, keď sa nájde lepší "
+"spôsob, ako to urobiť."
+
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/relocatable-schemas-enabled-mappings'
+#: editor/ca.desrt.dconf-editor.gschema.xml:217
+msgid "Enabled relocatable schema mapping facilities"
+msgstr "Povolené prostriedky premietnutia premiestniteľných schém"
+
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/relocatable-schemas-enabled-mappings'
+#: editor/ca.desrt.dconf-editor.gschema.xml:219
+msgid ""
+"Flags for the relocatable schemas mapping facilities. “User” enables "
+"mappings defined by the “relocatable-schemas-user-paths” key; “Built-in” "
+"enables well-known mappings hardcoded into Dconf Editor; “Internal” is "
+"reserved for Dconf Editor own mappings; “Startup” is for mapping a "
+"relocatable schema from the command-line."
+msgstr ""
+"Príznaky pre prostriedky premietnutia premiestniteľných schém. "
+"„User” (používateľské) zapne premietnutie definované kľúčom „relocatable-"
+"schemas-user-paths”; „Built-in” (vstavané) povolí dobre známe premietnutia "
+"natvrdo vložené do Editora Dcof; „Internal” (vnútorné) je rezervované pre "
+"vlastné premietnutie Editorom Dconf; „Startup” (pri spustení) slúži na "
+"premietnutie premiestniteľnej schémy cez príkazový riadok."
+
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/relocatable-schemas-user-paths'
+#: editor/ca.desrt.dconf-editor.gschema.xml:224
+msgid "Mapping of paths to manually associated schemas"
+msgstr "Premietnutie ciest na ručne priradené schémy"
+
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/relocatable-schemas-user-paths'
+#: editor/ca.desrt.dconf-editor.gschema.xml:226
+msgid ""
+"A dictionary that maps schema IDs with path specifications. It is used to "
+"allow the user to associate a relocatable schema to certain paths. Path "
+"specifications may contain wildcards in the form of empty segments (e.g. /ca/"
+"desrt/dconf-editor//), defining possibly multiple paths. The same schema ID "
+"may be associated with multiple path specifications."
+msgstr ""
+"Slovník, ktorý premietne identifikátory schém do špecifikácií ciest. Používa "
+"sa, aby sa umožnilo priradiť premiestniteľné schémy k určitým cestám. "
+"Špecifikácie ciest môžu obsahovať zástupné znaky vo forme prázdnych súčastí "
+"(napr./ca/desrt/dconf-editor// ), čo definuje viacero možných ciest. Rovnaký "
+"identifikátor schémy môže byť priradený k  viacerým špecifikáciám ciest."
+
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/use-shortpaths'
+#: editor/ca.desrt.dconf-editor.gschema.xml:231
+msgid "A flag for skipping unnecessary subfolders"
+msgstr "Príznak pre preskočenie nepotrebných podzložiek"
+
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/use-shortpaths'
+#: editor/ca.desrt.dconf-editor.gschema.xml:233
+msgid ""
+"When a folder only contains one subfolder and no keys, Dconf Editor can jump "
+"to that subfolder directly. This flag enables that behaviour."
+msgstr ""
+"Keď zložka obsahuje jednu podzložku a žiaden kľúče, Editor systému Dconf "
+"môže skočiť rovno do tejto podzložky."
+
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/bookmarks'
+#: editor/ca.desrt.dconf-editor.gschema.xml:240
+msgid "A list of bookmarked paths"
+msgstr "Zoznam ciest pridaných do záložiek"
+
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/bookmarks'
+#: editor/ca.desrt.dconf-editor.gschema.xml:242
+msgid "Contains all paths bookmarked by the user as an array of strings."
+msgstr ""
+"Obsahuje všetky cesty pridané do záložiek používateľom ako pole reťazcov."
+
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/small-bookmarks-rows'
+#: editor/ca.desrt.dconf-editor.gschema.xml:247
+msgid "A flag to enable small rows for bookmarks list"
+msgstr "Príznak, ktorý povolí malé riadky pre zoznam poznámok"
+
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/small-bookmarks-rows'
+#: editor/ca.desrt.dconf-editor.gschema.xml:249
+msgid "If “true”, the bookmarks list use smaller rows."
+msgstr "Ak je hodnota „true”, zoznam poznámok bude používať menšie riadky."
+
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/boolean'
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/relocatable/boolean' (with default /ca/desrt/dconf-editor/relocatable-* settings)
+#: editor/ca.desrt.dconf-editor.gschema.xml:275
+#: editor/ca.desrt.dconf-editor.gschema.xml:487
 msgid "A boolean, type ‘b’"
 msgstr "Logická hodnota, typ „b”"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:99
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/boolean'
+#: editor/ca.desrt.dconf-editor.gschema.xml:277
 msgid "Booleans can only take two values, “true” or “false”."
 msgstr ""
 "Logická hodnota (Boolean) môže nadobúdať dve hodnoty „true” (pravda) alebo "
 "„false” (nepravda)."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:103
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/boolean-nullable'
+#: editor/ca.desrt.dconf-editor.gschema.xml:282
 msgid "A nullable boolean, type ‘mb’"
 msgstr "Logická hodnota s ničím, typ Ak je hodnota „mb”"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:104
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/boolean-nullable'
+#: editor/ca.desrt.dconf-editor.gschema.xml:284
 msgid ""
 "GSettings allows nullable types, that are similar to other types but could "
 "take a “nothing” value. A nullable boolean can only take three values, "
@@ -286,11 +600,13 @@ msgstr ""
 "môže nadobúdať tri hodnoty „true” (pravda), „false” (nepravda) a "
 "„nothing” (nič)."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:108
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/byte'
+#: editor/ca.desrt.dconf-editor.gschema.xml:289
 msgid "A byte (unsigned), type ‘y’"
 msgstr "Bajt (bez znamienka), typ „y”"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:109
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/byte'
+#: editor/ca.desrt.dconf-editor.gschema.xml:291
 msgid ""
 "A byte value is an integer between 0 and 255. It may be used to pass around "
 "characters."
@@ -298,11 +614,13 @@ msgstr ""
 "Hodnota bajt je celé číslo v rozsahu 0 až 255. Môže byť tiež použitý na "
 "zadávanie znakov."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:113
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/bytestring'
+#: editor/ca.desrt.dconf-editor.gschema.xml:296
 msgid "A bytestring, type ‘ay’"
 msgstr "Bajtový reťazec, typ „ay”"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:114
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/bytestring'
+#: editor/ca.desrt.dconf-editor.gschema.xml:298
 msgid ""
 "The bytestring type is commonly used to pass around strings that may not be "
 "valid utf8. In that case, the convention is that the nul terminator "
@@ -312,11 +630,13 @@ msgstr ""
 "byť v platnom kódovaní utf8. V takom prípade, je zvykom, že ako posledný "
 "znak poľa je zadaný nulový ukončovací znak."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:118
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/bytestring-array'
+#: editor/ca.desrt.dconf-editor.gschema.xml:303
 msgid "A bytestring array, type ‘aay’"
 msgstr "Pole bajtových reťazcov, typ „aay”"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:119
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/bytestring-array'
+#: editor/ca.desrt.dconf-editor.gschema.xml:305
 msgid ""
 "This is the type of an array of bytestrings. The bytestring type is commonly "
 "used to pass around strings that may not be valid utf8."
@@ -325,27 +645,31 @@ msgstr ""
 "často používa na predávanie reťazcov, ktoré nemusia byť v platnom kódovaní "
 "utf8."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:123
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-handle'
+#: editor/ca.desrt.dconf-editor.gschema.xml:310
 msgid "A D-Bus handle type, type ‘h’"
 msgstr "Typ obsluhy D-Bus, typ „h”"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:124
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-handle'
+#: editor/ca.desrt.dconf-editor.gschema.xml:312
 msgid ""
-"The handle type is a 32bit signed integer value that is, by convention, used "
-"as an index into an array of file descriptors that are sent alongside a D-"
-"Bus message. If you are not interacting with D-Bus, then there is no reason "
-"to make use of this type."
+"The handle type is a 32-bit signed integer value that is, by convention, "
+"used as an index into an array of file descriptors that are sent alongside a "
+"D-Bus message. If you are not interacting with D-Bus, then there is no "
+"reason to make use of this type."
 msgstr ""
 "Typ obsluhy je 32 bitová hodnota so znamienkom, ktorý je podľa zvyku "
 "používaný ako ukazovateľ na pole popisovačov súborov, ktoré sú zasielané "
 "spolu so správou zbernice D-Bus. Ak nepracujete so zbernicou D-Bus, potom "
 "nie je dôvod na použitie tohto typu."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:130
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-object-path'
+#: editor/ca.desrt.dconf-editor.gschema.xml:317
 msgid "A D-Bus object path, type ‘o’"
 msgstr "Cesta objektu zbernice D-Bus, typ „o”"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:131
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-object-path'
+#: editor/ca.desrt.dconf-editor.gschema.xml:319
 msgid ""
 "An object path is used to identify D-Bus objects at a given destination on "
 "the bus. If you are not interacting with D-Bus, then there is no reason to "
@@ -355,11 +679,13 @@ msgstr ""
 "daného umiestnenia na zbernici. Ak nepracujete so zbernicou D-Bus, potom nie "
 "je dôvod na použitie tohto typu."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:137
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-object-path-array'
+#: editor/ca.desrt.dconf-editor.gschema.xml:324
 msgid "A D-Bus object path array, type ‘ao’"
 msgstr "Pole ciest objektov D-Bus, typ „ao”"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:138
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-object-path-array'
+#: editor/ca.desrt.dconf-editor.gschema.xml:326
 msgid ""
 "An object path array could contain any number of object paths (including "
 "none: “[]”). If you are not interacting with D-Bus, then there is no reason "
@@ -369,11 +695,13 @@ msgstr ""
 "(vrátane žiadnej: „[]”). Ak nepracujete so zbernicou D-Bus, potom nie je "
 "dôvod na použitie tohto typu."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:144
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-signature'
+#: editor/ca.desrt.dconf-editor.gschema.xml:331
 msgid "A D-Bus signature, type ‘g’"
 msgstr "Podpis D-Bus, typ „g”"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:145
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-signature'
+#: editor/ca.desrt.dconf-editor.gschema.xml:333
 msgid ""
 "A D-Bus signature is a string used as type signature for a D-Bus method or "
 "message. If you are not interacting with D-Bus, then there is no reason to "
@@ -383,19 +711,51 @@ msgstr ""
 "správu zbernice D-Bus. Ak nepracujete so zbernicou D-Bus, potom nie je dôvod "
 "na použitie tohto typu."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:151
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dict-entry'
+#: editor/ca.desrt.dconf-editor.gschema.xml:338
+msgid "A dictionary entry of type ‘{ss}’"
+msgstr "Slovníková položka typu „{ss}“"
+
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dict-entry'
+#: editor/ca.desrt.dconf-editor.gschema.xml:340
+msgid ""
+"A dictionary maps values of a basic type to another value (of any type). A "
+"dictionary entry is one such mapping."
+msgstr ""
+"Slovník premieta hodnoty základných typov na iné hodnoty (ľubovoľného typu). "
+"Slovníková položka je jedným z takýchto premietnutí."
+
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dictionary'
+#: editor/ca.desrt.dconf-editor.gschema.xml:345
+msgid "A “vardict”, type ‘a{sv}’"
+msgstr "Premenlivý položka slovníka, typ „{sv}”"
+
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dictionary'
+#: editor/ca.desrt.dconf-editor.gschema.xml:347
+msgid ""
+"A dictionary maps values of a basic type to another value (of any type). One "
+"simple use case is to map strings to variants."
+msgstr ""
+"Slovník premieta hodnoty základných typov na iné hodnoty (ľubovoľného typu). "
+"Jedným z jednoduchých príkladov je premietnutie reťazcov na premenlivý typ."
+
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/double'
+#: editor/ca.desrt.dconf-editor.gschema.xml:352
 msgid "A double, type ‘d’"
 msgstr "Desatinné číslo, typ „d”"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:152
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/double'
+#: editor/ca.desrt.dconf-editor.gschema.xml:354
 msgid "A double value could represent any real number."
 msgstr "Hodnota typu desatinné číslo, reprezentuje ľubovoľné reálne číslo."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:156
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/enumeration'
+#: editor/ca.desrt.dconf-editor.gschema.xml:359
 msgid "A 5-choices enumeration"
 msgstr "Vymenovanie hodnôt s 5 voľbami"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:157
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/enumeration'
+#: editor/ca.desrt.dconf-editor.gschema.xml:361
 msgid ""
 "Enumerations could be done either with the “enum” attribute, or with a "
 "“choices” tag."
@@ -403,74 +763,96 @@ msgstr ""
 "Vymenovanie hodnôt by malo byť buď s atribútom „enum” alebo so značkou "
 "„choices”."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:161
-msgid "A short integer, type ‘n’"
-msgstr "Krátke celé číslo, typ „n”"
-
-#: editor/ca.desrt.dconf-editor.gschema.xml:162
-msgid "A 16bit signed integer. See also the “integer-16-unsigned” key."
-msgstr ""
-"16 bitové celé číslo so znamienkom. Pozrite aj kľúč „integer-16-unsigned”."
-
 # mala by to byť ukážka vymenovania hodnôť ca.desrt.dconf-editor.DemoFlags, ale nemám najnovší dconf neviem to overiť
-#: editor/ca.desrt.dconf-editor.gschema.xml:166
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/flags'
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/relocatable/flags' (with default /ca/desrt/dconf-editor/relocatable-* settings)
+#: editor/ca.desrt.dconf-editor.gschema.xml:366
+#: editor/ca.desrt.dconf-editor.gschema.xml:501
 msgid "Flags: choose-colors-you-love"
 msgstr "Príznaky: vyberte-farby-ake-chcete"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:167
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/flags'
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/relocatable/flags' (with default /ca/desrt/dconf-editor/relocatable-* settings)
+#: editor/ca.desrt.dconf-editor.gschema.xml:368
+#: editor/ca.desrt.dconf-editor.gschema.xml:503
 msgid "Flags could be set by the “enum” attribute."
-msgstr "Príznaky by mali byť nastavené atribútom „enum”"
+msgstr "Príznaky by mali byť nastavené atribútom „enum”."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:171
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-16-signed'
+#: editor/ca.desrt.dconf-editor.gschema.xml:373
+msgid "A short integer, type ‘n’"
+msgstr "Krátke celé číslo, typ „n”"
+
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-16-signed'
+#: editor/ca.desrt.dconf-editor.gschema.xml:375
+msgid "A 16-bit signed integer. See also the “integer-16-unsigned” key."
+msgstr ""
+"16 bitové celé číslo so znamienkom. Pozrite aj kľúč „integer-16-unsigned”."
+
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-16-unsigned'
+#: editor/ca.desrt.dconf-editor.gschema.xml:380
 msgid "An unsigned short integer, type ‘q’"
 msgstr "Krátke celé číslo bez znamienka, typ „q”"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:172
-msgid "A 16bit unsigned integer. See also the “integer-16-signed” key."
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-16-unsigned'
+#: editor/ca.desrt.dconf-editor.gschema.xml:382
+msgid "A 16-bit unsigned integer. See also the “integer-16-signed” key."
 msgstr ""
 "16 bitové celé číslo bez znamienka. Pozrite aj kľúč „integer-16-signed”."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:176
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-32-signed'
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/relocatable/integer' (with default /ca/desrt/dconf-editor/relocatable-* settings)
+#: editor/ca.desrt.dconf-editor.gschema.xml:387
+#: editor/ca.desrt.dconf-editor.gschema.xml:494
 msgid "An usual integer, type ‘i’"
 msgstr "Celé číslo, typ „i”"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:177
-msgid "A 32bit signed integer. See also the “integer-32-unsigned” key."
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-32-signed'
+#: editor/ca.desrt.dconf-editor.gschema.xml:389
+msgid "A 32-bit signed integer. See also the “integer-32-unsigned” key."
 msgstr ""
 "32 bitové celé číslo so znamienkom. Pozrite aj kľúč „integer-32-unsigned”."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:181
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-32-unsigned'
+#: editor/ca.desrt.dconf-editor.gschema.xml:394
 msgid "An unsigned usual integer, type ‘u’"
 msgstr "Celé číslo bez znamienka, typ „u”"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:182
-msgid "A 32bit unsigned integer. See also the “integer-32-signed” key."
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-32-unsigned'
+#: editor/ca.desrt.dconf-editor.gschema.xml:396
+msgid "A 32-bit unsigned integer. See also the “integer-32-signed” key."
 msgstr ""
 "32 bitové celé číslo bez znamienka. Pozrite aj kľúč „integer-32-signed”."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:186
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-64-signed'
+#: editor/ca.desrt.dconf-editor.gschema.xml:401
 msgid "A long integer, type ‘x’"
 msgstr "Dlhé celé číslo, typ „x”"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:187
-msgid "A 64bit signed integer. See also the “integer-64-unsigned” key."
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-64-signed'
+#: editor/ca.desrt.dconf-editor.gschema.xml:403
+msgid "A 64-bit signed integer. See also the “integer-64-unsigned” key."
 msgstr ""
 "64 bitové celé číslo so znamienkom. Pozrite aj kľúč „integer-64-unsigned”."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:191
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-64-unsigned'
+#: editor/ca.desrt.dconf-editor.gschema.xml:408
 msgid "An unsigned long integer, type ‘t’"
 msgstr "Dlhé celé číslo bez znamienka, typ „t”"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:192
-msgid "A 64bit unsigned integer. See also the “integer-64-signed” key."
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-64-unsigned'
+#: editor/ca.desrt.dconf-editor.gschema.xml:410
+msgid "A 64-bit unsigned integer. See also the “integer-64-signed” key."
 msgstr ""
 "64 bitové celé číslo bez znamienka. Pozrite aj kľúč „integer-64-signed”."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:198
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/number-with-range'
+#: editor/ca.desrt.dconf-editor.gschema.xml:417
 msgid "A number with range"
 msgstr "Číslo s rozsahom"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:199
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/number-with-range'
+#: editor/ca.desrt.dconf-editor.gschema.xml:419
 msgid ""
 "Every numeral setting (integers and unsigned integers of every type, plus "
 "doubles) could be limited to a custom range of values. For example, this "
@@ -480,38 +862,44 @@ msgstr ""
 "obmedzené vlastným rozsahom hodnôt. Napríklad táto celo-číselná hodnota môže "
 "byť z rozsahu -2 až 10."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:203
+#. Translators: do not forget the parenthesis, they are meaningful; summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/pair-of-integers'
+#: editor/ca.desrt.dconf-editor.gschema.xml:424
 msgid "A custom type, here ‘(ii)’"
 msgstr "Vlastný typ, typ „(ii)”"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:204
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/pair-of-integers'
+#: editor/ca.desrt.dconf-editor.gschema.xml:426
 msgid ""
 "Dconf Editor lets you edit any settings type supported by GSettings, falling "
 "back on a string entry when it doesn’t have a better way to do. Here is a "
-"tuple of two 32bit signed integers."
+"tuple of two 32-bit signed integers."
 msgstr ""
-"Editor systému Dconf umožňuje upraviť nastavenia typu podporvaného v triede "
+"Editor systému Dconf umožňuje upraviť nastavenia typu podporovaného v triede "
 "GSettings, ktoré sa premenia na reťazec, ak neexistuje lepší spôsob "
 "spracovania. Tu je n-tica dvoch 32 bitových celých čísel so znamienkom."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:208
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string'
+#: editor/ca.desrt.dconf-editor.gschema.xml:431
 msgid "A string, type ‘s’"
-msgstr "Reťazec, typ \"s\""
+msgstr "Reťazec, typ „s”"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:209
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string'
+#: editor/ca.desrt.dconf-editor.gschema.xml:433
 msgid ""
 "The string type could accept any utf8 string. Note that an empty string “''” "
 "is not the same as NULL (nothing); see also the “string-nullable” key."
 msgstr ""
 "Typ reťazec by mal obsahovať ľubovoľný reťazec v kódovaní utf8. Prázdny "
 "reťazec „''” nie je to isté ako NULL (nič); pozrite tiež kľúč „string-"
-"nullable”"
+"nullable”."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:213
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string-array'
+#: editor/ca.desrt.dconf-editor.gschema.xml:438
 msgid "A string array, type ‘as’"
 msgstr "Pole reťazcov, typ „as”"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:214
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string-array'
+#: editor/ca.desrt.dconf-editor.gschema.xml:440
 msgid ""
 "A string array contains any number of strings of whatever length. It may be "
 "an empty array, “[]”."
@@ -519,11 +907,13 @@ msgstr ""
 "Pole reťazcov obsahujúce ľubovoľný počet reťazcov ľubovoľnej dĺžky. Môže byť "
 "aj prázdnym poľom „[]”."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:218
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string-nullable'
+#: editor/ca.desrt.dconf-editor.gschema.xml:445
 msgid "A nullable string, type ‘ms’"
 msgstr "Reťazec s ničím, typ „ms”"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:219
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string-nullable'
+#: editor/ca.desrt.dconf-editor.gschema.xml:447
 msgid ""
 "GSettings allows nullable types, that are similar to other types but could "
 "take a “nothing” value. A nullable string can take any string as value, "
@@ -533,11 +923,37 @@ msgstr ""
 "no môžu nadobúdať hodnotu „nothing” (nič). Reťazec s ničím môže obsahovať "
 "prázdny reťazec „''” alebo môže byť NULL (nič)."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:223
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/variant'
+#: editor/ca.desrt.dconf-editor.gschema.xml:452
+msgid "A variant, type ‘v’"
+msgstr "Premenlivý typ, typ „v”"
+
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/variant'
+#: editor/ca.desrt.dconf-editor.gschema.xml:454
+msgid ""
+"Variants could be stored inside variants, and consequently as a GSettings "
+"type. Their representation use the XML brackets (‘<’ and ‘>’ characters, in "
+"a gschema file “&#60;” and “&#62;” respectively), with a parsable "
+"representation of their content inside. If unclear, the type can be given in "
+"the value with a prefix annotation like “@x” (where “x” is the type string) "
+"or “int64”. See https://developer.gnome.org/glib/stable/gvariant-text.html "
+"for complete documentation."
+msgstr ""
+"Premenlivé typy môžu byť uložené vo vnútri premenlivých typov a následne ako "
+"typ Gsettings. Na ich reprezentáciu sa používajú zátvorky jazyka XML („<“ a "
+"„>“, resp. v súbore gschema „&#60“ a „&#62“), so syntakticky spracovateľnou "
+"reprezentáciou ich obsahu. Pre objasnenie, typ môže byť poskytnutý priamo v "
+"hodnote pomocou zápisu s predponou ako napr. „@x“ (kde „x“ je reťazec "
+"označujúci typ) alebo „int64“. Úplná dokumentácia je na adrese https://"
+"developer.gnome.org/glib/stable/gvariant-text.html."
+
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-enum'
+#: editor/ca.desrt.dconf-editor.gschema.xml:459
 msgid "A 1-choice enumeration"
 msgstr "Vymenovanie hodnôt s 1 voľbou"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:224
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-enum'
+#: editor/ca.desrt.dconf-editor.gschema.xml:461
 msgid ""
 "An enumeration could contain only one item, but that’s probably an error. "
 "Dconf Editor warns you in that case."
@@ -545,11 +961,13 @@ msgstr ""
 "Vymenovanie hodnôt by malo obsahovať len jednu hodnotu, no sú možné aj "
 "chyby. Editor systému Dconf v takom prípade zobrazí upozornenie."
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:229
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-range'
+#: editor/ca.desrt.dconf-editor.gschema.xml:467
 msgid "A 1-choice integer value"
 msgstr "Celočíselná hodnota s 1 voľbou"
 
-#: editor/ca.desrt.dconf-editor.gschema.xml:230
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-range'
+#: editor/ca.desrt.dconf-editor.gschema.xml:469
 msgid ""
 "A range could limit an integer key to only allow one value, but that’s "
 "probably an error. Dconf Editor warns you in that case."
@@ -557,375 +975,1100 @@ msgstr ""
 "Rozsah by mal obmedziť celočíselný kľúč iba na jednu hodnotu, no sú možné aj "
 "chyby. Editor systému Dconf v takom prípade zobrazí upozornenie."
 
-#: editor/dconf-editor-menu.ui:6
-msgid "Keyboard Shortcuts"
-msgstr "Klávesové skratky"
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-triv'
+#: editor/ca.desrt.dconf-editor.gschema.xml:474
+msgid "The empty tuple, type and value “()”"
+msgstr "Prázdna n-tica, typ a hodnota „()”"
 
-#: editor/dconf-editor-menu.ui:10
-msgid "_About"
-msgstr "_O programe"
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-triv'
+#: editor/ca.desrt.dconf-editor.gschema.xml:476
+msgid ""
+"There’s an empty tuple type (called sometimes “triv”) that is a tuple with "
+"no content, and can only take “()” as value."
+msgstr ""
+"Je to prázdna n-tica (po anglicky označovaná tiež „triv”), ktorá predstavuje "
+"n-ticu bez obsahu, ktorá môže obsahovať iba hodnotu „()”."
 
-#: editor/dconf-editor-menu.ui:14
-msgid "_Quit"
-msgstr "U_končiť"
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/relocatable/boolean' (with default /ca/desrt/dconf-editor/relocatable-* settings)
+#: editor/ca.desrt.dconf-editor.gschema.xml:489
+msgid "An usual boolean value, defined by a relocatable schema."
+msgstr "Bežná logická hodnota definovaná premiestniteľnou schémou."
 
-#: editor/dconf-editor.ui:49
-msgid "Actions"
-msgstr "Akcie"
+#. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/relocatable/integer' (with default /ca/desrt/dconf-editor/relocatable-* settings)
+#: editor/ca.desrt.dconf-editor.gschema.xml:496
+msgid "A 32-bit signed integer, defined by a relocatable schema."
+msgstr ""
+"32 bitové celé číslo so znamienkom definované premiestniteľnou schémou."
 
-#. TODO 1/3 Informations
-#: editor/dconf-editor.ui:50
-msgid "Current view actions"
-msgstr "Aktuálne akcie zobrazenia"
+#. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 a-non-conflicting-key'
+#: editor/ca.desrt.dconf-editor.gschema.xml:510
+msgid "A normal non-conflicting key from Conflict1"
+msgstr "Bežný nekonfliktný kľúč z Conflict1"
 
-#: editor/dconf-editor.ui:77
-msgid "Search"
-msgstr "Vyhľadať"
+#. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 a-non-conflicting-key'
+#. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 another-non-conflicting-key'
+#: editor/ca.desrt.dconf-editor.gschema.xml:512
+#: editor/ca.desrt.dconf-editor.gschema.xml:549
+msgid ""
+"This key is a test for multiple schemas in the same path with conflicting "
+"keys. Non-conflicting keys should have no issues."
+msgstr ""
+"Tento kľúč je testom rozporov kľúčov viacerých schém s rovnakou cestou. "
+"Nekonfliktné kľúče by nemali spôsobovať problémy."
 
-#: editor/dconf-editor.ui:78
-msgid "Search keys"
-msgstr "Vyhľadá kľúče"
+#. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 default-value-conflict'
+#: editor/ca.desrt.dconf-editor.gschema.xml:517
+msgid "Conflicting key defaulting to “1” that should give an error"
+msgstr "Konfliktný kľuč predvolený na hodnotu „1“, ktorý by mal spôsobiť chybu"
 
-#: editor/dconf-editor.vala:22
+#. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 default-value-conflict'
+#. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 default-value-conflict'
+#: editor/ca.desrt.dconf-editor.gschema.xml:519
+#: editor/ca.desrt.dconf-editor.gschema.xml:556
+msgid ""
+"This key is a test for multiple schemas in the same path with conflicting "
+"keys. It shouldn’t be editable as a key mapped to the same path has a "
+"different default value."
+msgstr ""
+"Tento kľúč je testom rozporov kľúčov viacerých schém s rovnakou cestou. "
+"Nemal by byť upraviteľný, aj keď má kľúč premietnutý na rovnakú cestu "
+"odlišnú predvolenú hodnotu."
+
+#. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 range-conflict'
+#: editor/ca.desrt.dconf-editor.gschema.xml:524
+msgid "Conflicting key with no range that should give an error"
+msgstr "Konfliktný kľúč bez rozsahu, ktorý by mal spôsobiť chybu"
+
+#. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 range-conflict'
+#. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 range-conflict'
+#: editor/ca.desrt.dconf-editor.gschema.xml:526
+#: editor/ca.desrt.dconf-editor.gschema.xml:564
+msgid ""
+"This key is a test for multiple schemas in the same path with conflicting "
+"keys. It shouldn’t be editable as a key mapped to the same path has a "
+"different range."
+msgstr ""
+"Tento kľúč je testom rozporov kľúčov viacerých schém s rovnakou cestou. "
+"Nemal by byť upraviteľný, aj keď má kľúč premietnutý na rovnakú cestu "
+"odlišný rozsah."
+
+#. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 type-conflict'
+#: editor/ca.desrt.dconf-editor.gschema.xml:531
+msgid "A (simple) string conflicting key that should give a error"
+msgstr "Konfliktný kľúč typu (jednoduchý) reťazec, ktorý by mal spôsobiť chybu"
+
+#. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 type-conflict'
+#. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 type-conflict'
+#: editor/ca.desrt.dconf-editor.gschema.xml:533
+#: editor/ca.desrt.dconf-editor.gschema.xml:571
+msgid ""
+"This key is a test for multiple schemas in the same path with conflicting "
+"keys. It shouldn’t be editable as a key mapped to the same path has a "
+"different type."
+msgstr ""
+"Tento kľúč je testom rozporov kľúčov viacerých schém s rovnakou cestou. "
+"Nemal by byť upraviteľný, aj keď má kľúč premietnutý na rovnakú cestu "
+"odlišný typ."
+
+#. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 warning-similar'
+#: editor/ca.desrt.dconf-editor.gschema.xml:538
+msgid "Conflicting key from Conflict1 that should give a warning"
+msgstr "Konfliktný kľuč z Conflict1, ktorý by mal spôsobiť upozornenie"
+
+#. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 warning-similar'
+#. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 warning-similar'
+#: editor/ca.desrt.dconf-editor.gschema.xml:540
+#: editor/ca.desrt.dconf-editor.gschema.xml:578
+msgid ""
+"This key is a test for multiple schemas in the same path with conflicting "
+"keys. It can be edited, since the types are compatible, but it is still an "
+"issue."
+msgstr ""
+"Tento kľúč je testom rozporov kľúčov viacerých schém s rovnakou cestou. Môže "
+"byť upraviteľný, pretože typy sú  kľúč premietnutý na rovnakú cestu odlišný "
+"typ."
+
+#. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 another-non-conflicting-key'
+#: editor/ca.desrt.dconf-editor.gschema.xml:547
+msgid "A normal non-conflicting key from Conflict2"
+msgstr "Bežný nekonfliktný kľúč z Conflict2"
+
+#. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 default-value-conflict'
+#: editor/ca.desrt.dconf-editor.gschema.xml:554
+msgid "Conflicting key defaulting to “2” that should give an error"
+msgstr "Konfliktný kľuč predvolený na hodnotu „2“, ktorý by mal spôsobiť chybu"
+
+#. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 range-conflict'
+#: editor/ca.desrt.dconf-editor.gschema.xml:562
+msgid "Conflicting key with range 0~5 that should give an error"
+msgstr "Konfliktný kľuč s rozsahom 0~5, ktorý by mal spôsobiť chybu"
+
+#. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 type-conflict'
+#: editor/ca.desrt.dconf-editor.gschema.xml:569
+msgid "A nullable-string conflicting key that should give an error"
+msgstr "Konfliktný kľúč typu reťazec s ničím, ktorý by mal spôsobiť chybu"
+
+#. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 warning-similar'
+#: editor/ca.desrt.dconf-editor.gschema.xml:576
+msgid "Conflicting key from Conflict2 that should give a warning"
+msgstr "Konfliktný kľuč z Conflict2, ktorý by mal spôsobiť upozornenie"
+
+#. Translators: command-line option description, see 'dconf-editor --help'
+#: editor/dconf-editor.vala:159
 msgid "Print release version and exit"
 msgstr "Vypíše verziu vydania a skončí"
 
-#. #. * * Copy action
-#. #: editor/dconf-editor.vala:96
+#. Translators: command-line option description, see 'dconf-editor --help'
+#: editor/dconf-editor.vala:162
+msgid "Print relocatable schemas and exit"
+msgstr "Vypíše premiestniteľné schémy a skončí"
+
+#. Translators: command-line option description, see 'dconf-editor --help'; the option removes the initial "use at your own risks" dialog
+#: editor/dconf-editor.vala:165
+msgid "Do not show initial warning"
+msgstr "Nezobrazí úvodné upozornenia"
+
+#. Translators: command-line text, description of the application in 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
+#: editor/dconf-editor.vala:203
+msgid "Graphical interface for editing other applications settings."
+msgstr "Grafické rozhranie na úpravu nastavení ostatných aplikácií."
+
+#. Translators: command-line text, describes how the application proceeds for editing other applications settings, in 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
+#: editor/dconf-editor.vala:206
+msgid "Uses the gsettings API of the glib library, among others."
+msgstr "Používa API rozhranie gsettings z knižnice glib, spolu s inými."
+
+#. Translators: command-line header description, see 'dconf-editor --help'
+#: editor/dconf-editor.vala:209
+msgid "Arguments description:"
+msgstr "Popis parametrov:"
+
+#. Translators: command-line argument description, see 'dconf-editor --help'
+#: editor/dconf-editor.vala:213
+msgid "a folder path or a key path"
+msgstr "cesta k priečinku alebo ku kľúču"
+
+#. Translators: command-line argument description, see 'dconf-editor --help'
+#: editor/dconf-editor.vala:215
+msgid "example: “/org/gnome/” or “/ca/desrt/dconf-editor/Demo/boolean”"
+msgstr "príklad: „/org/gnome/“ alebo „/ca/desrt/dconf-editor/Demo/boolean“"
+
+#. Translators: command-line argument description, see 'dconf-editor --help'
+#: editor/dconf-editor.vala:219
+msgid "the name of a schema with fixed path"
+msgstr "názov schémy s pevnou cestou"
+
+#. Translators: command-line argument description, see 'dconf-editor --help'
+#: editor/dconf-editor.vala:221
+msgid "example: “ca.desrt.dconf-editor.Settings”"
+msgstr "príklad: „ca.desrt.dconf-editor.Settings“"
+
+#. Translators: command-line argument description, see 'dconf-editor --help'; no need to put your translation of "relocatable" between quotation marks, that's done in English to highlight why the option is called "RELOC_SCHEMA"
+#: editor/dconf-editor.vala:225
+msgid "the name of a “relocatable” schema, without fixed path"
+msgstr "názov „premiestniteľnej“ schémy bez pevnej cesty"
+
+#. Translators: command-line argument description, see 'dconf-editor --help'
+#: editor/dconf-editor.vala:227
+msgid "see list with the “--list-relocatable-schemas” option"
+msgstr "zoznam schém zobrazíte voľbou „--list-relocatable-schema“"
+
+#. Translators: command-line argument description, see 'dconf-editor --help'
+#: editor/dconf-editor.vala:231
+msgid "the path where to map the relocatable schema"
+msgstr "cesta kam sa má premietnuť premiestniteľná schéma"
+
+#. Translators: command-line argument description, see 'dconf-editor --help'
+#: editor/dconf-editor.vala:233
+msgid "example: “ca.desrt.dconf-editor.Bookmarks:/ca/desrt/dconf-editor/”"
+msgstr "príklad: „ca.desrt.dconf-editor.Bookmarks:/ca/desrt/dconf-editor/“"
+
+#. Translators: command-line argument description, see 'dconf-editor --help'
+#: editor/dconf-editor.vala:237
+msgid "the name of a key from the schema"
+msgstr "názov kľúča zo schémy"
+
+#. Translators: command-line argument description, see 'dconf-editor --help'
+#: editor/dconf-editor.vala:239
+msgid "example: “bookmarks”"
+msgstr "príklad: „bookmarks“"
+
+#. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
+#: editor/dconf-editor.vala:295
+msgid "Known schemas installed:"
+msgstr "Nainštalované známe schémy:"
+
+#. Translators: command-line text, if --list-relocatable-schemas is given
+#: editor/dconf-editor.vala:301
+msgid "No known schemas installed."
+msgstr "Nie sú nainštalované žiadne známe schémy."
+
+#. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
+#: editor/dconf-editor.vala:306
+msgid "Known schemas skipped:"
+msgstr "Vynechané známe schémy:"
+
+#. Translators: command-line text, if --list-relocatable-schemas is given
+#: editor/dconf-editor.vala:312
+msgid "No known schemas skipped."
+msgstr "Nie sú vynechané žiadne známe schémy."
+
+#. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
+#: editor/dconf-editor.vala:317
+msgid "Unknown schemas:"
+msgstr "Neznáme schémy:"
+
+#. Translators: command-line text, if --list-relocatable-schemas is given
+#: editor/dconf-editor.vala:323
+msgid "No unknown schemas."
+msgstr "Nie sú žiadne neznáme schémy."
+
+#. Translators: command-line error message, when the user requests a specific path while there is already a window opened
+#: editor/dconf-editor.vala:457
+msgid "Only one window can be opened for now.\n"
+msgstr "V tejto chvíli môže byť otvorené iba jedno okno.\n"
+
+#. Translators: command-line error message, try 'dconf-editor a b c d'
+#: editor/dconf-editor.vala:477
+msgid "Cannot understand: too many arguments.\n"
+msgstr "Nepochopiteľné: príliš mnoho parametrov.\n"
+
+#. Translators: command-line error message, try 'dconf-editor / a'
+#: editor/dconf-editor.vala:491
+msgid "Cannot understand second argument in this context.\n"
+msgstr "V tejto súvislosti je druhý parameter nepochopiteľný.\n"
+
+#. Translators: command-line error message, try 'dconf-editor org.example /'
+#: editor/dconf-editor.vala:512
+msgid "Cannot understand: slash character in second argument.\n"
+msgstr "Nepochopiteľné: znak lomky v druhom parametri.\n"
+
+#. Translators: command-line error message, try 'dconf-editor org.example:a'
+#: editor/dconf-editor.vala:527
+msgid "Schema path should start and end with a “/”.\n"
+msgstr "Cesta schémy by mala začínať a končiť s „/“.\n"
+
+#. Translators: command-line error message, try 'dconf-editor //'
+#: editor/dconf-editor.vala:543
+msgid "Cannot understand: given path contains “//”.\n"
+msgstr "Nepochopiteľné: zadaná cesta obsahuje „//“.\n"
+
+#. Translators: command-line error message, try 'dconf-editor "org example" a'
+#: editor/dconf-editor.vala:551
+msgid "Cannot understand: space character in argument.\n"
+msgstr "Nepochopiteľné: znak medzery v parametri.\n"
+
+#. Translators: notification header, try ctrl-c while in the keys list
+#: editor/dconf-editor.vala:579
 msgid "Copied to clipboard"
 msgstr "Skopírované do schránky"
 
-#: editor/dconf-editor.vala:150
-msgid ""
-"Copyright © 2010-2014 – Canonical Ltd\n"
-"Copyright © 2015-2018 – Arnaud Bonatti\n"
-"Copyright © 2017-2018 – Davi da Silva Böger"
-msgstr ""
-"Autorské práva © 2010-2014 – Canonical Ltd\n"
-"Autorské práva © 2015-2018 – Arnaud Bonatti\n"
-"Autorské práva © 2017-2018 – Davi da Silva Böger"
+#. Translators: about dialog text
+#: editor/dconf-editor.vala:656
+msgid "A graphical viewer and editor of applications’ internal settings."
+msgstr "Grafický prehliadač a editor vnútorných nastavení aplikácií."
 
-#: editor/dconf-editor.vala:154
+#. Translators: text crediting a game author, seen in the About dialog
+#: editor/dconf-editor.vala:661
+msgid "Robert Ancell"
+msgstr "Robert Ancell"
+
+#. Translators: text crediting a game author, seen in the About dialog
+#: editor/dconf-editor.vala:665
+msgid "Arnaud Bonatti"
+msgstr "Arnaud Bonatti"
+
+#. Translators: text crediting a maintainer, seen in the About dialog
+#: editor/dconf-editor.vala:669
+msgid "Copyright © 2010-2014 – Canonical Ltd"
+msgstr "Autorské práva © 2010-2014 – Canonical Ltd"
+
+#. Translators: text crediting a maintainer, seen in the About dialog
+#: editor/dconf-editor.vala:673
+msgid "Copyright © 2017-2018 – Davi da Silva Böger"
+msgstr "Autorské práva © 2017-2018 – Davi da Silva Böger"
+
+#. Translators: text crediting a maintainer, seen in the About dialog; the %u are replaced with the years of start and end
+#: editor/dconf-editor.vala:677
+#, c-format
+msgid "Copyright © %u-%u – Arnaud Bonatti"
+msgstr "Autorské práva © %u-%u – Arnaud Bonatti"
+
+#. Translators: about dialog text; this string should be replaced by a text crediting yourselves and your translation team, or should be left empty. Do not translate literally!
+#: editor/dconf-editor.vala:684
 msgid "translator-credits"
 msgstr ""
 "Pavol Klačanský <pavol@klacansky.com>\n"
-"Dušan Kazik <prescott66@gmail.com>"
+"Dušan Kazik <prescott66@gmail.com>\n"
+"Peter Mráz <etkinator@gmail.com>"
 
-#: editor/dconf-model.vala:220
-msgid "Boolean"
-msgstr "Logická hodnota"
+#. Translators: about dialog text; label of the website link
+#: editor/dconf-editor.vala:690
+msgid "Page on GNOME wiki"
+msgstr "Stránka na wiki GNOME"
 
-#: editor/dconf-model.vala:222
-msgid "String"
-msgstr "Reťazec"
+#. Translators: usual menu entry of the hamburger menu
+#: editor/dconf-headerbar.vala:53
+msgid "About Dconf Editor"
+msgstr "O programe Editor systému Dconf"
 
-#: editor/dconf-model.vala:224
-msgid "String array"
-msgstr "Pole reťazcov"
+#. Translators: when a change is requested, on a small window, entry of the menu of the "delayed settings button" that appears in place of the close button
+#. Translators: when there are pending changes, label of the "apply" button in the bottom bar, on large windows
+#: editor/dconf-headerbar.vala:114 editor/modifications-revealer.ui:87
+msgid "Apply"
+msgstr "Použiť"
 
-#: editor/dconf-model.vala:226
-msgid "Enumeration"
-msgstr "Vymenovanie hodnôt"
+#. Translators: when a change is requested, on a small window, entry of the menu of the "delayed settings button" that appears in place of the close button
+#: editor/dconf-headerbar.vala:117
+msgid "Dismiss"
+msgstr "Zahodiť"
 
-#: editor/dconf-model.vala:228
-msgid "Flags"
-msgstr "Príznaky"
+#. Translators: when in delayed mode, on a small window, entry of the "three-dots menu" that appears when showing the pending changes list (if there is pending changes)
+#: editor/dconf-headerbar.vala:141
+msgid "Apply all"
+msgstr "Použiť všetko"
 
-#: editor/dconf-model.vala:230
-msgid "Double"
-msgstr "Desatinné číslo"
+#. Translators: when in delayed mode, on a small window, entry of the "three-dots menu" that appears when showing the pending changes list (if there is pending changes)
+#: editor/dconf-headerbar.vala:144
+msgid "Dismiss all"
+msgstr "Zahodiť všetko"
 
-#. Translators: this handle type is an index; you may maintain the word "handle"
-#: editor/dconf-model.vala:233
-msgid "D-Bus handle type"
-msgstr "Typ obsluhy zbernice D-Bus"
+#. Translators: when in delayed mode, on a small window, entry of the "three-dots menu" that appears when showing the pending changes list (if there is no pending changes)
+#: editor/dconf-headerbar.vala:152
+msgid "Quit mode"
+msgstr "Režim ukončenia"
 
-#: editor/dconf-model.vala:235
-msgid "D-Bus object path"
-msgstr "Cesta objektu zbernice D-Bus"
+#. Translators: hamburger menu entry, to enter in a special mode called "delay mode" where changes are not applied until validation
+#: editor/dconf-headerbar.vala:201
+msgid "Enter delay mode"
+msgstr "Vstúpiť do oneskoreného režimu"
 
-#: editor/dconf-model.vala:237
-msgid "D-Bus object path array"
-msgstr "Pole ciest objektov zbernice D-Bus"
+#. Translators: hamburger menu entry that appears when browsing a folder path, to set to their default value all currently visible keys, not including keys in subfolders
+#: editor/dconf-headerbar.vala:205
+msgid "Reset visible keys"
+msgstr "Vynulovať viditeľné kľúče"
 
-#: editor/dconf-model.vala:239
-msgid "D-Bus signature"
-msgstr "Podpis zbernice D-Bus"
+#. Translators: hamburger menu entry that appears when browsing a folder path, to set to their default value all currently visible keys, and all keys in subfolders
+#: editor/dconf-headerbar.vala:208
+msgid "Reset view recursively"
+msgstr "Rekurzívne vynulovať zobrazenie"
 
-#: editor/dconf-model.vala:247
-msgid "Integer"
-msgstr "Celé číslo"
+#. Translators: on really small windows, the bottom bar that appears in "delay mode" or when there're pending changes is replaced by an in-window view; here is the name of the view, displayed in the headerbar
+#: editor/dconf-headerbar.vala:246
+msgid "Pending"
+msgstr "Čakajúce"
 
-#: editor/dconf-model.vala:362
-msgid "True"
-msgstr "Pravda (True)"
+#. Translators: text copied when the users request a copy while an erased key is selected; the %s is the key path
+#: editor/dconf-model.vala:945
+#, c-format
+msgid "%s (key erased)"
+msgstr "%s (kľúč vymazaný)"
 
-#: editor/dconf-model.vala:364
-msgid "False"
-msgstr "Nepravda (False)"
+#. Translators: command-line startup warning, try 'dconf-editor ca.desrt.dconf-editor.Demo.Relocatable'
+#: editor/dconf-window.vala:124
+msgid "Schema is relocatable, a path is needed."
+msgstr "Schéma je premiestniteľná, je potrebná cesta."
 
-#: editor/dconf-model.vala:365
-msgid "Nothing"
-msgstr "Nič (Nothing)"
+#. Translators: command-line startup warning
+#: editor/dconf-window.vala:137
+msgid "Startup mappings are disabled."
+msgstr "Premietnutia pri spustení sú zakázané."
 
-#: editor/dconf-model.vala:370
-msgid "true"
-msgstr "pravda (true)"
+#. Translators: command-line startup warning, try 'dconf-editor ca.desrt.dconf-editor.Settings:/org/gnome/dconf-editor/'
+#: editor/dconf-window.vala:152
+msgid "Schema is not installed on given path."
+msgstr "Na zadanej ceste schéma nie je nainštalovaná."
 
-#: editor/dconf-model.vala:372
-msgid "false"
-msgstr "nepravda (false)"
+#. Translators: command-line startup warning, try 'dconf-editor org.example.nothing'; the %s is the schema id
+#: editor/dconf-window.vala:168
+#, c-format
+msgid "Unknown schema “%s”."
+msgstr "Neznáma schéma „%s”."
 
-#. Translators: "nothing" here is a keyword that should appear for consistence; please translate as "yourtranslation (nothing)"
-#: editor/dconf-model.vala:374
-msgid "nothing"
-msgstr "nič (nothing)"
-
-#: editor/dconf-view.vala:438
-msgid "This value is invalid for the key type."
-msgstr "Táto hodnota je neplatná pre typ kľúča."
-
-#: editor/dconf-window.vala:132
+#. Translators: initial "use at your own risk" dialog, the welcoming text
+#: editor/dconf-window.vala:274
 msgid "Thanks for using Dconf Editor for editing your settings!"
 msgstr ""
 "Ďakujeme za používanie Editora systému Dconf na úpravu vašich konfigurácií!"
 
-#: editor/dconf-window.vala:133
+#. Translators: initial "use at your own risk" dialog, the warning text
+#: editor/dconf-window.vala:277
 msgid "Don’t forget that some options may break applications, so be careful."
 msgstr ""
 "Nezabúdajte, že niektoré voľby môžu poškodiť vaše aplikácie, preto buďte "
 "opatrný."
 
-#: editor/dconf-window.vala:134
+#. Translators: initial "use at your own risk" dialog, the button label
+#: editor/dconf-window.vala:280
 msgid "I’ll be careful."
 msgstr "Budem opatrný."
 
-#. TODO don't show box if the user explicitely said she wanted to see the dialog next time?
-#: editor/dconf-window.vala:138
+#. Translators: initial "use at your own risk" dialog, the checkbox label
+#: editor/dconf-window.vala:284
 msgid "Show this dialog next time."
 msgstr "Zobraziť toto dialógové okno aj nabudúce."
 
-#: editor/dconf-window.vala:248
-msgid "Copy current path"
-msgstr "Kopírovať aktuálnu cestu"
+#. Translators: notification text, after a user Ctrl+Q keyboard action; same way to spell the shortcut as in the Settings application
+#: editor/dconf-window.vala:305
+msgid ""
+"There are pending changes. Use Shift+Ctrl+Q to apply changes and quit, or Alt"
+"+F4 to dismiss changes and quit."
+msgstr ""
+"Sú tu čakajúce zmeny. Pomocou Shift+Ctrl+Q použijete zmeny a skončíte alebo "
+"pomocou Alt+F4 zahodíte zmeny a skončíte."
 
-#: editor/dconf-window.vala:253
-msgid "Reset visible keys"
-msgstr "Vynulovať viditeľné kľúče"
+#. Translators: notification text, when the requested folder has been removed; the %s is the folder path
+#: editor/dconf-window.vala:777
+#, c-format
+msgid "Folder “%s” is now empty."
+msgstr "Priečinok „%s” je teraz prázdny."
 
-#. Translators: "reset recursively" action in the right-click menu on a folder
-#: editor/dconf-window.vala:254 editor/key-list-box-row.vala:485
-msgid "Reset recursively"
-msgstr "Vynulovať rekurzívne"
+#. Translators: notification text, when the requested key has been removed; the %s is the key path
+#: editor/dconf-window.vala:788
+#, c-format
+msgid "Key “%s” has been deleted."
+msgstr "Kľúč „%s” bol odstránený."
 
-#: editor/dconf-window.vala:262
-msgid "Enter delay mode"
-msgstr "Vstúpiť do oneskoreného režimu"
+#. Translators: notification text at startup, use 'dconf-editor /org/example/test'; the %s is the key path
+#: editor/dconf-window.vala:794
+#, c-format
+msgid "Cannot find key “%s”."
+msgstr "Nedá sa nájsť kľúč „%s”."
 
-#: editor/help-overlay.ui:11
+#. Translators: notification text at startup, use 'dconf-editor /org/example/empty/'; the %s is the folder path
+#: editor/dconf-window.vala:800
+#, c-format
+msgid "There’s nothing in requested folder “%s”."
+msgstr "V požadovanom priečinku „%s” nič nie je."
+
+#. Translators: displayed in the list of pending changes (could be an in-window panel, or in the popover of the bottom bar); for dconf keys
+#: editor/delayed-setting-view.vala:136
+msgid "Key erased"
+msgstr "Kľúč vymazaný"
+
+# hodnota
+#. Translators: displayed in the list of pending changes (could be an in-window panel, or in the popover of the bottom bar); for gsettings keys
+#. Translators: "reset key value" option of a multi-choice list (checks or radios) in the right-click menu on the list of keys
+#. Translators: field content when displaying key properties; the field description is "Current value", and as the default value of the key is written near, there's just this text displayed if the key uses its default value
+#: editor/delayed-setting-view.vala:151 editor/key-list-box-row.vala:649
+#: editor/registry-info.vala:469
+msgid "Default value"
+msgstr "Predvolená hodnota"
+
+#. Translators: header in the shortcut window, for usual headerbar menus actions
+#: editor/help-overlay.ui:29
 msgctxt "shortcut window"
 msgid "Actions"
 msgstr "Akcie"
 
-#: editor/help-overlay.ui:15
+#. Translators: Ctrl-B action
+#: editor/help-overlay.ui:34
 msgctxt "shortcut window"
 msgid "Bookmarks menu"
 msgstr "Ponuka záložiek"
 
-#: editor/help-overlay.ui:22
+#. Translators: Ctrl-D action
+#: editor/help-overlay.ui:42
 msgctxt "shortcut window"
 msgid "Bookmark this path"
 msgstr "Pridanie tejto cesty do záložiek"
 
-#: editor/help-overlay.ui:29
+#. Translators: Ctrl-Shift-D action
+#: editor/help-overlay.ui:50
 msgctxt "shortcut window"
 msgid "Unbookmark this path"
 msgstr "Odstránenie tejto cesty zo záložiek"
 
-#: editor/help-overlay.ui:36
-msgctxt "shortcut window"
-msgid "Search bar"
-msgstr "Lišta vyhľadávania"
-
-#: editor/help-overlay.ui:43
+#. Translators: F10 key action
+#: editor/help-overlay.ui:58
 msgctxt "shortcut window"
 msgid "Actions menu"
 msgstr "Ponuka akcií"
 
-#: editor/help-overlay.ui:52
+#. Translators: Shift-F10 action
+#: editor/help-overlay.ui:66
+msgctxt "shortcut window"
+msgid "Path bar menu"
+msgstr "Ponuka v lište s cestou"
+
+#. Translators: header in the shortcut window, for moving to paths known by the headerbar
+#: editor/help-overlay.ui:76
 msgctxt "shortcut window"
 msgid "Path bar navigation"
 msgstr "Navigácia v lište s cestou"
 
-#: editor/help-overlay.ui:56
+#. Translators: Alt-Shift-Up action; browse to the '/' folder
+#: editor/help-overlay.ui:81
 msgctxt "shortcut window"
 msgid "Open root folder"
 msgstr "Otvorenie koreňového priečinku"
 
-#: editor/help-overlay.ui:63
+#. Translators: Alt-Up action; browse to the parent folder
+#: editor/help-overlay.ui:89
 msgctxt "shortcut window"
 msgid "Open parent folder"
 msgstr "Otvorenie nadradeného priečinku"
 
-#: editor/help-overlay.ui:70
+#. Translators: Alt-Down action; browse to the child of the current path displayed in the headerbar, if any
+#: editor/help-overlay.ui:97
 msgctxt "shortcut window"
 msgid "Open active direct child"
 msgstr "Otvorenie aktívneho priameho potomka"
 
-#: editor/help-overlay.ui:77
+#. Translators: Alt-Shift-Down action; browse to the complete path of the headerbar
+#: editor/help-overlay.ui:105
 msgctxt "shortcut window"
 msgid "Open active last child"
 msgstr "Otvorenie aktívneho posledného potomka"
 
-#: editor/help-overlay.ui:86
+#. Translators: header in the shortcut window, for the various ways of opening search
+#: editor/help-overlay.ui:115
+msgctxt "shortcut window"
+msgid "Search options"
+msgstr "Voľby vyhľadávania"
+
+#. Translators: Ctrl-F action; opens search, searching everywhere
+#: editor/help-overlay.ui:120
+msgctxt "shortcut window"
+msgid "Toggle search"
+msgstr "Prepnúť vyhľadávanie"
+
+#. Translators: Ctrl-Alt-F action; does the same thing as "Toggle search", but loads the search entry with the last searched text
+#: editor/help-overlay.ui:128
+msgctxt "shortcut window"
+msgid "Search again"
+msgstr "Hľadať znova"
+
+#. Translators: Ctrl-Shift-F action; opens search, searching only from current folder
+#: editor/help-overlay.ui:136
+msgctxt "shortcut window"
+msgid "Toggle local search"
+msgstr "Prepnúť vyhľadávanie na mieste"
+
+#. Translators: Ctrl-Shift-Alt-F action; does the same thing as "Toggle local search", but loads the search entry with the last searched text
+#: editor/help-overlay.ui:144
+msgctxt "shortcut window"
+msgid "Search again, locally"
+msgstr "Hľadať znova na mieste"
+
+#. Translators: Ctrl-V action; open search with clipboard content
+#: editor/help-overlay.ui:152
+msgctxt "shortcut window"
+msgid "Paste as search"
+msgstr "Prilepiť do vyhľadávania"
+
+#. Translators: Ctrl-Shift-V action; does the same thing as "Paste as search", but works even if an entry or textview is selected; entry hidden for now
+#: editor/help-overlay.ui:160
+msgctxt "shortcut window"
+msgid "Paste as search (force)"
+msgstr "Prilepiť do vyhľadávania (násilne)"
+
+#. Translators: Ctrl-L action when browsing; opens search on current path
+#: editor/help-overlay.ui:168
+msgctxt "shortcut window"
+msgid "Edit path"
+msgstr "Upraviť cestu"
+
+#. Translators: Ctrl-Shift-L action when browsing; opens search on parent path
+#: editor/help-overlay.ui:176
+msgctxt "shortcut window"
+msgid "Edit parent path"
+msgstr "Upraviť nadradenú cestu"
+
+#. Translators: '/' key action when browsing; opens search on root path
+#: editor/help-overlay.ui:184
+msgctxt "shortcut window"
+msgid "Edit root path"
+msgstr "Upraviť základnú cestu"
+
+#. Translators: Escape key action, when searching; cancels search
+#: editor/help-overlay.ui:192
+msgctxt "shortcut window"
+msgid "Browse keys tree"
+msgstr "Prehliadať strom kľúčov"
+
+#. Translators: header in the shortcut window, for when browsing
+#: editor/help-overlay.ui:202
 msgctxt "shortcut window"
 msgid "Keys list actions"
-msgstr ""
+msgstr "Akcie zoznamu kľúčov"
 
-#: editor/help-overlay.ui:90
+#. Translators: Menu key action, when browsing
+#: editor/help-overlay.ui:207
 msgctxt "shortcut window"
 msgid "Contextual menu"
 msgstr "Kontextová ponuka"
 
+#. Translators: Ctrl-Shift-G action, when browsing
+#: editor/help-overlay.ui:215
+msgctxt "shortcut window"
+msgid "Previous line"
+msgstr "Predchádzajúci riadok"
+
+# výskyt
+#. Translators: Ctrl-G action, when browsing
+#: editor/help-overlay.ui:223
+msgctxt "shortcut window"
+msgid "Next line"
+msgstr "Nasledujúci riadok"
+
+#. Translators: entry disabled for now; Ctrl-I action, when browsing; displays informations on selected folder
+#: editor/help-overlay.ui:231
+msgctxt "shortcut window"
+msgid "Toggle folder properties"
+msgstr "Prepnúť vlastnosti priečinka"
+
 # hodnota
-#: editor/help-overlay.ui:97
+#. Translators: Ctrl-Delete action, when browsing; sets the selected key to its default value
+#: editor/help-overlay.ui:239
 msgctxt "shortcut window"
 msgid "Set to default"
-msgstr "Nastavenie na predvolenú hodnotu"
+msgstr "Nastaviť na predvolenú hodnotu"
 
-#: editor/help-overlay.ui:104
+#. Translators: Ctrl-Return action, when browsing; does nothing if the selection is not a boolean key
+#: editor/help-overlay.ui:247
 msgctxt "shortcut window"
 msgid "Toggle boolean value"
-msgstr "Prepnutie logickej hodnoty"
+msgstr "Prepnúť logickú hodnotu"
 
-#: editor/help-overlay.ui:113
+#. Translators: header in the shortcut window, for when there are pending changes
+#: editor/help-overlay.ui:257
 msgctxt "shortcut window"
-msgid "Clipboard"
-msgstr "Schránka"
+msgid "Modifications list actions"
+msgstr "Akcie zoznamu úprav"
 
-#: editor/help-overlay.ui:117
+#. Translators: Alt-I action if there are pending changes; the modifications list is either a popover, or an in-window panel
+#: editor/help-overlay.ui:262
 msgctxt "shortcut window"
-msgid "Copy descriptor"
-msgstr "Kopírovanie popisovača"
+msgid "Toggle modifications list"
+msgstr "Prepnúť zoznam úprav"
 
-#: editor/help-overlay.ui:124
+#. Translators: Return/Enter keys action in the list of pending modifications; go to the key with pending modification
+#: editor/help-overlay.ui:270
 msgctxt "shortcut window"
-msgid "Copy path"
-msgstr "Kopírovanie aktuálnej cesty"
+msgid "Open selected row key"
+msgstr "Otvoriť vybraný riadok kľúča"
 
-#: editor/help-overlay.ui:133
+#. Translators: Ctrl-Delete action in the list of pending modifications; dismisses the selected modification
+#: editor/help-overlay.ui:278
+msgctxt "shortcut window"
+msgid "Dismiss modification"
+msgstr "Zahodiť úpravu"
+
+#. Translators: header in the shortcut window, for opening the usual helpful dialogs
+#: editor/help-overlay.ui:288
 msgctxt "shortcut window"
 msgid "Generic"
 msgstr "Všeobecné"
 
-#: editor/help-overlay.ui:137
+#. Translators: Ctrl-F1 action; opens the Keyboard shortcuts dialog
+#: editor/help-overlay.ui:293
 msgctxt "shortcut window"
 msgid "Show this help"
-msgstr "Zobrazenie tohto pomocníka"
+msgstr "Zobraziť tohto pomocníka"
 
-#: editor/help-overlay.ui:144
+#. Translators: Shift-F1 action; opens the About dialog
+#: editor/help-overlay.ui:301
 msgctxt "shortcut window"
 msgid "About"
 msgstr "O programe"
 
-#: editor/help-overlay.ui:151
+#. Translators: header in the shortcut window, for the copy-to-clipboard actions
+#: editor/help-overlay.ui:311
+msgctxt "shortcut window"
+msgid "Clipboard"
+msgstr "Schránka"
+
+#. Translators: Ctrl-C action; copies to clipboard something that identifies the current selection (schema, name and value, for a gsettings key)
+#: editor/help-overlay.ui:316
+msgctxt "shortcut window"
+msgid "Copy descriptor"
+msgstr "Kopírovať popisovač"
+
+#. Translators: Ctrl-Shift-C action; copies to clipboard the path of the currently browsed key or folder
+#: editor/help-overlay.ui:324
+msgctxt "shortcut window"
+msgid "Copy path"
+msgstr "Kopírovať aktuálnu cestu"
+
+#. Translators: header in the shortcut window, for the various ways of quitting the application
+#: editor/help-overlay.ui:334
 msgctxt "shortcut window"
 msgid "Quit"
-msgstr "Ukončenie"
+msgstr "Skončiť"
 
-# Schema:
-#: editor/key-list-box-row.vala:188
-msgid "No Schema Found"
-msgstr "Nenašla sa žiadna schéma"
+#. Translators: Ctrl-Q action; displays a notification if there are pending changes
+#: editor/help-overlay.ui:340
+msgctxt "shortcut window"
+msgid "Quit if there’s no pending changes"
+msgstr "Skončiť, ak nie sú čakajúce zmeny"
 
-#: editor/key-list-box-row.vala:202
-msgid "Key erased."
-msgstr "Kľúč vymazaný."
+#. Translators: Ctrl-Shift-Q action
+#: editor/help-overlay.ui:348
+msgctxt "shortcut window"
+msgid "Apply pending changes and quit"
+msgstr "Použiť čakajúce zmeny a skončiť"
 
-#: editor/key-list-box-row.vala:224
+#. Translators: Alt-F4 action
+#: editor/help-overlay.ui:356
+msgctxt "shortcut window"
+msgid "Dismiss pending changes and quit"
+msgstr "Zahodiť čakajúce zmeny a skončiť"
+
+#. Translators: tooltip text of the entry's icon when editing the value of a double or a 64-bit (signed or unsigned) key, if the key only allows a range of values and the written value is out of range
+#: editor/key-editor-child.vala:30
+msgid "Given value is out of range."
+msgstr "Zadaná hodnota je mimo rozsahu."
+
+#. Translators: tooltip text of the entry's icon (if using an entry) or text displayed under the text view (if using a text view) when editing the value of a key, if the written text cannot be parsed regarding to the key's value type
+#: editor/key-editor-child.vala:33
+msgid "This value is invalid for the key type."
+msgstr "Táto hodnota je neplatná pre typ kľúča."
+
+#. Translators: tooltip text of the entry's icon when editing the value of a double key, if the written value cannot be parsed
+#: editor/key-editor-child.vala:380
+msgid "Failed to parse as double."
+msgstr "Nepodarilo sa syntakticky analyzovať ako desatinné číslo."
+
+#. Translators: tooltip text of the entry's icon when editing the value of a signed 64-bit key, if the written value cannot be parsed
+#: editor/key-editor-child.vala:449
+msgid "Failed to parse as 64-bit integer."
+msgstr "Nepodarilo sa syntakticky analyzovať ako 64 bitové celé číslo."
+
+#. Translators: tooltip text of the entry's icon when editing the value of an unsigned 64-bit key, if the written value cannot be parsed
+#: editor/key-editor-child.vala:518
+msgid "Failed to parse as unsigned 64-bit integer."
+msgstr ""
+"Nepodarilo sa syntakticky analyzovať ako 64 bitové celé číslo bez znamienka."
+
+#. Translators: first item of the keys list displayed during a search, the %s is a folder path usually
+#: editor/key-list-box-row.vala:118
 #, c-format
-msgid "%s (key erased)"
-msgstr "%s (kľúč vymazaný)"
+msgid "Go to “%s”"
+msgstr "Prejsť na „%s”"
 
-#: editor/key-list-box-row.vala:310
-msgid "No summary provided"
-msgstr "Nebol poskytnutý žiadny súhrn"
+#. Translators: first item of the keys list displayed during browsing, the %s is the current folder name
+#: editor/key-list-box-row.vala:149
+#, c-format
+msgid "Search in “%s” folder"
+msgstr "Hľadať v priečinku „%s”"
 
-#. Translators: "open key-editor dialog" action in the right-click menu on the list of keys
-#: editor/key-list-box-row.vala:465
+#. Translators: first item of the keys list displayed during browsing at root path
+#: editor/key-list-box-row.vala:153
+msgid "Open path entry"
+msgstr "Otvoriť položku cesty"
+
+#. Translators: last item of the keys list displayed during a local search
+#: editor/key-list-box-row.vala:157
+msgid "Search everywhere"
+msgstr "Hľadať všade"
+
+#. Translators: "copy to clipboard" action in the right-click menu on the list of keys
+#: editor/key-list-box-row.vala:449
+msgid "Copy"
+msgstr "Kopírovať"
+
+#. Translators: "open key-editor page" action in the right-click menu on the list of keys
+#: editor/key-list-box-row.vala:452
 msgid "Customize…"
 msgstr "Prispôsobiť…"
 
 # hodnota
 #. Translators: "reset key value" action in the right-click menu on the list of keys
-#: editor/key-list-box-row.vala:468
+#: editor/key-list-box-row.vala:455
 msgid "Set to default"
 msgstr "Nastaviť na predvolenú"
 
+#. Translators: "open key-editor page" action in the right-click menu on the list of keys, when key is hard-conflicting
+#: editor/key-list-box-row.vala:460
+msgid "Show details…"
+msgstr "Zobraziť podrobnosti…"
+
 #. Translators: "dismiss change" action in the right-click menu on a key with pending changes
-#: editor/key-list-box-row.vala:473
+#: editor/key-list-box-row.vala:463
 msgid "Dismiss change"
 msgstr "Zahodiť zmenu"
 
-#. Translators: "open folder" action in the right-click menu on a folder
-#: editor/key-list-box-row.vala:476
-msgid "Open"
-msgstr "Otvoriť"
-
 #. Translators: "erase key" action in the right-click menu on a key without schema
 #. Translators: "erase key" option in the right-click menu on a key without schema when on delayed mode
-#: editor/key-list-box-row.vala:479 editor/key-list-box-row.vala:610
-#: editor/registry-info.ui:28
+#. Translators: label of the action button of an infobar, when a key is not defined by a schema
+#: editor/key-list-box-row.vala:466 editor/key-list-box-row.vala:582
+#: editor/registry-info.ui:132
 msgid "Erase key"
 msgstr "Vymazať kľúč"
 
+#. Translators: "go to" action in the right-click menu on a "go back" line during search
+#: editor/key-list-box-row.vala:469
+msgid "Go to this path"
+msgstr "Prejsť na túto cestu"
+
+#. Translators: "open folder" action in the right-click menu on a folder
+#: editor/key-list-box-row.vala:472
+msgid "Open"
+msgstr "Otvoriť"
+
+#. Translators: "open search" action in the right-click menu on a search
+#. Translators: accessible name of the enter-search button displayed in small-size windows
+#. Translators: accessible name of the search togglebutton displayed in usual-size windows
+#: editor/key-list-box-row.vala:478 editor/pathwidget.ui:83
+#: editor/pathwidget.ui:109
+msgid "Search"
+msgstr "Vyhľadať"
+
+#. Translators: "open parent folder" action in the right-click menu on a folder in a search result
+#: editor/key-list-box-row.vala:481
+msgid "Open parent folder"
+msgstr "Otvoriť nadradený priečinok"
+
+#. Translators: "reset recursively" action in the right-click menu on a folder
+#: editor/key-list-box-row.vala:484
+msgid "Reset recursively"
+msgstr "Vynulovať rekurzívne"
+
 #. Translators: "dismiss change" action in the right-click menu on a key without schema planned to be erased
-#: editor/key-list-box-row.vala:482
+#: editor/key-list-box-row.vala:487
 msgid "Do not erase"
 msgstr "Nevymazať"
 
-#. Translators: "copy to clipboard" action in the right-click menu on the list of keys
-#: editor/key-list-box-row.vala:494
-msgid "Copy"
-msgstr "Kopírovať"
-
 #. Translators: "no change" option in the right-click menu on a key when on delayed mode
-#: editor/key-list-box-row.vala:604
+#: editor/key-list-box-row.vala:576
 msgid "No change"
 msgstr "Bez zmeny"
 
-# hodnota
-#. Translators: "reset key value" option of a multi-choice list (checks or radios) in the right-click menu on the list of keys
-#: editor/key-list-box-row.vala:674 editor/registry-info.vala:261
-msgid "Default value"
-msgstr "Predvolená hodnota"
+#. Translators: that's the name of a data type; capitalized (if that makes sense); this handle type is an index; you may maintain the word "handle"
+#: editor/model-utils.vala:301
+msgctxt "capitalized"
+msgid "D-Bus handle type"
+msgstr "Typ obsluhy zbernice D-Bus"
 
-#: editor/modifications-revealer.ui:49
-msgid "Apply"
-msgstr "Použiť"
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:305
+msgctxt "capitalized"
+msgid "D-Bus object path"
+msgstr "Cesta objektu zbernice D-Bus"
 
-#: editor/modifications-revealer.vala:141
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:309
+msgctxt "capitalized"
+msgid "D-Bus object path array"
+msgstr "Pole ciest objektov zbernice D-Bus"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:313
+msgctxt "capitalized"
+msgid "D-Bus signature"
+msgstr "Podpis zbernice D-Bus"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense); this handle type is an index; you may maintain the word "handle"
+#: editor/model-utils.vala:342
+msgctxt "non-capitalized"
+msgid "D-Bus handle type"
+msgstr "typ obsluhy zbernice D-Bus"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:346
+msgctxt "non-capitalized"
+msgid "D-Bus object path"
+msgstr "cesta objektu zbernice D-Bus"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:350
+msgctxt "non-capitalized"
+msgid "D-Bus object path array"
+msgstr "pole ciest objektov zbernice D-Bus"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:354
+msgctxt "non-capitalized"
+msgid "D-Bus signature"
+msgstr "podpis zbernice D-Bus"
+
+#. Translators: that's a name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:373
+msgid "Signed 16-bit integer"
+msgstr "16 bitové celé číslo so znamienkom"
+
+#. Translators: that's a name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:376
+msgid "Unsigned 16-bit integer"
+msgstr "16 bitové celé číslo bez znamienka"
+
+#. Translators: that's a name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:379
+msgid "Signed 32-bit integer"
+msgstr "32 bitové celé číslo so znamienkom"
+
+#. Translators: that's a name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:382
+msgid "Unsigned 32-bit integer"
+msgstr "32 bitové celé číslo bez znamienka"
+
+#. Translators: that's a name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:385
+msgid "Signed 64-bit integer"
+msgstr "64 bitové celé číslo so znamienkom"
+
+#. Translators: that's a name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:388
+msgid "Unsigned 64-bit integer"
+msgstr "64 bitové celé číslo bez znamienka"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:391
+msgid "Boolean"
+msgstr "Logická hodnota"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:394
+msgid "boolean"
+msgstr "logická hodnota"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:397
+msgid "String"
+msgstr "Reťazec"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:400
+msgid "string"
+msgstr "reťazec"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:403
+msgid "String array"
+msgstr "Pole reťazcov"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:406
+msgid "string array"
+msgstr "pole reťazcov"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:409
+msgid "Enumeration"
+msgstr "Vymenovanie hodnôt"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:412
+msgid "enumeration"
+msgstr "vymenovanie hodnôt"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:415
+msgid "Flags"
+msgstr "Príznaky"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:418
+msgid "flags"
+msgstr "príznaky"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:421
+msgid "Double"
+msgstr "Desatinné číslo"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:424
+msgid "double"
+msgstr "desatinné číslo"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense); this handle type is an index; you may maintain the word "handle"
+#. private const string _H_ = C_("capitalized", "D-Bus handle type");
+#. Translators: that's the name of a data type; non capitalized (if that makes sense); this handle type is an index; you may maintain the word "handle"
+#. private const string _h_ = C_("non-capitalized", "D-Bus handle type");
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#. private const string _O_ = C_("capitalized", "D-Bus object path");
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#. private const string _o_ = C_("non-capitalized", "D-Bus object path");
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#. private const string _Ao_ = C_("capitalized", "D-Bus object path array");
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#. private const string _ao_ = C_("non-capitalized", "D-Bus object path array");
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#. private const string _G_ = C_("capitalized", "D-Bus signature");
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#. private const string _g_ = C_("non-capitalized", "D-Bus signature");
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:451
+msgid "Integer"
+msgstr "Celé číslo"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:454
+msgid "integer"
+msgstr "celé číslo"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:457
+msgid "Variant"
+msgstr "Premenlivý typ"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:460
+msgid "variant"
+msgstr "premenlivý typ"
+
+#. Translators: that's the name of a data type; capitalized (if that makes sense)
+#: editor/model-utils.vala:463
+msgid "Empty tuple"
+msgstr "Prázdna n-tica"
+
+#. Translators: that's the name of a data type; non capitalized (if that makes sense)
+#: editor/model-utils.vala:466
+msgid "empty tuple"
+msgstr "prázdna n-tica"
+
+#. Translators: placeholder text of the list of pending modifications, displayed when the user is in delayed mode but has no pending modifications
+#: editor/modifications-list.vala:28
+msgid ""
+"Delayed mode is on\n"
+"but\n"
+"no pending changes"
+msgstr ""
+"Oneskorený režim je\n"
+"zapnutý, no žiadne\n"
+"zmeny nečakajú"
+
+# PM:Nič lepšie a stručné na tlačidlo mi nenapadlo - myslím že podstatu to vystihuje
+#. Translators: label of one of the two buttons of the list of pending modifications, to switch between applying changes to the whole list and selecting some items for more advanced things (not displayed currently, but this change is wanted); the second is "Select"
+#: editor/modifications-list.vala:32
+msgid "Rule all"
+msgstr "Pravidlo"
+
+#. Translators: label of one of the two buttons of the list of pending modifications, to switch between applying changes to the whole list and selecting some items for more advanced things (not displayed currently, but this change is wanted); the first is "Rule all"
+#: editor/modifications-list.vala:34
+msgid "Select"
+msgstr "Vybrať"
+
+#. Translators: displayed in the bottom bar in normal sized windows, when the user tries to reset keys from/for a folder that has nothing to reset
+#: editor/modifications-revealer.vala:136
+#: editor/modifications-revealer.vala:323
 msgid "Nothing to reset."
-msgstr "Nič na obnovenie."
+msgstr "Nič na vynulovanie."
 
-#: editor/modifications-revealer.vala:241
+#. Translators: displayed in the bottom bar in normal sized windows, when the user edits a key and enters in the entry or text view a value that cannot be parsed to the correct data type
+#: editor/modifications-revealer.vala:299
 msgid "The value is invalid."
 msgstr "Hodnota je neplatná."
 
-#: editor/modifications-revealer.vala:245
+#. Translators: displayed in the bottom bar in normal sized windows, when the user edits a key (with the "always confirm explicit" behaviour)
+#: editor/modifications-revealer.vala:307
 msgid "The change will be dismissed if you quit this view without applying."
 msgstr "Zmena bude stratená, keď ukončíte toto zobrazenie bez použitia."
 
-#: editor/modifications-revealer.vala:247
+#. Translators: displayed in the bottom bar in normal sized windows, when the user edits a key (with default "always confirm implicit" behaviour notably)
+#: editor/modifications-revealer.vala:313
 msgid "The change will be applied on such request or if you quit this view."
 msgstr "Zmena bude použitá pri požiadavke, alebo keď ukončíte toto zobrazenie."
 
-#: editor/modifications-revealer.vala:264
+#. Translators: Text displayed in the bottom bar; displayed if there are no pending changes, to document what is the "delay mode".
+#: editor/modifications-revealer.vala:337
 msgid "Changes will be delayed until you request it."
 msgstr "Zmeny budú oneskorené, až kým si ich nevyžiadate."
 
-#. Translators: "gsettings" is a technical term, notably a shell command, so you probably should not translate it.
-#: editor/modifications-revealer.vala:266
+#. Translators: Text displayed in the bottom bar; "gsettings" is a technical term, notably a shell command, so you probably should not translate it.
+#: editor/modifications-revealer.vala:340
 #, c-format
 msgid "One gsettings operation delayed."
 msgid_plural "%u gsettings operations delayed."
@@ -933,8 +2076,8 @@ msgstr[0] "%u operácií gsettings oneskorených."
 msgstr[1] "Jedna operácia gsettings oneskorená."
 msgstr[2] "%u operácie gsettings oneskorené."
 
-#. Translators: "dconf" is a technical term, notably a shell command, so you probably should not translate it.
-#: editor/modifications-revealer.vala:270
+#. Translators: Text displayed in the bottom bar; "dconf" is a technical term, notably a shell command, so you probably should not translate it.
+#: editor/modifications-revealer.vala:344
 #, c-format
 msgid "One dconf operation delayed."
 msgid_plural "%u dconf operations delayed."
@@ -942,14 +2085,15 @@ msgstr[0] "%u operácií dconf oneskorených."
 msgstr[1] "Jedna operácia dconf oneskorená."
 msgstr[2] "%u operácie dconf oneskorené."
 
-#. Translators: Beginning of a sentence like "One gsettings operation and 2 dconf operations delayed.", you could duplicate "delayed" if needed, as it refers to both the gsettings and dconf operations (at least one of each).
-#. Also, "gsettings" is a technical term, notably a shell command, so you probably should not translate it.
-#: editor/modifications-revealer.vala:273
+#. Translators: Text displayed in the bottom bar. Hacky: I split a sentence like "One gsettings operation and 2 dconf operations delayed." in two parts, before the "and"; there is at least one gsettings operation and one dconf operation. So, you can either keep "%s%s" like that, and have the second part of the translation starting with a space (if that makes sense in your language), or you might use "%s %s" here.
+#: editor/modifications-revealer.vala:347
 #, c-format
 msgid "%s%s"
 msgstr "%s%s"
 
-#: editor/modifications-revealer.vala:273
+#. Translators: Text displayed in the bottom bar; beginning of a sentence like "One gsettings operation and 2 dconf operations delayed.", you could duplicate "delayed" if needed, as it refers to both the gsettings and dconf operations (at least one of each).
+#. Also, "gsettings" is a technical term, notably a shell command, so you probably should not translate it.
+#: editor/modifications-revealer.vala:351
 #, c-format
 msgid "One gsettings operation"
 msgid_plural "%u gsettings operations"
@@ -957,11 +2101,11 @@ msgstr[0] "Oneskorených %u operácií gsettings"
 msgstr[1] "Oneskorená jedna operácia gsettings"
 msgstr[2] "Oneskorené %u operácie gsettings"
 
-#. Translators: Second part (and end) of a sentence like "One gsettings operation and 2 dconf operations delayed.", so:
-#. * the space before the "and" is probably wanted, and
+#. Translators: Text displayed in the bottom bar; second part (and end) of a sentence like "One gsettings operation and 2 dconf operations delayed.", so:
+#. * the space before the "and" is probably wanted, if you keeped the "%s%s" translation as-is, and
 #. * the "delayed" refers to both the gsettings and dconf operations (at least one of each).
 #. Also, "dconf" is a technical term, notably a shell command, so you probably should not translate it.
-#: editor/modifications-revealer.vala:278
+#: editor/modifications-revealer.vala:357
 #, c-format
 msgid " and one dconf operation delayed."
 msgid_plural " and %u dconf operations delayed."
@@ -969,19 +2113,60 @@ msgstr[0] " a %u operácií dconf."
 msgstr[1] " a jedna operácia dconf."
 msgstr[2] " a %u operácie dconf."
 
-#: editor/registry-info.ui:22
-msgid ""
-"No schema available. Dconf Editor can’t find a schema associated with this "
-"key. The application that installed this key may have been removed, may have "
-"stop the use of this key, or may use a relocatable schema for defining its "
-"keys."
-msgstr ""
-"Nie je dostupná žiadna schéma. Editor systému Dconf nemôže nájsť schému "
-"priradenú tomuto kľúču. Aplikácia, ktorá nainštalovala tento kľúč mohla byť "
-"odstránená, mohla prestať používať tento kľúč, alebo mohla použiť znovu "
-"prideliteľnú schému na definovanie svojich kľúčov."
+#. Translators: accessible name of the "close" button that is linked with the search entry on small windows
+#: editor/pathentry.ui:66
+msgid "Close search"
+msgstr "Zatvoriť vyhľadávanie"
 
-#: editor/registry-info.ui:56
+#. Translators: accessible description of the "close" button that is linked with the search entry on small windows
+#: editor/pathentry.ui:68
+msgid "Close search results"
+msgstr "Zatvoriť výsledky vyhľadávania"
+
+#. Translators: accessible description of the "refresh" button that is linked with the search entry on large windows
+#: editor/pathentry.ui:92
+msgid "Refresh search results"
+msgstr "Obnoviť výsledky vyhľadávania"
+
+#. Translators: accessible description of the enter-search button displayed in small-size windows
+#. Translators: accessible description of the search togglebutton displayed in usual-size windows
+#: editor/pathwidget.ui:85 editor/pathwidget.ui:111
+msgid "Search keys"
+msgstr "Vyhľadá kľúče"
+
+#. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/Conflict/warning-similar'
+#: editor/registry-info.ui:49
+msgid ""
+"This key is defined and used by more than one schema. This could lead to "
+"problems. Edit value at your own risk."
+msgstr ""
+"Tento kľúč je určený a používaný vo viac ako jednej schéme. Mohlo by to "
+"viesť k problémom. Upravte hodnotu na vlastnú zodpovednosť."
+
+#. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/Conflict/type-conflict'
+#: editor/registry-info.ui:87
+msgid ""
+"This key is incompatibly defined and used by more than one schema. It is "
+"impossible to work with its value in a meaningful way."
+msgstr ""
+"Tento kľúč je nesúladne určený a používaný vo viac ako jednej schéme. Nie je "
+"možné zmysluplne pracovať s jeho hodnotou."
+
+#. Translators: warning text of an infobar, when a key is not defined by a schema
+#: editor/registry-info.ui:125
+msgid ""
+"No schema available. A schema is what describes the use of a key, and Dconf "
+"Editor can’t find one associated with this key. If the application that was "
+"using this key has been uninstalled, or if this key is obsolete, you may "
+"want to erase it."
+msgstr ""
+"Nie je dostupná žiadna schéma. Schéma popisuje použitie kľúča a Editor "
+"systému Dconf nemôže nájsť schému priradenú tomuto kľúču. Ak bola aplikácia, "
+"ktorá používala tento kľúč, odinštalovaná, alebo je kľúč zastaraný, môžete "
+"ho vymazať."
+
+#. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-enum'
+#: editor/registry-info.ui:172
 msgid ""
 "This enumeration offers only one choice. That’s probably an error of the "
 "application that installed this schema. If possible, please open a bug about "
@@ -991,7 +2176,8 @@ msgstr ""
 "aplikácie, ktorá inštalovala túto schému. Ak je to možné, prosím podajte o "
 "tomto chybové hlásenie."
 
-#: editor/registry-info.ui:65
+#. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-range'
+#: editor/registry-info.ui:183
 msgid ""
 "This integer key can only take one value. That’s probably an error of the "
 "application that installed this schema. If possible, please open a bug about "
@@ -1001,50 +2187,145 @@ msgstr ""
 "pravdepodobne chyba aplikácie, ktorá inštalovala túto schému. Ak je to "
 "možné, prosím podajte o tomto chybové hlásenie."
 
-#: editor/registry-info.vala:82
+#. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-triv'
+#: editor/registry-info.ui:194
+msgid ""
+"This key has a special “empty tuple” type. That’s probably an error of the "
+"application that installed this schema. If possible, please open a bug about "
+"it."
+msgstr ""
+"Tento kľúč má špeciálny typ „Prázdna n-tica”. Toto je pravdepodobne chyba "
+"aplikácie, ktorá inštalovala túto schému. Ak je to možné, prosím podajte o "
+"tomto chybové hlásenie."
+
+#. Translators: field description when displaying folder properties; name of the folder
+#: editor/registry-info.vala:70
+msgid "Name"
+msgstr "Názov"
+
+#. Translators: field description when displaying key properties; the key can be defined by a schema or by the dconf engine
+#: editor/registry-info.vala:73
+msgid "Defined by"
+msgstr "Definované v"
+
+#. Translators: field description when displaying key properties; the schema id (if the key is defined by a schema)
+#: editor/registry-info.vala:76
 msgid "Schema"
 msgstr "Schéma"
 
-#: editor/registry-info.vala:83
+#. Translators: field description when displaying key properties; a summary describing the key use
+#: editor/registry-info.vala:79
 msgid "Summary"
 msgstr "Súhrn"
 
-#: editor/registry-info.vala:84
+#. Translators: field description when displaying key properties; a description describing deeply the key use
+#: editor/registry-info.vala:82
 msgid "Description"
 msgstr "Popis"
 
-#. Translators: as in datatype (integer, boolean, string, etc.)
-#: editor/registry-info.vala:86
+#. Translators: field description when displaying key properties; the datatype of the key (integer, boolean, string, etc.)
+#: editor/registry-info.vala:85
 msgid "Type"
 msgstr "Typ"
 
-#: editor/registry-info.vala:88
+#. Translators: field description when displaying key properties; specific name of the datatype of the key ("Signed 32-bit integer" for example)
+#: editor/registry-info.vala:89
+msgid "Type name"
+msgstr "Názov typu"
+
+#. Translators: field description when displaying key properties; technical code of the datatype of the key ("q" for uint16, "b" for boolean, etc.)
+#: editor/registry-info.vala:93
+msgid "Type code"
+msgstr "Kód typu"
+
+#. Translators: field description when displaying key properties; if the numeral key has a minimum or a maximum set
+#: editor/registry-info.vala:96
+msgid "Forced range"
+msgstr "Vymedzený rozsah"
+
+#. Translators: field description when displaying key properties; the minimum value a numeral key can take
+#: editor/registry-info.vala:99
 msgid "Minimum"
 msgstr "Minimum"
 
-#: editor/registry-info.vala:89
+#. Translators: field description when displaying key properties; the maximum value a numeral key can take
+#: editor/registry-info.vala:102
 msgid "Maximum"
 msgstr "Maximum"
 
 # hodnota
-#: editor/registry-info.vala:90
+#. Translators: field description when displaying key properties; the default value of the key (defined if it has a schema)
+#: editor/registry-info.vala:105
 msgid "Default"
 msgstr "Predvolená"
 
-#: editor/registry-info.vala:110
+#. Translators: field description when displaying key properties; the current value of the key
+#: editor/registry-info.vala:108
 msgid "Current value"
 msgstr "Aktuálna hodnota"
 
-#: editor/registry-info.vala:143
+#. Translators: field description when displaying key properties; the field content is a switch widget that allows using or not the default value of the key, as provided by its schema
+#: editor/registry-info.vala:111
 msgid "Use default value"
 msgstr "Použiť predvolenú hodnotu"
 
-#: editor/registry-info.vala:201
+#. Translators: field description when displaying key properties; the field content is a widget that allows setting the value of the key (depending of its type, an entry, a switch, etc.)
+#: editor/registry-info.vala:114
 msgid "Custom value"
 msgstr "Vlastná hodnota"
 
-#. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
-#: editor/registry-info.vala:324
+#. Translators: field content when displaying key properties; if the key does not have a summary describing its use
+#. Translators: "subtitle" in the keys list of a key defined by a schema but missing a summary describing the key use
+#: editor/registry-info.vala:202 editor/registry-list.vala:491
+msgid "No summary provided"
+msgstr "Nebol poskytnutý žiadny súhrn"
+
+#. Translators: field content when displaying key properties; if the key does not have a description describing deeply its use
+#: editor/registry-info.vala:212
+msgid "No description provided"
+msgstr "Nebol poskytnutý žiadny popis"
+
+#. Translators: field content when displaying key properties; "Yes" if the key has a range set, "No" if not
+#: editor/registry-info.vala:249
+msgid "Yes"
+msgstr "Áno"
+
+#. Translators: field content when displaying key properties; "Yes" if the key has a range set, "No" if not
+#: editor/registry-info.vala:252
+msgid "No"
+msgstr "Nie"
+
+#. Translators: field content when displaying key properties; displayed instead of the value, in case of conflicting keys
+#: editor/registry-info.vala:280
+msgid ""
+"There are conflicting definitions of this key, getting value would be either "
+"problematic or meaningless."
+msgstr ""
+"Existujú konfliktné definície tohto kľúča, získanie hodnoty by bolo "
+"problematické alebo nezmyselné."
+
+#. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of type "double"
+#: editor/registry-info.vala:615
+msgid ""
+"Use a dot as decimal mark and no thousands separator. You can use the X.Ye+Z "
+"notation."
+msgstr ""
+"Použite bodku ako oddeľovač desatinných miest. Môžete použiť aj zápis v "
+"tvare X.Ye+Z."
+
+#. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of type "variant" (or of a type composed with a variant)
+#: editor/registry-info.vala:620
+msgid ""
+"Variants content should be surrounded by XML brackets (‘<’ and ‘>’). See "
+"https://developer.gnome.org/glib/stable/gvariant-text.html for complete "
+"documentation."
+msgstr ""
+"Obsah premenlivého typu by mal byť obklopený zátvorkami jazyka XML („<“ a "
+"„>“). Úplná dokumentácia je na adrese https://developer.gnome.org/glib/"
+"stable/gvariant-text.html."
+
+#. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a "maybe type" and with a string type (or similar); neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
+#: editor/registry-info.vala:627
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value. Strings, signatures and object paths should be surrounded by "
@@ -1054,13 +2335,14 @@ msgstr ""
 "použite kľúčové slovo  „nothing”. Reťazce, podpisy a cesty objektov je "
 "potrebné zadať do úvodzoviek."
 
-#: editor/registry-info.vala:326
+#. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a string type (or similar)
+#: editor/registry-info.vala:630
 msgid ""
 "Strings, signatures and object paths should be surrounded by quotation marks."
 msgstr "Reťazce, podpisy a cesty objektov je potrebné zadať do úvodzoviek."
 
-#. Translators: neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
-#: editor/registry-info.vala:330
+#. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a "maybe type"; neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
+#: editor/registry-info.vala:635
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value."
@@ -1068,32 +2350,156 @@ msgstr ""
 "Ak chcete pre typ možno (typ začínajúci  „m”) nastaviť prázdnu hodnotu, "
 "použite kľúčové slovo  „nothing”."
 
-#: editor/registry-view.ui:32
-msgid "Sort preferences have changed. Do you want to reload the view?"
-msgstr "Predvoľby usporiadania boli zmenené. Chcete znovu načítať zobrazenie?"
+#. Translators: field content when displaying key properties; the field description is "Current value", this text displayed if the key, not defined by a schema, has been erased (and so has no value anymore)
+#: editor/registry-info.vala:674
+msgid "Key erased."
+msgstr "Kľúč vymazaný."
 
-#: editor/registry-view.ui:38
-msgid "Reload"
-msgstr "Znovu načítať"
+#. Translators: means that the key has (at least) one other key defined by a different schema but at the same path and with the same name; used on large windows ("conflict" is used on small windows)
+#: editor/registry-list.vala:518
+msgid "conflicting keys"
+msgstr "konfliktné kľúče"
 
-#: editor/registry-view.ui:136
+#. Translators: means that the key has (at least) one other key defined by a different schema but at the same path and with the same name; used on small windows ("conflicting keys" is used on large windows)
+#: editor/registry-list.vala:521
+msgid "conflict"
+msgstr "rozpor"
+
+# Schema:
+#. Translators: "subtitle" in the keys list of a key not defined by a schema; keys defined by a schema have in place a summary describing the key use
+#: editor/registry-list.vala:537
+msgid "No schema found"
+msgstr "Nenašla sa žiadna schéma"
+
+#. Translators: means that the key has been erased; used on large windows ("erased" is used on small windows)
+#: editor/registry-list.vala:638
+msgid "key erased"
+msgstr "kľúč vymazaný"
+
+#. Translators: means that the key has been erased; used on small windows ("key erased" is used on large windows)
+#: editor/registry-list.vala:641
+msgid "erased"
+msgstr "vymazaný"
+
+#. Translators: displayed on small windows; indicates the data type of the key (the %s is the variant type code)
+#: editor/registry-list.vala:679
+#, c-format
+msgid "type “%s”"
+msgstr "typ „%s”"
+
+#. Translators: header displayed in the keys list during a search only; indicates that the schema (the %s is the schema id) is installed at the path where the search has started
+#: editor/registry-list.vala:1176
+#, c-format
+msgid "%s (local keys)"
+msgstr "%s (kľúče na mieste)"
+
+#. Translators: header displayed in the keys list during a search only; indicates that the following non-defined keys are installed at the path where the search has started
+#: editor/registry-list.vala:1182
+msgid "Local keys not defined by a schema"
+msgstr "Kľúče na mieste nie sú schémou definované"
+
+#. Translators: header displayed in the keys list during a search or during browsing
+#: editor/registry-list.vala:1186
+msgid "Keys not defined by a schema"
+msgstr "Kľúče nie sú schémou definované"
+
+#. Translators: header displayed in the keys list during a search or during browsing
+#: editor/registry-list.vala:1196
+msgid "Subfolders"
+msgstr "Podpriečinky"
+
+#. Translators: last header displayed in the keys list during a local search
+#: editor/registry-list.vala:1201
+msgid "Other actions"
+msgstr "Ďalšie akcie"
+
+#. Translators: placeholder text of the search list when there's no search results (not used in current design)
+#: editor/registry-search.vala:26
+msgid "No matches"
+msgstr "Žiadne zhody"
+
+#. Translators: header displayed in the keys list during a search only
+#: editor/registry-search.vala:556
+msgid "Folders"
+msgstr "Priečinky"
+
+#. Translators: placeholder text of the keys list when there's nothing to display in a path (not used in current design)
+#: editor/registry-view.vala:23
 msgid "No keys in this path"
 msgstr "Na tejto ceste sa nenachádzajú žiadne kľúče"
 
-#: editor/registry-view.vala:182
-#, c-format
-msgid "Cannot find folder “%s”."
-msgstr "Nedá sa nájsť priečinok „%s”."
+#. Translators: the boolean "true" value; capitalized (if that makes sense)
+#: editor/setting-object.vala:173
+msgid "True"
+msgstr "Pravda"
 
-#: editor/registry-view.vala:200
-#, c-format
-msgid "Cannot find key “%s” here."
-msgstr "Tu sa nedá nájsť kľúč „%s”."
+#. Translators: the boolean "false" value; capitalized (if that makes sense)
+#: editor/setting-object.vala:177
+msgid "False"
+msgstr "Nepravda"
 
-#: editor/registry-view.vala:206
+#. Translators: "nothing" value of a nullable key; capitalized (if that makes sense); "nothing" here is a keyword, but you do not need to show it in your translation, that will be done with the non-capitalized version of the word
+#: editor/setting-object.vala:180
+msgid "Nothing"
+msgstr "Nič"
+
+#. Translators: the boolean "true" value; non capitalized (if that makes sense)
+#: editor/setting-object.vala:186
+msgid "true"
+msgstr "pravda"
+
+#. Translators: the boolean "false" value; non capitalized (if that makes sense)
+#: editor/setting-object.vala:190
+msgid "false"
+msgstr "nepravda"
+
+#. Translators: "nothing" value of a nullable key; non capitalized (if that makes sense); the %s is replaced by the text "nothing" (as a technical keyword); it isn't introduced with quotation marks around it, but you might want to add some, depending of your language typographic rules
+#: editor/setting-object.vala:194
 #, c-format
-msgid "Key “%s” has been removed."
-msgstr "Kľúč „%s” bol odstránený."
+msgid "nothing (%s)"
+msgstr "nič (%s)"
+
+#. Translators: "nothing" value of a nullable key; non capitalized (if that makes sense)
+#: editor/setting-object.vala:199
+msgid "nothing"
+msgstr "nič"
+
+#. Translators: field content when displaying key properties; the field description is "Defined by", this text is displayed if the key is defined by a schema, and if this schema has a fixed path (it is not relocatable)
+#: editor/setting-object.vala:410
+msgid "Schema with path"
+msgstr "Schéma s cestou"
+
+#. Translators: field content when displaying key properties; the field description is "Defined by", this text is displayed if the key is defined by a schema, and if this schema is relocatable (it has not a fixed path)
+#: editor/setting-object.vala:414
+msgid "Relocatable schema"
+msgstr "Premiestniteľná schéma"
+
+# PM: Definované v
+#. Translators: field content when displaying key properties; the field description is "Defined by", this text is displayed if the key is not defined by a schema (the value is given by dconf but cannot be used by the GSettings functions)
+#: editor/setting-object.vala:417
+msgid "DConf backend"
+msgstr "obslužnom programe DConf"
+
+#~ msgid "Remove"
+#~ msgstr "Odstrániť"
+
+#~ msgid "Remove this bookmark"
+#~ msgstr "Odstráni túto záložku"
+
+#~ msgid "_About"
+#~ msgstr "_O programe"
+
+#~ msgid "_Quit"
+#~ msgstr "U_končiť"
+
+#~ msgid ""
+#~ "Copyright © 2010-2014 – Canonical Ltd\n"
+#~ "Copyright © 2015-2018 – Arnaud Bonatti\n"
+#~ "Copyright © 2017-2018 – Davi da Silva Böger"
+#~ msgstr ""
+#~ "Autorské práva © 2010-2014 – Canonical Ltd\n"
+#~ "Autorské práva © 2015-2018 – Arnaud Bonatti\n"
+#~ "Autorské práva © 2017-2018 – Davi da Silva Böger"
 
 #, fuzzy
 #~ msgid "dconf-editor"
@@ -1138,10 +2544,6 @@ msgstr "Kľúč „%s” bol odstránený."
 #~ msgid "_Find…"
 #~ msgstr "_Nájsť…"
 
-# výskyt
-#~ msgid "Next"
-#~ msgstr "Ďalší"
-
 # vyskyt
 #~ msgid "Not found"
 #~ msgstr "Nenajdený"
@@ -1175,14 +2577,8 @@ msgstr "Kľúč „%s” bol odstránený."
 #~ "programom Ak sa tak nestalo, napíšte na adresu Free Software Foundation, "
 #~ "Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
 
-#~ msgid "Copyright © Canonical Ltd"
-#~ msgstr "Autorské práva © Canonical Ltd"
-
 #~ msgid "Error setting value: %s"
 #~ msgstr "Chyba pri nastavovaní hodnoty: %s"
-
-#~ msgid "Name"
-#~ msgstr "Názov"
 
 #~ msgid "Value"
 #~ msgstr "Hodnota"
