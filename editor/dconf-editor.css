@@ -165,9 +165,9 @@ window:not(.extra-thin-window)      .keys-list:dir(rtl) > row > .key    > grid >
 /* icon color */
 
 window:not(.hc-theme)             .bookmarks list > row:not(:selected),
-                                  .keys-list      > row:not(:selected) > * { color:@theme_fg_color; }
+window:not(.hc-theme)             .keys-list      > row:not(:selected) > * { color:@theme_fg_color; }
 window:not(.hc-theme):backdrop    .bookmarks list > row:not(:selected),
-                     :backdrop    .keys-list      > row:not(:selected) > * { color:@theme_unfocused_fg_color; }
+window:not(.hc-theme):backdrop    .keys-list      > row:not(:selected) > * { color:@theme_unfocused_fg_color; }
 /*                                .bookmarks list > row:selected,                                                    TODO fails
                                   .keys-list      > row:selected       > * { color:@theme_selected_fg_color; }       to work...
                      :backdrop    .bookmarks list > row:selected,
