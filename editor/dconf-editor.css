@@ -288,15 +288,15 @@ window:not(.extra-thin-window) .small-keys-list-rows .property-value {
 }
 
   /* see also ".greyed-label" */
-                            .property-name-label          { color:@theme_fg_color; }
+window:not(.hc-theme)                            .property-name-label          { color:@theme_fg_color; }
   /* TODO report bug: better would be mix(@theme_fg_color,@theme_bg_color,1.5); but that renders white... */
-.extra-thin-window          .property-name-label          { color:mix(@theme_fg_color,@insensitive_fg_color,0.6); }
-                  :backdrop .property-name-label,
-.extra-thin-window:backdrop .property-name-label          { color:@theme_unfocused_fg_color; }
-                            .property-name-label:disabled,
-.extra-thin-window          .property-name-label:disabled { color:@insensitive_fg_color; }
-                  :backdrop .property-name-label:disabled,
-.extra-thin-window:backdrop .property-name-label:disabled { color:@unfocused_insensitive_color; }
+window:not(.hc-theme).extra-thin-window          .property-name-label          { color:mix(@theme_fg_color,@insensitive_fg_color,0.6); }
+window:not(.hc-theme)                  :backdrop .property-name-label,
+window:not(.hc-theme).extra-thin-window:backdrop .property-name-label          { color:@theme_unfocused_fg_color; }
+window:not(.hc-theme)                            .property-name-label:disabled,
+window:not(.hc-theme).extra-thin-window          .property-name-label:disabled { color:@insensitive_fg_color; }
+window:not(.hc-theme)                  :backdrop .property-name-label:disabled,
+window:not(.hc-theme).extra-thin-window:backdrop .property-name-label:disabled { color:@unfocused_insensitive_color; }
 
                                          .property-value          { margin-left  : 1.0rem;
                                                                     margin-right : 1.0rem;
