@@ -4,23 +4,23 @@
 #
 # Dirgita <dirgitadevina@yahoo.co.id>, 2012, 2014.
 # Andika Triwidada <andika@gmail.com>, 2012, 2013, 2014.
-# Kukuh Syafaat <kukuhsyafaat@gnome.org>, 2017, 2018, 2019.
+# Kukuh Syafaat <kukuhsyafaat@gnome.org>, 2017-2020.
 # Sucipto <sucipto@pm.me>, 2020.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2020-01-02 12:36+0000\n"
-"PO-Revision-Date: 2020-01-13 17:03+0700\n"
-"Last-Translator: Sucipto <sucipto@pm.me>\n"
+"POT-Creation-Date: 2020-04-22 13:49+0000\n"
+"PO-Revision-Date: 2020-05-30 18:08+0700\n"
+"Last-Translator: Kukuh Syafaat <kukuhsyafaat@gnome.org>\n"
 "Language-Team: Indonesian <gnome-l10n-id@googlegroups.com>\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural= n!=1;\n"
-"X-Generator: Gtranslator 3.34.0\n"
+"X-Generator: Poedit 2.3.1\n"
 
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the second is "Credits"
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the name of the view, displayed in the headerbar
@@ -99,27 +99,27 @@ msgstr "Pintasan Papan Tik"
 #: editor/bookmarks-headerbar.vala:159 editor/bookmarks.ui:131
 #: editor/registry-search.vala:552
 msgid "Bookmarks"
-msgstr "Penanda Tautan"
+msgstr "Markah"
 
 #. Translators: hamburger menu entry on small windows (not used in current design)
 #: editor/bookmarks-headerbar.vala:254
 msgid "Hide bookmarks"
-msgstr "Sembunyikan penanda taut"
+msgstr "Sembunyikan markah"
 
 #. Translators: hamburger menu entry on small windows, to unbookmark the currently browsed path
 #: editor/bookmarks-headerbar.vala:259
 msgid "Unbookmark"
-msgstr "Hilangkan penanda taut"
+msgstr "Hilangkan markah"
 
 #. Translators: hamburger menu entry on small windows, to bookmark the currently browsed path
 #: editor/bookmarks-headerbar.vala:262
 msgid "Bookmark"
-msgstr "Penanda Taut"
+msgstr "Markah"
 
 #. Translators: hamburger menu entry on small windows, to show the bookmarks list
 #: editor/bookmarks-headerbar.vala:265
 msgid "Show bookmarks"
-msgstr "Tampilkan penanda taut"
+msgstr "Tampilkan markah"
 
 #. Translators: placeholder text of the bookmarks list, displayed when the user has no bookmarks
 #: editor/bookmarks-list.vala:32
@@ -127,7 +127,7 @@ msgid ""
 "Bookmarks will\n"
 "be added here"
 msgstr ""
-"Penanda akan\n"
+"Markah akan\n"
 "ditambahkan disini"
 
 #. Translators: label of one of the two buttons of the bookmarks list, to switch between using the bookmarks and editing the list; the second is "Edit"
@@ -143,32 +143,32 @@ msgstr "Sunting"
 #. Translators: accessible name of the switch for bookmarking current path in the bookmarks popover
 #: editor/bookmarks.ui:69
 msgid "Location bookmarked"
-msgstr "Lokasi telah ditandai"
+msgstr "Lokasi telah dimarkahi"
 
 #. Translators: accessible description of the switch for bookmarking current path in the bookmarks popover
 #: editor/bookmarks.ui:71
 msgid "Toggle to bookmark this location"
-msgstr "Jungkitkan untuk menandai lokasi Ini"
+msgstr "Jungkitkan untuk memarkahi lokasi Ini"
 
 #. Translators: text that might appear in the bookmarks popover in place of the switch and its label
 #: editor/bookmarks.ui:96
 msgid "The bookmarks list is not editable."
-msgstr "Daftar penanda taut tidak dapat disunting."
+msgstr "Daftar markah tidak dapat disunting."
 
 #. Translators: accessible description of the button for opening the bookmarks popover
 #: editor/bookmarks.ui:133
 msgid "Manage your bookmarks"
-msgstr "Kelola penanda taut"
+msgstr "Kelola markah"
 
 #. Translators: label of the switch in the bookmarks popover, when searching
 #: editor/bookmarks.vala:404
 msgid "Bookmark this Search"
-msgstr "Tandai pencarian ini"
+msgstr "Markahi pencarian ini"
 
 #. Translators: label of the switch in the bookmarks popover, when browsing
 #: editor/bookmarks.vala:407
 msgid "Bookmark this Location"
-msgstr "Tandai Lokasi Ini"
+msgstr "Markahi Lokasi Ini"
 
 #. Translators: on really small windows, name of the view when showing a folder properties, displayed in the headerbar
 #: editor/browser-headerbar.vala:165
@@ -238,16 +238,16 @@ msgstr ""
 "Menyunting konfigurasi Anda secara langsung adalah fitur tingkat lanjut yang "
 "mungkin menyebabkan aplikasi tidak dapat berjalan sebagaimana mestinya."
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:30
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:31
 msgid "Browse the keys used by installed applications"
 msgstr "Ramban kunci yang dipakai oleh aplikasi yang terpasang"
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:34
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:35
 msgid "Read keys descriptions and edit their values"
 msgstr "Baca deskripsi kunci dan sunting nilai mereka"
 
 #. a translatable version of project_group
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:49
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:50
 msgid "The GNOME Project"
 msgstr "Projek GNOME"
 
@@ -558,13 +558,12 @@ msgstr ""
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/bookmarks'
 #: editor/ca.desrt.dconf-editor.gschema.xml:240
 msgid "A list of bookmarked paths"
-msgstr "Daftar path yang ditandatauti"
+msgstr "Daftar path yang dimarkahi"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/bookmarks'
 #: editor/ca.desrt.dconf-editor.gschema.xml:242
 msgid "Contains all paths bookmarked by the user as an array of strings."
-msgstr ""
-"Memuat semua path yang ditanda tauti oleh pengguna sebagai larik string."
+msgstr "Memuat semua path yang dimarkahi oleh pengguna sebagai larik string."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/small-bookmarks-rows'
 #: editor/ca.desrt.dconf-editor.gschema.xml:247
@@ -1196,7 +1195,7 @@ msgstr "path tempat memetakan skema yang dapat dipindahkan"
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:233
 msgid "example: “ca.desrt.dconf-editor.Bookmarks:/ca/desrt/dconf-editor/”"
-msgstr "contoh: “ca.desrt.dconf-editor.Penanda taut:/ca/desrt/dconf-editor/”"
+msgstr "contoh: “ca.desrt.dconf-editor.Markah:/ca/desrt/dconf-editor/”"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:237
@@ -1315,7 +1314,7 @@ msgid "translator-credits"
 msgstr ""
 "Dirgita <dirgitadevina@yahoo.co.id>, 2012.\n"
 "Andika Triwidada <andika@gmail.com>, 2012, 2013, 2018.\n"
-"Kukuh Syafaat <kukuhsyafaat@gnome.org>, 2018, 2019.\n"
+"Kukuh Syafaat <kukuhsyafaat@gnome.org>, 2017-2020.\n"
 "Sucipto <sucipto@pm.me>, 2020."
 
 #. Translators: about dialog text; label of the website link
@@ -1481,19 +1480,19 @@ msgstr "Aksi"
 #: editor/help-overlay.ui:34
 msgctxt "shortcut window"
 msgid "Bookmarks menu"
-msgstr "Menu penanda taut"
+msgstr "Menu markah"
 
 #. Translators: Ctrl-D action
 #: editor/help-overlay.ui:42
 msgctxt "shortcut window"
 msgid "Bookmark this path"
-msgstr "Tandai lokasi ini"
+msgstr "Markahi lokasi ini"
 
 #. Translators: Ctrl-Shift-D action
 #: editor/help-overlay.ui:50
 msgctxt "shortcut window"
 msgid "Unbookmark this path"
-msgstr "Hilangkan penanda taut path ini"
+msgstr "Hilangkan markah path ini"
 
 #. Translators: F10 key action
 #: editor/help-overlay.ui:58
