@@ -979,7 +979,7 @@ private class SettingsModel : SettingsModelCore
     }
 
     /*\
-    * * Directories informations
+    * * Directories information
     \*/
 
     internal Variant _get_folder_properties (string folder_path)

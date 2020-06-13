@@ -285,7 +285,7 @@ private class DConfWindow : BookmarksWindow, AdaptativeWidget
         checkbutton.visible = true;
         checkbutton.active = true;
         checkbutton.margin_top = 5;
-        box.add (checkbutton);  // TODO don't show box if the user explicitely said she wanted to see the dialog next time?
+        box.add (checkbutton);  // TODO don't show box if the user explicitly said she wanted to see the dialog next time?
 
         ulong dialog_response_handler = dialog.response.connect (() => { if (!checkbutton.active) settings.set_boolean ("show-warning", false); });
         dialog.run ();
@@ -519,7 +519,7 @@ private class DConfWindow : BookmarksWindow, AdaptativeWidget
     }
 
     /*\
-    * * Keyboad action entries
+    * * Keyboard action entries
     \*/
 
     private void install_kbd_action_entries ()
@@ -765,7 +765,7 @@ private class DConfWindow : BookmarksWindow, AdaptativeWidget
     }
 
     /*\
-    * * Non-existant path notifications // TODO unduplicate
+    * * Non-existent path notifications // TODO unduplicate
     \*/
 
     private void notify_folder_emptied (SimpleAction action, Variant? path_variant)

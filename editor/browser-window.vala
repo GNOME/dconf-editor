@@ -568,7 +568,7 @@ private abstract class BrowserWindow : BaseWindow
     }
 
     /*\
-    * * keyboad action entries
+    * * keyboard action entries
     \*/
 
     private void install_key_action_entries ()

@@ -663,7 +663,7 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
 
     private static void get_type_or_value (string type_string, string key_value_text, out string key_type_label, out bool key_type_italic)
     {
-        // all these types have a value garantied to be displayable in a limited (and not too long) number of chars; there is also the empty tuple, but "type “()”" looks even better than "empty tuple"
+        // all these types have a value guaranteed to be displayable in a limited (and not too long) number of chars; there is also the empty tuple, but "type “()”" looks even better than "empty tuple"
         if (type_string == "b" || type_string == "mb" || type_string == "y" || type_string == "h" || type_string == "d" || type_string == "n" || type_string == "q" || type_string == "i" || type_string == "u")
         {
             key_type_label = key_value_text;

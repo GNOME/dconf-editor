@@ -79,7 +79,7 @@ private class ModificationsRevealer : Revealer, AdaptativeWidget
     }
 
     /*\
-    * * Reseting objects
+    * * Resetting objects
     \*/
 
     internal void reset_objects (string base_path, Variant? objects, bool recursively)

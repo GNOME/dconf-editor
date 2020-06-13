@@ -227,7 +227,7 @@
             <child>
               <object class="GtkShortcutsShortcut">
                 <property name="visible">False</property>
-                <!-- Translators: entry disabled for now; Ctrl-I action, when browsing; displays informations on selected folder -->
+                <!-- Translators: entry disabled for now; Ctrl-I action, when browsing; displays information on selected folder -->
                 <property name="title" translatable="yes" context="shortcut window">Toggle folder properties</property>
                 <property name="accelerator">&lt;Primary&gt;i</property>
               </object>

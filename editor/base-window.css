@@ -36,7 +36,7 @@
 }
 
 /*\
-* * overlayed list
+* * overlaid list
 \*/
 
   .vertical.overlayed-list.needs-padding          > scrolledwindow > viewport > list {
@@ -109,7 +109,7 @@
 }
 
 /*\
-* * text formating
+* * text formatting
 \*/
 
 .small-label {
