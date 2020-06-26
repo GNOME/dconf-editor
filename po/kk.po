@@ -1,21 +1,21 @@
 # Kazakh translation for dconf.
 # Copyright (C) 2014 dconf's COPYRIGHT HOLDER
 # This file is distributed under the same license as the dconf package.
-# Baurzhan Muftakhidinov <baurthefirst@gmail.com>, 2014-2017.
+# Baurzhan Muftakhidinov <baurthefirst@gmail.com>, 2014-2020.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2019-02-12 16:37+0000\n"
-"PO-Revision-Date: 2019-02-16 16:15+0500\n"
+"POT-Creation-Date: 2020-04-22 13:51+0000\n"
+"PO-Revision-Date: 2020-06-26 10:34+0500\n"
 "Last-Translator: Baurzhan Muftakhidinov <baurthefirst@gmail.com>\n"
 "Language-Team: Kazakh <kk@li.org>\n"
 "Language: kk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 2.3.1\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the second is "Credits"
@@ -41,7 +41,7 @@ msgstr ""
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the header of the programmers names
 #: editor/about-list.vala:154
 msgid "Creators"
-msgstr ""
+msgstr "Жасаушылар"
 
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the header of the translators names
 #: editor/about-list.vala:166
@@ -56,32 +56,31 @@ msgstr "Ағымдағы орналасуды көшіріп алу"
 #. Translators: menu entry of the pathbar menu (not displayed for now)
 #. Translators: "open" action in the right-click menu on a "show folder info" row
 #: editor/adaptative-pathbar.vala:264 editor/key-list-box-row.vala:475
-#| msgid "Show details…"
 msgid "Show properties"
-msgstr ""
+msgstr "Қасиеттерін көрсету"
 
 #. Translators: there are three related actions: "use", "reuse" and "pause"; displayed in the hamburger menu at night
 #: editor/adaptative-window.vala:149
 msgid "Pause night mode"
-msgstr ""
+msgstr "Түнгі режимді аялдату"
 
 #. Translators: there are three related actions: "use", "reuse" and "pause"; displayed in the hamburger menu at night
 #: editor/adaptative-window.vala:153
 msgid "Reuse night mode"
-msgstr ""
+msgstr "Түнгі режимді қайта пайдалану"
 
 #. Translators: there are three related actions: "use", "reuse" and "pause"; displayed in the hamburger menu at night
 #: editor/adaptative-window.vala:157
 msgid "Use night mode"
-msgstr ""
+msgstr "Түнгі режимді пайдалану"
 
 #. Translators: accessible name of the hamburger menu
-#: editor/base-headerbar.ui:112
+#: editor/base-headerbar.ui:113
 msgid "Actions"
 msgstr "Әрекеттер"
 
 #. Translators: accessible description of the hamburger menu
-#: editor/base-headerbar.ui:114
+#: editor/base-headerbar.ui:115
 msgid "Current view actions"
 msgstr "Ағымдағы көрініс әрекеттері"
 
@@ -100,15 +99,13 @@ msgstr "Бетбелгілер"
 
 #. Translators: hamburger menu entry on small windows (not used in current design)
 #: editor/bookmarks-headerbar.vala:254
-#| msgid "Bookmarks"
 msgid "Hide bookmarks"
-msgstr ""
+msgstr "Бетбелгілерді жасыру"
 
 #. Translators: hamburger menu entry on small windows, to unbookmark the currently browsed path
 #: editor/bookmarks-headerbar.vala:259
-#| msgid "Bookmarks"
 msgid "Unbookmark"
-msgstr ""
+msgstr "Бетбелгілерден өшіру"
 
 #. Translators: hamburger menu entry on small windows, to bookmark the currently browsed path
 #: editor/bookmarks-headerbar.vala:262
@@ -117,9 +114,8 @@ msgstr "Бетбелгі"
 
 #. Translators: hamburger menu entry on small windows, to show the bookmarks list
 #: editor/bookmarks-headerbar.vala:265
-#| msgid "Bookmarks"
 msgid "Show bookmarks"
-msgstr ""
+msgstr "Бетбелгілерді көрсету"
 
 #. Translators: placeholder text of the bookmarks list, displayed when the user has no bookmarks
 #: editor/bookmarks-list.vala:32
@@ -151,7 +147,7 @@ msgstr "Бұл орналасуды бетбелгілерге қосу үшін
 #. Translators: text that might appear in the bookmarks popover in place of the switch and its label
 #: editor/bookmarks.ui:96
 msgid "The bookmarks list is not editable."
-msgstr ""
+msgstr "Бетбелгілер тізімін түзетуге келмейді."
 
 #. Translators: accessible description of the button for opening the bookmarks popover
 #: editor/bookmarks.ui:133
@@ -160,10 +156,8 @@ msgstr "Бетбелгілеріңізді басқарыңыз"
 
 #. Translators: label of the switch in the bookmarks popover, when searching
 #: editor/bookmarks.vala:404
-#| msgctxt "shortcut window"
-#| msgid "Bookmark this path"
 msgid "Bookmark this Search"
-msgstr ""
+msgstr "Осы іздеуді бетбелгілеу"
 
 #. Translators: label of the switch in the bookmarks popover, when browsing
 #: editor/bookmarks.vala:407
@@ -178,7 +172,7 @@ msgstr "Қасиеттері"
 #. Translators: text of an infobar to sort again the keys list ("refresh" only, no "reload")
 #: editor/browser-view.vala:81
 msgid "Sort preferences have changed. Do you want to refresh the view?"
-msgstr ""
+msgstr "Сұрыптау параметрлері өзгертілді. Көріністі жаңартқыңыз келе ме?"
 
 #. Translators: button of an infobar to sort again the keys list ("refresh" only, no "reload")
 #. Translators: accessible name of the "refresh" button that is linked with the search entry on large windows
@@ -189,7 +183,7 @@ msgstr "Жаңарту"
 #. Translators: text of an infobar to reload the keys list because of a new key (for example)
 #: editor/browser-view.vala:87
 msgid "This folder content has changed. Do you want to reload the view?"
-msgstr ""
+msgstr "Бұл буманың мазмұны өзгертілді. Көріністі қайта жүктеуді қалайсыз ба?"
 
 #. Translators: button of an infobar to reload the keys list because of a new key (for example)
 #. Translators: button of an infobar to reload the key properties because something has changed
@@ -200,7 +194,7 @@ msgstr "Қайта жүктеу"
 #. Translators: text of an infobar to reload the key properties because something has changed
 #: editor/browser-view.vala:93
 msgid "This key’s properties have changed. Do you want to reload the view?"
-msgstr ""
+msgstr "Бұл кілттің қасиеттері өзгерді. Көріністі қайта жүктеуді қалайсыз ба?"
 
 #. Translators: command-line message, when the user uses the backward/forward buttons of the mouse
 #: editor/browser-window.vala:906
@@ -231,16 +225,16 @@ msgid ""
 "applications to not work correctly."
 msgstr ""
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:25
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:31
 msgid "Browse the keys used by installed applications"
 msgstr "Орнатылған қолданбалар қолданатын кілттерді шолу"
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:29
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:35
 msgid "Read keys descriptions and edit their values"
 msgstr "Кілттер сипаттамаларын оқып, олардың мәндерін түзету"
 
 #. a translatable version of project_group
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:44
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:50
 msgid "The GNOME Project"
 msgstr "GNOME жобасы"
 
@@ -264,57 +258,71 @@ msgstr "Баптаулар дерекқорын тікелей түзетіңі�
 msgid "settings;configuration;"
 msgstr "settings;configuration;баптаулар;қалаулар;"
 
-#. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
-#: editor/ca.desrt.dconf-editor.desktop.in:17
-msgid "ca.desrt.dconf-editor"
-msgstr "ca.desrt.dconf-editor"
+#. Translators: summary of a settings key, see 'dconf-editor /org/gnome/iagno/automatic-night-mode'
+#: editor/ca.desrt.dconf-editor.gschema.xml:89
+msgid "A flag to follow system night light"
+msgstr "Жүйелік түнгі жарық күйіне сай болу жалаушасы"
 
-#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-width'
-#: editor/ca.desrt.dconf-editor.gschema.xml:105
+#. Translators: description of a settings key, see 'dconf-editor /org/gnome/iagno/automatic-night-mode'
+#: editor/ca.desrt.dconf-editor.gschema.xml:91
+msgid "Use GNOME night light setting to activate night-mode."
+msgstr ""
+"Түнгі жарықты белсендіру үшін GNOME түнгі жарық режимін белсендіру үшін "
+"қолданыңыз."
+
+#. see AdaptativeWindow.width-request at data/ui/adaptative-window.ui:22
+#. range min="350"/ FIXME
+#. Translators: summary of a settings key, see 'dconf-editor /org/gnome/iagno/window-width'
+#: editor/ca.desrt.dconf-editor.gschema.xml:98
 msgid "The width of the window"
 msgstr "Терезе ені"
 
-#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-width'
-#: editor/ca.desrt.dconf-editor.gschema.xml:107
+#. Translators: summary of a settings key, see 'dconf-editor /org/gnome/iagno/window-width'
+#: editor/ca.desrt.dconf-editor.gschema.xml:100
 msgid "The width of the main window in pixels."
 msgstr "Басты терезенің ені, пиксельмен."
 
-#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-height'
-#: editor/ca.desrt.dconf-editor.gschema.xml:115
+#. see AdaptativeWindow.height-request at data/ui/adaptative-window.ui:21
+#. range min="284"/ FIXME
+#. Translators: summary of a settings key, see 'dconf-editor /org/gnome/iagno/window-height'
+#: editor/ca.desrt.dconf-editor.gschema.xml:107
 msgid "The height of the window"
 msgstr "Терезе биіктігі"
 
-#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-height'
-#: editor/ca.desrt.dconf-editor.gschema.xml:117
+#. Translators: description of a settings key, see 'dconf-editor /org/gnome/iagno/window-height'
+#: editor/ca.desrt.dconf-editor.gschema.xml:109
 msgid "The height of the main window in pixels."
 msgstr "Басты терезенің биіктігі, пиксельмен."
 
-#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-is-maximized'
-#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/window-is-maximized'
-#: editor/ca.desrt.dconf-editor.gschema.xml:122
-#: editor/ca.desrt.dconf-editor.gschema.xml:124
+#. Translators: summary of a settings key, see 'dconf-editor /org/gnome/iagno/window-is-maximized'
+#: editor/ca.desrt.dconf-editor.gschema.xml:114
 msgid "A flag to enable maximized mode"
 msgstr "Максималды режимін іске қосу жалаушасы"
 
+#. Translators: description of a settings key, see 'dconf-editor /org/gnome/iagno/window-is-maximized'
+#: editor/ca.desrt.dconf-editor.gschema.xml:116
+msgid "If “true”, the main window starts in maximized mode."
+msgstr ""
+
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/restore-view'
-#: editor/ca.desrt.dconf-editor.gschema.xml:129
+#: editor/ca.desrt.dconf-editor.gschema.xml:138
 msgid "A flag to restore the last view"
 msgstr ""
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/restore-view'
-#: editor/ca.desrt.dconf-editor.gschema.xml:131
+#: editor/ca.desrt.dconf-editor.gschema.xml:140
 msgid ""
 "If “true”, Dconf Editor tries at launch to navigate to the path described in "
 "the “saved-view” key."
 msgstr ""
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/saved-pathbar-path'
-#: editor/ca.desrt.dconf-editor.gschema.xml:136
+#: editor/ca.desrt.dconf-editor.gschema.xml:145
 msgid "A path to restore the pathbar state"
 msgstr ""
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/saved-pathbar-path'
-#: editor/ca.desrt.dconf-editor.gschema.xml:138
+#: editor/ca.desrt.dconf-editor.gschema.xml:147
 msgid ""
 "If the “restore-view” key is set to “true”, and if the path requested at "
 "startup is a parent path of this one, Dconf Editor tries to restore the "
@@ -322,46 +330,46 @@ msgid ""
 msgstr ""
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/saved-view'
-#: editor/ca.desrt.dconf-editor.gschema.xml:143
+#: editor/ca.desrt.dconf-editor.gschema.xml:152
 msgid "A path to restore the last view"
 msgstr ""
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/saved-view'
-#: editor/ca.desrt.dconf-editor.gschema.xml:145
+#: editor/ca.desrt.dconf-editor.gschema.xml:154
 msgid ""
 "If the “restore-view” key is set to “true”, Dconf Editor tries at launch to "
 "navigate to this path."
 msgstr ""
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/show-warning'
-#: editor/ca.desrt.dconf-editor.gschema.xml:150
+#: editor/ca.desrt.dconf-editor.gschema.xml:159
 msgid "Show initial warning"
 msgstr ""
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/show-warning'
-#: editor/ca.desrt.dconf-editor.gschema.xml:152
+#: editor/ca.desrt.dconf-editor.gschema.xml:161
 msgid ""
 "If “true”, Dconf Editor opens a popup when launched reminding the user to be "
 "careful."
 msgstr ""
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/small-keys-list-rows'
-#: editor/ca.desrt.dconf-editor.gschema.xml:157
+#: editor/ca.desrt.dconf-editor.gschema.xml:166
 msgid "A flag to enable small rows for keys list"
 msgstr "Кілттер тізімі үшін кіші жолдар іске қосу жалаушасы"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/small-keys-list-rows'
-#: editor/ca.desrt.dconf-editor.gschema.xml:159
+#: editor/ca.desrt.dconf-editor.gschema.xml:168
 msgid "If “true”, the keys list use smaller rows."
 msgstr ""
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/behaviour'
-#: editor/ca.desrt.dconf-editor.gschema.xml:164
+#: editor/ca.desrt.dconf-editor.gschema.xml:173
 msgid "Change the behaviour of a key value change request"
 msgstr ""
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/behaviour'
-#: editor/ca.desrt.dconf-editor.gschema.xml:166
+#: editor/ca.desrt.dconf-editor.gschema.xml:175
 msgid ""
 "The “unsafe” value is discouraged: for keys that have a non-special-cased "
 "type, it updates the key value each time something changes in the entry, so "
@@ -374,12 +382,12 @@ msgid ""
 msgstr ""
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/sort-case-sensitive'
-#: editor/ca.desrt.dconf-editor.gschema.xml:171
+#: editor/ca.desrt.dconf-editor.gschema.xml:180
 msgid "A flag to sort keys list case-sensitively"
 msgstr ""
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/sort-case-sensitive'
-#: editor/ca.desrt.dconf-editor.gschema.xml:173
+#: editor/ca.desrt.dconf-editor.gschema.xml:182
 msgid ""
 "GSettings doesn’t allow keys to use upper-case in their names, but "
 "installation paths of schemas can. If “true”, the keys list is sorted case-"
@@ -387,12 +395,12 @@ msgid ""
 msgstr ""
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-use-extra-buttons'
-#: editor/ca.desrt.dconf-editor.gschema.xml:178
+#: editor/ca.desrt.dconf-editor.gschema.xml:187
 msgid "Use “Back” and “Forward” mouse button events"
 msgstr ""
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-use-extra-buttons'
-#: editor/ca.desrt.dconf-editor.gschema.xml:180
+#: editor/ca.desrt.dconf-editor.gschema.xml:189
 msgid ""
 "For users with mice that have buttons for “Forward” and “Back”, this key "
 "will determine if any action is taken inside of a browser window when either "
@@ -403,13 +411,13 @@ msgstr ""
 "соны анықтайды."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-back-buttons'
-#: editor/ca.desrt.dconf-editor.gschema.xml:186
+#: editor/ca.desrt.dconf-editor.gschema.xml:195
 msgid "Mouse button to activate the “Back” command in browser window"
 msgstr ""
 "Шолушы терезесінде \"Артқа\" командасын белсендіру үшін тышқан батырмасы"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-back-buttons'
-#: editor/ca.desrt.dconf-editor.gschema.xml:188
+#: editor/ca.desrt.dconf-editor.gschema.xml:197
 msgid ""
 "For users with mice that have buttons for “Forward” and “Back”, this key "
 "will set which button activates the “Back” command in a browser window. "
@@ -420,13 +428,13 @@ msgstr ""
 "орындайтынын анықтайды. Мүмкін мәндері 6 және 14 арасында жатуы керек."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-forward-buttons'
-#: editor/ca.desrt.dconf-editor.gschema.xml:194
+#: editor/ca.desrt.dconf-editor.gschema.xml:203
 msgid "Mouse button to activate the “Forward” command in browser window"
 msgstr ""
 "Шолушы терезесінде \"Алға\" командасын белсендіру үшін тышқан батырмасы"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-forward-buttons'
-#: editor/ca.desrt.dconf-editor.gschema.xml:196
+#: editor/ca.desrt.dconf-editor.gschema.xml:205
 msgid ""
 "For users with mice that have buttons for “Forward” and “Back”, this key "
 "will set which button activates the “Forward” command in a browser window. "
@@ -437,12 +445,12 @@ msgstr ""
 "орындайтынын анықтайды. Мүмкін мәндері 6 және 14 арасында жатуы керек."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/refresh-settings-schema-source'
-#: editor/ca.desrt.dconf-editor.gschema.xml:201
+#: editor/ca.desrt.dconf-editor.gschema.xml:210
 msgid "A flag to check for added or removed schemas"
 msgstr ""
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/refresh-settings-schema-source'
-#: editor/ca.desrt.dconf-editor.gschema.xml:203
+#: editor/ca.desrt.dconf-editor.gschema.xml:212
 msgid ""
 "Dconf Editor can monitor if schemas are added or removed from the multiple "
 "possible locations. That’s done by checking every three seconds if the "
@@ -452,12 +460,12 @@ msgid ""
 msgstr ""
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/relocatable-schemas-enabled-mappings'
-#: editor/ca.desrt.dconf-editor.gschema.xml:208
+#: editor/ca.desrt.dconf-editor.gschema.xml:217
 msgid "Enabled relocatable schema mapping facilities"
 msgstr ""
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/relocatable-schemas-enabled-mappings'
-#: editor/ca.desrt.dconf-editor.gschema.xml:210
+#: editor/ca.desrt.dconf-editor.gschema.xml:219
 msgid ""
 "Flags for the relocatable schemas mapping facilities. “User” enables "
 "mappings defined by the “relocatable-schemas-user-paths” key; “Built-in” "
@@ -467,12 +475,12 @@ msgid ""
 msgstr ""
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/relocatable-schemas-user-paths'
-#: editor/ca.desrt.dconf-editor.gschema.xml:215
+#: editor/ca.desrt.dconf-editor.gschema.xml:224
 msgid "Mapping of paths to manually associated schemas"
 msgstr ""
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/relocatable-schemas-user-paths'
-#: editor/ca.desrt.dconf-editor.gschema.xml:217
+#: editor/ca.desrt.dconf-editor.gschema.xml:226
 msgid ""
 "A dictionary that maps schema IDs with path specifications. It is used to "
 "allow the user to associate a relocatable schema to certain paths. Path "
@@ -482,28 +490,16 @@ msgid ""
 msgstr ""
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/use-shortpaths'
-#: editor/ca.desrt.dconf-editor.gschema.xml:222
+#: editor/ca.desrt.dconf-editor.gschema.xml:231
 msgid "A flag for skipping unnecessary subfolders"
 msgstr ""
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/use-shortpaths'
-#: editor/ca.desrt.dconf-editor.gschema.xml:224
+#: editor/ca.desrt.dconf-editor.gschema.xml:233
 msgid ""
 "When a folder only contains one subfolder and no keys, Dconf Editor can jump "
 "to that subfolder directly. This flag enables that behaviour."
 msgstr ""
-
-#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/automatic-night-mode'
-#: editor/ca.desrt.dconf-editor.gschema.xml:231
-msgid "Follow system night light"
-msgstr "Жүйелік түнгі жарық күйіне сай болу"
-
-#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/automatic-night-mode'
-#: editor/ca.desrt.dconf-editor.gschema.xml:233
-msgid "Use GNOME night light setting to activate night-mode."
-msgstr ""
-"Түнгі жарықты белсендіру үшін GNOME түнгі жарық режимін белсендіру үшін "
-"қолданыңыз."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/bookmarks'
 #: editor/ca.desrt.dconf-editor.gschema.xml:240
@@ -988,194 +984,205 @@ msgid "Conflicting key from Conflict2 that should give a warning"
 msgstr ""
 
 #. Translators: command-line option description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:147
+#: editor/dconf-editor.vala:159
 msgid "Print release version and exit"
 msgstr "Нұсқа ақпаратын шығару және шығу"
 
 #. Translators: command-line option description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:150
+#: editor/dconf-editor.vala:162
 msgid "Print relocatable schemas and exit"
 msgstr "Қайта орналастырылатын сұлбаларды шығару және шығу"
 
 #. Translators: command-line option description, see 'dconf-editor --help'; the option removes the initial "use at your own risks" dialog
-#: editor/dconf-editor.vala:153
+#: editor/dconf-editor.vala:165
 msgid "Do not show initial warning"
 msgstr "Бастапқы ескертуді көрсетпеу"
 
-#. Translators: command-line argument description, see 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
-#: editor/dconf-editor.vala:191
-#| msgid "A graphical tool for editing the dconf database"
+#. Translators: command-line text, description of the application in 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
+#: editor/dconf-editor.vala:203
 msgid "Graphical interface for editing other applications settings."
 msgstr ""
 
-#. Translators: command-line argument description, see 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
-#: editor/dconf-editor.vala:194
-msgid "Uses the gsettings API of the glib library, and other ways."
+#. Translators: command-line text, describes how the application proceeds for editing other applications settings, in 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
+#: editor/dconf-editor.vala:206
+msgid "Uses the gsettings API of the glib library, among others."
 msgstr ""
 
 #. Translators: command-line header description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:197
-#| msgid "Description"
+#: editor/dconf-editor.vala:209
 msgid "Arguments description:"
 msgstr ""
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:201
+#: editor/dconf-editor.vala:213
 msgid "a folder path or a key path"
 msgstr ""
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:203
+#: editor/dconf-editor.vala:215
 msgid "example: “/org/gnome/” or “/ca/desrt/dconf-editor/Demo/boolean”"
 msgstr ""
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:207
+#: editor/dconf-editor.vala:219
 msgid "the name of a schema with fixed path"
 msgstr ""
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:209
-#| msgid "ca.desrt.dconf-editor"
+#: editor/dconf-editor.vala:221
 msgid "example: “ca.desrt.dconf-editor.Settings”"
 msgstr ""
 
 #. Translators: command-line argument description, see 'dconf-editor --help'; no need to put your translation of "relocatable" between quotation marks, that's done in English to highlight why the option is called "RELOC_SCHEMA"
-#: editor/dconf-editor.vala:213
+#: editor/dconf-editor.vala:225
 msgid "the name of a “relocatable” schema, without fixed path"
 msgstr ""
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:215
+#: editor/dconf-editor.vala:227
 msgid "see list with the “--list-relocatable-schemas” option"
 msgstr ""
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:219
+#: editor/dconf-editor.vala:231
 msgid "the path where to map the relocatable schema"
 msgstr ""
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:221
+#: editor/dconf-editor.vala:233
 msgid "example: “ca.desrt.dconf-editor.Bookmarks:/ca/desrt/dconf-editor/”"
 msgstr ""
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:225
+#: editor/dconf-editor.vala:237
 msgid "the name of a key from the schema"
 msgstr ""
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:227
+#: editor/dconf-editor.vala:239
 msgid "example: “bookmarks”"
-msgstr ""
+msgstr "мысалы: \"бетбелгілер\""
 
 #. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
-#: editor/dconf-editor.vala:283
+#: editor/dconf-editor.vala:295
 msgid "Known schemas installed:"
 msgstr ""
 
 #. Translators: command-line text, if --list-relocatable-schemas is given
-#: editor/dconf-editor.vala:289
+#: editor/dconf-editor.vala:301
 msgid "No known schemas installed."
 msgstr ""
 
 #. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
-#: editor/dconf-editor.vala:294
+#: editor/dconf-editor.vala:306
 msgid "Known schemas skipped:"
 msgstr ""
 
 #. Translators: command-line text, if --list-relocatable-schemas is given
-#: editor/dconf-editor.vala:300
+#: editor/dconf-editor.vala:312
 msgid "No known schemas skipped."
 msgstr ""
 
 #. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
-#: editor/dconf-editor.vala:305
+#: editor/dconf-editor.vala:317
 msgid "Unknown schemas:"
 msgstr "Белгісіз сұлбалар:"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given
-#: editor/dconf-editor.vala:311
+#: editor/dconf-editor.vala:323
 msgid "No unknown schemas."
 msgstr "Белгісіз сұлбалар жоқ."
 
 #. Translators: command-line error message, when the user requests a specific path while there is already a window opened
-#: editor/dconf-editor.vala:445
+#: editor/dconf-editor.vala:457
 msgid "Only one window can be opened for now.\n"
 msgstr ""
 
 #. Translators: command-line error message, try 'dconf-editor a b c d'
-#: editor/dconf-editor.vala:465
+#: editor/dconf-editor.vala:477
 msgid "Cannot understand: too many arguments.\n"
 msgstr ""
 
 #. Translators: command-line error message, try 'dconf-editor / a'
-#: editor/dconf-editor.vala:479
+#: editor/dconf-editor.vala:491
 msgid "Cannot understand second argument in this context.\n"
 msgstr ""
 
 #. Translators: command-line error message, try 'dconf-editor org.example /'
-#: editor/dconf-editor.vala:500
+#: editor/dconf-editor.vala:512
 msgid "Cannot understand: slash character in second argument.\n"
 msgstr ""
 
 #. Translators: command-line error message, try 'dconf-editor org.example:a'
-#: editor/dconf-editor.vala:515
+#: editor/dconf-editor.vala:527
 msgid "Schema path should start and end with a “/”.\n"
 msgstr ""
 
 #. Translators: command-line error message, try 'dconf-editor //'
-#: editor/dconf-editor.vala:531
+#: editor/dconf-editor.vala:543
 msgid "Cannot understand: given path contains “//”.\n"
 msgstr ""
 
 #. Translators: command-line error message, try 'dconf-editor "org example" a'
-#: editor/dconf-editor.vala:539
+#: editor/dconf-editor.vala:551
 msgid "Cannot understand: space character in argument.\n"
 msgstr ""
 
 #. Translators: notification header, try ctrl-c while in the keys list
-#: editor/dconf-editor.vala:567
+#: editor/dconf-editor.vala:579
 msgid "Copied to clipboard"
 msgstr "Алмасу буферіне көшірілді"
 
 #. Translators: about dialog text
-#: editor/dconf-editor.vala:644
+#: editor/dconf-editor.vala:656
 msgid "A graphical viewer and editor of applications’ internal settings."
 msgstr ""
 
-#. Translators: about dialog text
-#: editor/dconf-editor.vala:650
-#| msgid ""
-#| "Copyright © 2010-2014 – Canonical Ltd\n"
-#| "Copyright © 2015-2018 – Arnaud Bonatti\n"
-#| "Copyright © 2017-2018 – Davi da Silva Böger"
-msgid ""
-"Copyright © 2010-2014 – Canonical Ltd\n"
-"Copyright © 2017-2018 – Davi da Silva Böger\n"
-"Copyright © 2015-2019 – Arnaud Bonatti"
-msgstr ""
+#. Translators: text crediting a game author, seen in the About dialog
+#: editor/dconf-editor.vala:661
+msgid "Robert Ancell"
+msgstr "Robert Ancell"
+
+#. Translators: text crediting a game author, seen in the About dialog
+#: editor/dconf-editor.vala:665
+msgid "Arnaud Bonatti"
+msgstr "Arnaud Bonatti"
+
+#. Translators: text crediting a maintainer, seen in the About dialog
+#: editor/dconf-editor.vala:669
+#| msgid "Copyright © Canonical Ltd"
+msgid "Copyright © 2010-2014 – Canonical Ltd"
+msgstr "Copyright © 2010-2014 – Canonical Ltd"
+
+#. Translators: text crediting a maintainer, seen in the About dialog
+#: editor/dconf-editor.vala:673
+msgid "Copyright © 2017-2018 – Davi da Silva Böger"
+msgstr "Copyright © 2017-2018 – Davi da Silva Böger"
+
+#. Translators: text crediting a maintainer, seen in the About dialog; the %u are replaced with the years of start and end
+#: editor/dconf-editor.vala:677
+#, c-format
+msgid "Copyright © %u-%u – Arnaud Bonatti"
+msgstr "Copyright © %u-%u – Arnaud Bonatti"
 
 #. Translators: about dialog text; this string should be replaced by a text crediting yourselves and your translation team, or should be left empty. Do not translate literally!
-#: editor/dconf-editor.vala:657
+#: editor/dconf-editor.vala:684
 msgid "translator-credits"
 msgstr "Baurzhan Muftakhidinov <baurthefirst@gmail.com>"
 
 #. Translators: about dialog text; label of the website link
-#: editor/dconf-editor.vala:663
+#: editor/dconf-editor.vala:690
 msgid "Page on GNOME wiki"
-msgstr ""
+msgstr "GNOME вики беті"
 
 #. Translators: usual menu entry of the hamburger menu
 #: editor/dconf-headerbar.vala:53
-#| msgid "Dconf Editor"
 msgid "About Dconf Editor"
 msgstr "Dconf түзетушісі туралы"
 
 #. Translators: when a change is requested, on a small window, entry of the menu of the "delayed settings button" that appears in place of the close button
 #. Translators: when there are pending changes, label of the "apply" button in the bottom bar, on large windows
-#: editor/dconf-headerbar.vala:114 editor/modifications-revealer.ui:86
+#: editor/dconf-headerbar.vala:114 editor/modifications-revealer.ui:87
 msgid "Apply"
 msgstr "Іске асыру"
 
@@ -1186,22 +1193,18 @@ msgstr "Елемеу"
 
 #. Translators: when in delayed mode, on a small window, entry of the "three-dots menu" that appears when showing the pending changes list (if there is pending changes)
 #: editor/dconf-headerbar.vala:141
-#| msgid "Apply"
 msgid "Apply all"
 msgstr "Барлығын іске асыру"
 
 #. Translators: when in delayed mode, on a small window, entry of the "three-dots menu" that appears when showing the pending changes list (if there is pending changes)
 #: editor/dconf-headerbar.vala:144
-#| msgid "Dismiss change"
 msgid "Dismiss all"
 msgstr "Барлығын тайдыру"
 
 #. Translators: when in delayed mode, on a small window, entry of the "three-dots menu" that appears when showing the pending changes list (if there is no pending changes)
 #: editor/dconf-headerbar.vala:152
-#| msgctxt "shortcut window"
-#| msgid "Quit"
 msgid "Quit mode"
-msgstr ""
+msgstr "Режимнен шығу"
 
 #. Translators: hamburger menu entry, to enter in a special mode called "delay mode" where changes are not applied until validation
 #: editor/dconf-headerbar.vala:201
@@ -1230,73 +1233,73 @@ msgid "%s (key erased)"
 msgstr "%s (кілт өшірілді)"
 
 #. Translators: command-line startup warning, try 'dconf-editor ca.desrt.dconf-editor.Demo.Relocatable'
-#: editor/dconf-window.vala:122
+#: editor/dconf-window.vala:124
 msgid "Schema is relocatable, a path is needed."
 msgstr ""
 
 #. Translators: command-line startup warning
-#: editor/dconf-window.vala:135
+#: editor/dconf-window.vala:137
 msgid "Startup mappings are disabled."
 msgstr ""
 
 #. Translators: command-line startup warning, try 'dconf-editor ca.desrt.dconf-editor.Settings:/org/gnome/dconf-editor/'
-#: editor/dconf-window.vala:150
+#: editor/dconf-window.vala:152
 msgid "Schema is not installed on given path."
 msgstr ""
 
 #. Translators: command-line startup warning, try 'dconf-editor org.example.nothing'; the %s is the schema id
-#: editor/dconf-window.vala:166
+#: editor/dconf-window.vala:168
 #, c-format
 msgid "Unknown schema “%s”."
 msgstr "\"%s\" сұлбасы белгісіз."
 
 #. Translators: initial "use at your own risk" dialog, the welcoming text
-#: editor/dconf-window.vala:272
+#: editor/dconf-window.vala:274
 msgid "Thanks for using Dconf Editor for editing your settings!"
 msgstr ""
 
 #. Translators: initial "use at your own risk" dialog, the warning text
-#: editor/dconf-window.vala:275
+#: editor/dconf-window.vala:277
 msgid "Don’t forget that some options may break applications, so be careful."
 msgstr ""
 
 #. Translators: initial "use at your own risk" dialog, the button label
-#: editor/dconf-window.vala:278
+#: editor/dconf-window.vala:280
 msgid "I’ll be careful."
 msgstr "Мен абай боламын."
 
 #. Translators: initial "use at your own risk" dialog, the checkbox label
-#: editor/dconf-window.vala:282
+#: editor/dconf-window.vala:284
 msgid "Show this dialog next time."
 msgstr "Бұл сұхбатты келесі рет көрсету."
 
 #. Translators: notification text, after a user Ctrl+Q keyboard action; same way to spell the shortcut as in the Settings application
-#: editor/dconf-window.vala:303
+#: editor/dconf-window.vala:305
 msgid ""
 "There are pending changes. Use Shift+Ctrl+Q to apply changes and quit, or Alt"
 "+F4 to dismiss changes and quit."
 msgstr ""
 
 #. Translators: notification text, when the requested folder has been removed; the %s is the folder path
-#: editor/dconf-window.vala:775
+#: editor/dconf-window.vala:777
 #, c-format
 msgid "Folder “%s” is now empty."
 msgstr "\"%s\" бумасы енді бос."
 
 #. Translators: notification text, when the requested key has been removed; the %s is the key path
-#: editor/dconf-window.vala:786
+#: editor/dconf-window.vala:788
 #, c-format
 msgid "Key “%s” has been deleted."
 msgstr "\"%s\" кілті өшірілді."
 
 #. Translators: notification text at startup, use 'dconf-editor /org/example/test'; the %s is the key path
-#: editor/dconf-window.vala:792
+#: editor/dconf-window.vala:794
 #, c-format
 msgid "Cannot find key “%s”."
 msgstr "\"%s\" кілтін табу мүмкін емес."
 
 #. Translators: notification text at startup, use 'dconf-editor /org/example/empty/'; the %s is the folder path
-#: editor/dconf-window.vala:798
+#: editor/dconf-window.vala:800
 #, c-format
 msgid "There’s nothing in requested folder “%s”."
 msgstr "Сұралған \"%s\" бумасында ешнәрсе жоқ."
@@ -1346,11 +1349,9 @@ msgstr "Әрекеттер мәзірі"
 
 #. Translators: Shift-F10 action
 #: editor/help-overlay.ui:66
-#| msgctxt "shortcut window"
-#| msgid "Path bar navigation"
 msgctxt "shortcut window"
 msgid "Path bar menu"
-msgstr ""
+msgstr "Жол панелі мәзірі"
 
 #. Translators: header in the shortcut window, for moving to paths known by the headerbar
 #: editor/help-overlay.ui:76
@@ -1374,13 +1375,13 @@ msgstr "Аталық бумасын ашу"
 #: editor/help-overlay.ui:97
 msgctxt "shortcut window"
 msgid "Open active direct child"
-msgstr ""
+msgstr "Белсенді тікелей ұрпағын ашу"
 
 #. Translators: Alt-Shift-Down action; browse to the complete path of the headerbar
 #: editor/help-overlay.ui:105
 msgctxt "shortcut window"
 msgid "Open active last child"
-msgstr ""
+msgstr "Белсенді соңғы ұрпағын ашу"
 
 #. Translators: header in the shortcut window, for the various ways of opening search
 #: editor/help-overlay.ui:115
@@ -1392,95 +1393,91 @@ msgstr "Іздеу опциялары"
 #: editor/help-overlay.ui:120
 msgctxt "shortcut window"
 msgid "Toggle search"
-msgstr ""
+msgstr "Іздеуді іске қосу/сөндіру"
 
 #. Translators: Ctrl-Alt-F action; does the same thing as "Toggle search", but loads the search entry with the last searched text
 #: editor/help-overlay.ui:128
-#| msgctxt "shortcut window"
-#| msgid "Search bar"
 msgctxt "shortcut window"
 msgid "Search again"
-msgstr ""
+msgstr "Қайта іздеу"
 
 #. Translators: Ctrl-Shift-F action; opens search, searching only from current folder
 #: editor/help-overlay.ui:136
 msgctxt "shortcut window"
 msgid "Toggle local search"
-msgstr ""
+msgstr "Жергілікті іздеуді іске қосу/сөндіру"
 
 #. Translators: Ctrl-Shift-Alt-F action; does the same thing as "Toggle local search", but loads the search entry with the last searched text
 #: editor/help-overlay.ui:144
 msgctxt "shortcut window"
 msgid "Search again, locally"
-msgstr ""
+msgstr "Қайта іздеу, жергілікті"
 
 #. Translators: Ctrl-V action; open search with clipboard content
 #: editor/help-overlay.ui:152
 msgctxt "shortcut window"
 msgid "Paste as search"
-msgstr ""
+msgstr "Іздеу ретінде кірістіру"
 
 #. Translators: Ctrl-Shift-V action; does the same thing as "Paste as search", but works even if an entry or textview is selected; entry hidden for now
 #: editor/help-overlay.ui:160
 msgctxt "shortcut window"
 msgid "Paste as search (force)"
-msgstr ""
+msgstr "Іздеу ретінде кірістіру (мәжбүрлі)"
 
 #. Translators: Ctrl-L action when browsing; opens search on current path
 #: editor/help-overlay.ui:168
 msgctxt "shortcut window"
 msgid "Edit path"
-msgstr ""
+msgstr "Жолды өңдеу"
 
 #. Translators: Ctrl-Shift-L action when browsing; opens search on parent path
 #: editor/help-overlay.ui:176
-#| msgid "Copy current path"
 msgctxt "shortcut window"
 msgid "Edit parent path"
-msgstr ""
+msgstr "Аталық жолды өңдеу"
 
 #. Translators: '/' key action when browsing; opens search on root path
 #: editor/help-overlay.ui:184
 msgctxt "shortcut window"
 msgid "Edit root path"
-msgstr ""
+msgstr "Түбір жолын өңдеу"
 
 #. Translators: Escape key action, when searching; cancels search
 #: editor/help-overlay.ui:192
 msgctxt "shortcut window"
 msgid "Browse keys tree"
-msgstr ""
+msgstr "Кілттер ағашын шолу"
 
 #. Translators: header in the shortcut window, for when browsing
 #: editor/help-overlay.ui:202
 msgctxt "shortcut window"
 msgid "Keys list actions"
-msgstr ""
+msgstr "Кілттер тізімінің әрекеттері"
 
 #. Translators: Menu key action, when browsing
 #: editor/help-overlay.ui:207
 msgctxt "shortcut window"
 msgid "Contextual menu"
-msgstr ""
+msgstr "Контекстік мәзір"
 
 #. Translators: Ctrl-Shift-G action, when browsing
 #: editor/help-overlay.ui:215
 msgctxt "shortcut window"
 msgid "Previous line"
-msgstr ""
+msgstr "Алдыңғы жол"
 
 #. Translators: Ctrl-G action, when browsing
 #: editor/help-overlay.ui:223
-#| msgid "Next"
 msgctxt "shortcut window"
 msgid "Next line"
-msgstr ""
+msgstr "Келесі жол"
 
 #. Translators: entry disabled for now; Ctrl-I action, when browsing; displays informations on selected folder
 #: editor/help-overlay.ui:231
 msgctxt "shortcut window"
 msgid "Toggle folder properties"
-msgstr ""
+msgstr "Бума қасиеттерін іске қосу/сөндіру"
 
 #. Translators: Ctrl-Delete action, when browsing; sets the selected key to its default value
 #: editor/help-overlay.ui:239
@@ -1492,25 +1489,25 @@ msgstr "Бастапқы мәніне орнату"
 #: editor/help-overlay.ui:247
 msgctxt "shortcut window"
 msgid "Toggle boolean value"
-msgstr ""
+msgstr "Логикалық мәнді іске қосу/сөндіру"
 
 #. Translators: header in the shortcut window, for when there are pending changes
 #: editor/help-overlay.ui:257
 msgctxt "shortcut window"
 msgid "Modifications list actions"
-msgstr ""
+msgstr "Өзгертулер тізімінің әрекеттері"
 
 #. Translators: Alt-I action if there are pending changes; the modifications list is either a popover, or an in-window panel
 #: editor/help-overlay.ui:262
 msgctxt "shortcut window"
 msgid "Toggle modifications list"
-msgstr ""
+msgstr "Өзгертулер тізімін іске қосу/сөндіру"
 
 #. Translators: Return/Enter keys action in the list of pending modifications; go to the key with pending modification
 #: editor/help-overlay.ui:270
 msgctxt "shortcut window"
 msgid "Open selected row key"
-msgstr ""
+msgstr "Таңдалған жол кілтін ашу"
 
 #. Translators: Ctrl-Delete action in the list of pending modifications; dismisses the selected modification
 #: editor/help-overlay.ui:278
@@ -1564,20 +1561,19 @@ msgstr "Шығу"
 #: editor/help-overlay.ui:340
 msgctxt "shortcut window"
 msgid "Quit if there’s no pending changes"
-msgstr ""
+msgstr "Кезекте өзгерістер болмаса, шығу"
 
 #. Translators: Ctrl-Shift-Q action
 #: editor/help-overlay.ui:348
 msgctxt "shortcut window"
 msgid "Apply pending changes and quit"
-msgstr ""
+msgstr "Кезекте өзгерістерді іске асырып, шығу"
 
 #. Translators: Alt-F4 action
 #: editor/help-overlay.ui:356
-#| msgid "Dismiss change"
 msgctxt "shortcut window"
 msgid "Dismiss pending changes and quit"
-msgstr ""
+msgstr "Кезекте өзгерістерді елемей шығу"
 
 #. Translators: tooltip text of the entry's icon when editing the value of a double or a 64-bit (signed or unsigned) key, if the key only allows a range of values and the written value is out of range
 #: editor/key-editor-child.vala:30
@@ -1596,13 +1592,11 @@ msgstr "Қос дәлдікті сан ретінде талдау сәтсіз 
 
 #. Translators: tooltip text of the entry's icon when editing the value of a signed 64-bit key, if the written value cannot be parsed
 #: editor/key-editor-child.vala:449
-#| msgid "Failed to parse as double."
 msgid "Failed to parse as 64-bit integer."
 msgstr ""
 
 #. Translators: tooltip text of the entry's icon when editing the value of an unsigned 64-bit key, if the written value cannot be parsed
 #: editor/key-editor-child.vala:518
-#| msgid "Failed to parse as double."
 msgid "Failed to parse as unsigned 64-bit integer."
 msgstr ""
 
@@ -1610,25 +1604,23 @@ msgstr ""
 #: editor/key-list-box-row.vala:118
 #, c-format
 msgid "Go to “%s”"
-msgstr ""
+msgstr "\"%s\" жеріне өту"
 
 #. Translators: first item of the keys list displayed during browsing, the %s is the current folder name
 #: editor/key-list-box-row.vala:149
 #, c-format
 msgid "Search in “%s” folder"
-msgstr ""
+msgstr "\"%s\" бумасынан іздеу"
 
 #. Translators: first item of the keys list displayed during browsing at root path
 #: editor/key-list-box-row.vala:153
-#| msgid "Open parent folder"
 msgid "Open path entry"
-msgstr ""
+msgstr "Жол жазбасын ашу"
 
 #. Translators: last item of the keys list displayed during a local search
 #: editor/key-list-box-row.vala:157
-#| msgid "Search keys"
 msgid "Search everywhere"
-msgstr ""
+msgstr "Барлық жерде іздеу"
 
 #. Translators: "copy to clipboard" action in the right-click menu on the list of keys
 #: editor/key-list-box-row.vala:449
@@ -1665,10 +1657,8 @@ msgstr "Кілтті өшіру"
 
 #. Translators: "go to" action in the right-click menu on a "go back" line during search
 #: editor/key-list-box-row.vala:469
-#| msgctxt "shortcut window"
-#| msgid "Bookmark this path"
 msgid "Go to this path"
-msgstr ""
+msgstr "Осы жолға өту"
 
 #. Translators: "open folder" action in the right-click menu on a folder
 #: editor/key-list-box-row.vala:472
@@ -1788,7 +1778,6 @@ msgstr "Логикалық"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:394
-#| msgid "Boolean"
 msgid "boolean"
 msgstr ""
 
@@ -1799,7 +1788,6 @@ msgstr "Жол"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:400
-#| msgid "String"
 msgid "string"
 msgstr ""
 
@@ -1810,7 +1798,6 @@ msgstr "Жолдық массив"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:406
-#| msgid "String array"
 msgid "string array"
 msgstr ""
 
@@ -1821,7 +1808,6 @@ msgstr "Нөмірлеу"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:412
-#| msgid "Enumeration"
 msgid "enumeration"
 msgstr ""
 
@@ -1842,7 +1828,6 @@ msgstr "Қос"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:424
-#| msgid "Double"
 msgid "double"
 msgstr ""
 
@@ -1869,7 +1854,6 @@ msgstr "Бүтін сан"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:454
-#| msgid "Integer"
 msgid "integer"
 msgstr ""
 
@@ -1978,13 +1962,12 @@ msgstr[0] ""
 #. Translators: accessible name of the "close" button that is linked with the search entry on small windows
 #: editor/pathentry.ui:66
 msgid "Close search"
-msgstr ""
+msgstr "Іздеуді жабу"
 
 #. Translators: accessible description of the "close" button that is linked with the search entry on small windows
 #: editor/pathentry.ui:68
-#| msgid "Refresh search results"
 msgid "Close search results"
-msgstr ""
+msgstr "Іздеу нәтижелерін жабу"
 
 #. Translators: accessible description of the "refresh" button that is linked with the search entry on large windows
 #: editor/pathentry.ui:92
@@ -2076,13 +2059,11 @@ msgstr "Түрі"
 
 #. Translators: field description when displaying key properties; specific name of the datatype of the key ("Signed 32-bit integer" for example)
 #: editor/registry-info.vala:89
-#| msgid "Type"
 msgid "Type name"
 msgstr ""
 
 #. Translators: field description when displaying key properties; technical code of the datatype of the key ("q" for uint16, "b" for boolean, etc.)
 #: editor/registry-info.vala:93
-#| msgid "Type"
 msgid "Type code"
 msgstr ""
 
@@ -2193,29 +2174,25 @@ msgstr "Кілт өшірілді."
 #. Translators: means that the key has (at least) one other key defined by a different schema but at the same path and with the same name; used on large windows ("conflict" is used on small windows)
 #: editor/registry-list.vala:518
 msgid "conflicting keys"
-msgstr ""
+msgstr "бәсекелесетін кілттер"
 
 #. Translators: means that the key has (at least) one other key defined by a different schema but at the same path and with the same name; used on small windows ("conflicting keys" is used on large windows)
 #: editor/registry-list.vala:521
-#| msgid "Dconf Editor"
 msgid "conflict"
-msgstr ""
+msgstr "бәсекелес"
 
 #. Translators: "subtitle" in the keys list of a key not defined by a schema; keys defined by a schema have in place a summary describing the key use
 #: editor/registry-list.vala:537
-#| msgid "No Schema Found"
 msgid "No schema found"
-msgstr ""
+msgstr "Схема табылмады"
 
 #. Translators: means that the key has been erased; used on large windows ("erased" is used on small windows)
 #: editor/registry-list.vala:638
-#| msgid "Key erased"
 msgid "key erased"
 msgstr ""
 
 #. Translators: means that the key has been erased; used on small windows ("key erased" is used on large windows)
 #: editor/registry-list.vala:641
-#| msgid "Key erased"
 msgid "erased"
 msgstr ""
 
@@ -2228,9 +2205,8 @@ msgstr ""
 #. Translators: header displayed in the keys list during a search only; indicates that the schema (the %s is the schema id) is installed at the path where the search has started
 #: editor/registry-list.vala:1176
 #, c-format
-#| msgid "%s (key erased)"
 msgid "%s (local keys)"
-msgstr ""
+msgstr "%s (жергілікті кілттер)"
 
 #. Translators: header displayed in the keys list during a search only; indicates that the following non-defined keys are installed at the path where the search has started
 #: editor/registry-list.vala:1182
@@ -2244,15 +2220,13 @@ msgstr ""
 
 #. Translators: header displayed in the keys list during a search or during browsing
 #: editor/registry-list.vala:1196
-#| msgid "Folders"
 msgid "Subfolders"
-msgstr ""
+msgstr "Ішкі бумалар"
 
 #. Translators: last header displayed in the keys list during a local search
 #: editor/registry-list.vala:1201
-#| msgid "Current view actions"
 msgid "Other actions"
-msgstr ""
+msgstr "Басқа әрекеттер"
 
 #. Translators: placeholder text of the search list when there's no search results (not used in current design)
 #: editor/registry-search.vala:26
@@ -2297,9 +2271,8 @@ msgstr "false"
 #. Translators: "nothing" value of a nullable key; non capitalized (if that makes sense); the %s is replaced by the text "nothing" (as a technical keyword); it isn't introduced with quotation marks around it, but you might want to add some, depending of your language typographic rules
 #: editor/setting-object.vala:194
 #, c-format
-#| msgid "nothing"
 msgid "nothing (%s)"
-msgstr ""
+msgstr "ешнәрсе (%s)"
 
 #. Translators: "nothing" value of a nullable key; non capitalized (if that makes sense)
 #: editor/setting-object.vala:199
@@ -2320,6 +2293,9 @@ msgstr ""
 #: editor/setting-object.vala:417
 msgid "DConf backend"
 msgstr ""
+
+#~ msgid "ca.desrt.dconf-editor"
+#~ msgstr "ca.desrt.dconf-editor"
 
 #~ msgid "Remove"
 #~ msgstr "Өшіру"
@@ -2402,9 +2378,6 @@ msgstr ""
 #~ "алуыңыз керек еді; олай болмаса, Free Software Foundation, Inc. ұйымына, "
 #~ "51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA адресі "
 #~ "бойынша жазыңыз."
-
-#~ msgid "Copyright © Canonical Ltd"
-#~ msgstr "Copyright © Canonical Ltd"
 
 #~ msgid "Error setting value: %s"
 #~ msgstr "Мәнді орнату қатесі: %s"
