@@ -1,5 +1,5 @@
 # dconf ja.po.
-# Copyright (C) 2012-2015, 2019-2020 dconf's COPYRIGHT HOLDER
+# Copyright (C) 2012-2013, 2015, 2019-2020 dconf's COPYRIGHT HOLDER
 # This file is distributed under the same license as the dconf package.
 # Takeshi AIHANA <takeshi.aihana@gmail.com>, 2012.
 # Jiro Matsuzawa <jmatsuzawa@gnome.org>, 2013, 2015.
@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
 "POT-Creation-Date: 2020-05-30 11:09+0000\n"
-"PO-Revision-Date: 2020-03-02 23:00+0900\n"
+"PO-Revision-Date: 2020-08-26 21:55+0900\n"
 "Last-Translator: sicklylife <translation@sicklylife.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
@@ -359,9 +359,8 @@ msgstr ""
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/small-keys-list-rows'
 #: editor/ca.desrt.dconf-editor.gschema.xml:166
-#, fuzzy
 msgid "A flag to enable small rows for keys list"
-msgstr "フルスクリーンモードを有効にするフラグです。"
+msgstr ""
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/small-keys-list-rows'
 #: editor/ca.desrt.dconf-editor.gschema.xml:168
@@ -1840,12 +1839,12 @@ msgstr "フラグ"
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:421
 msgid "Double"
-msgstr ""
+msgstr "倍精度浮動小数点数"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:424
 msgid "double"
-msgstr ""
+msgstr "倍精度浮動小数点数"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense); this handle type is an index; you may maintain the word "handle"
 #. private const string _H_ = C_("capitalized", "D-Bus handle type");
@@ -1980,23 +1979,23 @@ msgstr[0] "と %u 個の dconf 操作を保留しました。"
 #. Translators: accessible name of the "close" button that is linked with the search entry on small windows
 #: editor/pathentry.ui:66
 msgid "Close search"
-msgstr ""
+msgstr "検索を閉じる"
 
 #. Translators: accessible description of the "close" button that is linked with the search entry on small windows
 #: editor/pathentry.ui:68
 msgid "Close search results"
-msgstr ""
+msgstr "検索結果を閉じる"
 
 #. Translators: accessible description of the "refresh" button that is linked with the search entry on large windows
 #: editor/pathentry.ui:92
 msgid "Refresh search results"
-msgstr ""
+msgstr "検索結果を更新"
 
 #. Translators: accessible description of the enter-search button displayed in small-size windows
 #. Translators: accessible description of the search togglebutton displayed in usual-size windows
 #: editor/pathwidget.ui:85 editor/pathwidget.ui:111
 msgid "Search keys"
-msgstr ""
+msgstr "キーを検索"
 
 #. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/Conflict/warning-similar'
 #: editor/registry-info.ui:49
@@ -2088,7 +2087,7 @@ msgstr "型コード"
 #. Translators: field description when displaying key properties; if the numeral key has a minimum or a maximum set
 #: editor/registry-info.vala:96
 msgid "Forced range"
-msgstr ""
+msgstr "範囲の指定"
 
 #. Translators: field description when displaying key properties; the minimum value a numeral key can take
 #: editor/registry-info.vala:99
@@ -2154,6 +2153,7 @@ msgid ""
 "Use a dot as decimal mark and no thousands separator. You can use the X.Ye+Z "
 "notation."
 msgstr ""
+"カンマではなくドットを使用してください。X.Ye+Z 表記を使用できます。"
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of type "variant" (or of a type composed with a variant)
 #: editor/registry-info.vala:620
