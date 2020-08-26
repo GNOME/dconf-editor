@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2020-03-01 16:21+0000\n"
+"POT-Creation-Date: 2020-05-30 11:09+0000\n"
 "PO-Revision-Date: 2020-03-02 23:00+0900\n"
 "Last-Translator: sicklylife <translation@sicklylife.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
@@ -231,16 +231,16 @@ msgid ""
 "applications to not work correctly."
 msgstr ""
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:30
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:31
 msgid "Browse the keys used by installed applications"
 msgstr ""
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:34
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:35
 msgid "Read keys descriptions and edit their values"
 msgstr ""
 
 #. a translatable version of project_group
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:49
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:50
 msgid "The GNOME Project"
 msgstr "The GNOME Project"
 
