@@ -577,7 +577,7 @@ msgstr ""
 #. editor/relocatable-schemas-enabled-mappings'
 #: editor/ca.desrt.dconf-editor.gschema.xml:217
 msgid "Enabled relocatable schema mapping facilities"
-msgstr "S'han habilitat les instal·lacions de mapeig de l'esquema reubicable"
+msgstr "S'han habilitat les funcionalitats de mapatge d'esquemes reubicables"
 
 #. Translators: description of a settings key, see 'dconf-editor
 #. /ca/desrt/dconf-editor/relocatable-schemas-enabled-mappings'
@@ -2384,7 +2384,7 @@ msgstr "Es descartarà el canvi si sortiu d'aquesta vista sense aplicar-lo."
 #. user edits a key (with default "always confirm implicit" behaviour notably)
 #: editor/modifications-revealer.vala:313
 msgid "The change will be applied on such request or if you quit this view."
-msgstr "El canvi s'aplicarà per aquesta petició o si sortiu d'aquesta vista."
+msgstr "El canvi s'aplicarà si així ho demaneu o si sortiu d'aquesta vista."
 
 #. Translators: Text displayed in the bottom bar; displayed if there are no
 #. pending changes, to document what is the "delay mode".
