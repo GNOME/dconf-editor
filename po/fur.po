@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dconf dconf-0.14\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2020-01-21 07:32+0000\n"
-"PO-Revision-Date: 2020-01-26 17:22+0100\n"
+"POT-Creation-Date: 2020-05-30 11:09+0000\n"
+"PO-Revision-Date: 2020-10-18 10:05+0200\n"
 "Last-Translator: Fabio Tomat <f.t.public@gmail.com>\n"
 "Language-Team: Friulian <f.t.public@gmail.com>\n"
 "Language: fur\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2.4\n"
+"X-Generator: Poedit 2.4.1\n"
 
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the second is "Credits"
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the name of the view, displayed in the headerbar
@@ -233,16 +233,16 @@ msgstr ""
 "Modificâ in maniere direte la configurazion e je une funzionalitât avanzade "
 "e e pues causâ il malfunzionament des aplicazions."
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:30
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:31
 msgid "Browse the keys used by installed applications"
 msgstr "Esplore lis clâfs dopradis par aplicazions instaladis"
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:34
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:35
 msgid "Read keys descriptions and edit their values"
 msgstr "Lei lis descrizions des clâfs e modifiche i lôr valôrs"
 
 #. a translatable version of project_group
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:49
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:50
 msgid "The GNOME Project"
 msgstr "Il progjet GNOME"
 
@@ -294,12 +294,12 @@ msgstr "La largjece dal barcon principâl in pixel."
 #. Translators: summary of a settings key, see 'dconf-editor /org/gnome/iagno/window-height'
 #: editor/ca.desrt.dconf-editor.gschema.xml:107
 msgid "The height of the window"
-msgstr "L'altece dal barcon"
+msgstr "La altece dal barcon"
 
 #. Translators: description of a settings key, see 'dconf-editor /org/gnome/iagno/window-height'
 #: editor/ca.desrt.dconf-editor.gschema.xml:109
 msgid "The height of the main window in pixels."
-msgstr "L'altece dal barcon principâl in pixel."
+msgstr "La altece dal barcon principâl in pixel."
 
 #. Translators: summary of a settings key, see 'dconf-editor /org/gnome/iagno/window-is-maximized'
 #: editor/ca.desrt.dconf-editor.gschema.xml:114
@@ -499,7 +499,7 @@ msgstr ""
 #: editor/ca.desrt.dconf-editor.gschema.xml:217
 msgid "Enabled relocatable schema mapping facilities"
 msgstr ""
-"Abilitât struturis di mapadure dai schemis che si puedin tornâ a assegnâ"
+"Abilitadis struturis di mapadure dai schemis che si puedin tornâ a assegnâ"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/relocatable-schemas-enabled-mappings'
 #: editor/ca.desrt.dconf-editor.gschema.xml:219
@@ -2052,13 +2052,13 @@ msgstr "Il valôr nol è valit."
 #: editor/modifications-revealer.vala:307
 msgid "The change will be dismissed if you quit this view without applying."
 msgstr ""
-"La modifiche e vegnarà scartade se tu jessis di cheste viodude cence aplicâ."
+"La modifiche e vignarà scartade se tu jessis di cheste viodude cence aplicâ."
 
 #. Translators: displayed in the bottom bar in normal sized windows, when the user edits a key (with default "always confirm implicit" behaviour notably)
 #: editor/modifications-revealer.vala:313
 msgid "The change will be applied on such request or if you quit this view."
 msgstr ""
-"La modifiche e vegnarà aplicade ae richieste o se tu jessarâs di cheste "
+"La modifiche e vignarà aplicade ae richieste o se tu jessarâs di cheste "
 "viodude."
 
 #. Translators: Text displayed in the bottom bar; displayed if there are no pending changes, to document what is the "delay mode".
