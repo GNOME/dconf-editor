@@ -21,7 +21,7 @@
 
   <releases>
     <!-- should be kept in versioning inverted order -->
-    <release version="3.38.0" date="2020-09-12" type="stable" urgency="medium"/>
+    <release version="3.38.2" date="2020-11-22" type="stable" urgency="medium"/>
   ​  <release version="3.37.91" date="2020-08-28" type="development" urgency="low"/>
   </releases>
 
