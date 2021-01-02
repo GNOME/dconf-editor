@@ -175,7 +175,7 @@ msgstr "La ubicació s'ha afegit a les adreces d'interès"
 #. path in the bookmarks popover
 #: editor/bookmarks.ui:71
 msgid "Toggle to bookmark this location"
-msgstr "Commuta per afegir aquesta ubicació a les adreces d'interès"
+msgstr "Commuta per a afegir aquesta ubicació a les adreces d'interès"
 
 #. Translators: text that might appear in the bookmarks popover in place of
 #. the switch and its label
@@ -247,7 +247,7 @@ msgstr ""
 msgid ""
 "The same mouse button is set for going backward and forward. Doing nothing."
 msgstr ""
-"El mateix botó del ratolí es configura per anar endavant i endarrere. No "
+"El mateix botó del ratolí es configura per a anar endavant i endarrere. No "
 "facis res."
 
 #: editor/ca.desrt.dconf-editor.appdata.xml.in:9
@@ -256,7 +256,7 @@ msgstr "Editor del dconf"
 
 #: editor/ca.desrt.dconf-editor.appdata.xml.in:10
 msgid "A graphical tool for editing the dconf database"
-msgstr "Una eina gràfica per editar la base de dades del dconf"
+msgstr "Una eina gràfica per a editar la base de dades del dconf"
 
 #: editor/ca.desrt.dconf-editor.appdata.xml.in:13
 msgid ""
@@ -324,7 +324,7 @@ msgstr "Un senyalador per seguir la llum nocturna del sistema"
 #. /org/gnome/iagno/automatic-night-mode'
 #: editor/ca.desrt.dconf-editor.gschema.xml:91
 msgid "Use GNOME night light setting to activate night-mode."
-msgstr "Usa el paràmetre llum nocturna de GNOME per activar el mode nocturn."
+msgstr "Usa el paràmetre llum nocturna de GNOME per a activar el mode nocturn."
 
 #. see AdaptativeWindow.width-request at data/ui/adaptative-window.ui:22
 #. range min="350"/ FIXME
@@ -358,7 +358,7 @@ msgstr "L'alçada de la finestra principal, en píxels."
 #. /org/gnome/iagno/window-is-maximized'
 #: editor/ca.desrt.dconf-editor.gschema.xml:114
 msgid "A flag to enable maximized mode"
-msgstr "Un senyalador per habilitar el mode maximitzat"
+msgstr "Un senyalador per a habilitar el mode maximitzat"
 
 #. Translators: description of a settings key, see 'dconf-editor
 #. /org/gnome/iagno/window-is-maximized'
@@ -370,23 +370,23 @@ msgstr "Si és «true» (cert), la finestra principal s'inicia maximitzada."
 #. editor/restore-view'
 #: editor/ca.desrt.dconf-editor.gschema.xml:138
 msgid "A flag to restore the last view"
-msgstr "Un senyalador per restaurar l'última visualització"
+msgstr "Un senyalador per a restaurar l'última visualització"
 
 #. Translators: description of a settings key, see 'dconf-editor
 #. /ca/desrt/dconf-editor/restore-view'
 #: editor/ca.desrt.dconf-editor.gschema.xml:140
 msgid ""
-"If “true”, Dconf Editor tries at launch to navigate to the path described in"
-" the “saved-view” key."
+"If “true”, Dconf Editor tries at launch to navigate to the path described in "
+"the “saved-view” key."
 msgstr ""
-"Si és «true», l'editor del dconf intenta a l'inici navegar al camí descrit a"
-" la clau «saved-view»."
+"Si és «true», l'editor del dconf intenta a l'inici navegar al camí descrit a "
+"la clau «saved-view»."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-
 #. editor/saved-pathbar-path'
 #: editor/ca.desrt.dconf-editor.gschema.xml:145
 msgid "A path to restore the pathbar state"
-msgstr "Un camí per restaurar l'estat de la barra de camins"
+msgstr "Un camí per a restaurar l'estat de la barra de camins"
 
 #. Translators: description of a settings key, see 'dconf-editor
 #. /ca/desrt/dconf-editor/saved-pathbar-path'
@@ -396,15 +396,15 @@ msgid ""
 "startup is a parent path of this one, Dconf Editor tries to restore the "
 "pathbar state at this path."
 msgstr ""
-"Si la clau «restore-view» s'ha establert a «true»,i si el camí sol·licitat a"
-" l'inici és el camí pare d'aquest, l'Editor de Dconf intentarà restaurar "
+"Si la clau «restore-view» s'ha establert a «true»,i si el camí sol·licitat a "
+"l'inici és el camí pare d'aquest, l'Editor de Dconf intentarà restaurar "
 "l'estat de la barra de camins en aquest camí."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-
 #. editor/saved-view'
 #: editor/ca.desrt.dconf-editor.gschema.xml:152
 msgid "A path to restore the last view"
-msgstr "Un camí per restaurar l'última visualització"
+msgstr "Un camí per a restaurar l'última visualització"
 
 #. Translators: description of a settings key, see 'dconf-editor
 #. /ca/desrt/dconf-editor/saved-view'
@@ -426,8 +426,8 @@ msgstr "Mostra l'advertiment inicial"
 #. /ca/desrt/dconf-editor/show-warning'
 #: editor/ca.desrt.dconf-editor.gschema.xml:161
 msgid ""
-"If “true”, Dconf Editor opens a popup when launched reminding the user to be"
-" careful."
+"If “true”, Dconf Editor opens a popup when launched reminding the user to be "
+"careful."
 msgstr ""
 "Si és «true», l'editor del dconf obre una finestra emergent quan s'inicia "
 "que recorda a l'usuari que vagi amb compte."
@@ -436,7 +436,7 @@ msgstr ""
 #. editor/small-keys-list-rows'
 #: editor/ca.desrt.dconf-editor.gschema.xml:166
 msgid "A flag to enable small rows for keys list"
-msgstr "Un senyalador per habilitar files petites per a la llista de claus"
+msgstr "Un senyalador per a habilitar files petites per a la llista de claus"
 
 #. Translators: description of a settings key, see 'dconf-editor
 #. /ca/desrt/dconf-editor/small-keys-list-rows'
@@ -458,10 +458,10 @@ msgid ""
 "type, it updates the key value each time something changes in the entry, so "
 "including intermediate states. The “safe” value asks for confirmation in "
 "these cases, but allows instant changes for booleans and nullable booleans, "
-"enums and flags. The “always-confirm-implicit” and “always-confirm-explicit”"
-" values always asks for confirmation, but the first applies the change if "
-"you change path whereas the second dismiss it. The “always-delay” value adds"
-" each change in delay mode, allowing to apply multiple keys at once."
+"enums and flags. The “always-confirm-implicit” and “always-confirm-explicit” "
+"values always asks for confirmation, but the first applies the change if you "
+"change path whereas the second dismiss it. The “always-delay” value adds "
+"each change in delay mode, allowing to apply multiple keys at once."
 msgstr ""
 "Es descoratja el valor «unsafe»: per a les claus que tenen un tipus entubat "
 "no especial, actualitza el valor de la clau cada cop que quelcom canvia a "
@@ -470,15 +470,15 @@ msgstr ""
 "i booleans anul·lables, enums i senyaladors. Els valors «always-confirm-"
 "implicit» i «always-confirm-explicit» sempre demanen confirmació, però el "
 "primer aplica el canvi si canvieu el camí mentre que el segon el descarta. "
-"El valor «always-delay» afegeix cada canvi en mode de retardament, permetent"
-" aplicar claus múltiples de forma immediata."
+"El valor «always-delay» afegeix cada canvi en mode de retardament, permetent "
+"aplicar claus múltiples de forma immediata."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-
 #. editor/sort-case-sensitive'
 #: editor/ca.desrt.dconf-editor.gschema.xml:180
 msgid "A flag to sort keys list case-sensitively"
 msgstr ""
-"Un senyalador per ordenar la llista de claus distingint entre majúscules i "
+"Un senyalador per a ordenar la llista de claus distingint entre majúscules i "
 "minúscules"
 
 #. Translators: description of a settings key, see 'dconf-editor
@@ -505,8 +505,8 @@ msgstr "Useu els esdeveniments «Enrere» i «Avant» del botó del ratolí"
 #: editor/ca.desrt.dconf-editor.gschema.xml:189
 msgid ""
 "For users with mice that have buttons for “Forward” and “Back”, this key "
-"will determine if any action is taken inside of a browser window when either"
-" is pressed."
+"will determine if any action is taken inside of a browser window when either "
+"is pressed."
 msgstr ""
 "Per als usuaris amb ratolins que tenen els botons «Endavant» i «Endarrere» "
 "aquesta clau determinarà si es pren alguna acció dins de la finestra del "
@@ -517,7 +517,7 @@ msgstr ""
 #: editor/ca.desrt.dconf-editor.gschema.xml:195
 msgid "Mouse button to activate the “Back” command in browser window"
 msgstr ""
-"Botó del ratolí per activar l'ordre «Endarrere» a la finestra del navegador"
+"Botó del ratolí per a activar l'ordre «Endarrere» a la finestra del navegador"
 
 #. Translators: description of a settings key, see 'dconf-editor
 #. /ca/desrt/dconf-editor/mouse-back-buttons'
@@ -536,7 +536,7 @@ msgstr ""
 #: editor/ca.desrt.dconf-editor.gschema.xml:203
 msgid "Mouse button to activate the “Forward” command in browser window"
 msgstr ""
-"Botó del ratolí per activar l'ordre «Endavant» a la finestra del navegador"
+"Botó del ratolí per a activar l'ordre «Endavant» a la finestra del navegador"
 
 #. Translators: description of a settings key, see 'dconf-editor
 #. /ca/desrt/dconf-editor/mouse-forward-buttons'
@@ -547,14 +547,14 @@ msgid ""
 "Possible values range between 6 and 14."
 msgstr ""
 "Per als usuaris amb ratolins que tenen els botons «Endavant» i «Endarrere» "
-"aquesta clau establirà quin botó activarà l'ordre «Endavant» en una finestra"
-" del navegador. El rang de valors possibles és entre 6 i 14."
+"aquesta clau establirà quin botó activarà l'ordre «Endavant» en una finestra "
+"del navegador. El rang de valors possibles és entre 6 i 14."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-
 #. editor/refresh-settings-schema-source'
 #: editor/ca.desrt.dconf-editor.gschema.xml:210
 msgid "A flag to check for added or removed schemas"
-msgstr "Una bandera per comprovar esquemes afegits o trets"
+msgstr "Una bandera per a comprovar esquemes afegits o trets"
 
 #. Translators: description of a settings key, see 'dconf-editor
 #. /ca/desrt/dconf-editor/refresh-settings-schema-source'
@@ -562,14 +562,14 @@ msgstr "Una bandera per comprovar esquemes afegits o trets"
 msgid ""
 "Dconf Editor can monitor if schemas are added or removed from the multiple "
 "possible locations. That’s done by checking every three seconds if the "
-"schemas list has changed. As this way to do is suboptimal, this function can"
-" be disabled by setting this flag to “false”. Note that this option will be "
+"schemas list has changed. As this way to do is suboptimal, this function can "
+"be disabled by setting this flag to “false”. Note that this option will be "
 "removed when a better way to do things is found."
 msgstr ""
-"L'editor de Dconf pot supervisar si els esquemes s'afegeixen o treuen de les"
-" múltiples ubicacions possibles. Això es fa comprovant cada tres segons si "
-"la llista d'esquemes ha canviat. Com que aquesta forma de fer és poc òptima,"
-" aquesta funció es pot desactivar establint aquesta bandera com a «falsa». "
+"L'editor de Dconf pot supervisar si els esquemes s'afegeixen o treuen de les "
+"múltiples ubicacions possibles. Això es fa comprovant cada tres segons si la "
+"llista d'esquemes ha canviat. Com que aquesta forma de fer és poc òptima, "
+"aquesta funció es pot desactivar establint aquesta bandera com a «falsa». "
 "Tingueu en compte que aquesta opció s'eliminarà quan es trobi una millor "
 "manera de fer les coses."
 
@@ -608,12 +608,12 @@ msgstr "Mapatge de camins per esquemes associats manualment"
 msgid ""
 "A dictionary that maps schema IDs with path specifications. It is used to "
 "allow the user to associate a relocatable schema to certain paths. Path "
-"specifications may contain wildcards in the form of empty segments (e.g. "
-"/ca/desrt/dconf-editor//), defining possibly multiple paths. The same schema"
-" ID may be associated with multiple path specifications."
+"specifications may contain wildcards in the form of empty segments (e.g. /ca/"
+"desrt/dconf-editor//), defining possibly multiple paths. The same schema ID "
+"may be associated with multiple path specifications."
 msgstr ""
 "Un diccionari que mapeja identificadors d'esquema amb especificacions de "
-"camí. S'utilitza per permetre a l'usuari associar un esquema reubicable a "
+"camí. S'utilitza per a permetre a l'usuari associar un esquema reubicable a "
 "certs camins. Les especificacions de camí poden contenir comodins en forma "
 "de segments buits (p. ex. /ca/desrt/dconf-editor//), que defineixen "
 "múltiples camins possibles. El mateix identificador d'esquema pot estar "
@@ -629,8 +629,8 @@ msgstr "Un senyalador per ometre subcarpetes innecessàries"
 #. /ca/desrt/dconf-editor/use-shortpaths'
 #: editor/ca.desrt.dconf-editor.gschema.xml:233
 msgid ""
-"When a folder only contains one subfolder and no keys, Dconf Editor can jump"
-" to that subfolder directly. This flag enables that behaviour."
+"When a folder only contains one subfolder and no keys, Dconf Editor can jump "
+"to that subfolder directly. This flag enables that behaviour."
 msgstr ""
 "Quan una carpeta només conté una subcarpeta i no hi ha claus, l'Editor de "
 "Dconf pot saltar directament a aquesta subcarpeta. Aquest senyalador "
@@ -654,7 +654,7 @@ msgstr ""
 #. editor/small-bookmarks-rows'
 #: editor/ca.desrt.dconf-editor.gschema.xml:247
 msgid "A flag to enable small rows for bookmarks list"
-msgstr "Un senyalador per habilitar files petites a la llista de marcadors"
+msgstr "Un senyalador per a habilitar files petites a la llista de marcadors"
 
 #. Translators: description of a settings key, see 'dconf-editor
 #. /ca/desrt/dconf-editor/small-bookmarks-rows'
@@ -693,8 +693,8 @@ msgid ""
 "“true”, “false” and “nothing”."
 msgstr ""
 "El GSettings permet tipus anul·lables, que són similars a altres tipus però "
-"poden prendre un valor «nothing». Un booleà anul·lable pot prendre sols tres"
-" valors, «true», «false» i «nothing»."
+"poden prendre un valor «nothing». Un booleà anul·lable pot prendre sols tres "
+"valors, «true», «false» i «nothing»."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-
 #. editor/Demo/byte'
@@ -727,8 +727,8 @@ msgid ""
 "character should be included as the last character in the array."
 msgstr ""
 "El tipus bytestring s'usa en general per passar cadenes de caràcters que "
-"poden ser utf8 no vàlid a altres llocs. En aquest cas la convenció és que el"
-" caràcter nul terminador s'hauria d'incloure com l'últim caràcter de la "
+"poden ser utf8 no vàlid a altres llocs. En aquest cas la convenció és que el "
+"caràcter nul terminador s'hauria d'incloure com l'últim caràcter de la "
 "matriu."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-
@@ -741,11 +741,11 @@ msgstr "Una matriu bytestring, tipus «aay»"
 #. editor/Demo/bytestring-array'
 #: editor/ca.desrt.dconf-editor.gschema.xml:305
 msgid ""
-"This is the type of an array of bytestrings. The bytestring type is commonly"
-" used to pass around strings that may not be valid utf8."
+"This is the type of an array of bytestrings. The bytestring type is commonly "
+"used to pass around strings that may not be valid utf8."
 msgstr ""
-"Aquest és el tipus d'una matriu de bytestrings. El tipus bytestring s'usa en"
-" general per passar cadenes de caràcters que poden no ser vàlides en utf8."
+"Aquest és el tipus d'una matriu de bytestrings. El tipus bytestring s'usa en "
+"general per passar cadenes de caràcters que poden no ser vàlides en utf8."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-
 #. editor/Demo/dbus-handle'
@@ -758,12 +758,12 @@ msgstr "Un tipus de gestor D-Bus, tipus «h»"
 #: editor/ca.desrt.dconf-editor.gschema.xml:312
 msgid ""
 "The handle type is a 32-bit signed integer value that is, by convention, "
-"used as an index into an array of file descriptors that are sent alongside a"
-" D-Bus message. If you are not interacting with D-Bus, then there is no "
+"used as an index into an array of file descriptors that are sent alongside a "
+"D-Bus message. If you are not interacting with D-Bus, then there is no "
 "reason to make use of this type."
 msgstr ""
-"El tipus de gestor és un enter amb signe de 32-bit que s'usa, per convenció,"
-" com un índex cap a una matriu de descriptors de fitxers que s'envien "
+"El tipus de gestor és un enter amb signe de 32-bit que s'usa, per convenció, "
+"com un índex cap a una matriu de descriptors de fitxers que s'envien "
 "conjuntament amb un missatge D-Bus. Si no esteu interactuant amb D-Bus, "
 "aleshores no hi ha cap raó per usar aquest tipus."
 
@@ -781,9 +781,9 @@ msgid ""
 "the bus. If you are not interacting with D-Bus, then there is no reason to "
 "make use of this type."
 msgstr ""
-"Un camí d'objecte s'usa per identificar objectes D-Bus a una destinació "
-"donada al bus. Si no esteu interactuant amb el D-Bus, aleshores no hi ha cap"
-" raó per usar aquest tipus."
+"Un camí d'objecte s'usa per a identificar objectes D-Bus a una destinació "
+"donada al bus. Si no esteu interactuant amb el D-Bus, aleshores no hi ha cap "
+"raó per usar aquest tipus."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-
 #. editor/Demo/dbus-object-path-array'
@@ -834,8 +834,8 @@ msgid ""
 "A dictionary maps values of a basic type to another value (of any type). A "
 "dictionary entry is one such mapping."
 msgstr ""
-"Un diccionari assigna valors d'un tipus bàsic a un altre valor (de qualsevol"
-" tipus). Una entrada de diccionari és una d'aquestes assignacions."
+"Un diccionari assigna valors d'un tipus bàsic a un altre valor (de qualsevol "
+"tipus). Una entrada de diccionari és una d'aquestes assignacions."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-
 #. editor/Demo/dictionary'
@@ -847,11 +847,11 @@ msgstr "Un «vardict» del tipus «a{sv}»"
 #. editor/Demo/dictionary'
 #: editor/ca.desrt.dconf-editor.gschema.xml:347
 msgid ""
-"A dictionary maps values of a basic type to another value (of any type). One"
-" simple use case is to map strings to variants."
+"A dictionary maps values of a basic type to another value (of any type). One "
+"simple use case is to map strings to variants."
 msgstr ""
-"Un diccionari assigna valors d'un tipus bàsic a un altre valor (de qualsevol"
-" tipus). Un cas d'ús simple és assignar cadenes a variants."
+"Un diccionari assigna valors d'un tipus bàsic a un altre valor (de qualsevol "
+"tipus). Un cas d'ús simple és assignar cadenes a variants."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-
 #. editor/Demo/double'
@@ -999,8 +999,7 @@ msgid ""
 msgstr ""
 "Cada configuració de numeral (enters i enters sense signe de qualsevol "
 "tipus, a més dels dobles) es podrien limitar a un rang personalitzat de "
-"valors. Per exemple, aquest enter podria prendre sols un valor entre -2 i "
-"10."
+"valors. Per exemple, aquest enter podria prendre sols un valor entre -2 i 10."
 
 #. Translators: do not forget the parenthesis, they are meaningful; summary of
 #. a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/pair-of-integers'
@@ -1012,8 +1011,8 @@ msgstr "Un tipus personalitzat, aquí «(ii)»"
 #. editor/Demo/pair-of-integers'
 #: editor/ca.desrt.dconf-editor.gschema.xml:426
 msgid ""
-"Dconf Editor lets you edit any settings type supported by GSettings, falling"
-" back on a string entry when it doesn’t have a better way to do. Here is a "
+"Dconf Editor lets you edit any settings type supported by GSettings, falling "
+"back on a string entry when it doesn’t have a better way to do. Here is a "
 "tuple of two 32-bit signed integers."
 msgstr ""
 "L'editor del dconf us deia editar tots els tipus de paràmetres de "
@@ -1031,11 +1030,11 @@ msgstr "Una cadena, tipus «s»"
 #. editor/Demo/string'
 #: editor/ca.desrt.dconf-editor.gschema.xml:433
 msgid ""
-"The string type could accept any utf8 string. Note that an empty string “''”"
-" is not the same as NULL (nothing); see also the “string-nullable” key."
+"The string type could accept any utf8 string. Note that an empty string “''” "
+"is not the same as NULL (nothing); see also the “string-nullable” key."
 msgstr ""
-"El tipus de cadena podria acceptar qualsevol cadena de caràcters utf8. Noteu"
-" que una cadena buida «''» no és el mateix que NULL (res); vegeu també la "
+"El tipus de cadena podria acceptar qualsevol cadena de caràcters utf8. Noteu "
+"que una cadena buida «''» no és el mateix que NULL (res); vegeu també la "
 "clau «string-nullable»."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-
@@ -1070,8 +1069,8 @@ msgid ""
 msgstr ""
 "El GSettings permet tipus anul·lables, que són similars a altres tipus però "
 "podrien prendre un valor «nothing». Una cadena anul·lable pot prendre "
-"qualsevol cadena com a valor, incloent-hi la cadena de caràcters buida «''»,"
-" o pot ser NULL (res)."
+"qualsevol cadena com a valor, incloent-hi la cadena de caràcters buida «''», "
+"o pot ser NULL (res)."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-
 #. editor/Demo/variant'
@@ -1086,9 +1085,9 @@ msgid ""
 "Variants could be stored inside variants, and consequently as a GSettings "
 "type. Their representation use the XML brackets (‘<’ and ‘>’ characters, in "
 "a gschema file “&#60;” and “&#62;” respectively), with a parsable "
-"representation of their content inside. If unclear, the type can be given in"
-" the value with a prefix annotation like “@x” (where “x” is the type string)"
-" or “int64”. See https://developer.gnome.org/glib/stable/gvariant-text.html "
+"representation of their content inside. If unclear, the type can be given in "
+"the value with a prefix annotation like “@x” (where “x” is the type string) "
+"or “int64”. See https://developer.gnome.org/glib/stable/gvariant-text.html "
 "for complete documentation."
 msgstr ""
 "Les variants han d'emmagatzemar-se dins de variants, i en conseqüència com "
@@ -1096,8 +1095,8 @@ msgstr ""
 "«<» and «>» en un fitxer gschema «&#60;» i «&#62;» respectivament), amb una "
 "representació analitzable del contingut interior. Si no està clar, el tipus "
 "pot donar al valor amb una anotació de prefix com «@x» (on «x» és un tipus "
-"de cadena) o «int64». Mireu per una documentació més completa "
-"https://developer.gnome.org/glib/stable/gvariant-text.html  ."
+"de cadena) o «int64». Mireu per una documentació més completa https://"
+"developer.gnome.org/glib/stable/gvariant-text.html  ."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-
 #. editor/Demo/weird-enum'
@@ -1198,8 +1197,8 @@ msgid ""
 "different default value."
 msgstr ""
 "Aquesta clau és una prova per a esquemes múltiples en el mateix camí amb "
-"claus conflictives. No s'ha de poder editar com una clau assignada al mateix"
-" camí amb un valor predeterminat diferent."
+"claus conflictives. No s'ha de poder editar com una clau assignada al mateix "
+"camí amb un valor predeterminat diferent."
 
 #. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-
 #. editor.Demo.Conflict1 range-conflict'
@@ -1262,8 +1261,8 @@ msgid ""
 "issue."
 msgstr ""
 "Aquesta clau és una prova per esquemes múltiples al mateix camí amb claus "
-"conflictives. Es pot editar ja que els tipus són compatibles, però és encara"
-" un problema."
+"conflictives. Es pot editar ja que els tipus són compatibles, però és encara "
+"un problema."
 
 #. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-
 #. editor.Demo.Conflict2 another-non-conflicting-key'
@@ -1318,7 +1317,7 @@ msgstr "No mostris l'advertiment inicial"
 #. possible.
 #: editor/dconf-editor.vala:203
 msgid "Graphical interface for editing other applications settings."
-msgstr "Una interfície gràfica per editar altres paràmetres d'aplicacions."
+msgstr "Una interfície gràfica per a editar altres paràmetres d'aplicacions."
 
 #. Translators: command-line text, describes how the application proceeds for
 #. editing other applications settings, in 'dconf-editor --help'; try to put
@@ -1608,7 +1607,7 @@ msgstr "Esquema desconegut «%s»."
 #: editor/dconf-window.vala:274
 msgid "Thanks for using Dconf Editor for editing your settings!"
 msgstr ""
-"Gràcies per usar l'editor del Dconf per editar les vostres configuracions!"
+"Gràcies per usar l'editor del Dconf per a editar les vostres configuracions!"
 
 #. Translators: initial "use at your own risk" dialog, the warning text
 #: editor/dconf-window.vala:277
@@ -1631,11 +1630,11 @@ msgstr "Mostra aquest diàleg la propera vegada."
 #. way to spell the shortcut as in the Settings application
 #: editor/dconf-window.vala:305
 msgid ""
-"There are pending changes. Use Shift+Ctrl+Q to apply changes and quit, or "
-"Alt+F4 to dismiss changes and quit."
+"There are pending changes. Use Shift+Ctrl+Q to apply changes and quit, or Alt"
+"+F4 to dismiss changes and quit."
 msgstr ""
-"Hi ha canvis pendents. Useu Maj+Ctrl+Q per aplicar els canvis i sortir o "
-"Alt+F4 per descartar els canvis i sortir."
+"Hi ha canvis pendents. Useu Maj+Ctrl+Q per a aplicar els canvis i sortir o "
+"Alt+F4 per a descartar els canvis i sortir."
 
 #. Translators: notification text, when the requested folder has been removed;
 #. the %s is the folder path
@@ -2515,8 +2514,8 @@ msgstr ""
 #: editor/registry-info.ui:172
 msgid ""
 "This enumeration offers only one choice. That’s probably an error of the "
-"application that installed this schema. If possible, please open a bug about"
-" it."
+"application that installed this schema. If possible, please open a bug about "
+"it."
 msgstr ""
 "Aquesta enumeració ofereix sols una elecció. Això és probablement un error "
 "de l'aplicació que va instal·lar aquest esquema. Si és possible, obriu un "
@@ -2527,8 +2526,8 @@ msgstr ""
 #: editor/registry-info.ui:183
 msgid ""
 "This integer key can only take one value. That’s probably an error of the "
-"application that installed this schema. If possible, please open a bug about"
-" it."
+"application that installed this schema. If possible, please open a bug about "
+"it."
 msgstr ""
 "La clau entera només pot prendre un valor. Això és probablement un error de "
 "l'aplicació que va instal·lar aquest esquema. Si és possible, obriu un "
@@ -2539,12 +2538,12 @@ msgstr ""
 #: editor/registry-info.ui:194
 msgid ""
 "This key has a special “empty tuple” type. That’s probably an error of the "
-"application that installed this schema. If possible, please open a bug about"
-" it."
+"application that installed this schema. If possible, please open a bug about "
+"it."
 msgstr ""
-"La clau té el tipus «tupla buida» especial. Això és probablement un error de"
-" l'aplicació que ha instal·lat aquest esquema. Si és possible obriu un error"
-" sobre això."
+"La clau té el tipus «tupla buida» especial. Això és probablement un error de "
+"l'aplicació que ha instal·lat aquest esquema. Si és possible obriu un error "
+"sobre això."
 
 #. Translators: field description when displaying folder properties; name of
 #. the folder
@@ -2668,8 +2667,8 @@ msgstr "No"
 #. instead of the value, in case of conflicting keys
 #: editor/registry-info.vala:280
 msgid ""
-"There are conflicting definitions of this key, getting value would be either"
-" problematic or meaningless."
+"There are conflicting definitions of this key, getting value would be either "
+"problematic or meaningless."
 msgstr ""
 "Hi ha definicions en conflicte en aquesta clau, obtenir un valor seria "
 "problemàtic o sense sentit."
@@ -2678,8 +2677,8 @@ msgstr ""
 #. displaying key properties; for keys of type "double"
 #: editor/registry-info.vala:615
 msgid ""
-"Use a dot as decimal mark and no thousands separator. You can use the X.Ye+Z"
-" notation."
+"Use a dot as decimal mark and no thousands separator. You can use the X.Ye+Z "
+"notation."
 msgstr ""
 "Useu el punt com a decimal i sense milers de separació. Podeu usar la "
 "notació X.Ye+Z ."
@@ -2695,7 +2694,7 @@ msgid ""
 msgstr ""
 "El contingut de les variants ha d'estar envoltat de claudàtors XML («<» i "
 "«>»). Consulteu https://developer.gnome.org/glib/stable/gvariant-text.html "
-"per obtenir la documentació completa."
+"per a obtenir la documentació completa."
 
 #. Translators: annotation under the entry that allows customizing a key, when
 #. displaying key properties; for keys of a type composed with a "maybe type"
@@ -2708,17 +2707,16 @@ msgid ""
 "empty value. Strings, signatures and object paths should be surrounded by "
 "quotation marks."
 msgstr ""
-"Useu la paraula clau «nothing» per establir un tipus anul·lable (que comença"
-" amb «m») al seu valor buit. Les cadenes de caràcters, signatures i camins "
-"d'objectes haurien d'estar entre cometes."
+"Useu la paraula clau «nothing» per a establir un tipus anul·lable (que "
+"comença amb «m») al seu valor buit. Les cadenes de caràcters, signatures i "
+"camins d'objectes haurien d'estar entre cometes."
 
 #. Translators: annotation under the entry that allows customizing a key, when
 #. displaying key properties; for keys of a type composed with a string type
 #. (or similar)
 #: editor/registry-info.vala:630
 msgid ""
-"Strings, signatures and object paths should be surrounded by quotation "
-"marks."
+"Strings, signatures and object paths should be surrounded by quotation marks."
 msgstr ""
 "Les cadenes de caràcters, signatures i camins d'objectes haurien d'estar "
 "entre cometes."
@@ -2732,8 +2730,8 @@ msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value."
 msgstr ""
-"Useu la paraula clau «nothing» per establir un tipus anul·lable (que comença"
-" amb «m») al seu valor buit."
+"Useu la paraula clau «nothing» per a establir un tipus anul·lable (que "
+"comença amb «m») al seu valor buit."
 
 #. Translators: field content when displaying key properties; the field
 #. description is "Current value", this text displayed if the key, not defined
