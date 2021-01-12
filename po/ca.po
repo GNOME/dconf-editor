@@ -318,7 +318,7 @@ msgstr "paràmetres;configuració;"
 #. /org/gnome/iagno/automatic-night-mode'
 #: editor/ca.desrt.dconf-editor.gschema.xml:89
 msgid "A flag to follow system night light"
-msgstr "Un senyalador per seguir la llum nocturna del sistema"
+msgstr "Un senyalador per a seguir la llum nocturna del sistema"
 
 #. Translators: description of a settings key, see 'dconf-editor
 #. /org/gnome/iagno/automatic-night-mode'
@@ -623,7 +623,7 @@ msgstr ""
 #. editor/use-shortpaths'
 #: editor/ca.desrt.dconf-editor.gschema.xml:231
 msgid "A flag for skipping unnecessary subfolders"
-msgstr "Un senyalador per ometre subcarpetes innecessàries"
+msgstr "Un senyalador per a ometre subcarpetes innecessàries"
 
 #. Translators: description of a settings key, see 'dconf-editor
 #. /ca/desrt/dconf-editor/use-shortpaths'
@@ -709,7 +709,7 @@ msgid ""
 "A byte value is an integer between 0 and 255. It may be used to pass around "
 "characters."
 msgstr ""
-"Un valor byte és un enter entre 0 i 255. Pot usar-se per passar caràcters a "
+"Un valor byte és un enter entre 0 i 255. Pot usar-se per a passar caràcters a "
 "altres llocs."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-
@@ -726,7 +726,7 @@ msgid ""
 "valid utf8. In that case, the convention is that the nul terminator "
 "character should be included as the last character in the array."
 msgstr ""
-"El tipus bytestring s'usa en general per passar cadenes de caràcters que "
+"El tipus bytestring s'usa en general per a passar cadenes de caràcters que "
 "poden ser utf8 no vàlid a altres llocs. En aquest cas la convenció és que el "
 "caràcter nul terminador s'hauria d'incloure com l'últim caràcter de la "
 "matriu."
@@ -745,7 +745,7 @@ msgid ""
 "used to pass around strings that may not be valid utf8."
 msgstr ""
 "Aquest és el tipus d'una matriu de bytestrings. El tipus bytestring s'usa en "
-"general per passar cadenes de caràcters que poden no ser vàlides en utf8."
+"general per a passar cadenes de caràcters que poden no ser vàlides en utf8."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-
 #. editor/Demo/dbus-handle'
@@ -765,7 +765,7 @@ msgstr ""
 "El tipus de gestor és un enter amb signe de 32-bit que s'usa, per convenció, "
 "com un índex cap a una matriu de descriptors de fitxers que s'envien "
 "conjuntament amb un missatge D-Bus. Si no esteu interactuant amb D-Bus, "
-"aleshores no hi ha cap raó per usar aquest tipus."
+"aleshores no hi ha cap raó per a usar aquest tipus."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-
 #. editor/Demo/dbus-object-path'
@@ -783,7 +783,7 @@ msgid ""
 msgstr ""
 "Un camí d'objecte s'usa per a identificar objectes D-Bus a una destinació "
 "donada al bus. Si no esteu interactuant amb el D-Bus, aleshores no hi ha cap "
-"raó per usar aquest tipus."
+"raó per a usar aquest tipus."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-
 #. editor/Demo/dbus-object-path-array'
@@ -801,7 +801,7 @@ msgid ""
 msgstr ""
 "Una matriu de camins d'objectes podria contenir qualsevol nombre de camins "
 "d'objectes (incloent-hi cap: «[]»). Si no esteu interactuant amb el D-Bus, "
-"aleshores no hi ha cap raó per usar aquest tipus."
+"aleshores no hi ha cap raó per a usar aquest tipus."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-
 #. editor/Demo/dbus-signature'
@@ -819,7 +819,7 @@ msgid ""
 msgstr ""
 "Una signatura D-Bus és una cadena usada com a signatura de tipus per a un "
 "mètode o missatge del D-Bus. Si no esteu interactuant amb el D-Bus, "
-"aleshores no hi ha cap raó per usar aquest tipus."
+"aleshores no hi ha cap raó per a usar aquest tipus."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-
 #. editor/Demo/dict-entry'
@@ -1219,7 +1219,7 @@ msgid ""
 msgstr ""
 "Aquesta clau és una prova per a esquemes múltiples en el mateix camí amb "
 "claus conflictives. No s'ha de modificar com una clau assignada al mateix "
-"camí ja que té un rang diferent."
+"camí, ja que té un rang diferent."
 
 #. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-
 #. editor.Demo.Conflict1 type-conflict'
@@ -1241,7 +1241,7 @@ msgid ""
 msgstr ""
 "Aquesta clau és una prova per a esquemes múltiples en el mateix camí amb "
 "claus conflictives. No s'ha de modificar com una clau assignada al mateix "
-"camí ja que té un tipus diferent."
+"camí, ja que té un tipus diferent."
 
 #. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-
 #. editor.Demo.Conflict1 warning-similar'
@@ -1261,7 +1261,7 @@ msgid ""
 "issue."
 msgstr ""
 "Aquesta clau és una prova per esquemes múltiples al mateix camí amb claus "
-"conflictives. Es pot editar ja que els tipus són compatibles, però és encara "
+"conflictives. Es pot editar, ja que els tipus són compatibles, però és encara "
 "un problema."
 
 #. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-
@@ -1607,7 +1607,7 @@ msgstr "Esquema desconegut «%s»."
 #: editor/dconf-window.vala:274
 msgid "Thanks for using Dconf Editor for editing your settings!"
 msgstr ""
-"Gràcies per usar l'editor del Dconf per a editar les vostres configuracions!"
+"Gràcies per a usar l'editor del Dconf per a editar les vostres configuracions!"
 
 #. Translators: initial "use at your own risk" dialog, the warning text
 #: editor/dconf-window.vala:277
@@ -1624,7 +1624,7 @@ msgstr "Aniré amb compte."
 #. Translators: initial "use at your own risk" dialog, the checkbox label
 #: editor/dconf-window.vala:284
 msgid "Show this dialog next time."
-msgstr "Mostra aquest diàleg la propera vegada."
+msgstr "Mostra aquest diàleg la pròxima vegada."
 
 #. Translators: notification text, after a user Ctrl+Q keyboard action; same
 #. way to spell the shortcut as in the Settings application
@@ -2001,7 +2001,7 @@ msgstr "Errada en analitzar com a enter de 64 bits sense signe."
 #: editor/key-list-box-row.vala:118
 #, c-format
 msgid "Go to “%s”"
-msgstr "Vés a «%s»"
+msgstr "Ves a «%s»"
 
 #. Translators: first item of the keys list displayed during browsing, the %s
 #. is the current folder name
@@ -2066,7 +2066,7 @@ msgstr "Suprimeix la clau"
 #. during search
 #: editor/key-list-box-row.vala:469
 msgid "Go to this path"
-msgstr "Vés a aquest camí"
+msgstr "Ves a aquest camí"
 
 #. Translators: "open folder" action in the right-click menu on a folder
 #: editor/key-list-box-row.vala:472
