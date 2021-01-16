@@ -48,7 +48,7 @@ private class RegistrySearch : RegistryList
 
     internal bool handle_alt_copy_text (out string copy_text)
     {
-        return _handle_alt_copy_text (out copy_text, ref key_list_box);
+        return _handle_alt_copy_text (out copy_text, key_list_box);
     }
 
     internal void clean ()
@@ -145,7 +145,7 @@ private class RegistrySearch : RegistryList
     * * Keyboard calls
     \*/
 
-    private static bool _handle_alt_copy_text (out string copy_text, ref ListBox key_list_box)
+    private static bool _handle_alt_copy_text (out string copy_text, ListBox key_list_box)
     {
         ListBoxRow? selected_row = key_list_box.get_selected_row ();
         if (selected_row == null)
@@ -521,7 +521,7 @@ private class RegistrySearch : RegistryList
     private void update_row_header (ListBoxRow row, ListBoxRow? before)
     {
         int row_index = row.get_index ();
-        if (is_first_row (row_index, ref before))
+        if (is_first_row (row_index, before))
             return;
 
         if (search_is_path_search)
