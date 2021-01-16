@@ -24,7 +24,7 @@ private abstract class BookmarksHeaderBar : BrowserHeaderBar, AdaptativeWidget
         install_action_entries ();
 
         add_bookmarks_revealer              (out bookmarks_revealer,
-                                             out bookmarks_button,              ref center_box);
+                                             out bookmarks_button,              center_box);
         connect_bookmarks_signals ();
         add_bookmarks_controller            (out bookmarks_controller,          ref this);
 
@@ -58,7 +58,7 @@ private abstract class BookmarksHeaderBar : BrowserHeaderBar, AdaptativeWidget
     private Bookmarks           bookmarks_button;
     private BookmarksController bookmarks_controller;
 
-    private static void add_bookmarks_revealer (out Revealer bookmarks_revealer, out Bookmarks bookmarks_button, ref Box center_box)
+    private static void add_bookmarks_revealer (out Revealer bookmarks_revealer, out Bookmarks bookmarks_button, Box center_box)
     {
         bookmarks_revealer = new Revealer ();
         bookmarks_revealer.transition_type = RevealerTransitionType.SLIDE_LEFT;

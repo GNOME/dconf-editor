@@ -114,7 +114,7 @@ private class RegistryView : RegistryList
 
     private void update_row_header (ListBoxRow row, ListBoxRow? before)
     {
-        if (is_first_row (row.get_index (), ref before))
+        if (is_first_row (row.get_index (), before))
             return;
         update_row_header_with_context (row, (!) before, modifications_handler.model, /* local search header */ false);
     }

@@ -146,10 +146,10 @@ private class BookmarksList : OverlayedList
 
     internal bool create_bookmark_rows (Variant bookmarks_variant)
     {
-        _create_bookmark_rows (bookmarks_variant, view_mode, ref main_list_store, ref main_list_box, ref bookmarks_hashtable);
+        _create_bookmark_rows (bookmarks_variant, view_mode, ref main_list_store, main_list_box, ref bookmarks_hashtable);
         return n_items == 0;
     }
-    private static void _create_bookmark_rows (Variant bookmarks_variant, bool view_mode, ref GLib.ListStore main_list_store, ref ListBox main_list_box, ref HashTable<string, Bookmark> bookmarks_hashtable)
+    private static void _create_bookmark_rows (Variant bookmarks_variant, bool view_mode, ref GLib.ListStore main_list_store, ListBox main_list_box, ref HashTable<string, Bookmark> bookmarks_hashtable)
     {
         string saved_bookmark_name = "";
         ListBoxRow? selected_row = main_list_box.get_selected_row ();

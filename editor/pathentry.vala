@@ -133,9 +133,9 @@ private class PathEntry : Box, AdaptativeWidget
 
     internal void entry_grab_focus_without_selecting ()
     {
-        _entry_grab_focus_without_selecting (ref search_entry);
+        _entry_grab_focus_without_selecting (search_entry);
     }
-    private static void _entry_grab_focus_without_selecting (ref BrowserEntry search_entry)
+    private static void _entry_grab_focus_without_selecting (BrowserEntry search_entry)
     {
         if (search_entry.text_length != 0)
         {
@@ -172,36 +172,36 @@ private class PathEntry : Box, AdaptativeWidget
         requires (search_changed_handler != 0)
     {
         SignalHandler.block (search_entry, search_changed_handler);
-        _prepare (mode, nullable_search, ref current_path, ref search_entry);
+        _prepare (mode, nullable_search, ref current_path, search_entry);
         SignalHandler.unblock (search_entry, search_changed_handler);
     }
 
     private static inline void _prepare (SearchMode   mode,
                                          string?      nullable_search,
                                      ref string       current_path,
-                                     ref BrowserEntry search_entry)
+                                         BrowserEntry search_entry)
     {
         string search;
         switch (mode)
         {
             case SearchMode.EDIT_PATH_MOVE_END:
                 search = nullable_search == null ? current_path : (!) nullable_search;
-                _prepare_move_end (ref search, ref search_entry);
+                _prepare_move_end (ref search, search_entry);
                 return;
 
             case SearchMode.EDIT_PATH_SELECT_ALL:
                 search = nullable_search == null ? current_path : (!) nullable_search;
-                _prepare_search (ref search, ref search_entry);
+                _prepare_search (ref search, search_entry);
                 return;
 
             case SearchMode.EDIT_PATH_SELECT_LAST_WORD:
                 search = current_path;
-                _prepare_select_last_word (ref search, ref search_entry);
+                _prepare_select_last_word (ref search, search_entry);
                 return;
 
             case SearchMode.SEARCH:
                 search = "";
-                _prepare_search (ref search, ref search_entry);
+                _prepare_search (ref search, search_entry);
                 return;
 
             case SearchMode.UNCLEAR:
@@ -210,19 +210,19 @@ private class PathEntry : Box, AdaptativeWidget
         }
     }
 
-    private static inline void _prepare_move_end (ref string text, ref BrowserEntry search_entry)
+    private static inline void _prepare_move_end (ref string text, BrowserEntry search_entry)
     {
         search_entry.text = text;
-        _entry_grab_focus_without_selecting (ref search_entry);
+        _entry_grab_focus_without_selecting (search_entry);
     }
 
-    private static inline void _prepare_search (ref string text, ref BrowserEntry search_entry)
+    private static inline void _prepare_search (ref string text, BrowserEntry search_entry)
     {
         search_entry.text = text;
         search_entry.grab_focus ();
     }
 
-    private static inline void _prepare_select_last_word (ref string current_path, ref BrowserEntry search_entry)
+    private static inline void _prepare_select_last_word (ref string current_path, BrowserEntry search_entry)
     {
         search_entry.move_cursor (MovementStep.DISPLAY_LINE_ENDS, -1, false);
         search_entry.text = current_path;
