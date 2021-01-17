@@ -84,7 +84,7 @@ private class Bookmarks : MenuButton
 
     construct
     {
-        update_switch_label (ViewType.SEARCH, ViewType.FOLDER, ref switch_label); // init text with "Bookmark this Location"
+        update_switch_label (ViewType.SEARCH, ViewType.FOLDER, switch_label); // init text with "Bookmark this Location"
 
         install_action_entries ();
 
@@ -184,7 +184,7 @@ private class Bookmarks : MenuButton
 
     internal void set_path (ViewType type, string path)
     {
-        update_switch_label (current_type, type, ref switch_label);
+        update_switch_label (current_type, type, switch_label);
 
         current_path = path;
         current_type = type;
@@ -392,7 +392,7 @@ private class Bookmarks : MenuButton
     * * Bookmarks management
     \*/
 
-    private static void update_switch_label (ViewType old_type, ViewType new_type, ref Label switch_label)
+    private static void update_switch_label (ViewType old_type, ViewType new_type, Label switch_label)
     {
         if (new_type == ViewType.SEARCH && old_type != ViewType.SEARCH)
             switch_label.label = bookmark_this_search_text;
@@ -414,18 +414,18 @@ private class Bookmarks : MenuButton
         {
             if (bookmarks_icon.icon_name != "starred-symbolic")
                 bookmarks_icon.icon_name = "starred-symbolic";
-            update_switch_state (true, ref bookmarked_switch);
+            update_switch_state (true, bookmarked_switch);
             bookmarked_switch.set_detailed_action_name ("bookmarks.unbookmark(" + variant.print (true) + ")");
         }
         else
         {
             if (bookmarks_icon.icon_name != "non-starred-symbolic")
                 bookmarks_icon.icon_name = "non-starred-symbolic";
-            update_switch_state (false, ref bookmarked_switch);
+            update_switch_state (false, bookmarked_switch);
             bookmarked_switch.set_detailed_action_name ("bookmarks.bookmark(" + variant.print (true) + ")");
         }
     }
-    private static void update_switch_state (bool bookmarked, ref Switch bookmarked_switch)
+    private static void update_switch_state (bool bookmarked, Switch bookmarked_switch)
     {
         if (bookmarked == bookmarked_switch.active)
             return;
