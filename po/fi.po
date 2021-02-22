@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2020-01-02 12:36+0000\n"
-"PO-Revision-Date: 2020-02-09 20:36+0200\n"
+"POT-Creation-Date: 2020-05-30 11:09+0000\n"
+"PO-Revision-Date: 2021-02-22 13:12+0200\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos+l10n@iki.fi>\n"
 "Language-Team: suomi <lokalisointi-lista@googlegroups.com>\n"
 "Language: fi\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2.4\n"
+"X-Generator: Poedit 2.4.2\n"
 
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the second is "Credits"
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the name of the view, displayed in the headerbar
@@ -148,7 +148,7 @@ msgstr ""
 #. Translators: text that might appear in the bookmarks popover in place of the switch and its label
 #: editor/bookmarks.ui:96
 msgid "The bookmarks list is not editable."
-msgstr ""
+msgstr "Kirjanmerkkiluettelo ei ole muokattavissa."
 
 #. Translators: accessible description of the button for opening the bookmarks popover
 #: editor/bookmarks.ui:133
@@ -231,16 +231,16 @@ msgstr ""
 "Asetusten muokkaaminen suoraan on edistynyt ominaisuus ja se saattaa "
 "aiheuttaa ongelmia sovellusten toimintaan."
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:30
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:31
 msgid "Browse the keys used by installed applications"
 msgstr "Selaa asennettujen sovellusten käyttämiä avaimia"
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:34
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:35
 msgid "Read keys descriptions and edit their values"
 msgstr "Lue avainten kuvauksia ja muuta niiden arvoja"
 
 #. a translatable version of project_group
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:49
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:50
 msgid "The GNOME Project"
 msgstr "Gnome-projekti"
 
@@ -1066,7 +1066,7 @@ msgstr ""
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:233
 msgid "example: “ca.desrt.dconf-editor.Bookmarks:/ca/desrt/dconf-editor/”"
-msgstr ""
+msgstr "esimerkki: “ca.desrt.dconf-editor.Bookmarks:/ca/desrt/dconf-editor/”"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:237
@@ -1111,7 +1111,7 @@ msgstr "Ei tuntemattomia skeemoja."
 #. Translators: command-line error message, when the user requests a specific path while there is already a window opened
 #: editor/dconf-editor.vala:457
 msgid "Only one window can be opened for now.\n"
-msgstr ""
+msgstr "Vain yksi ikkuna voi olla avoinna toistaiseksi.\n"
 
 #. Translators: command-line error message, try 'dconf-editor a b c d'
 #: editor/dconf-editor.vala:477
@@ -1165,7 +1165,6 @@ msgstr "Arnaud Bonatti"
 
 #. Translators: text crediting a maintainer, seen in the About dialog
 #: editor/dconf-editor.vala:669
-#| msgid "Copyright © Canonical Ltd"
 msgid "Copyright © 2010-2014 – Canonical Ltd"
 msgstr "Tekijänoikeus © 2010-2014 – Canonical Ltd"
 
@@ -1236,10 +1235,8 @@ msgstr "Nollaa näkyvät avaimet"
 
 #. Translators: hamburger menu entry that appears when browsing a folder path, to set to their default value all currently visible keys, and all keys in subfolders
 #: editor/dconf-headerbar.vala:208
-#, fuzzy
-#| msgid "Reset recursively"
 msgid "Reset view recursively"
-msgstr "Nollaa rekursiivisesti"
+msgstr "Nollaa näkymä rekursiivisesti"
 
 #. Translators: on really small windows, the bottom bar that appears in "delay mode" or when there're pending changes is replaced by an in-window view; here is the name of the view, displayed in the headerbar
 #: editor/dconf-headerbar.vala:246
@@ -1372,12 +1369,9 @@ msgstr "Toimintovalikko"
 
 #. Translators: Shift-F10 action
 #: editor/help-overlay.ui:66
-#, fuzzy
-#| msgctxt "shortcut window"
-#| msgid "Path bar navigation"
 msgctxt "shortcut window"
 msgid "Path bar menu"
-msgstr "Polkupalkissa liikkuminen"
+msgstr "Polkupalkin valikko"
 
 #. Translators: header in the shortcut window, for moving to paths known by the headerbar
 #: editor/help-overlay.ui:76
@@ -1411,47 +1405,39 @@ msgstr "Avaa aktiivinen viimeinen lapsi"
 
 #. Translators: header in the shortcut window, for the various ways of opening search
 #: editor/help-overlay.ui:115
-#, fuzzy
-#| msgid "Search keys"
 msgctxt "shortcut window"
 msgid "Search options"
-msgstr "Etsi avaimia"
+msgstr "Hakuvalinnat"
 
 #. Translators: Ctrl-F action; opens search, searching everywhere
 #: editor/help-overlay.ui:120
 msgctxt "shortcut window"
 msgid "Toggle search"
-msgstr ""
+msgstr "Haku päälle/pois"
 
 #. Translators: Ctrl-Alt-F action; does the same thing as "Toggle search", but loads the search entry with the last searched text
 #: editor/help-overlay.ui:128
-#, fuzzy
-#| msgctxt "shortcut window"
-#| msgid "Search bar"
 msgctxt "shortcut window"
 msgid "Search again"
-msgstr "Hakupalkki"
+msgstr "Etsi uudelleen"
 
 #. Translators: Ctrl-Shift-F action; opens search, searching only from current folder
 #: editor/help-overlay.ui:136
 msgctxt "shortcut window"
 msgid "Toggle local search"
-msgstr ""
+msgstr "Paikallinen haku päälle/pois"
 
 #. Translators: Ctrl-Shift-Alt-F action; does the same thing as "Toggle local search", but loads the search entry with the last searched text
 #: editor/help-overlay.ui:144
-#, fuzzy
-#| msgctxt "shortcut window"
-#| msgid "Search bar"
 msgctxt "shortcut window"
 msgid "Search again, locally"
-msgstr "Hakupalkki"
+msgstr "Etsi uudelleen, paikallisesti"
 
 #. Translators: Ctrl-V action; open search with clipboard content
 #: editor/help-overlay.ui:152
 msgctxt "shortcut window"
 msgid "Paste as search"
-msgstr ""
+msgstr "Liitä hakuna"
 
 #. Translators: Ctrl-Shift-V action; does the same thing as "Paste as search", but works even if an entry or textview is selected; entry hidden for now
 #: editor/help-overlay.ui:160
@@ -1467,11 +1453,9 @@ msgstr "Muokkaa polkua"
 
 #. Translators: Ctrl-Shift-L action when browsing; opens search on parent path
 #: editor/help-overlay.ui:176
-#, fuzzy
-#| msgid "Copy current path"
 msgctxt "shortcut window"
 msgid "Edit parent path"
-msgstr "Kopioi nykyinen polku"
+msgstr "Muokkaa ylätason polkua"
 
 #. Translators: '/' key action when browsing; opens search on root path
 #: editor/help-overlay.ui:184
@@ -1495,21 +1479,19 @@ msgstr ""
 #: editor/help-overlay.ui:207
 msgctxt "shortcut window"
 msgid "Contextual menu"
-msgstr ""
+msgstr "Asiayhteyteen sopiva valikko"
 
 #. Translators: Ctrl-Shift-G action, when browsing
 #: editor/help-overlay.ui:215
 msgctxt "shortcut window"
 msgid "Previous line"
-msgstr ""
+msgstr "Edellinen rivi"
 
 #. Translators: Ctrl-G action, when browsing
 #: editor/help-overlay.ui:223
-#, fuzzy
-#| msgid "Next"
 msgctxt "shortcut window"
 msgid "Next line"
-msgstr "Seuraava"
+msgstr "Seuraava rivi"
 
 #. Translators: entry disabled for now; Ctrl-I action, when browsing; displays informations on selected folder
 #: editor/help-overlay.ui:231
@@ -1527,19 +1509,19 @@ msgstr "Aseta oletusarvoon"
 #: editor/help-overlay.ui:247
 msgctxt "shortcut window"
 msgid "Toggle boolean value"
-msgstr ""
+msgstr "Vaihda totuusarvon tilaa"
 
 #. Translators: header in the shortcut window, for when there are pending changes
 #: editor/help-overlay.ui:257
 msgctxt "shortcut window"
 msgid "Modifications list actions"
-msgstr ""
+msgstr "Muokkauslistan toiminnot"
 
 #. Translators: Alt-I action if there are pending changes; the modifications list is either a popover, or an in-window panel
 #: editor/help-overlay.ui:262
 msgctxt "shortcut window"
 msgid "Toggle modifications list"
-msgstr ""
+msgstr "Muokkauslista päälle/pois"
 
 #. Translators: Return/Enter keys action in the list of pending modifications; go to the key with pending modification
 #: editor/help-overlay.ui:270
@@ -1616,7 +1598,7 @@ msgstr "Hylkää odottavat muutokset ja lopeta"
 #. Translators: tooltip text of the entry's icon when editing the value of a double or a 64-bit (signed or unsigned) key, if the key only allows a range of values and the written value is out of range
 #: editor/key-editor-child.vala:30
 msgid "Given value is out of range."
-msgstr ""
+msgstr "Arvo on sallitun alueen ulkopuolella."
 
 #. Translators: tooltip text of the entry's icon (if using an entry) or text displayed under the text view (if using a text view) when editing the value of a key, if the written text cannot be parsed regarding to the key's value type
 #: editor/key-editor-child.vala:33
@@ -1648,14 +1630,12 @@ msgstr "Siirry polkuun “%s”"
 #: editor/key-list-box-row.vala:149
 #, c-format
 msgid "Search in “%s” folder"
-msgstr ""
+msgstr "Etsi kansiossa “%s”"
 
 #. Translators: first item of the keys list displayed during browsing at root path
 #: editor/key-list-box-row.vala:153
-#, fuzzy
-#| msgid "Open parent folder"
 msgid "Open path entry"
-msgstr "Avaa ylätason kansio"
+msgstr "Avaa polkutietue"
 
 #. Translators: last item of the keys list displayed during a local search
 #: editor/key-list-box-row.vala:157
@@ -1697,11 +1677,8 @@ msgstr "Poista avain"
 
 #. Translators: "go to" action in the right-click menu on a "go back" line during search
 #: editor/key-list-box-row.vala:469
-#, fuzzy
-#| msgctxt "shortcut window"
-#| msgid "Bookmark this path"
 msgid "Go to this path"
-msgstr "Lisää tämä polku kirjanmerkkeihin"
+msgstr "Siirry tähän polkuun"
 
 #. Translators: "open folder" action in the right-click menu on a folder
 #: editor/key-list-box-row.vala:472
@@ -2269,17 +2246,15 @@ msgstr ""
 
 #. Translators: header displayed in the keys list during a search only; indicates that the schema (the %s is the schema id) is installed at the path where the search has started
 #: editor/registry-list.vala:1176
-#, fuzzy, c-format
+#, c-format
 #| msgid "%s (key erased)"
 msgid "%s (local keys)"
-msgstr "%s (avain poistettu)"
+msgstr "%s (paikalliset avaimet)"
 
 #. Translators: header displayed in the keys list during a search only; indicates that the following non-defined keys are installed at the path where the search has started
 #: editor/registry-list.vala:1182
-#, fuzzy
-#| msgid "Keys not defined by a schema"
 msgid "Local keys not defined by a schema"
-msgstr "Skeema ei määritä avaimia"
+msgstr "Paikalliset avaimet eivät ole skeeman määrittämiä"
 
 #. Translators: header displayed in the keys list during a search or during browsing
 #: editor/registry-list.vala:1186
