@@ -4,21 +4,21 @@
 # Proxecto Trasno - Adaptación do software libre á lingua galega:  Se desexas
 # colaborar connosco, podes atopar máis información en http://www.trasno.net
 # Leandro Regueiro <leandro.regueiro@gmail.com>, 2012.
-# Fran Dieguez <frandieguez@gnome.org>, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019.
+# Fran Dieguez <frandieguez@gnome.org>, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2020-02-14 05:00+0000\n"
-"PO-Revision-Date: 2020-02-14 21:57+0100\n"
-"Last-Translator: Fran Diéguez <frandieguez@gnome.org>\n"
-"Language-Team: Galician\n"
+"POT-Creation-Date: 2020-05-30 11:09+0000\n"
+"PO-Revision-Date: 2021-02-23 21:48+0100\n"
+"Last-Translator: Fran Dieguez <frandieguez@gnome.org>\n"
+"Language-Team: Proxecto Trasno <proxecto@trasno.gal>\n"
 "Language: gl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.3\n"
+"X-Generator: Gtranslator 3.38.0\n"
 "X-Project-Style: gnome\n"
 
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the second is "Credits"
@@ -50,7 +50,7 @@ msgstr "Creadores"
 #: editor/about-list.vala:166
 msgid "Translators"
 msgstr ""
-"Fran Dieguez <frandieguez@gnome.org>, 2015-2019.\n"
+"Fran Diéguez <frandieguez@gnome.org>, 2015-2019.\n"
 "Leandro Regueiro <leandro.regueiro@gmail.com>, 2012.\n"
 "\n"
 "Proxecto Trasno - Adaptación do software libre á lingua galega:  Se desexas\n"
@@ -142,7 +142,7 @@ msgstr "Usar"
 #. Translators: label of one of the two buttons of the bookmarks list, to switch between using the bookmarks and editing the list; the first is "Use"
 #: editor/bookmarks-list.vala:38
 msgid "Edit"
-msgstr "Edtiar"
+msgstr "Editar"
 
 #. Translators: accessible name of the switch for bookmarking current path in the bookmarks popover
 #: editor/bookmarks.ui:69
@@ -240,16 +240,16 @@ msgstr ""
 "A edición a configuración directamente é unha característica avanzada que "
 "pode causar que as aplicacións non funcionen correctamente."
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:30
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:31
 msgid "Browse the keys used by installed applications"
 msgstr "Explore as chaves usadas polas aplicacións instaladas"
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:34
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:35
 msgid "Read keys descriptions and edit their values"
 msgstr "Lea as descricións das chaves e edite os seus valores"
 
 #. a translatable version of project_group
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:49
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:50
 msgid "The GNOME Project"
 msgstr "O Proxecto GNOME"
 
@@ -276,13 +276,13 @@ msgstr "preferencias;configuración;"
 #. Translators: summary of a settings key, see 'dconf-editor /org/gnome/iagno/automatic-night-mode'
 #: editor/ca.desrt.dconf-editor.gschema.xml:89
 msgid "A flag to follow system night light"
-msgstr "Unha bandeira para seguir a luz noctura ndo sistema"
+msgstr "Unha bandeira para seguir a luz nocturna do sistema"
 
 #. Translators: description of a settings key, see 'dconf-editor /org/gnome/iagno/automatic-night-mode'
 #: editor/ca.desrt.dconf-editor.gschema.xml:91
 msgid "Use GNOME night light setting to activate night-mode."
 msgstr ""
-"Usar a preferencia da luz noctura de GNOME para activar o modo nocturno."
+"Usar a preferencia da luz nocturna de GNOME para activar o modo nocturno."
 
 #. see AdaptativeWindow.width-request at data/ui/adaptative-window.ui:22
 #. range min="350"/ FIXME
@@ -321,7 +321,7 @@ msgstr "Se é «true», a xanela principal arrincará maximizada."
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/restore-view'
 #: editor/ca.desrt.dconf-editor.gschema.xml:138
 msgid "A flag to restore the last view"
-msgstr "Unha bandeira para restaurar a úlitima vista"
+msgstr "Unha bandeira para restaurar a última vista"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/restore-view'
 #: editor/ca.desrt.dconf-editor.gschema.xml:140
@@ -407,10 +407,10 @@ msgstr ""
 "encapsulado non especial, actualiza o valor da chave cada vez que algo "
 "cambia na entrada, isto inclúe os estados intermedios. O valor «safe» "
 "pídelle confirmación neste casos, pero permite os cambios instantáneos para "
-"os boleanos e os boleanos con null, as enumeracións e os parámetros. Os "
+"os booleanos e os booleanos con null, as enumeracións e os parámetros. Os "
 "valores «always-confirm-implicit» e «always-confirm-explicit» pídenlle "
 "confirmación sempre, pero o primeiro aplica o cambio se cambia a ruta "
-"mentres que o segunto omíteo. O valor «always-delay» engade cada cambio ao "
+"mentres que o segundo omíteo. O valor «always-delay» engade cada cambio ao "
 "modo atrasado, permitíndolle aplicar varias chaves á vez."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/sort-case-sensitive'
@@ -493,7 +493,7 @@ msgid ""
 "be disabled by setting this flag to “false”. Note that this option will be "
 "removed when a better way to do things is found."
 msgstr ""
-"O Editor DConf pode facer un seguemento dos esquemas que se engaden ou "
+"O Editor DConf pode facer un seguimento dos esquemas que se engaden ou "
 "eliminan desde varias localizacións posíbeis. Isto realízase comprobando "
 "cada tres segundos se a lista de esquemas cambiou. Como esta forma non é "
 "óptima, esta función pode desactivarse estabelecendo esta bandeira a "
@@ -514,8 +514,8 @@ msgid ""
 "reserved for Dconf Editor own mappings; “Startup” is for mapping a "
 "relocatable schema from the command-line."
 msgstr ""
-"Aandeiras para as facilidades de asignación de esquemas relocalizábeis. "
-"«User» permite a asiganción definida pola chave «relocatable-schemas-user-"
+"Bandeiras para as facilidades de asignación de esquemas relocalizábeis. "
+"«User» permite a asignación definida pola chave «relocatable-schemas-user-"
 "paths»; “Built-in” activa as asignacións «hardcoded» coñecidas dentro do "
 "Editor de DConf; “Internal” está reservado para as asignacións propias do "
 "Editor de Dconf; “Startup” é para as asignacións dos esquemas relocalizábeis "
@@ -554,7 +554,7 @@ msgid ""
 "to that subfolder directly. This flag enables that behaviour."
 msgstr ""
 "Cando un cartafol só contén un subcartafol e non contén chaves, o Editor de "
-"Dconf pode omitir o subcartafol directametne. Esta bandeira activa este "
+"Dconf pode omitir o subcartafol directamente. Esta bandeira activa este "
 "comportamento."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/bookmarks'
@@ -587,12 +587,12 @@ msgstr "Un booleano, tipo «b»"
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/boolean'
 #: editor/ca.desrt.dconf-editor.gschema.xml:277
 msgid "Booleans can only take two values, “true” or “false”."
-msgstr "Os boleanos só poden ter dous valores, «true» ou «false»."
+msgstr "Os booleanos só poden ter dous valores, «true» ou «false»."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/boolean-nullable'
 #: editor/ca.desrt.dconf-editor.gschema.xml:282
 msgid "A nullable boolean, type ‘mb’"
-msgstr "Un boleano nuleable, tipo «mb»"
+msgstr "Un booleano anulábel, tipo «mb»"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/boolean-nullable'
 #: editor/ca.desrt.dconf-editor.gschema.xml:284
@@ -602,13 +602,13 @@ msgid ""
 "“true”, “false” and “nothing”."
 msgstr ""
 "GSettings permite os tipos con valor null, que son similares aos tipos pero "
-"que poden conter o valor «nulo». O boleano con valor nulo pode ter tres "
+"que poden conter o valor «nulo». O booleano con valor nulo pode ter tres "
 "valores «true», «false» e «nothing»."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/byte'
 #: editor/ca.desrt.dconf-editor.gschema.xml:289
 msgid "A byte (unsigned), type ‘y’"
-msgstr "Un bite (sen signo), tipo «y»"
+msgstr "Un byte (sen signo), tipo «y»"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/byte'
 #: editor/ca.desrt.dconf-editor.gschema.xml:291
@@ -616,7 +616,7 @@ msgid ""
 "A byte value is an integer between 0 and 255. It may be used to pass around "
 "characters."
 msgstr ""
-"Un valor bite é un enteiro entre 0 e 255. Pode usarse para pasar caracteres."
+"Un valor byte é un enteiro entre 0 e 255. Pode usarse para pasar caracteres."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/bytestring'
 #: editor/ca.desrt.dconf-editor.gschema.xml:296
@@ -631,8 +631,8 @@ msgid ""
 "character should be included as the last character in the array."
 msgstr ""
 "O tipo bytestring úsase de forma común para pasar cadeas que poden non ser "
-"utf8 váliso. Nese caso, a convención é que o caracter terminador nul debería "
-"incluirse como o último caracter da matriz."
+"utf8 válido. Nese caso, a convención é que o carácter terminador nul debería "
+"incluírse como o último carácter da matriz."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/bytestring-array'
 #: editor/ca.desrt.dconf-editor.gschema.xml:303
@@ -669,7 +669,7 @@ msgstr ""
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-object-path'
 #: editor/ca.desrt.dconf-editor.gschema.xml:317
 msgid "A D-Bus object path, type ‘o’"
-msgstr "Unha ruta de boxecto D-Bus, tipo «o»"
+msgstr "Unha ruta de obxecto D-Bus, tipo «o»"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-object-path'
 #: editor/ca.desrt.dconf-editor.gschema.xml:319
@@ -695,7 +695,7 @@ msgid ""
 "to make use of this type."
 msgstr ""
 "Unha matriz de rutas de obxectos pode conter calquera número de rutas de "
-"obxectos (tamén ningun: «[]». Se non está interactuando con D-Bus entón non "
+"obxectos (tamén ningún: «[]». Se non está interactuando con D-Bus entón non "
 "hai ningunha razón para usar este tipo."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-signature'
@@ -725,7 +725,7 @@ msgid ""
 "A dictionary maps values of a basic type to another value (of any type). A "
 "dictionary entry is one such mapping."
 msgstr ""
-"Un diccionario asigna valores do tipo básico a outro valor (ou calquera "
+"Un dicionario asigna valores do tipo básico a outro valor (ou calquera "
 "tipo). Unha entrada de dicionario é dita asignación."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dictionary'
@@ -860,7 +860,7 @@ msgid ""
 "integer could only take a value between -2 and 10."
 msgstr ""
 "Cada configuración numeral (enteiros e enteiros sen signo de cada tipo, "
-"ademáis dos doubles) poden limitarse a un rango de valores personalizado. "
+"ademais dos doubles) poden limitarse a un rango de valores personalizado. "
 "Por exemplo, este enteiro podería só ter valores entre -2 e 10."
 
 #. Translators: do not forget the parenthesis, they are meaningful; summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/pair-of-integers'
@@ -877,7 +877,7 @@ msgid ""
 msgstr ""
 "O editor de Dconf permítelle editar calquera tipo de configuracións "
 "compatíbeis en GSettings, de forma alternativa pode usar a entrada de cadea "
-"cando non existe unha forma mellor de facelo. Aqui está unha tupla de dous "
+"cando non existe unha forma mellor de facelo. Aquí está unha tupla de dous "
 "enteiros con signo de 32 bits."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string'
@@ -912,7 +912,7 @@ msgstr ""
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string-nullable'
 #: editor/ca.desrt.dconf-editor.gschema.xml:445
 msgid "A nullable string, type ‘ms’"
-msgstr "Unha cadea nuleable, tipo «ms»"
+msgstr "Unha cadea anulábel, tipo «ms»"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string-nullable'
 #: editor/ca.desrt.dconf-editor.gschema.xml:447
@@ -921,8 +921,8 @@ msgid ""
 "take a “nothing” value. A nullable string can take any string as value, "
 "including the empty string “''”, or can be NULL (nothing)."
 msgstr ""
-"GSettings permite os tipos nulables, que é similar aos outros tipos pero que "
-"poden obter valores «nulos». Unha cadea nulable pode conter calquera cadea "
+"GSettings permite os tipos anulábeis, que é similar aos outros tipos pero que "
+"poden obter valores «nulos». Unha cadea anulábel pode conter calquera cadea "
 "como valor, incluíndo o valor de cadea baleira «''», ou que pode ser NULL "
 "(nulo)."
 
@@ -996,7 +996,7 @@ msgstr ""
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/relocatable/boolean' (with default /ca/desrt/dconf-editor/relocatable-* settings)
 #: editor/ca.desrt.dconf-editor.gschema.xml:489
 msgid "An usual boolean value, defined by a relocatable schema."
-msgstr "Un valor boleano normal, definido por un esquema relocalizábel."
+msgstr "Un valor booleano normal, definido por un esquema relocalizábel."
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/relocatable/integer' (with default /ca/desrt/dconf-editor/relocatable-* settings)
 #: editor/ca.desrt.dconf-editor.gschema.xml:496
@@ -1034,7 +1034,7 @@ msgid ""
 "keys. It shouldn’t be editable as a key mapped to the same path has a "
 "different default value."
 msgstr ""
-"Esta chave é u nha proba para ter varios esquemas na mesma ruta con chaves "
+"Esta chave é unha proba para ter varios esquemas na mesma ruta con chaves "
 "conflitivas. Non debería ser editábel como unha chave asignada á mesma ruta "
 "ten un valor por omisión diferente."
 
@@ -1052,7 +1052,7 @@ msgid ""
 "keys. It shouldn’t be editable as a key mapped to the same path has a "
 "different range."
 msgstr ""
-"Esta chave é u nha proba para ter varios esquemas na mesma ruta con chaves "
+"Esta chave é unha proba para ter varios esquemas na mesma ruta con chaves "
 "conflitivas. Non debería ser editábel como unha chave asignada á mesma ruta "
 "ten un rango diferente."
 
@@ -1070,7 +1070,7 @@ msgid ""
 "keys. It shouldn’t be editable as a key mapped to the same path has a "
 "different type."
 msgstr ""
-"Esta chave é u nha proba para ter varios esquemas na mesma ruta con chaves "
+"Esta chave é unha proba para ter varios esquemas na mesma ruta con chaves "
 "conflitivas. Non debería ser editábel como unha chave asignada á mesma ruta "
 "ten un tipo diferente."
 
@@ -1088,7 +1088,7 @@ msgid ""
 "keys. It can be edited, since the types are compatible, but it is still an "
 "issue."
 msgstr ""
-"Esta chave é unha proba para os esquemas múltiples ñcoa mesma ruta con "
+"Esta chave é unha proba para os esquemas múltiples coa mesma ruta con "
 "chaves conflitivas. Pode ser editado, xa que os tipos son compatíbeis, pero "
 "aínda así é un problema."
 
@@ -1171,7 +1171,7 @@ msgstr "exemplo: «ca.desrt.dconf-editor.Settings»"
 #. Translators: command-line argument description, see 'dconf-editor --help'; no need to put your translation of "relocatable" between quotation marks, that's done in English to highlight why the option is called "RELOC_SCHEMA"
 #: editor/dconf-editor.vala:225
 msgid "the name of a “relocatable” schema, without fixed path"
-msgstr "o nome do esquema «reubicábel», sen a ruta arranxada"
+msgstr "o nome do esquema «relocalizábel», sen a ruta arranxada"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:227
@@ -1181,7 +1181,7 @@ msgstr "ver a lista coa opción «--list-relocatable-schemas»"
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:231
 msgid "the path where to map the relocatable schema"
-msgstr "a ruta onde mapear o esquema reubicábel"
+msgstr "a ruta onde mapear o esquema relocalizábel"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:233
@@ -1241,12 +1241,12 @@ msgstr "Non é posíbel entender: demasiados argumentos.\n"
 #. Translators: command-line error message, try 'dconf-editor / a'
 #: editor/dconf-editor.vala:491
 msgid "Cannot understand second argument in this context.\n"
-msgstr "Non é posíbel enteder o segundo argumento neste contexto.\n"
+msgstr "Non é posíbel entender o segundo argumento neste contexto.\n"
 
 #. Translators: command-line error message, try 'dconf-editor org.example /'
 #: editor/dconf-editor.vala:512
 msgid "Cannot understand: slash character in second argument.\n"
-msgstr "Non é posíbel entender: o caracter barra no segundo argumento.\n"
+msgstr "Non é posíbel entender: o carácter barra no segundo argumento.\n"
 
 #. Translators: command-line error message, try 'dconf-editor org.example:a'
 #: editor/dconf-editor.vala:527
@@ -1256,12 +1256,12 @@ msgstr "A ruta de esquema debe comezar e rematar con un «/».\n"
 #. Translators: command-line error message, try 'dconf-editor //'
 #: editor/dconf-editor.vala:543
 msgid "Cannot understand: given path contains “//”.\n"
-msgstr "Non é posíbel enteder: a ruta fornecida contén «//».\n"
+msgstr "Non é posíbel entender: a ruta fornecida contén «//».\n"
 
 #. Translators: command-line error message, try 'dconf-editor "org example" a'
 #: editor/dconf-editor.vala:551
 msgid "Cannot understand: space character in argument.\n"
-msgstr "Non é posíbel entender: o caracter espazo no argumento.\n"
+msgstr "Non é posíbel entender: o carácter espazo no argumento.\n"
 
 #. Translators: notification header, try ctrl-c while in the keys list
 #: editor/dconf-editor.vala:579
@@ -1285,7 +1285,6 @@ msgstr "Arnaud Bonatti"
 
 #. Translators: text crediting a maintainer, seen in the About dialog
 #: editor/dconf-editor.vala:669
-#| msgid "Copyright © Canonical Ltd"
 msgid "Copyright © 2010-2014 – Canonical Ltd"
 msgstr "Copyright © 2010-2014 – Canonical Ltd"
 
@@ -1304,7 +1303,7 @@ msgstr "Copyright © %u-%u – Arnaud Bonatti"
 #: editor/dconf-editor.vala:684
 msgid "translator-credits"
 msgstr ""
-"Fran Dieguez <frandieguez@gnome.org>, 2015-2020.\n"
+"Fran Diéguez <frandieguez@gnome.org>, 2015-2020.\n"
 "Leandro Regueiro <leandro.regueiro@gmail.com>, 2012.\n"
 "\n"
 "Proxecto Trasno - Adaptación do software libre á lingua galega:  Se desexas\n"
@@ -1349,7 +1348,7 @@ msgstr "Saír do modo"
 #. Translators: hamburger menu entry, to enter in a special mode called "delay mode" where changes are not applied until validation
 #: editor/dconf-headerbar.vala:201
 msgid "Enter delay mode"
-msgstr "Inserte o modo de retraso"
+msgstr "Insira o modo de atraso"
 
 #. Translators: hamburger menu entry that appears when browsing a folder path, to set to their default value all currently visible keys, not including keys in subfolders
 #: editor/dconf-headerbar.vala:205
@@ -1560,7 +1559,7 @@ msgstr "Buscar de novo, de forma local"
 #: editor/help-overlay.ui:152
 msgctxt "shortcut window"
 msgid "Paste as search"
-msgstr "Peegar como busca"
+msgstr "Pegar como busca"
 
 #. Translators: Ctrl-Shift-V action; does the same thing as "Paste as search", but works even if an entry or textview is selected; entry hidden for now
 #: editor/help-overlay.ui:160
@@ -1596,7 +1595,7 @@ msgstr "Explorar o árbore de chaves"
 #: editor/help-overlay.ui:202
 msgctxt "shortcut window"
 msgid "Keys list actions"
-msgstr "Acci'ons de listado de chaves"
+msgstr "Accións de listado de chaves"
 
 #. Translators: Menu key action, when browsing
 #: editor/help-overlay.ui:207
@@ -1967,7 +1966,7 @@ msgstr "bandeiras"
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:421
 msgid "Double"
-msgstr "Doble"
+msgstr "Dobre"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:424
@@ -2027,7 +2026,7 @@ msgid ""
 "but\n"
 "no pending changes"
 msgstr ""
-"O modo retrasado está activo\n"
+"O modo atrasado está activo\n"
 "pero\n"
 "non hai cambios pendentes"
 
@@ -2065,7 +2064,7 @@ msgstr "O cambio aplicarase en dita solicitude ou se sae de esta vista."
 #. Translators: Text displayed in the bottom bar; displayed if there are no pending changes, to document what is the "delay mode".
 #: editor/modifications-revealer.vala:337
 msgid "Changes will be delayed until you request it."
-msgstr "Os cambios retrasaranse ate que o solicite."
+msgstr "Os cambios atrasaranse ate que o solicite."
 
 #. Translators: Text displayed in the bottom bar; "gsettings" is a technical term, notably a shell command, so you probably should not translate it.
 #: editor/modifications-revealer.vala:340
@@ -2073,7 +2072,7 @@ msgstr "Os cambios retrasaranse ate que o solicite."
 msgid "One gsettings operation delayed."
 msgid_plural "%u gsettings operations delayed."
 msgstr[0] "Atrasouse unha operación de gsettings."
-msgstr[1] "Atrasáronse %u operacions de gsettings."
+msgstr[1] "Atrasáronse %u operacións de gsettings."
 
 #. Translators: Text displayed in the bottom bar; "dconf" is a technical term, notably a shell command, so you probably should not translate it.
 #: editor/modifications-revealer.vala:344
@@ -2136,7 +2135,7 @@ msgid ""
 "This key is defined and used by more than one schema. This could lead to "
 "problems. Edit value at your own risk."
 msgstr ""
-"Este chave está definida e usada por maís dun esquema. Isto pode levar a "
+"Este chave está definida e usada por máis dun esquema. Isto pode levar a "
 "problemas. Edite o valor baixo o seu risco."
 
 #. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/Conflict/type-conflict'
@@ -2280,7 +2279,7 @@ msgstr "Non se forneceu descrición"
 #. Translators: field content when displaying key properties; "Yes" if the key has a range set, "No" if not
 #: editor/registry-info.vala:249
 msgid "Yes"
-msgstr "Sí"
+msgstr "Si"
 
 #. Translators: field content when displaying key properties; "Yes" if the key has a range set, "No" if not
 #: editor/registry-info.vala:252
