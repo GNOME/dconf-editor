@@ -37,8 +37,8 @@ private class ShortPathbar : Grid, Pathbar  // TODO make MenuButton?
         _complete_path = complete_path;
     }
 
-    [GtkChild] private MenuButton   menu_button;
-    [GtkChild] private Label        view_label;
+    [GtkChild] private unowned MenuButton   menu_button;
+    [GtkChild] private unowned Label        view_label;
 
     internal ShortPathbar (string complete_path_or_empty, ViewType type, string path)
     {

@@ -20,8 +20,8 @@ using Gtk;
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/registry-placeholder.ui")]
 private class RegistryPlaceholder : Grid
 {
-    [GtkChild] private Label placeholder_label;
-    [GtkChild] private Image placeholder_image;
+    [GtkChild] private unowned Label placeholder_label;
+    [GtkChild] private unowned Image placeholder_image;
 
     [CCode (notify = false)] public string label     { internal construct set { placeholder_label.label = value; }}
     [CCode (notify = false)] public string icon_name { private get; internal construct; }

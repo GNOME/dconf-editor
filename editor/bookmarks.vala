@@ -32,13 +32,13 @@ internal enum BookmarkIcon {
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/bookmarks.ui")]
 private class Bookmarks : MenuButton
 {
-    [GtkChild] private Image                bookmarks_icon;
-    [GtkChild] private Popover              bookmarks_popover;
-    [GtkChild] private Stack                edit_mode_stack;
-    [GtkChild] private BookmarksList        bookmarks_list;
-    [GtkChild] private Switch               bookmarked_switch;
-    [GtkChild] private Label                switch_label;
-    [GtkChild] private BookmarksController  bookmarks_controller;
+    [GtkChild] private unowned Image                bookmarks_icon;
+    [GtkChild] private unowned Popover              bookmarks_popover;
+    [GtkChild] private unowned Stack                edit_mode_stack;
+    [GtkChild] private unowned BookmarksList        bookmarks_list;
+    [GtkChild] private unowned Switch               bookmarked_switch;
+    [GtkChild] private unowned Label                switch_label;
+    [GtkChild] private unowned BookmarksController  bookmarks_controller;
 
     private string   current_path = "/";
     private ViewType current_type = ViewType.FOLDER;

@@ -20,7 +20,7 @@ using Gtk;
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/large-pathbar.ui")]
 private class LargePathbar : Box, Pathbar
 {
-    [GtkChild] private LargePathbarItem root_button;
+    [GtkChild] private unowned LargePathbarItem root_button;
     private LargePathbarItem active_button;
 
     private string complete_path = "";
@@ -314,7 +314,7 @@ private class LargePathbarItem : Button
     [CCode (notify = false)] public string text_string        { internal get; internal construct; }
     [CCode (notify = false)] public bool   has_config_menu    { private get;  internal construct; }
 
-    [GtkChild] private Label text_label;
+    [GtkChild] private unowned Label text_label;
     private Popover? popover = null;
 
     internal enum CursorType {

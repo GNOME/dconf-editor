@@ -72,7 +72,7 @@ private class BaseWindow : AdaptativeWindow, AdaptativeWidget
     * * main grid
     \*/
 
-    [GtkChild] private Grid main_grid;
+    [GtkChild] private unowned Grid main_grid;
 
     protected void add_to_main_grid (Widget widget)
     {

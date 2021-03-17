@@ -20,10 +20,10 @@ using Gtk;
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/browser-stack.ui")]
 private class BrowserStack : Grid, AdaptativeWidget, BrowserContent
 {
-    [GtkChild] private Stack stack;
-    [GtkChild] private RegistryView folder_view;
-    [GtkChild] private RegistryInfo object_view;
-    [GtkChild] private RegistrySearch search_view;
+    [GtkChild] private unowned Stack stack;
+    [GtkChild] private unowned RegistryView folder_view;
+    [GtkChild] private unowned RegistryInfo object_view;
+    [GtkChild] private unowned RegistrySearch search_view;
 
     [CCode (notify = false)] internal ViewType current_view { internal get; protected set; default = ViewType.FOLDER; }
 

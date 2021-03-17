@@ -20,7 +20,7 @@ using Gtk;
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/base-view.ui")]
 private class BaseView : Stack, AdaptativeWidget
 {
-    [GtkChild] protected Grid main_grid;
+    [GtkChild] protected unowned Grid main_grid;
 
     internal virtual bool handle_copy_text (out string copy_text)
     {
@@ -109,7 +109,7 @@ private class BaseView : Stack, AdaptativeWidget
     * * notifications
     \*/
 
-    [GtkChild] private Overlay notifications_overlay;
+    [GtkChild] private unowned Overlay notifications_overlay;
 
     private bool notifications_revealer_created = false;
     private NotificationsRevealer notifications_revealer;

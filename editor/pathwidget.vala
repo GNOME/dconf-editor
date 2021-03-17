@@ -20,15 +20,15 @@ using Gtk;
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/pathwidget.ui")]
 private class PathWidget : Box, AdaptativeWidget
 {
-    [GtkChild] private ModelButton          search_toggle;      // most window size button
-    [GtkChild] private ModelButton          search_button;      // extra-small-window only
-    [GtkChild] private Stack                pathwidget_stack;
-    [GtkChild] private Grid                 pathbar_grid;
-    [GtkChild] private AdaptativePathbar    pathbar;
-    [GtkChild] private PathEntry            searchentry;
+    [GtkChild] private unowned ModelButton          search_toggle;      // most window size button
+    [GtkChild] private unowned ModelButton          search_button;      // extra-small-window only
+    [GtkChild] private unowned Stack                pathwidget_stack;
+    [GtkChild] private unowned Grid                 pathbar_grid;
+    [GtkChild] private unowned AdaptativePathbar    pathbar;
+    [GtkChild] private unowned PathEntry            searchentry;
 
-    [GtkChild] private Revealer             parent_revealer;
-    [GtkChild] private ModelButton          parent_button;
+    [GtkChild] private unowned Revealer             parent_revealer;
+    [GtkChild] private unowned ModelButton          parent_button;
 
     private ThemedIcon search_icon = new ThemedIcon.from_names ({"edit-find-symbolic"});
     private ThemedIcon parent_icon = new ThemedIcon.from_names ({"go-up-symbolic"});
