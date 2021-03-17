@@ -20,17 +20,17 @@ using Gtk;
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/bookmarks-controller.ui")]
 private class BookmarksController : Grid
 {
-    [GtkChild] private Image big_rows_icon;
-    [GtkChild] private Image small_rows_icon;
+    [GtkChild] private unowned Image big_rows_icon;
+    [GtkChild] private unowned Image small_rows_icon;
 
-    [GtkChild] private Button rows_size_button;
+    [GtkChild] private unowned Button rows_size_button;
     [CCode (notify = false)] public bool show_rows_size_button { private get; construct; default = false; }
 
-    [GtkChild] private Button trash_bookmark_button;
-    [GtkChild] private Button move_top_button;
-    [GtkChild] private Button move_up_button;
-    [GtkChild] private Button move_down_button;
-    [GtkChild] private Button move_bottom_button;
+    [GtkChild] private unowned Button trash_bookmark_button;
+    [GtkChild] private unowned Button move_top_button;
+    [GtkChild] private unowned Button move_up_button;
+    [GtkChild] private unowned Button move_down_button;
+    [GtkChild] private unowned Button move_bottom_button;
     [CCode (notify = false)] public string controller_action_prefix
     {
         construct

@@ -20,12 +20,12 @@ using Gtk;
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/overlayed-list.ui")]
 private abstract class OverlayedList : Overlay, AdaptativeWidget
 {
-    [GtkChild] protected ListBox        main_list_box;
+    [GtkChild] protected unowned ListBox        main_list_box;
                private   StyleContext   main_list_box_context;
                protected GLib.ListStore main_list_store = new GLib.ListStore (typeof (Widget));
 
-    [GtkChild] private   ScrolledWindow scrolled;
-    [GtkChild] private   Box            edit_mode_box;
+    [GtkChild] private   unowned ScrolledWindow scrolled;
+    [GtkChild] private   unowned Box            edit_mode_box;
 
     /*\
     * * differed construct
@@ -45,8 +45,8 @@ private abstract class OverlayedList : Overlay, AdaptativeWidget
     }
 
 
-    [GtkChild] private ModelButton enter_edit_mode_button;
-    [GtkChild] private ModelButton leave_edit_mode_button;
+    [GtkChild] private unowned ModelButton enter_edit_mode_button;
+    [GtkChild] private unowned ModelButton leave_edit_mode_button;
     [CCode (notify = false)] public string edit_mode_action_prefix
     {
         construct

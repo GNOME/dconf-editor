@@ -20,7 +20,7 @@ using Gtk;
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/browser-infobar.ui")]
 private class BrowserInfoBar : Revealer
 {
-    [GtkChild] private Stack content;
+    [GtkChild] private unowned Stack content;
 
     internal void add_label (string name, string text_label, string? button_label = null, string button_action = "")
     {

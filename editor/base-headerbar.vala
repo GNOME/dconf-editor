@@ -20,7 +20,7 @@ using Gtk;
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/base-headerbar.ui")]
 private class BaseHeaderBar : NightTimeAwareHeaderBar, AdaptativeWidget
 {
-    [GtkChild] protected Box center_box;
+    [GtkChild] protected unowned Box center_box;
 
     construct
     {
@@ -190,7 +190,7 @@ private class BaseHeaderBar : NightTimeAwareHeaderBar, AdaptativeWidget
     * * quit button stack
     \*/
 
-    [GtkChild] private Stack quit_button_stack;
+    [GtkChild] private unowned Stack quit_button_stack;
 
     protected void add_named_widget_to_quit_button_stack (Widget widget, string name)
     {
@@ -214,11 +214,11 @@ private class BaseHeaderBar : NightTimeAwareHeaderBar, AdaptativeWidget
     * * default widgets
     \*/
 
-    [GtkChild] private Button     go_back_button;
-    [GtkChild] private Separator  ltr_left_separator;
-    [GtkChild] private Label      title_label;
-    [GtkChild] private MenuButton info_button;
-    [GtkChild] private Separator  ltr_right_separator;
+    [GtkChild] private unowned Button     go_back_button;
+    [GtkChild] private unowned Separator  ltr_left_separator;
+    [GtkChild] private unowned Label      title_label;
+    [GtkChild] private unowned MenuButton info_button;
+    [GtkChild] private unowned Separator  ltr_right_separator;
 
     protected void set_default_widgets_states (string?  title_label_text_or_null,
                                                bool     show_go_back_button,

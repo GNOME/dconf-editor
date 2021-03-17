@@ -20,12 +20,12 @@ using Gtk;
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/delayed-setting-view.ui")]
 private class DelayedSettingView : OverlayedListRow
 {
-    [GtkChild] private Label key_name_label;
-    [GtkChild] private Label key_value_label;
-    [GtkChild] private Label key_value_default;
-    [GtkChild] private Label planned_value_label;
-    [GtkChild] private Label planned_value_default;
-    [GtkChild] private Button cancel_change_button;
+    [GtkChild] private unowned Label key_name_label;
+    [GtkChild] private unowned Label key_value_label;
+    [GtkChild] private unowned Label key_value_default;
+    [GtkChild] private unowned Label planned_value_label;
+    [GtkChild] private unowned Label planned_value_default;
+    [GtkChild] private unowned Button cancel_change_button;
 
     [CCode (notify = false)] public string full_name     { internal get; internal construct; }
     [CCode (notify = false)] public uint16 context_id    { internal get; internal construct; }

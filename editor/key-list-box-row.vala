@@ -109,7 +109,7 @@ private abstract class ClickableListBoxRow : EventBox
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/return-list-box-row.ui")]
 private class ReturnListBoxRow : ClickableListBoxRow
 {
-    [GtkChild] private Label folder_name_label;
+    [GtkChild] private unowned Label folder_name_label;
 
     internal ReturnListBoxRow (string _full_name, uint16 _context_id)
     {
@@ -122,7 +122,7 @@ private class ReturnListBoxRow : ClickableListBoxRow
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/folder-list-box-row.ui")]
 private class FolderListBoxRow : ClickableListBoxRow
 {
-    [GtkChild] private Label folder_name_label;
+    [GtkChild] private unowned Label folder_name_label;
 
     [CCode (notify = false)] public bool path_search { internal get; internal construct; }
 
@@ -138,7 +138,7 @@ private class FilterListBoxRow : ClickableListBoxRow
 {
     public bool is_local_search { internal get; protected construct; }
 
-    [GtkChild] private Label folder_name_label;
+    [GtkChild] private unowned Label folder_name_label;
 
     internal FilterListBoxRow (string name, string path)
     {
@@ -161,7 +161,7 @@ private class FilterListBoxRow : ClickableListBoxRow
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/search-list-box-row.ui")]
 private class SearchListBoxRow : ClickableListBoxRow
 {
-    [GtkChild] private Label search_label;
+    [GtkChild] private unowned Label search_label;
 
     internal SearchListBoxRow (string search)
     {
@@ -173,11 +173,11 @@ private class SearchListBoxRow : ClickableListBoxRow
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/key-list-box-row.ui")]
 private class KeyListBoxRow : ClickableListBoxRow, AdaptativeWidget
 {
-    [GtkChild] private Grid key_name_and_value_grid;
-    [GtkChild] private Label key_name_label;
-    [GtkChild] private Label key_type_label;
-    [GtkChild] private Label key_value_label;
-    [GtkChild] private Label key_info_label;
+    [GtkChild] private unowned Grid key_name_and_value_grid;
+    [GtkChild] private unowned Label key_name_label;
+    [GtkChild] private unowned Label key_type_label;
+    [GtkChild] private unowned Label key_value_label;
+    [GtkChild] private unowned Label key_info_label;
     private Switch? boolean_switch = null;
 
     [CCode (notify = false)] public string key_name    { internal get; internal construct; }

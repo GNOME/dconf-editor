@@ -20,8 +20,8 @@ using Gtk;
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/registry-list.ui")]
 private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
 {
-    [GtkChild] protected ListBox key_list_box;
-    [GtkChild] private ScrolledWindow scrolled;
+    [GtkChild] protected unowned ListBox key_list_box;
+    [GtkChild] private unowned ScrolledWindow scrolled;
     private Adjustment adjustment;
 
     [CCode (notify = false)] protected bool search_mode { private get; protected set; }
@@ -34,7 +34,7 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
 
     [CCode (notify = false)] internal ModificationsHandler modifications_handler { protected get; set; }
 
-    [GtkChild] private RegistryPlaceholder placeholder;
+    [GtkChild] private unowned RegistryPlaceholder placeholder;
     [CCode (notify = false)] public abstract string placeholder_label { protected get; }
 
     construct

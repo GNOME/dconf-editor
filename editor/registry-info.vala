@@ -20,15 +20,15 @@ using Gtk;
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/registry-info.ui")]
 private class RegistryInfo : Grid, BrowsableView
 {
-    [GtkChild] private Revealer conflicting_key_warning_revealer;
-    [GtkChild] private Revealer hard_conflicting_key_error_revealer;
-    [GtkChild] private Revealer no_schema_warning;
-    [GtkChild] private Revealer one_choice_warning_revealer;
-    [GtkChild] private Label one_choice_enum_warning;
-    [GtkChild] private Label one_choice_integer_warning;
-    [GtkChild] private Label one_choice_tuple_warning;
-    [GtkChild] private ListBox properties_list_box;
-    [GtkChild] private Button erase_button;
+    [GtkChild] private unowned Revealer conflicting_key_warning_revealer;
+    [GtkChild] private unowned Revealer hard_conflicting_key_error_revealer;
+    [GtkChild] private unowned Revealer no_schema_warning;
+    [GtkChild] private unowned Revealer one_choice_warning_revealer;
+    [GtkChild] private unowned Label one_choice_enum_warning;
+    [GtkChild] private unowned Label one_choice_integer_warning;
+    [GtkChild] private unowned Label one_choice_tuple_warning;
+    [GtkChild] private unowned ListBox properties_list_box;
+    [GtkChild] private unowned Button erase_button;
 
     private Label current_value_label;
 
@@ -684,8 +684,8 @@ private class RegistryInfo : Grid, BrowsableView
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/property-row.ui")]
 private class PropertyRow : ListBoxRowWrapper
 {
-    [GtkChild] private Overlay overlay;
-    [GtkChild] private Label name_label;
+    [GtkChild] private unowned Overlay overlay;
+    [GtkChild] private unowned Label name_label;
 
     private Widget? value_widget = null;
 
