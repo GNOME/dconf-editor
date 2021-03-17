@@ -63,11 +63,11 @@ private class ModificationsRevealer : Revealer, AdaptativeWidget
         }
     }
 
-    [GtkChild] private Label label;
-    [GtkChild] private ModelButton apply_button;
-    [GtkChild] private MenuButton delayed_list_button;
-    [GtkChild] private Popover delayed_settings_list_popover;
-    [GtkChild] private ModificationsList modifications_list;
+    [GtkChild] private unowned Label label;
+    [GtkChild] private unowned ModelButton apply_button;
+    [GtkChild] private unowned MenuButton delayed_list_button;
+    [GtkChild] private unowned Popover delayed_settings_list_popover;
+    [GtkChild] private unowned ModificationsList modifications_list;
 
     private ThemedIcon apply_button_icon = new ThemedIcon.from_names ({"object-select-symbolic"});
 

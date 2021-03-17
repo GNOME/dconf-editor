@@ -54,11 +54,11 @@ private class BrowserEntry : SearchEntry
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/pathentry.ui")]
 private class PathEntry : Box, AdaptativeWidget
 {
-    [GtkChild] private Button       hide_search_button;
-    [GtkChild] private Button       reload_search_button;
+    [GtkChild] private unowned Button       hide_search_button;
+    [GtkChild] private unowned Button       reload_search_button;
 
-    [GtkChild] private BrowserEntry search_entry;
-    [GtkChild] private Button       search_action_button;
+    [GtkChild] private unowned BrowserEntry search_entry;
+    [GtkChild] private unowned Button       search_action_button;
 
     private string current_path = "";
 

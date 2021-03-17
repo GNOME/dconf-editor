@@ -508,7 +508,7 @@ private class BookmarksList : OverlayedList
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/bookmark.ui")]
 private class Bookmark : OverlayedListRow
 {
-    [GtkChild] private Label bookmark_label;
+    [GtkChild] private unowned Label bookmark_label;
 
     [CCode (notify = false)] public string bookmark_name { internal get; internal construct; }
 
