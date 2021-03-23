@@ -1,3 +1,11 @@
+dconf-editor 3.38.3
+===================
+
+Fix build with newer vala
+
+Translations updated:
+  Norwegian Bokmål: Kjartan Maraas
+
 dconf-editor 3.38.2
 =====================
 
