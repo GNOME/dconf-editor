@@ -1718,14 +1718,14 @@ msgstr "Menú d'accions"
 #: editor/help-overlay.ui:66
 msgctxt "shortcut window"
 msgid "Path bar menu"
-msgstr "Camí del menú de la barra"
+msgstr "Menú de la barra de camí"
 
 #. Translators: header in the shortcut window, for moving to paths known by
 #. the headerbar
 #: editor/help-overlay.ui:76
 msgctxt "shortcut window"
 msgid "Path bar navigation"
-msgstr "Navegació de barra de camins"
+msgstr "Navegació amb la barra de camí"
 
 #. Translators: Alt-Shift-Up action; browse to the '/' folder
 #: editor/help-overlay.ui:81
