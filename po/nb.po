@@ -1,14 +1,14 @@
 # Norwegian bokmål translation of dconf-editor.
 # Copyright (C) 1999-2003 Free Software Foundation, Inc.
-# Kjartan Maraas <kmaraas@gnome.org>, 1999-2020.
+# Kjartan Maraas <kmaraas@gnome.org>, 1999-2021.
 # Torstein Adolf Winterseth <kvikende@fsfe.org>, 2010.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: dconf-editor 3.38.x\n"
+"Project-Id-Version: dconf-editor 4.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2020-11-22 16:21+0000\n"
-"PO-Revision-Date: 2021-01-26 15:29+0100\n"
+"POT-Creation-Date: 2021-04-17 13:28+0000\n"
+"PO-Revision-Date: 2021-05-11 14:12+0200\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian bokmål <i18n-nb@lister.ping.uio.no>\n"
 "Language: nb\n"
@@ -26,7 +26,7 @@ msgstr "Om"
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the first is "About"
 #: editor/about-list.vala:46
 msgid "Credits"
-msgstr ""
+msgstr "Bidragsytere"
 
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of the link to the GPL license; TODO better text, as in the usual about dialog
 #: editor/about-list.vala:135
@@ -195,7 +195,8 @@ msgstr "Last på nytt"
 #. Translators: text of an infobar to reload the key properties because something has changed
 #: editor/browser-view.vala:93
 msgid "This key’s properties have changed. Do you want to reload the view?"
-msgstr "Egenskaper for denne nøkkelen er endret. Vil du laste visningen på nytt?"
+msgstr ""
+"Egenskaper for denne nøkkelen er endret. Vil du laste visningen på nytt?"
 
 #. Translators: command-line message, when the user uses the backward/forward buttons of the mouse
 #: editor/browser-window.vala:906
@@ -1027,62 +1028,62 @@ msgstr "eksempel: ca.desrt.dconf-editor.Settings"
 #. Translators: command-line argument description, see 'dconf-editor --help'; no need to put your translation of "relocatable" between quotation marks, that's done in English to highlight why the option is called "RELOC_SCHEMA"
 #: editor/dconf-editor.vala:225
 msgid "the name of a “relocatable” schema, without fixed path"
-msgstr ""
+msgstr "navn på et flyttbart schema uten en fast sti"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:227
 msgid "see list with the “--list-relocatable-schemas” option"
-msgstr ""
+msgstr "se listen med valget «--list-relocatable-schemas»"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:231
 msgid "the path where to map the relocatable schema"
-msgstr ""
+msgstr "stien hvor det flyttbare skjemaet ligger"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:233
 msgid "example: “ca.desrt.dconf-editor.Bookmarks:/ca/desrt/dconf-editor/”"
-msgstr ""
+msgstr "eksempel: «ca.desrt.dconf-editor.Bookmarks:/ca/desrt/dconf-editor/"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:237
 msgid "the name of a key from the schema"
-msgstr ""
+msgstr "navnet på en nøkkel fra skjemaet"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:239
 msgid "example: “bookmarks”"
-msgstr ""
+msgstr "eksempel: «bookmarks»"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
 #: editor/dconf-editor.vala:295
 msgid "Known schemas installed:"
-msgstr ""
+msgstr "Kjente installerte skjema:"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given
 #: editor/dconf-editor.vala:301
 msgid "No known schemas installed."
-msgstr ""
+msgstr "Ingen kjente skjema installert."
 
 #. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
 #: editor/dconf-editor.vala:306
 msgid "Known schemas skipped:"
-msgstr ""
+msgstr "Kjente skjema som hoppes over:"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given
 #: editor/dconf-editor.vala:312
 msgid "No known schemas skipped."
-msgstr ""
+msgstr "Ingen kjente skjema hoppet over."
 
 #. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
 #: editor/dconf-editor.vala:317
 msgid "Unknown schemas:"
-msgstr "Ukjente schemas:"
+msgstr "Ukjente skjema:"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given
 #: editor/dconf-editor.vala:323
 msgid "No unknown schemas."
-msgstr "Ingen ukjente schemas."
+msgstr "Ingen ukjente skjema."
 
 #. Translators: command-line error message, when the user requests a specific path while there is already a window opened
 #: editor/dconf-editor.vala:457
@@ -1112,12 +1113,12 @@ msgstr "Skjemastien skal starte og slutte med en «/».\n"
 #. Translators: command-line error message, try 'dconf-editor //'
 #: editor/dconf-editor.vala:543
 msgid "Cannot understand: given path contains “//”.\n"
-msgstr ""
+msgstr "Forstår ikke: oppgitt sti inneholder «//».\n"
 
 #. Translators: command-line error message, try 'dconf-editor "org example" a'
 #: editor/dconf-editor.vala:551
 msgid "Cannot understand: space character in argument.\n"
-msgstr ""
+msgstr "Forstår ikke: mellomrom i argumentet.\n"
 
 #. Translators: notification header, try ctrl-c while in the keys list
 #: editor/dconf-editor.vala:579
@@ -1225,17 +1226,17 @@ msgstr "%s (tast slettet)"
 #. Translators: command-line startup warning, try 'dconf-editor ca.desrt.dconf-editor.Demo.Relocatable'
 #: editor/dconf-window.vala:124
 msgid "Schema is relocatable, a path is needed."
-msgstr ""
+msgstr "Skjema er flyttbart, en sti kreves."
 
 #. Translators: command-line startup warning
 #: editor/dconf-window.vala:137
 msgid "Startup mappings are disabled."
-msgstr ""
+msgstr "Mapping ved oppstart er slått av."
 
 #. Translators: command-line startup warning, try 'dconf-editor ca.desrt.dconf-editor.Settings:/org/gnome/dconf-editor/'
 #: editor/dconf-window.vala:152
 msgid "Schema is not installed on given path."
-msgstr ""
+msgstr "Skjema er ikke installert i oppgitt sti."
 
 #. Translators: command-line startup warning, try 'dconf-editor org.example.nothing'; the %s is the schema id
 #: editor/dconf-window.vala:168
@@ -1270,7 +1271,7 @@ msgstr "Vis denne dialogen neste gang."
 msgid ""
 "There are pending changes. Use Shift+Ctrl+Q to apply changes and quit, or Alt"
 "+F4 to dismiss changes and quit."
-msgstr ""
+msgstr "Det finnes utestående endringer. Bruk Shift+Ctrl+Q for å ta endringene i bruk og aslutte, eller Alt+F4 for å forkaste endringene og avslutte."
 
 #. Translators: notification text, when the requested folder has been removed; the %s is the folder path
 #: editor/dconf-window.vala:777
@@ -1580,7 +1581,7 @@ msgstr "Denne verdien er ugyldig for denne nøkkeltypen."
 #. Translators: tooltip text of the entry's icon when editing the value of a double key, if the written value cannot be parsed
 #: editor/key-editor-child.vala:380
 msgid "Failed to parse as double."
-msgstr ""
+msgstr "Klarte ikke å lese som en double."
 
 #. Translators: tooltip text of the entry's icon when editing the value of a signed 64-bit key, if the written value cannot be parsed
 #: editor/key-editor-child.vala:449
@@ -1590,7 +1591,7 @@ msgstr "Klarte ikke å lese dette som 64-bit heltall."
 #. Translators: tooltip text of the entry's icon when editing the value of an unsigned 64-bit key, if the written value cannot be parsed
 #: editor/key-editor-child.vala:518
 msgid "Failed to parse as unsigned 64-bit integer."
-msgstr ""
+msgstr "Klarte ikke å lese som et 64-bit heltall uten fortegn."
 
 #. Translators: first item of the keys list displayed during a search, the %s is a folder path usually
 #: editor/key-list-box-row.vala:118
@@ -1736,32 +1737,32 @@ msgstr "D-Bus-signatur"
 #. Translators: that's a name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:373
 msgid "Signed 16-bit integer"
-msgstr ""
+msgstr "16-bit heltall med fortegn"
 
 #. Translators: that's a name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:376
 msgid "Unsigned 16-bit integer"
-msgstr ""
+msgstr "16-bit heltall uten fortegn"
 
 #. Translators: that's a name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:379
 msgid "Signed 32-bit integer"
-msgstr ""
+msgstr "32-bit heltall med fortegn"
 
 #. Translators: that's a name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:382
 msgid "Unsigned 32-bit integer"
-msgstr ""
+msgstr "32-bit heltall uten fortegn"
 
 #. Translators: that's a name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:385
 msgid "Signed 64-bit integer"
-msgstr ""
+msgstr "64-bit heltall med fortegn"
 
 #. Translators: that's a name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:388
 msgid "Unsigned 64-bit integer"
-msgstr ""
+msgstr "64-bit heltall uten fortegn"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:391
@@ -1862,12 +1863,12 @@ msgstr "variant"
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:463
 msgid "Empty tuple"
-msgstr ""
+msgstr "Tom tuple"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:466
 msgid "empty tuple"
-msgstr ""
+msgstr "tom tuple"
 
 #. Translators: placeholder text of the list of pending modifications, displayed when the user is in delayed mode but has no pending modifications
 #: editor/modifications-list.vala:28
@@ -1876,6 +1877,9 @@ msgid ""
 "but\n"
 "no pending changes"
 msgstr ""
+"Pausemodus er på\n"
+"men\n"
+"ingen utestående endringer"
 
 #. Translators: label of one of the two buttons of the list of pending modifications, to switch between applying changes to the whole list and selecting some items for more advanced things (not displayed currently, but this change is wanted); the second is "Select"
 #: editor/modifications-list.vala:32
@@ -1985,14 +1989,14 @@ msgstr "Søk i nøkler"
 msgid ""
 "This key is defined and used by more than one schema. This could lead to "
 "problems. Edit value at your own risk."
-msgstr ""
+msgstr "Denne nøkkelen er definert og brukt av mer enn ett skjema. Dette kan føre til problemer. Rediger verdien på egen risiko."
 
 #. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/Conflict/type-conflict'
 #: editor/registry-info.ui:87
 msgid ""
 "This key is incompatibly defined and used by more than one schema. It is "
 "impossible to work with its value in a meaningful way."
-msgstr ""
+msgstr "Denne nøkkelen er ikke kompatibelt definert og brukes av mer enn ett skjema. Det er umulig å bruke denne verdien på en meningsfylt måte."
 
 #. Translators: warning text of an infobar, when a key is not defined by a schema
 #: editor/registry-info.ui:125
@@ -2001,7 +2005,7 @@ msgid ""
 "Editor can’t find one associated with this key. If the application that was "
 "using this key has been uninstalled, or if this key is obsolete, you may "
 "want to erase it."
-msgstr ""
+msgstr "Ingen skjema tilgjengelig. Et skjema er det som beskriver bruken av en nøkkel, og Dconf kan ikke finne et som er assosiert til denne nøkkelen. Hvis programmet som brukte denne nøkkelen har blitt avinstallert, eller nøkkelen er utdatert, vil du kanskje slette den."
 
 #. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-enum'
 #: editor/registry-info.ui:172
@@ -2025,10 +2029,6 @@ msgstr ""
 #. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-triv'
 #: editor/registry-info.ui:194
 #, fuzzy
-#| msgid ""
-#| "This integer key can only take one value. That’s probably an error of the "
-#| "application that installed this schema. If possible, please open a bug "
-#| "about it."
 msgid ""
 "This key has a special “empty tuple” type. That’s probably an error of the "
 "application that installed this schema. If possible, please open a bug about "
@@ -2139,14 +2139,14 @@ msgstr "Nei"
 msgid ""
 "There are conflicting definitions of this key, getting value would be either "
 "problematic or meaningless."
-msgstr ""
+msgstr "Definisjoner av denne nøkkelen er i konflikt. Det vil være problematisk eller meningsløst å hente verdien."
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of type "double"
 #: editor/registry-info.vala:615
 msgid ""
 "Use a dot as decimal mark and no thousands separator. You can use the X.Ye+Z "
 "notation."
-msgstr ""
+msgstr "Bruk punktum som desimaltegn og ingen tusenskilletegn. Du kan bruke X.Ye+Z notasjonen."
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of type "variant" (or of a type composed with a variant)
 #: editor/registry-info.vala:620
