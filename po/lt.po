@@ -1,14 +1,14 @@
 # Lithuanian translation for dconf.
 # Copyright (C) 2012 dconf's COPYRIGHT HOLDER
 # This file is distributed under the same license as the dconf package.
-# Aurimas Černius <aurisc4@gmail.com>, 2012-2020.
+# Aurimas Černius <aurisc4@gmail.com>, 2012-2021.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2020-01-02 12:36+0000\n"
-"PO-Revision-Date: 2020-02-02 19:48+0200\n"
+"POT-Creation-Date: 2020-05-30 11:09+0000\n"
+"PO-Revision-Date: 2021-08-08 22:19+0300\n"
 "Last-Translator: Aurimas Černius <aurisc4@gmail.com>\n"
 "Language-Team: Lietuvių <gnome-lt@lists.akl.lt>\n"
 "Language: lt\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n"
 "%100<10 || n%100>=20) ? 1 : 2)\n"
-"X-Generator: Gtranslator 3.34.0\n"
+"X-Generator: Gtranslator 40.0\n"
 
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the second is "Credits"
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the name of the view, displayed in the headerbar
@@ -233,16 +233,16 @@ msgstr ""
 "Tiesioginis konfigūracijos redagavimas yra sudėtingas ir dėl jo programos "
 "gali veikti nekorektiškai."
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:30
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:31
 msgid "Browse the keys used by installed applications"
 msgstr "Naršyti programų įdiegtus raktus"
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:34
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:35
 msgid "Read keys descriptions and edit their values"
 msgstr "Skaityti raktų aprašymus bei keisti jų vertes"
 
 #. a translatable version of project_group
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:49
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:50
 msgid "The GNOME Project"
 msgstr "GNOME projektas"
 
@@ -1278,7 +1278,6 @@ msgstr "Arnaud Bonatti"
 
 #. Translators: text crediting a maintainer, seen in the About dialog
 #: editor/dconf-editor.vala:669
-#| msgid "Copyright © Canonical Ltd"
 msgid "Copyright © 2010-2014 – Canonical Ltd"
 msgstr "Autorinės teisės priklauso © 2010-2014 – Canonical Ltd"
 
@@ -1385,7 +1384,7 @@ msgstr "Nežinoma schema „%s“."
 #: editor/dconf-window.vala:274
 msgid "Thanks for using Dconf Editor for editing your settings!"
 msgstr ""
-"Ačių, kad naudojatės Dconf redaktoriumi savo konfigūracijų redagavimui!"
+"Ačiū, kad naudojatės Dconf redaktoriumi savo konfigūracijų redagavimui!"
 
 #. Translators: initial "use at your own risk" dialog, the warning text
 #: editor/dconf-window.vala:277
