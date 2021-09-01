@@ -7,25 +7,24 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2020-11-22 16:21+0000\n"
-"PO-Revision-Date: 2021-05-25 21:03+0430\n"
-"Last-Translator: Arash Mousavi <mousavi.arash@gmail.com>\n"
+"POT-Creation-Date: 2021-08-31 10:45+0000\n"
+"PO-Revision-Date: 2021-09-01 13:17+0430\n"
+"Last-Translator: eshagh <eshagh094@gmail.com>\n"
 "Language-Team: Persian\n"
 "Language: fa\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-DamnedLies-Scope: partial\n"
-"X-Generator: Poedit 2.4.2\n"
-"X-Poedit-SourceCharset: UTF-8\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
+"X-Generator: Poedit 2.4.2\n"
+"X-DamnedLies-Scope: partial\n"
+"X-Poedit-SourceCharset: UTF-8\n"
 
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the second is "Credits"
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the name of the view, displayed in the headerbar
 #: editor/about-list.vala:44 editor/base-headerbar.vala:310
-#, fuzzy
 msgid "About"
-msgstr "_درباره"
+msgstr "درباره"
 
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the first is "About"
 #: editor/about-list.vala:46
@@ -39,7 +38,7 @@ msgid ""
 "version 3 or later"
 msgstr ""
 "پروانهٔ انتشار عمومی گنو\n"
-"نسخهٔ ۳ یا تازه‌تر"
+"نسخهٔ ۳ یا بالاتر"
 
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the header of the programmers names
 #: editor/about-list.vala:154
@@ -51,7 +50,7 @@ msgstr "سازندگان"
 msgid "Translators"
 msgstr ""
 "آرش موسوی <mousavi.arash@gmail.com>\n"
-"سینا کارنلیوس <sinacarnelious@protonmail.com>"
+"سینا عقیقی <sinaaghighi@protonmail.com>"
 
 #. Translators: menu entry of the pathbar menu
 #: editor/adaptative-pathbar.vala:251
@@ -92,7 +91,7 @@ msgstr "اقدامات نمایش کنونی"
 #. Translators: usual menu entry of the hamburger menu
 #: editor/base-headerbar.vala:116
 msgid "Keyboard Shortcuts"
-msgstr "کلید میانبرهای صفحه کلید"
+msgstr "میان‌برهای صفحه‌کلید"
 
 #. Translators: on really small windows, the bookmarks popover is replaced by an in-window view; here is the name of the view, displayed in the headerbar
 #. Translators: accessible name of the button for opening the bookmarks popover
@@ -110,7 +109,7 @@ msgstr "پنهان‌سازی نشانک‌ها"
 #. Translators: hamburger menu entry on small windows, to unbookmark the currently browsed path
 #: editor/bookmarks-headerbar.vala:259
 msgid "Unbookmark"
-msgstr "حذف نشانک"
+msgstr "برداشتن نشانک"
 
 #. Translators: hamburger menu entry on small windows, to bookmark the currently browsed path
 #: editor/bookmarks-headerbar.vala:262
@@ -127,7 +126,9 @@ msgstr "نمایش نشانک‌ها"
 msgid ""
 "Bookmarks will\n"
 "be added here"
-msgstr "نشانک‌ها در اینجا اضافه خواهند شد"
+msgstr ""
+"نشانک‌ها در اینجا\n"
+"اضافه خواهند شد"
 
 #. Translators: label of one of the two buttons of the bookmarks list, to switch between using the bookmarks and editing the list; the second is "Edit"
 #: editor/bookmarks-list.vala:36
@@ -142,17 +143,17 @@ msgstr "ویرایش"
 #. Translators: accessible name of the switch for bookmarking current path in the bookmarks popover
 #: editor/bookmarks.ui:69
 msgid "Location bookmarked"
-msgstr "مکان، نشان شد"
+msgstr "مکان، نشانه‌گذاری شد"
 
 #. Translators: accessible description of the switch for bookmarking current path in the bookmarks popover
 #: editor/bookmarks.ui:71
 msgid "Toggle to bookmark this location"
-msgstr "نشان کردن این مکان"
+msgstr "تغییر وضعیت نشانه‌گذاری این مکان"
 
 #. Translators: text that might appear in the bookmarks popover in place of the switch and its label
 #: editor/bookmarks.ui:96
 msgid "The bookmarks list is not editable."
-msgstr "فهرست نشانک‌ها ویرایش‌پذیر نیست"
+msgstr "فهرست نشانک‌ها ویرایش‌پذیر نیست."
 
 #. Translators: accessible description of the button for opening the bookmarks popover
 #: editor/bookmarks.ui:133
@@ -162,12 +163,12 @@ msgstr "مدیریت نشانک‌های شما"
 #. Translators: label of the switch in the bookmarks popover, when searching
 #: editor/bookmarks.vala:404
 msgid "Bookmark this Search"
-msgstr "نشان کردن این جستجو"
+msgstr "نشانه‌گذاری این جست‌وجو"
 
 #. Translators: label of the switch in the bookmarks popover, when browsing
 #: editor/bookmarks.vala:407
 msgid "Bookmark this Location"
-msgstr "نشان کردن این مکان"
+msgstr "نشانه‌گذاری این مکان"
 
 #. Translators: on really small windows, name of the view when showing a folder properties, displayed in the headerbar
 #: editor/browser-headerbar.vala:165
@@ -177,50 +178,47 @@ msgstr "ویژگی‌ها"
 #. Translators: text of an infobar to sort again the keys list ("refresh" only, no "reload")
 #: editor/browser-view.vala:81
 msgid "Sort preferences have changed. Do you want to refresh the view?"
-msgstr "ترجیحات مرتب‌سازی تغییر کرده است. آیا می‌خواهید دوباره‌سازی کنید؟"
+msgstr "ترجیحات مرتب‌سازی تغییر کرده است. آیا می‌خواهید تازه‌سازی کنید؟"
 
 #. Translators: button of an infobar to sort again the keys list ("refresh" only, no "reload")
 #. Translators: accessible name of the "refresh" button that is linked with the search entry on large windows
 #: editor/browser-view.vala:84 editor/pathentry.ui:90
 msgid "Refresh"
-msgstr "دوباره‌سازی"
+msgstr "تازه‌سازی"
 
 #. Translators: text of an infobar to reload the keys list because of a new key (for example)
 #: editor/browser-view.vala:87
 msgid "This folder content has changed. Do you want to reload the view?"
-msgstr "این پوشه تغییر کرده است. آیا می‌خواهید نمایش را دوباره بارگذاری کنید؟"
+msgstr "محتویات این پوشه تغییر کرده است. آیا می‌خواهید نما را دوباره بارگزاری کنید؟"
 
 #. Translators: button of an infobar to reload the keys list because of a new key (for example)
 #. Translators: button of an infobar to reload the key properties because something has changed
 #: editor/browser-view.vala:90 editor/browser-view.vala:96
 msgid "Reload"
-msgstr "بارگذاری دوباره"
+msgstr "بارگزاری دوباره"
 
 #. Translators: text of an infobar to reload the key properties because something has changed
 #: editor/browser-view.vala:93
 msgid "This key’s properties have changed. Do you want to reload the view?"
-msgstr ""
-"ویژگی‌های این کلید تغییر کرده است. آیا می‌خواهید نمایش را دوباره بارگذاری کنید؟"
+msgstr "ویژگی‌های این کلید تغییر کرده است. آیا می‌خواهید نما را دوباره بارگزاری کنید؟"
 
 #. Translators: command-line message, when the user uses the backward/forward buttons of the mouse
 #: editor/browser-window.vala:906
-msgid ""
-"The same mouse button is set for going backward and forward. Doing nothing."
+msgid "The same mouse button is set for going backward and forward. Doing nothing."
 msgstr "همان دکمهٔ موشواره برای عقب و جلو رفتن تنظیم شده است. انجام هیچ کاری."
 
 #: editor/ca.desrt.dconf-editor.appdata.xml.in:9
-#, fuzzy
 msgid "Dconf Editor"
 msgstr "ویرایشگر dconf"
 
 #: editor/ca.desrt.dconf-editor.appdata.xml.in:10
 msgid "A graphical tool for editing the dconf database"
-msgstr ""
+msgstr "یک ابزار گرافیکی برای ویرایش پایگاه دادهٔ dconf"
 
 #: editor/ca.desrt.dconf-editor.appdata.xml.in:13
 msgid ""
-"Dconf Editor is a tool to allow direct editing of the dconf configuration "
-"database. This is useful when developing applications that use these settings."
+"Dconf Editor is a tool to allow direct editing of the dconf configuration database. "
+"This is useful when developing applications that use these settings."
 msgstr ""
 
 #: editor/ca.desrt.dconf-editor.appdata.xml.in:17
@@ -228,19 +226,21 @@ msgid ""
 "Editing your configuration directly is an advanced feature and may cause "
 "applications to not work correctly."
 msgstr ""
+"ویرایش پیکربندی‌های شما به صورت مستقیم یک ویژگی حرفه‌ای است و ممکن است باعث عدم "
+"کارکرد درست برنامه شود."
 
 #: editor/ca.desrt.dconf-editor.appdata.xml.in:31
 msgid "Browse the keys used by installed applications"
-msgstr ""
+msgstr "کلیدهایی که توسط نرم‌افزارهای نصب شده استفاده شده را مرور کنید"
 
 #: editor/ca.desrt.dconf-editor.appdata.xml.in:35
 msgid "Read keys descriptions and edit their values"
-msgstr ""
+msgstr "خواندن توضیحات کلیدها و تغییر مقادیر آن‌ها"
 
 #. a translatable version of project_group
 #: editor/ca.desrt.dconf-editor.appdata.xml.in:50
 msgid "The GNOME Project"
-msgstr ""
+msgstr "پروژهٔ گنوم"
 
 #. Translators: application name, as used in the window manager, the window title, the about dialog...
 #: editor/ca.desrt.dconf-editor.desktop.in:3 editor/dconf-editor.vala:21
@@ -250,29 +250,29 @@ msgstr "ویرایشگر dconf"
 #. Translators: a GenericName that gives the application goal, as defined in the desktop file spec
 #: editor/ca.desrt.dconf-editor.desktop.in:5
 msgid "Configuration editor for dconf"
-msgstr ""
+msgstr "پیکربندی ویرایشگر برای dconf"
 
 #. Translators: a Comment that gives the application function, as defined in the desktop file spec
 #: editor/ca.desrt.dconf-editor.desktop.in:7
 msgid "Directly edit your entire configuration database"
-msgstr "مستقیما تمام پایگاه‌داده‌ی پیکربندی خود را ویرایش کنید"
+msgstr "به صورت مستقیم پایگاه‌دادهٔ پیکربندی خود را ویرایش کنید"
 
 #. Translators: some search Keywords to find this application, as defined in the desktop file spec. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: editor/ca.desrt.dconf-editor.desktop.in:9
 msgid "settings;configuration;"
-msgstr "تنظیمات;پیکربندی;"
+msgstr "settings;configuration;تنظیمات;پیکربندی;"
 
 #. see AdaptativeWindow.width-request at data/ui/adaptative-window.ui:22
 #. range min="350"/ FIXME
 #. Translators: summary of a settings key, see 'dconf-editor /org/gnome/iagno/window-width'
 #: editor/ca.desrt.dconf-editor.gschema.xml:98
 msgid "The width of the window"
-msgstr "طول پنجره"
+msgstr "عرض پنجره"
 
 #. Translators: summary of a settings key, see 'dconf-editor /org/gnome/iagno/window-width'
 #: editor/ca.desrt.dconf-editor.gschema.xml:100
 msgid "The width of the main window in pixels."
-msgstr "طول پنجره اصلی به پیکسل."
+msgstr "عرض پنجرهٔ اصلی به پیکسل."
 
 #. see AdaptativeWindow.height-request at data/ui/adaptative-window.ui:21
 #. range min="284"/ FIXME
@@ -284,34 +284,27 @@ msgstr "ارتفاع پنجره"
 #. Translators: description of a settings key, see 'dconf-editor /org/gnome/iagno/window-height'
 #: editor/ca.desrt.dconf-editor.gschema.xml:109
 msgid "The height of the main window in pixels."
-msgstr "ارتفاع پنجره اصلی به پیکسل."
+msgstr "ارتفاع پنجرهٔ اصلی به پیکسل."
 
 #. Translators: summary of a settings key, see 'dconf-editor /org/gnome/iagno/window-is-maximized'
 #: editor/ca.desrt.dconf-editor.gschema.xml:114
 msgid "A flag to enable maximized mode"
-msgstr "یک پرچم برای فعال‌سازی حالت حداکثرکردن"
+msgstr "یک پرچم برای فعال‌سازی حالت بیشینه"
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/small-keys-list-rows'
 #: editor/ca.desrt.dconf-editor.gschema.xml:166
-#, fuzzy
 msgid "A flag to enable small rows for keys list"
-msgstr "یک پرچم برای فعال‌سازی حالت تمام‌صفحه"
+msgstr "یک پرچم برای فعال‌سازی ردیف‌های کوچک برای فهرست کلیدها"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-use-extra-buttons'
 #: editor/ca.desrt.dconf-editor.gschema.xml:189
-#, fuzzy
-#| msgid ""
-#| "For users with mice that have buttons for “Forward” and “Back”, this key "
-#| "will set which button activates the “Back” command in a browser window. "
-#| "Possible values range between 6 and 14."
 msgid ""
 "For users with mice that have buttons for “Forward” and “Back”, this key will "
-"determine if any action is taken inside of a browser window when either is "
-"pressed."
+"determine if any action is taken inside of a browser window when either is pressed."
 msgstr ""
-"برای کاربران با موشی‌هایی که دارای دکمه‌های ویژه‌ی «Forward» و «Back» هستند، این "
-"کلید تنظیم می‌کند که کدام دکمه برای دستور «Back» در مرورگر عمل کند. مقادیر ممکنه "
-"در دامنه‌ی بین ۶ و ۱۴هستند."
+"برای کاربران با موشواره‌هایی که دارای دکمه‌های ویژهٔ پیش و پس هستند، این کلید تنظیم "
+"می‌کند که کدام دکمه برای دستور «بازگشت» در مرورگر عمل کند. مقادیر ممکنه، در دامنهٔ "
+"بین ۶ و ۱۴ هستند."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-back-buttons'
 #: editor/ca.desrt.dconf-editor.gschema.xml:195
@@ -321,13 +314,13 @@ msgstr "دکمه‌ی موشی برای فعال کردن دستور «Back» د
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-back-buttons'
 #: editor/ca.desrt.dconf-editor.gschema.xml:197
 msgid ""
-"For users with mice that have buttons for “Forward” and “Back”, this key will "
-"set which button activates the “Back” command in a browser window. Possible "
-"values range between 6 and 14."
+"For users with mice that have buttons for “Forward” and “Back”, this key will set "
+"which button activates the “Back” command in a browser window. Possible values "
+"range between 6 and 14."
 msgstr ""
-"برای کاربران با موشی‌هایی که دارای دکمه‌های ویژه‌ی «Forward» و «Back» هستند، این "
-"کلید تنظیم می‌کند که کدام دکمه برای دستور «Back» در مرورگر عمل کند. مقادیر ممکنه "
-"در دامنه‌ی بین ۶ و ۱۴هستند."
+"برای کاربران با موشی‌هایی که دارای دکمه‌های ویژه‌ی «Forward» و «Back» هستند، این کلید "
+"تنظیم می‌کند که کدام دکمه برای دستور «Back» در مرورگر عمل کند. مقادیر ممکنه در "
+"دامنه‌ی بین ۶ و ۱۴هستند."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-forward-buttons'
 #: editor/ca.desrt.dconf-editor.gschema.xml:203
@@ -337,13 +330,31 @@ msgstr "دکمه‌ی موشی برای فعال کردن دستور «Forward»
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-forward-buttons'
 #: editor/ca.desrt.dconf-editor.gschema.xml:205
 msgid ""
-"For users with mice that have buttons for “Forward” and “Back”, this key will "
-"set which button activates the “Forward” command in a browser window. Possible "
-"values range between 6 and 14."
+"For users with mice that have buttons for “Forward” and “Back”, this key will set "
+"which button activates the “Forward” command in a browser window. Possible values "
+"range between 6 and 14."
 msgstr ""
-"برای کاربران با موشی‌هایی که دارای دکمه‌های ویژه‌ی «Forward» و «Back» هستند، این "
-"کلید تنظیم می‌کند که کدام دکمه برای دستور «Forward» در مرورگر عمل کند. مقادیر "
-"ممکنه در دامنه‌ی بین ۶ و ۱۴هستند."
+"برای کاربران با موشی‌هایی که دارای دکمه‌های ویژه‌ی «Forward» و «Back» هستند، این کلید "
+"تنظیم می‌کند که کدام دکمه برای دستور «Forward» در مرورگر عمل کند. مقادیر ممکنه در "
+"دامنه‌ی بین ۶ و ۱۴هستند."
+
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/relocatable-schemas-enabled-mappings'
+#: editor/ca.desrt.dconf-editor.gschema.xml:217
+#, fuzzy
+#| msgid "Print release version and exit"
+msgid "Enabled relocatable schema mapping facilities"
+msgstr "چاپ نسخه و خروج"
+
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/small-bookmarks-rows'
+#: editor/ca.desrt.dconf-editor.gschema.xml:247
+msgid "A flag to enable small rows for bookmarks list"
+msgstr "یک پرچم برای فعال‌سازی ردیف‌های کوچک برای فهرست نشانه‌گذاری‌ها"
+
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/enumeration'
+#: editor/ca.desrt.dconf-editor.gschema.xml:359
+#, fuzzy
+msgid "A 5-choices enumeration"
+msgstr "شمارشی"
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-enum'
 #: editor/ca.desrt.dconf-editor.gschema.xml:459
@@ -360,7 +371,7 @@ msgstr "شمارشی"
 #. Translators: command-line option description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:159
 msgid "Print release version and exit"
-msgstr "چاپ نسخه و خروج"
+msgstr "چاپ نگارش انتشار و خروج"
 
 #. Translators: command-line option description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:162
@@ -377,7 +388,7 @@ msgstr ""
 #. Translators: command-line text, description of the application in 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
 #: editor/dconf-editor.vala:203
 msgid "Graphical interface for editing other applications settings."
-msgstr ""
+msgstr "رابط گرافیکی برای ویرایش تنظیمات سایر برنامه‌ها."
 
 #. Translators: command-line text, describes how the application proceeds for editing other applications settings, in 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
 #: editor/dconf-editor.vala:206
@@ -386,9 +397,8 @@ msgstr ""
 
 #. Translators: command-line header description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:209
-#, fuzzy
 msgid "Arguments description:"
-msgstr "توضیحات:"
+msgstr "توضیحات آرگومان‌ها:"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:213
@@ -428,7 +438,7 @@ msgstr ""
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:233
 msgid "example: “ca.desrt.dconf-editor.Bookmarks:/ca/desrt/dconf-editor/”"
-msgstr ""
+msgstr "مثال: «ca.desrt.dconf-editor.Bookmarks:/ca/desrt/dconf-editor/»"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:237
@@ -438,7 +448,7 @@ msgstr ""
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:239
 msgid "example: “bookmarks”"
-msgstr ""
+msgstr "مثال: «نشانک‌ها»"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
 #: editor/dconf-editor.vala:295
@@ -508,7 +518,7 @@ msgstr ""
 #. Translators: notification header, try ctrl-c while in the keys list
 #: editor/dconf-editor.vala:579
 msgid "Copied to clipboard"
-msgstr ""
+msgstr "به تخته‌گیره رونوشت شد"
 
 #. Translators: about dialog text
 #: editor/dconf-editor.vala:656
@@ -523,25 +533,23 @@ msgstr ""
 #. Translators: text crediting a game author, seen in the About dialog
 #: editor/dconf-editor.vala:665
 msgid "Arnaud Bonatti"
-msgstr ""
+msgstr "آرناد بوناتی"
 
 #. Translators: text crediting a maintainer, seen in the About dialog
 #: editor/dconf-editor.vala:669
-#, fuzzy
-#| msgid "Copyright © Canonical Ltd"
 msgid "Copyright © 2010-2014 – Canonical Ltd"
-msgstr "حق‌رونوشت © Canonical Ltd"
+msgstr "حق رونوشت © ۲۰۱۰-۲۰۱۴ – Canonical Ltd"
 
 #. Translators: text crediting a maintainer, seen in the About dialog
 #: editor/dconf-editor.vala:673
 msgid "Copyright © 2017-2018 – Davi da Silva Böger"
-msgstr ""
+msgstr "حق رونوشت © ۲۰۱۷-۲۰۱۸ – Davi da Silva Böger"
 
 #. Translators: text crediting a maintainer, seen in the About dialog; the %u are replaced with the years of start and end
 #: editor/dconf-editor.vala:677
 #, c-format
 msgid "Copyright © %u-%u – Arnaud Bonatti"
-msgstr ""
+msgstr "حق رونوشت © %u-%u – آرناد بوناتی"
 
 #. Translators: about dialog text; this string should be replaced by a text crediting yourselves and your translation team, or should be left empty. Do not translate literally!
 #: editor/dconf-editor.vala:684
@@ -553,50 +561,48 @@ msgstr ""
 #. Translators: about dialog text; label of the website link
 #: editor/dconf-editor.vala:690
 msgid "Page on GNOME wiki"
-msgstr ""
+msgstr "صفحه در ویکی گنوم"
 
 #. Translators: usual menu entry of the hamburger menu
 #: editor/dconf-headerbar.vala:53
-#, fuzzy
 msgid "About Dconf Editor"
-msgstr "ویرایشگر dconf"
+msgstr "دربارهٔ ویرایشگر dconf"
 
 #. Translators: when a change is requested, on a small window, entry of the menu of the "delayed settings button" that appears in place of the close button
 #. Translators: when there are pending changes, label of the "apply" button in the bottom bar, on large windows
 #: editor/dconf-headerbar.vala:114 editor/modifications-revealer.ui:87
 msgid "Apply"
-msgstr ""
+msgstr "اعمال"
 
 #. Translators: when a change is requested, on a small window, entry of the menu of the "delayed settings button" that appears in place of the close button
 #: editor/dconf-headerbar.vala:117
 msgid "Dismiss"
-msgstr ""
+msgstr "دورانداختن"
 
 #. Translators: when in delayed mode, on a small window, entry of the "three-dots menu" that appears when showing the pending changes list (if there is pending changes)
 #: editor/dconf-headerbar.vala:141
 msgid "Apply all"
-msgstr ""
+msgstr "اعمال همه"
 
 #. Translators: when in delayed mode, on a small window, entry of the "three-dots menu" that appears when showing the pending changes list (if there is pending changes)
 #: editor/dconf-headerbar.vala:144
 msgid "Dismiss all"
-msgstr ""
+msgstr "دورانداختن همه"
 
 #. Translators: when in delayed mode, on a small window, entry of the "three-dots menu" that appears when showing the pending changes list (if there is no pending changes)
 #: editor/dconf-headerbar.vala:152
-#, fuzzy
 msgid "Quit mode"
-msgstr "_خروج"
+msgstr "حالت خروج"
 
 #. Translators: hamburger menu entry, to enter in a special mode called "delay mode" where changes are not applied until validation
 #: editor/dconf-headerbar.vala:201
 msgid "Enter delay mode"
-msgstr ""
+msgstr "ورود حالت تاخیر"
 
 #. Translators: hamburger menu entry that appears when browsing a folder path, to set to their default value all currently visible keys, not including keys in subfolders
 #: editor/dconf-headerbar.vala:205
 msgid "Reset visible keys"
-msgstr ""
+msgstr "بازنشانی کلیدهای مرئی"
 
 #. Translators: hamburger menu entry that appears when browsing a folder path, to set to their default value all currently visible keys, and all keys in subfolders
 #: editor/dconf-headerbar.vala:208
@@ -606,7 +612,7 @@ msgstr ""
 #. Translators: on really small windows, the bottom bar that appears in "delay mode" or when there're pending changes is replaced by an in-window view; here is the name of the view, displayed in the headerbar
 #: editor/dconf-headerbar.vala:246
 msgid "Pending"
-msgstr ""
+msgstr "در حال انتظار"
 
 #. Translators: text copied when the users request a copy while an erased key is selected; the %s is the key path
 #: editor/dconf-model.vala:945
@@ -658,8 +664,8 @@ msgstr ""
 #. Translators: notification text, after a user Ctrl+Q keyboard action; same way to spell the shortcut as in the Settings application
 #: editor/dconf-window.vala:305
 msgid ""
-"There are pending changes. Use Shift+Ctrl+Q to apply changes and quit, or Alt"
-"+F4 to dismiss changes and quit."
+"There are pending changes. Use Shift+Ctrl+Q to apply changes and quit, or Alt+F4 to "
+"dismiss changes and quit."
 msgstr ""
 
 #. Translators: notification text, when the requested folder has been removed; the %s is the folder path
@@ -689,46 +695,45 @@ msgstr ""
 #. Translators: displayed in the list of pending changes (could be an in-window panel, or in the popover of the bottom bar); for dconf keys
 #: editor/delayed-setting-view.vala:136
 msgid "Key erased"
-msgstr ""
+msgstr "کلید پاک شد"
 
 #. Translators: displayed in the list of pending changes (could be an in-window panel, or in the popover of the bottom bar); for gsettings keys
 #. Translators: "reset key value" option of a multi-choice list (checks or radios) in the right-click menu on the list of keys
 #. Translators: field content when displaying key properties; the field description is "Current value", and as the default value of the key is written near, there's just this text displayed if the key uses its default value
 #: editor/delayed-setting-view.vala:151 editor/key-list-box-row.vala:649
 #: editor/registry-info.vala:469
-#, fuzzy
 msgid "Default value"
-msgstr "پیش‌فرض:"
+msgstr "مقدار پیش‌گزیده"
 
 #. Translators: header in the shortcut window, for usual headerbar menus actions
 #: editor/help-overlay.ui:29
 msgctxt "shortcut window"
 msgid "Actions"
-msgstr ""
+msgstr "عملیات‌ها"
 
 #. Translators: Ctrl-B action
 #: editor/help-overlay.ui:34
 msgctxt "shortcut window"
 msgid "Bookmarks menu"
-msgstr ""
+msgstr "منوی نشانک‌ها"
 
 #. Translators: Ctrl-D action
 #: editor/help-overlay.ui:42
 msgctxt "shortcut window"
 msgid "Bookmark this path"
-msgstr ""
+msgstr "نشانه‌گذاری این مسیر"
 
 #. Translators: Ctrl-Shift-D action
 #: editor/help-overlay.ui:50
 msgctxt "shortcut window"
 msgid "Unbookmark this path"
-msgstr ""
+msgstr "برداشتن نشانه‌گذاری این مسیر"
 
 #. Translators: F10 key action
 #: editor/help-overlay.ui:58
 msgctxt "shortcut window"
 msgid "Actions menu"
-msgstr ""
+msgstr "منوی اقدامات"
 
 #. Translators: Shift-F10 action
 #: editor/help-overlay.ui:66
@@ -746,13 +751,13 @@ msgstr ""
 #: editor/help-overlay.ui:81
 msgctxt "shortcut window"
 msgid "Open root folder"
-msgstr ""
+msgstr "گشودن شاخهٔ ریشه"
 
 #. Translators: Alt-Up action; browse to the parent folder
 #: editor/help-overlay.ui:89
 msgctxt "shortcut window"
 msgid "Open parent folder"
-msgstr ""
+msgstr "گشودن شاخهٔ والد"
 
 #. Translators: Alt-Down action; browse to the child of the current path displayed in the headerbar, if any
 #: editor/help-overlay.ui:97
@@ -812,19 +817,19 @@ msgstr ""
 #: editor/help-overlay.ui:168
 msgctxt "shortcut window"
 msgid "Edit path"
-msgstr ""
+msgstr "ویرایش مسیر"
 
 #. Translators: Ctrl-Shift-L action when browsing; opens search on parent path
 #: editor/help-overlay.ui:176
 msgctxt "shortcut window"
 msgid "Edit parent path"
-msgstr ""
+msgstr "ویرایش مسیر والد"
 
 #. Translators: '/' key action when browsing; opens search on root path
 #: editor/help-overlay.ui:184
 msgctxt "shortcut window"
 msgid "Edit root path"
-msgstr ""
+msgstr "ویرایش مسیر ریشه"
 
 #. Translators: Escape key action, when searching; cancels search
 #: editor/help-overlay.ui:192
@@ -848,15 +853,13 @@ msgstr ""
 #: editor/help-overlay.ui:215
 msgctxt "shortcut window"
 msgid "Previous line"
-msgstr ""
+msgstr "خط قبلی"
 
 #. Translators: Ctrl-G action, when browsing
 #: editor/help-overlay.ui:223
-#, fuzzy
-#| msgid "Next"
 msgctxt "shortcut window"
 msgid "Next line"
-msgstr "بعدی"
+msgstr "خط بعدی"
 
 #. Translators: entry disabled for now; Ctrl-I action, when browsing; displays information on selected folder
 #: editor/help-overlay.ui:231
@@ -866,10 +869,9 @@ msgstr ""
 
 #. Translators: Ctrl-Delete action, when browsing; sets the selected key to its default value
 #: editor/help-overlay.ui:239
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Set to default"
-msgstr "ثبت مقدار پیش‌فرض"
+msgstr "تنظیم به پیش‌گزیده"
 
 #. Translators: Ctrl-Return action, when browsing; does nothing if the selection is not a boolean key
 #: editor/help-overlay.ui:247
@@ -893,13 +895,13 @@ msgstr ""
 #: editor/help-overlay.ui:270
 msgctxt "shortcut window"
 msgid "Open selected row key"
-msgstr ""
+msgstr "گشودن کلید ردیف گزینش‌شده"
 
 #. Translators: Ctrl-Delete action in the list of pending modifications; dismisses the selected modification
 #: editor/help-overlay.ui:278
 msgctxt "shortcut window"
 msgid "Dismiss modification"
-msgstr ""
+msgstr "دورانداختن اصلاحات"
 
 #. Translators: header in the shortcut window, for opening the usual helpful dialogs
 #: editor/help-overlay.ui:288
@@ -911,20 +913,19 @@ msgstr ""
 #: editor/help-overlay.ui:293
 msgctxt "shortcut window"
 msgid "Show this help"
-msgstr ""
+msgstr "نمایش این راهنما"
 
 #. Translators: Shift-F1 action; opens the About dialog
 #: editor/help-overlay.ui:301
-#, fuzzy
 msgctxt "shortcut window"
 msgid "About"
-msgstr "_درباره"
+msgstr "درباره"
 
 #. Translators: header in the shortcut window, for the copy-to-clipboard actions
 #: editor/help-overlay.ui:311
 msgctxt "shortcut window"
 msgid "Clipboard"
-msgstr ""
+msgstr "تخته‌گیره"
 
 #. Translators: Ctrl-C action; copies to clipboard something that identifies the current selection (schema, name and value, for a gsettings key)
 #: editor/help-overlay.ui:316
@@ -936,14 +937,13 @@ msgstr ""
 #: editor/help-overlay.ui:324
 msgctxt "shortcut window"
 msgid "Copy path"
-msgstr ""
+msgstr "رونوشت مسیر"
 
 #. Translators: header in the shortcut window, for the various ways of quitting the application
 #: editor/help-overlay.ui:334
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Quit"
-msgstr "_خروج"
+msgstr "خروج"
 
 #. Translators: Ctrl-Q action; displays a notification if there are pending changes
 #: editor/help-overlay.ui:340
@@ -955,13 +955,13 @@ msgstr ""
 #: editor/help-overlay.ui:348
 msgctxt "shortcut window"
 msgid "Apply pending changes and quit"
-msgstr ""
+msgstr "اعمال تغییرات در حال انتظار و خروج"
 
 #. Translators: Alt-F4 action
 #: editor/help-overlay.ui:356
 msgctxt "shortcut window"
 msgid "Dismiss pending changes and quit"
-msgstr ""
+msgstr "دورانداختن تغییرات در حال انتظار و خروج"
 
 #. Translators: tooltip text of the entry's icon when editing the value of a double or a 64-bit (signed or unsigned) key, if the key only allows a range of values and the written value is out of range
 #: editor/key-editor-child.vala:30
@@ -992,13 +992,13 @@ msgstr ""
 #: editor/key-list-box-row.vala:118
 #, c-format
 msgid "Go to “%s”"
-msgstr ""
+msgstr "رفتن به «%s»"
 
 #. Translators: first item of the keys list displayed during browsing, the %s is the current folder name
 #: editor/key-list-box-row.vala:149
 #, c-format
 msgid "Search in “%s” folder"
-msgstr ""
+msgstr "جست‌وجو در شاخهٔ «%s»"
 
 #. Translators: first item of the keys list displayed during browsing at root path
 #: editor/key-list-box-row.vala:153
@@ -1008,33 +1008,32 @@ msgstr ""
 #. Translators: last item of the keys list displayed during a local search
 #: editor/key-list-box-row.vala:157
 msgid "Search everywhere"
-msgstr ""
+msgstr "جست‌وجوی همه‌جا"
 
 #. Translators: "copy to clipboard" action in the right-click menu on the list of keys
 #: editor/key-list-box-row.vala:449
 msgid "Copy"
-msgstr ""
+msgstr "رونوشت"
 
 #. Translators: "open key-editor page" action in the right-click menu on the list of keys
 #: editor/key-list-box-row.vala:452
 msgid "Customize…"
-msgstr ""
+msgstr "سفارشی‌سازی…"
 
 #. Translators: "reset key value" action in the right-click menu on the list of keys
 #: editor/key-list-box-row.vala:455
-#, fuzzy
 msgid "Set to default"
-msgstr "ثبت مقدار پیش‌فرض"
+msgstr "تنظیم به پیش‌گزیده"
 
 #. Translators: "open key-editor page" action in the right-click menu on the list of keys, when key is hard-conflicting
 #: editor/key-list-box-row.vala:460
 msgid "Show details…"
-msgstr ""
+msgstr "نمایش جزییات…"
 
 #. Translators: "dismiss change" action in the right-click menu on a key with pending changes
 #: editor/key-list-box-row.vala:463
 msgid "Dismiss change"
-msgstr ""
+msgstr "دورانداختن تغییرات"
 
 #. Translators: "erase key" action in the right-click menu on a key without schema
 #. Translators: "erase key" option in the right-click menu on a key without schema when on delayed mode
@@ -1042,30 +1041,29 @@ msgstr ""
 #: editor/key-list-box-row.vala:466 editor/key-list-box-row.vala:582
 #: editor/registry-info.ui:132
 msgid "Erase key"
-msgstr ""
+msgstr "کلید پاک‌کردن"
 
 #. Translators: "go to" action in the right-click menu on a "go back" line during search
 #: editor/key-list-box-row.vala:469
 msgid "Go to this path"
-msgstr ""
+msgstr "رفتن به این مسیر"
 
 #. Translators: "open folder" action in the right-click menu on a folder
 #: editor/key-list-box-row.vala:472
 msgid "Open"
-msgstr ""
+msgstr "گشودن"
 
 #. Translators: "open search" action in the right-click menu on a search
 #. Translators: accessible name of the enter-search button displayed in small-size windows
 #. Translators: accessible name of the search togglebutton displayed in usual-size windows
-#: editor/key-list-box-row.vala:478 editor/pathwidget.ui:83
-#: editor/pathwidget.ui:109
+#: editor/key-list-box-row.vala:478 editor/pathwidget.ui:83 editor/pathwidget.ui:109
 msgid "Search"
-msgstr ""
+msgstr "جست‌وجو"
 
 #. Translators: "open parent folder" action in the right-click menu on a folder in a search result
 #: editor/key-list-box-row.vala:481
 msgid "Open parent folder"
-msgstr ""
+msgstr "گشودن شاخهٔ والد"
 
 #. Translators: "reset recursively" action in the right-click menu on a folder
 #: editor/key-list-box-row.vala:484
@@ -1080,7 +1078,7 @@ msgstr ""
 #. Translators: "no change" option in the right-click menu on a key when on delayed mode
 #: editor/key-list-box-row.vala:576
 msgid "No change"
-msgstr ""
+msgstr "بدون تغییر"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense); this handle type is an index; you may maintain the word "handle"
 #: editor/model-utils.vala:301
@@ -1162,13 +1160,13 @@ msgstr ""
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:391
+#, fuzzy
 msgid "Boolean"
 msgstr "بولی"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:394
 #, fuzzy
-#| msgid "Boolean"
 msgid "boolean"
 msgstr "بولی"
 
@@ -1179,22 +1177,18 @@ msgstr "رشته"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:400
-#, fuzzy
-#| msgid "String"
 msgid "string"
 msgstr "رشته"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:403
-#, fuzzy
 msgid "String array"
-msgstr "رشته"
+msgstr "آرایهٔ رشته‌ای"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:406
-#, fuzzy
 msgid "string array"
-msgstr "رشته"
+msgstr "آرایهٔ رشته‌ای"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:409
@@ -1203,30 +1197,30 @@ msgstr "شمارشی"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:412
-#, fuzzy
-#| msgid "Enumeration"
 msgid "enumeration"
 msgstr "شمارشی"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:415
 msgid "Flags"
-msgstr ""
+msgstr "پرچم‌ها"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:418
 msgid "flags"
-msgstr ""
+msgstr "پرچم‌ها"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:421
+#, fuzzy
 msgid "Double"
-msgstr ""
+msgstr "دو برابر"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:424
+#, fuzzy
 msgid "double"
-msgstr ""
+msgstr "دو برابر"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense); this handle type is an index; you may maintain the word "handle"
 #. private const string _H_ = C_("capitalized", "D-Bus handle type");
@@ -1246,15 +1240,13 @@ msgstr ""
 #. private const string _g_ = C_("non-capitalized", "D-Bus signature");
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:451
-#, fuzzy
 msgid "Integer"
-msgstr "عدد صحیح [%s..%s]"
+msgstr "عدد صحیح"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:454
-#, fuzzy
 msgid "integer"
-msgstr "عدد صحیح [%s..%s]"
+msgstr "عدد صحیح"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:457
@@ -1269,12 +1261,12 @@ msgstr ""
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:463
 msgid "Empty tuple"
-msgstr ""
+msgstr "چندتایی خالی"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:466
 msgid "empty tuple"
-msgstr ""
+msgstr "چندتایی خالی"
 
 #. Translators: placeholder text of the list of pending modifications, displayed when the user is in delayed mode but has no pending modifications
 #: editor/modifications-list.vala:28
@@ -1292,17 +1284,17 @@ msgstr ""
 #. Translators: label of one of the two buttons of the list of pending modifications, to switch between applying changes to the whole list and selecting some items for more advanced things (not displayed currently, but this change is wanted); the first is "Rule all"
 #: editor/modifications-list.vala:34
 msgid "Select"
-msgstr ""
+msgstr "انتخاب"
 
 #. Translators: displayed in the bottom bar in normal sized windows, when the user tries to reset keys from/for a folder that has nothing to reset
 #: editor/modifications-revealer.vala:136 editor/modifications-revealer.vala:323
 msgid "Nothing to reset."
-msgstr ""
+msgstr "هیچی برای بازنشانی نیست."
 
 #. Translators: displayed in the bottom bar in normal sized windows, when the user edits a key and enters in the entry or text view a value that cannot be parsed to the correct data type
 #: editor/modifications-revealer.vala:299
 msgid "The value is invalid."
-msgstr ""
+msgstr "مقدار نامعتبر است."
 
 #. Translators: displayed in the bottom bar in normal sized windows, when the user edits a key (with the "always confirm explicit" behaviour)
 #: editor/modifications-revealer.vala:307
@@ -1339,16 +1331,16 @@ msgstr[1] ""
 #: editor/modifications-revealer.vala:347
 #, c-format
 msgid "%s%s"
-msgstr ""
+msgstr "%s%s"
 
 #. Translators: Text displayed in the bottom bar; beginning of a sentence like "One gsettings operation and 2 dconf operations delayed.", you could duplicate "delayed" if needed, as it refers to both the gsettings and dconf operations (at least one of each).
 #. Also, "gsettings" is a technical term, notably a shell command, so you probably should not translate it.
 #: editor/modifications-revealer.vala:351
-#, fuzzy, c-format
+#, c-format
 msgid "One gsettings operation"
 msgid_plural "%u gsettings operations"
-msgstr[0] "تنظیمات;پیکربندی;"
-msgstr[1] "تنظیمات;پیکربندی;"
+msgstr[0] "%u عملیات gsettings"
+msgstr[1] "یک عملیات gsettings"
 
 #. Translators: Text displayed in the bottom bar; second part (and end) of a sentence like "One gsettings operation and 2 dconf operations delayed.", so:
 #. * the space before the "and" is probably wanted, if you keeped the "%s%s" translation as-is, and
@@ -1364,45 +1356,44 @@ msgstr[1] ""
 #. Translators: accessible name of the "close" button that is linked with the search entry on small windows
 #: editor/pathentry.ui:66
 msgid "Close search"
-msgstr ""
+msgstr "جستجوی نزدیک"
 
 #. Translators: accessible description of the "close" button that is linked with the search entry on small windows
 #: editor/pathentry.ui:68
 msgid "Close search results"
-msgstr ""
+msgstr "نتایج جستجوی نزدیک"
 
 #. Translators: accessible description of the "refresh" button that is linked with the search entry on large windows
 #: editor/pathentry.ui:92
 msgid "Refresh search results"
-msgstr ""
+msgstr "دوباره‌سازی نتایج جستجو"
 
 #. Translators: accessible description of the enter-search button displayed in small-size windows
 #. Translators: accessible description of the search togglebutton displayed in usual-size windows
 #: editor/pathwidget.ui:85 editor/pathwidget.ui:111
 msgid "Search keys"
-msgstr ""
+msgstr "جست‌وجوی کلیدها"
 
 #. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/Conflict/warning-similar'
 #: editor/registry-info.ui:49
 msgid ""
-"This key is defined and used by more than one schema. This could lead to "
-"problems. Edit value at your own risk."
+"This key is defined and used by more than one schema. This could lead to problems. "
+"Edit value at your own risk."
 msgstr ""
 
 #. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/Conflict/type-conflict'
 #: editor/registry-info.ui:87
 msgid ""
-"This key is incompatibly defined and used by more than one schema. It is "
-"impossible to work with its value in a meaningful way."
+"This key is incompatibly defined and used by more than one schema. It is impossible "
+"to work with its value in a meaningful way."
 msgstr ""
 
 #. Translators: warning text of an infobar, when a key is not defined by a schema
 #: editor/registry-info.ui:125
 msgid ""
-"No schema available. A schema is what describes the use of a key, and Dconf "
-"Editor can’t find one associated with this key. If the application that was "
-"using this key has been uninstalled, or if this key is obsolete, you may want "
-"to erase it."
+"No schema available. A schema is what describes the use of a key, and Dconf Editor "
+"can’t find one associated with this key. If the application that was using this key "
+"has been uninstalled, or if this key is obsolete, you may want to erase it."
 msgstr ""
 
 #. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-enum'
@@ -1434,43 +1425,37 @@ msgstr "نام"
 #. Translators: field description when displaying key properties; the key can be defined by a schema or by the dconf engine
 #: editor/registry-info.vala:73
 msgid "Defined by"
-msgstr ""
+msgstr "تعریف شده توسط"
 
 #. Translators: field description when displaying key properties; the schema id (if the key is defined by a schema)
 #: editor/registry-info.vala:76
-#, fuzzy
 msgid "Schema"
-msgstr "شِما:"
+msgstr "شِما"
 
 #. Translators: field description when displaying key properties; a summary describing the key use
 #: editor/registry-info.vala:79
-#, fuzzy
 msgid "Summary"
-msgstr "خلاصه:"
+msgstr "خلاصه"
 
 #. Translators: field description when displaying key properties; a description describing deeply the key use
 #: editor/registry-info.vala:82
-#, fuzzy
 msgid "Description"
-msgstr "توضیحات:"
+msgstr "توضیحات"
 
 #. Translators: field description when displaying key properties; the datatype of the key (integer, boolean, string, etc.)
 #: editor/registry-info.vala:85
-#, fuzzy
 msgid "Type"
-msgstr "نوع:"
+msgstr "نوع"
 
 #. Translators: field description when displaying key properties; specific name of the datatype of the key ("Signed 32-bit integer" for example)
 #: editor/registry-info.vala:89
-#, fuzzy
 msgid "Type name"
-msgstr "نوع:"
+msgstr "نام نوع"
 
 #. Translators: field description when displaying key properties; technical code of the datatype of the key ("q" for uint16, "b" for boolean, etc.)
 #: editor/registry-info.vala:93
-#, fuzzy
 msgid "Type code"
-msgstr "نوع:"
+msgstr "کد نوع"
 
 #. Translators: field description when displaying key properties; if the numeral key has a minimum or a maximum set
 #: editor/registry-info.vala:96
@@ -1480,54 +1465,53 @@ msgstr ""
 #. Translators: field description when displaying key properties; the minimum value a numeral key can take
 #: editor/registry-info.vala:99
 msgid "Minimum"
-msgstr ""
+msgstr "کمینه"
 
 #. Translators: field description when displaying key properties; the maximum value a numeral key can take
 #: editor/registry-info.vala:102
 msgid "Maximum"
-msgstr ""
+msgstr "بیشینه"
 
 #. Translators: field description when displaying key properties; the default value of the key (defined if it has a schema)
 #: editor/registry-info.vala:105
-#, fuzzy
 msgid "Default"
-msgstr "پیش‌فرض:"
+msgstr "پیش‌گزیده"
 
 #. Translators: field description when displaying key properties; the current value of the key
 #: editor/registry-info.vala:108
 msgid "Current value"
-msgstr ""
+msgstr "مقدار فعلی"
 
 #. Translators: field description when displaying key properties; the field content is a switch widget that allows using or not the default value of the key, as provided by its schema
 #: editor/registry-info.vala:111
 msgid "Use default value"
-msgstr ""
+msgstr "استفاده از مقدار پیش‌گزیده"
 
 #. Translators: field description when displaying key properties; the field content is a widget that allows setting the value of the key (depending of its type, an entry, a switch, etc.)
 #: editor/registry-info.vala:114
 msgid "Custom value"
-msgstr ""
+msgstr "مقدار دلخواه"
 
 #. Translators: field content when displaying key properties; if the key does not have a summary describing its use
 #. Translators: "subtitle" in the keys list of a key defined by a schema but missing a summary describing the key use
 #: editor/registry-info.vala:202 editor/registry-list.vala:491
 msgid "No summary provided"
-msgstr ""
+msgstr "هیچ خلاصه‌ای ارائه نشد"
 
 #. Translators: field content when displaying key properties; if the key does not have a description describing deeply its use
 #: editor/registry-info.vala:212
 msgid "No description provided"
-msgstr ""
+msgstr "توضیحات پشتیبانی نمی‌شود"
 
 #. Translators: field content when displaying key properties; "Yes" if the key has a range set, "No" if not
 #: editor/registry-info.vala:249
 msgid "Yes"
-msgstr ""
+msgstr "بله"
 
 #. Translators: field content when displaying key properties; "Yes" if the key has a range set, "No" if not
 #: editor/registry-info.vala:252
 msgid "No"
-msgstr ""
+msgstr "خیر"
 
 #. Translators: field content when displaying key properties; displayed instead of the value, in case of conflicting keys
 #: editor/registry-info.vala:280
@@ -1546,23 +1530,20 @@ msgstr ""
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of type "variant" (or of a type composed with a variant)
 #: editor/registry-info.vala:620
 msgid ""
-"Variants content should be surrounded by XML brackets (‘<’ and ‘>’). See "
-"https://developer.gnome.org/glib/stable/gvariant-text.html for complete "
-"documentation."
+"Variants content should be surrounded by XML brackets (‘<’ and ‘>’). See https://"
+"developer.gnome.org/glib/stable/gvariant-text.html for complete documentation."
 msgstr ""
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a "maybe type" and with a string type (or similar); neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
 #: editor/registry-info.vala:627
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its empty "
-"value. Strings, signatures and object paths should be surrounded by quotation "
-"marks."
+"value. Strings, signatures and object paths should be surrounded by quotation marks."
 msgstr ""
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a string type (or similar)
 #: editor/registry-info.vala:630
-msgid ""
-"Strings, signatures and object paths should be surrounded by quotation marks."
+msgid "Strings, signatures and object paths should be surrounded by quotation marks."
 msgstr ""
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a "maybe type"; neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
@@ -1575,7 +1556,7 @@ msgstr ""
 #. Translators: field content when displaying key properties; the field description is "Current value", this text displayed if the key, not defined by a schema, has been erased (and so has no value anymore)
 #: editor/registry-info.vala:674
 msgid "Key erased."
-msgstr ""
+msgstr "کلید پاک شد."
 
 #. Translators: means that the key has (at least) one other key defined by a different schema but at the same path and with the same name; used on large windows ("conflict" is used on small windows)
 #: editor/registry-list.vala:518
@@ -1584,31 +1565,29 @@ msgstr ""
 
 #. Translators: means that the key has (at least) one other key defined by a different schema but at the same path and with the same name; used on small windows ("conflicting keys" is used on large windows)
 #: editor/registry-list.vala:521
-#, fuzzy
 msgid "conflict"
-msgstr "ویرایشگر dconf"
+msgstr "تداخل"
 
 #. Translators: "subtitle" in the keys list of a key not defined by a schema; keys defined by a schema have in place a summary describing the key use
 #: editor/registry-list.vala:537
-#, fuzzy
 msgid "No schema found"
-msgstr "بدون شِما"
+msgstr "هیچ شِمایی پیدا نشد"
 
 #. Translators: means that the key has been erased; used on large windows ("erased" is used on small windows)
 #: editor/registry-list.vala:638
 msgid "key erased"
-msgstr ""
+msgstr "کلید پاک شد"
 
 #. Translators: means that the key has been erased; used on small windows ("key erased" is used on large windows)
 #: editor/registry-list.vala:641
 msgid "erased"
-msgstr ""
+msgstr "پاک شد"
 
 #. Translators: displayed on small windows; indicates the data type of the key (the %s is the variant type code)
 #: editor/registry-list.vala:679
 #, c-format
 msgid "type “%s”"
-msgstr ""
+msgstr "نوع «%s»"
 
 #. Translators: header displayed in the keys list during a search only; indicates that the schema (the %s is the schema id) is installed at the path where the search has started
 #: editor/registry-list.vala:1176
@@ -1629,63 +1608,63 @@ msgstr ""
 #. Translators: header displayed in the keys list during a search or during browsing
 #: editor/registry-list.vala:1196
 msgid "Subfolders"
-msgstr ""
+msgstr "زیرشاخه‌ها"
 
 #. Translators: last header displayed in the keys list during a local search
 #: editor/registry-list.vala:1201
 msgid "Other actions"
-msgstr ""
+msgstr "اقدامات دیگر"
 
 #. Translators: placeholder text of the search list when there's no search results (not used in current design)
 #: editor/registry-search.vala:26
 msgid "No matches"
-msgstr ""
+msgstr "بدون منطبق"
 
 #. Translators: header displayed in the keys list during a search only
 #: editor/registry-search.vala:556
 msgid "Folders"
-msgstr ""
+msgstr "شاخه‌‌ها"
 
 #. Translators: placeholder text of the keys list when there's nothing to display in a path (not used in current design)
 #: editor/registry-view.vala:23
 msgid "No keys in this path"
-msgstr ""
+msgstr "هیچ کلیدی در این مسیر نیست"
 
 #. Translators: the boolean "true" value; capitalized (if that makes sense)
 #: editor/setting-object.vala:173
 msgid "True"
-msgstr ""
+msgstr "درست"
 
 #. Translators: the boolean "false" value; capitalized (if that makes sense)
 #: editor/setting-object.vala:177
 msgid "False"
-msgstr ""
+msgstr "نادرست"
 
 #. Translators: "nothing" value of a nullable key; capitalized (if that makes sense); "nothing" here is a keyword, but you do not need to show it in your translation, that will be done with the non-capitalized version of the word
 #: editor/setting-object.vala:180
 msgid "Nothing"
-msgstr ""
+msgstr "هیچ چیز"
 
 #. Translators: the boolean "true" value; non capitalized (if that makes sense)
 #: editor/setting-object.vala:186
 msgid "true"
-msgstr ""
+msgstr "درست"
 
 #. Translators: the boolean "false" value; non capitalized (if that makes sense)
 #: editor/setting-object.vala:190
 msgid "false"
-msgstr ""
+msgstr "نادرست"
 
 #. Translators: "nothing" value of a nullable key; non capitalized (if that makes sense); the %s is replaced by the text "nothing" (as a technical keyword); it isn't introduced with quotation marks around it, but you might want to add some, depending of your language typographic rules
 #: editor/setting-object.vala:194
 #, c-format
 msgid "nothing (%s)"
-msgstr ""
+msgstr "هیچ چیز (%s)"
 
 #. Translators: "nothing" value of a nullable key; non capitalized (if that makes sense)
 #: editor/setting-object.vala:199
 msgid "nothing"
-msgstr ""
+msgstr "هیچ چیز"
 
 #. Translators: field content when displaying key properties; the field description is "Defined by", this text is displayed if the key is defined by a schema, and if this schema has a fixed path (it is not relocatable)
 #: editor/setting-object.vala:410
@@ -1700,7 +1679,7 @@ msgstr ""
 #. Translators: field content when displaying key properties; the field description is "Defined by", this text is displayed if the key is not defined by a schema (the value is given by dconf but cannot be used by the GSettings functions)
 #: editor/setting-object.vala:417
 msgid "DConf backend"
-msgstr ""
+msgstr "بک‌اند dconf"
 
 #, fuzzy
 #~ msgid "dconf-editor"
@@ -1722,28 +1701,26 @@ msgstr ""
 #~ msgstr "پیدا نشد"
 
 #~ msgid ""
-#~ "This program is free software; you can redistribute it and/or modify it "
-#~ "under the terms of the GNU General Public License as published by the Free "
-#~ "Software Foundation; either version 2 of the License, or (at your option) "
-#~ "any later version.\n"
+#~ "This program is free software; you can redistribute it and/or modify it under "
+#~ "the terms of the GNU General Public License as published by the Free Software "
+#~ "Foundation; either version 2 of the License, or (at your option) any later "
+#~ "version.\n"
 #~ "\n"
-#~ "This program is distributed in the hope that it will be useful, but WITHOUT "
-#~ "ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
-#~ "FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for "
-#~ "more details.\n"
+#~ "This program is distributed in the hope that it will be useful, but WITHOUT ANY "
+#~ "WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A "
+#~ "PARTICULAR PURPOSE.  See the GNU General Public License for more details.\n"
 #~ "\n"
 #~ "You should have received a copy of the GNU General Public License along with "
-#~ "this program; if not, write to the Free Software Foundation, Inc., 51 "
-#~ "Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
+#~ "this program; if not, write to the Free Software Foundation, Inc., 51 Franklin "
+#~ "Street, Fifth Floor, Boston, MA 02110-1301, USA"
 #~ msgstr ""
-#~ "این برنامه یک نرم‌افزار آزاد است؛ شما می‌توانید آن را تحت شرایط اجازه‌نامه‌ی "
-#~ "همگانی عمومی گنو که بنیاد نرم‌افزارهای آزاد منتشر کرده است،‌ تغییر دهید یا "
-#~ "دوباره توزیع کنید. با نسخه‌ی ۲ اجازه‌نامه یا (به اختیار خودتان) هر نسخه‌ی "
-#~ "بالاتر دیگری.\n"
+#~ "این برنامه یک نرم‌افزار آزاد است؛ شما می‌توانید آن را تحت شرایط اجازه‌نامه‌ی همگانی "
+#~ "عمومی گنو که بنیاد نرم‌افزارهای آزاد منتشر کرده است،‌ تغییر دهید یا دوباره توزیع "
+#~ "کنید. با نسخه‌ی ۲ اجازه‌نامه یا (به اختیار خودتان) هر نسخه‌ی بالاتر دیگری.\n"
 #~ "\n"
 #~ "این برنامه با این امید توزیع شده است که به درد بخور باشد، اما بدون هر گونه "
-#~ "ضمانتی؛ حتی بدون ضمانت ضمنی قابل فروش بودن یا مناسب بودن برای یک هدف مشخص. "
-#~ "برای جزئیات بیشتر به اجازه‌نامه‌ی همگانی عمومی گنو را ببینید.\n"
+#~ "ضمانتی؛ حتی بدون ضمانت ضمنی قابل فروش بودن یا مناسب بودن برای یک هدف مشخص. برای "
+#~ "جزئیات بیشتر به اجازه‌نامه‌ی همگانی عمومی گنو را ببینید.\n"
 #~ "\n"
 #~ "شما باید به همراه ناتیلوس نسخه‌ای از اجازه‌نامه‌ی همگانی عمومی گنو دریافت کرده "
 #~ "باشد؛ اگر این طور نیست برای شرکت بنیاد نرم افزارهای آزاد به آدرس زیر بنویسید:"
