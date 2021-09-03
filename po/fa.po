@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2021-09-01 13:55+0000\n"
-"PO-Revision-Date: 2021-09-01 18:30+0430\n"
-"Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
+"POT-Creation-Date: 2021-09-01 14:01+0000\n"
+"PO-Revision-Date: 2021-09-02 16:41+0430\n"
+"Last-Translator: eshagh <eshagh094@gmail.com>\n"
 "Language-Team: Persian\n"
 "Language: fa\n"
 "MIME-Version: 1.0\n"
@@ -224,6 +224,9 @@ msgid ""
 "Dconf Editor is a tool to allow direct editing of the dconf configuration "
 "database. This is useful when developing applications that use these settings."
 msgstr ""
+"ویراشگر Dconf یک ابزار است که اجازه ویرایش مستقیم پایگاه‌دادهٔ dconf را می‌دهد. "
+"این ابزار در زمان توسعهٔ نرم‌افزارهایی که از این تنظیمات بهره‌گیری می‌کنند، کاربردی "
+"است."
 
 #: editor/ca.desrt.dconf-editor.appdata.xml.in:17
 msgid ""
@@ -253,8 +256,9 @@ msgstr "ویرایشگر dconf"
 
 #. Translators: a GenericName that gives the application goal, as defined in the desktop file spec
 #: editor/ca.desrt.dconf-editor.desktop.in:5
+#, fuzzy
 msgid "Configuration editor for dconf"
-msgstr "پیکربندی ویرایشگر برای dconf"
+msgstr "ویرایشگر پیکربندی برای dconf"
 
 #. Translators: a Comment that gives the application function, as defined in the desktop file spec
 #: editor/ca.desrt.dconf-editor.desktop.in:7
@@ -269,12 +273,12 @@ msgstr "settings;configuration;تنظیمات;پیکربندی;"
 #. Translators: summary of a settings key, see 'dconf-editor /org/gnome/iagno/automatic-night-mode'
 #: editor/ca.desrt.dconf-editor.gschema.xml:89
 msgid "A flag to follow system night light"
-msgstr ""
+msgstr "یک پرچم برای دنبال کردن چراغ شب سامانه"
 
 #. Translators: description of a settings key, see 'dconf-editor /org/gnome/iagno/automatic-night-mode'
 #: editor/ca.desrt.dconf-editor.gschema.xml:91
 msgid "Use GNOME night light setting to activate night-mode."
-msgstr ""
+msgstr "از تنظیمات چراغ شب گنوم برای فعال‌سازی حالت شب استفاده کنید."
 
 #. see AdaptativeWindow.width-request at data/ui/adaptative-window.ui:22
 #. range min="350"/ FIXME
@@ -308,12 +312,12 @@ msgstr "یک پرچم برای فعال‌سازی حالت بیشینه"
 #. Translators: description of a settings key, see 'dconf-editor /org/gnome/iagno/window-is-maximized'
 #: editor/ca.desrt.dconf-editor.gschema.xml:116
 msgid "If “true”, the main window starts in maximized mode."
-msgstr ""
+msgstr "اگر «درست» باشد، پنجرهٔ اصلی در حالت بیشینه آغاز خواهد شد."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/restore-view'
 #: editor/ca.desrt.dconf-editor.gschema.xml:138
 msgid "A flag to restore the last view"
-msgstr ""
+msgstr "یک پرچم برای بازگردانی آخرین نمایش"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/restore-view'
 #: editor/ca.desrt.dconf-editor.gschema.xml:140
@@ -412,9 +416,8 @@ msgid ""
 "determine if any action is taken inside of a browser window when either is "
 "pressed."
 msgstr ""
-"برای کاربران با موشواره‌هایی که دارای دکمه‌های ویژهٔ پیش و پس هستند، این کلید "
-"تنظیم می‌کند که کدام دکمه برای دستور «بازگشت» در مرورگر عمل کند. مقادیر ممکنه، "
-"در دامنهٔ بین ۶ و ۱۴ هستند."
+"برای کاربران با موشی‌هایی که دارای دکمه‌های «جلو» و «بازگشت» هستند، این کلید "
+"تنظیم می‌کند که در صورت فشردن هر کلید داخل پنجرهٔ مرورگر، چه اقدامی صورت بگیرد."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-back-buttons'
 #: editor/ca.desrt.dconf-editor.gschema.xml:195
@@ -428,14 +431,14 @@ msgid ""
 "set which button activates the “Back” command in a browser window. Possible "
 "values range between 6 and 14."
 msgstr ""
-"برای کاربران با موشی‌هایی که دارای دکمه‌های ویژه‌ی «Forward» و «Back» هستند، این "
-"کلید تنظیم می‌کند که کدام دکمه برای دستور «Back» در مرورگر عمل کند. مقادیر ممکنه "
-"در دامنه‌ی بین ۶ و ۱۴هستند."
+"برای کاربران با موشی‌هایی که دارای دکمه‌های «جلو» و «بازگشت» هستند، این کلید "
+"تنظیم می‌کند که کدام دکمه برای دستور «بازگشت» در مرورگر عمل کند. مقادیر ممکنه در "
+"دامنهٔ بین ۶ و ۱۴هستند."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-forward-buttons'
 #: editor/ca.desrt.dconf-editor.gschema.xml:203
 msgid "Mouse button to activate the “Forward” command in browser window"
-msgstr "دکمه‌ی موشی برای فعال کردن دستور «Forward» در پنجره‌ی مرورگر"
+msgstr "دکمهٔ موشی برای فعال کردن دستور «جلو» در پنجره‌ی مرورگر"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-forward-buttons'
 #: editor/ca.desrt.dconf-editor.gschema.xml:205
@@ -444,9 +447,9 @@ msgid ""
 "set which button activates the “Forward” command in a browser window. Possible "
 "values range between 6 and 14."
 msgstr ""
-"برای کاربران با موشی‌هایی که دارای دکمه‌های ویژه‌ی «Forward» و «Back» هستند، این "
-"کلید تنظیم می‌کند که کدام دکمه برای دستور «Forward» در مرورگر عمل کند. مقادیر "
-"ممکنه در دامنه‌ی بین ۶ و ۱۴هستند."
+"برای کاربران با موشی‌هایی که دارای دکمه‌های ویژهٔ «جلو» و «بازگشت» هستند، این کلید "
+"تنظیم می‌کند که کدام دکمه برای دستور «جلو» در مرورگر عمل کند. مقادیر ممکنه در "
+"دامنهٔ بین ۶ و ۱۴هستند."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/refresh-settings-schema-source'
 #: editor/ca.desrt.dconf-editor.gschema.xml:210
@@ -518,7 +521,7 @@ msgstr ""
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/small-bookmarks-rows'
 #: editor/ca.desrt.dconf-editor.gschema.xml:247
 msgid "A flag to enable small rows for bookmarks list"
-msgstr "یک پرچم برای فعال‌سازی ردیف‌های کوچک برای فهرست نشانه‌گذاری‌ها"
+msgstr "یک پرچم برای فعال‌سازی ردیف‌های کوچک برای فهرست نشانک‌ها"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/small-bookmarks-rows'
 #: editor/ca.desrt.dconf-editor.gschema.xml:249
@@ -1016,7 +1019,7 @@ msgstr "توضیحات آرگومان‌ها:"
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:213
 msgid "a folder path or a key path"
-msgstr ""
+msgstr "مسیر یک پوشه یا مسیر یک کلید"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:215
@@ -1209,6 +1212,7 @@ msgstr "حالت خروج"
 
 #. Translators: hamburger menu entry, to enter in a special mode called "delay mode" where changes are not applied until validation
 #: editor/dconf-headerbar.vala:201
+#, fuzzy
 msgid "Enter delay mode"
 msgstr "ورود حالت تاخیر"
 
@@ -1482,6 +1486,7 @@ msgstr ""
 
 #. Translators: Ctrl-Delete action, when browsing; sets the selected key to its default value
 #: editor/help-overlay.ui:239
+#, fuzzy
 msgctxt "shortcut window"
 msgid "Set to default"
 msgstr "تنظیم به پیش‌گزیده"
@@ -1965,18 +1970,20 @@ msgstr[1] ""
 
 #. Translators: accessible name of the "close" button that is linked with the search entry on small windows
 #: editor/pathentry.ui:66
+#, fuzzy
 msgid "Close search"
-msgstr "جستجوی نزدیک"
+msgstr "جست‌وجوی نزدیک"
 
 #. Translators: accessible description of the "close" button that is linked with the search entry on small windows
 #: editor/pathentry.ui:68
+#, fuzzy
 msgid "Close search results"
-msgstr "نتایج جستجوی نزدیک"
+msgstr "نتایج جست‌وجوی نزدیک"
 
 #. Translators: accessible description of the "refresh" button that is linked with the search entry on large windows
 #: editor/pathentry.ui:92
 msgid "Refresh search results"
-msgstr "دوباره‌سازی نتایج جستجو"
+msgstr "تازه‌سازی نتایج جست‌وجو"
 
 #. Translators: accessible description of the enter-search button displayed in small-size windows
 #. Translators: accessible description of the search togglebutton displayed in usual-size windows
@@ -2106,13 +2113,15 @@ msgstr "مقدار دلخواه"
 #. Translators: field content when displaying key properties; if the key does not have a summary describing its use
 #. Translators: "subtitle" in the keys list of a key defined by a schema but missing a summary describing the key use
 #: editor/registry-info.vala:202 editor/registry-list.vala:491
+#, fuzzy
 msgid "No summary provided"
 msgstr "هیچ خلاصه‌ای ارائه نشد"
 
 #. Translators: field content when displaying key properties; if the key does not have a description describing deeply its use
 #: editor/registry-info.vala:212
+#, fuzzy
 msgid "No description provided"
-msgstr "توضیحات پشتیبانی نمی‌شود"
+msgstr "هیچ توضیحاتی ارائه نشد"
 
 #. Translators: field content when displaying key properties; "Yes" if the key has a range set, "No" if not
 #: editor/registry-info.vala:249
@@ -2231,6 +2240,7 @@ msgstr "اقدامات دیگر"
 
 #. Translators: placeholder text of the search list when there's no search results (not used in current design)
 #: editor/registry-search.vala:26
+#, fuzzy
 msgid "No matches"
 msgstr "بدون منطبق"
 
@@ -2292,6 +2302,7 @@ msgstr ""
 
 #. Translators: field content when displaying key properties; the field description is "Defined by", this text is displayed if the key is not defined by a schema (the value is given by dconf but cannot be used by the GSettings functions)
 #: editor/setting-object.vala:417
+#, fuzzy
 msgid "DConf backend"
 msgstr "بک‌اند dconf"
 
