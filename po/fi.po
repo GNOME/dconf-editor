@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2020-05-30 11:09+0000\n"
-"PO-Revision-Date: 2021-02-22 13:12+0200\n"
+"POT-Creation-Date: 2021-08-31 10:45+0000\n"
+"PO-Revision-Date: 2021-09-05 19:54+0300\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos+l10n@iki.fi>\n"
 "Language-Team: suomi <lokalisointi-lista@googlegroups.com>\n"
 "Language: fi\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.4.2\n"
+"X-Generator: Poedit 3.0\n"
 
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the second is "Credits"
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the name of the view, displayed in the headerbar
@@ -1116,12 +1116,12 @@ msgstr "Vain yksi ikkuna voi olla avoinna toistaiseksi.\n"
 #. Translators: command-line error message, try 'dconf-editor a b c d'
 #: editor/dconf-editor.vala:477
 msgid "Cannot understand: too many arguments.\n"
-msgstr ""
+msgstr "Ei kykene ymmärtämään: liian monta argumenttia.\n"
 
 #. Translators: command-line error message, try 'dconf-editor / a'
 #: editor/dconf-editor.vala:491
 msgid "Cannot understand second argument in this context.\n"
-msgstr ""
+msgstr "Ei kykene ymmärtämään toista argumenttia tässä asiayhteydessä.\n"
 
 #. Translators: command-line error message, try 'dconf-editor org.example /'
 #: editor/dconf-editor.vala:512
@@ -1131,17 +1131,17 @@ msgstr ""
 #. Translators: command-line error message, try 'dconf-editor org.example:a'
 #: editor/dconf-editor.vala:527
 msgid "Schema path should start and end with a “/”.\n"
-msgstr ""
+msgstr "Skeeman polku tulee alkaa ja päättyä merkillä “/”.\n"
 
 #. Translators: command-line error message, try 'dconf-editor //'
 #: editor/dconf-editor.vala:543
 msgid "Cannot understand: given path contains “//”.\n"
-msgstr ""
+msgstr "Ei kykene ymmärtämään: annettu polku sisältää “//”.\n"
 
 #. Translators: command-line error message, try 'dconf-editor "org example" a'
 #: editor/dconf-editor.vala:551
 msgid "Cannot understand: space character in argument.\n"
-msgstr ""
+msgstr "Ei kykene ymmärtämään: välilyöntimerkki argumentissa.\n"
 
 #. Translators: notification header, try ctrl-c while in the keys list
 #: editor/dconf-editor.vala:579
@@ -1252,7 +1252,7 @@ msgstr "%s (avain poistettu)"
 #. Translators: command-line startup warning, try 'dconf-editor ca.desrt.dconf-editor.Demo.Relocatable'
 #: editor/dconf-window.vala:124
 msgid "Schema is relocatable, a path is needed."
-msgstr ""
+msgstr "Skeema on uudelleensijoitettavissa, polku tarvitaan."
 
 #. Translators: command-line startup warning
 #: editor/dconf-window.vala:137
@@ -1473,7 +1473,7 @@ msgstr ""
 #: editor/help-overlay.ui:202
 msgctxt "shortcut window"
 msgid "Keys list actions"
-msgstr ""
+msgstr "Avainlistan toiminnot"
 
 #. Translators: Menu key action, when browsing
 #: editor/help-overlay.ui:207
@@ -1493,7 +1493,7 @@ msgctxt "shortcut window"
 msgid "Next line"
 msgstr "Seuraava rivi"
 
-#. Translators: entry disabled for now; Ctrl-I action, when browsing; displays informations on selected folder
+#. Translators: entry disabled for now; Ctrl-I action, when browsing; displays information on selected folder
 #: editor/help-overlay.ui:231
 msgctxt "shortcut window"
 msgid "Toggle folder properties"
@@ -2073,7 +2073,7 @@ msgstr "Nimi"
 #. Translators: field description when displaying key properties; the key can be defined by a schema or by the dconf engine
 #: editor/registry-info.vala:73
 msgid "Defined by"
-msgstr ""
+msgstr "Määrittänyt"
 
 #. Translators: field description when displaying key properties; the schema id (if the key is defined by a schema)
 #: editor/registry-info.vala:76
@@ -2216,7 +2216,7 @@ msgstr "Avain poistettu."
 #. Translators: means that the key has (at least) one other key defined by a different schema but at the same path and with the same name; used on large windows ("conflict" is used on small windows)
 #: editor/registry-list.vala:518
 msgid "conflicting keys"
-msgstr ""
+msgstr "ristiriidassa olevat avaimet"
 
 #. Translators: means that the key has (at least) one other key defined by a different schema but at the same path and with the same name; used on small windows ("conflicting keys" is used on large windows)
 #: editor/registry-list.vala:521
@@ -2247,7 +2247,6 @@ msgstr ""
 #. Translators: header displayed in the keys list during a search only; indicates that the schema (the %s is the schema id) is installed at the path where the search has started
 #: editor/registry-list.vala:1176
 #, c-format
-#| msgid "%s (key erased)"
 msgid "%s (local keys)"
 msgstr "%s (paikalliset avaimet)"
 
@@ -2289,12 +2288,12 @@ msgstr "Ei avaimia tässä polussa"
 #. Translators: the boolean "true" value; capitalized (if that makes sense)
 #: editor/setting-object.vala:173
 msgid "True"
-msgstr ""
+msgstr "Tosi"
 
 #. Translators: the boolean "false" value; capitalized (if that makes sense)
 #: editor/setting-object.vala:177
 msgid "False"
-msgstr ""
+msgstr "Epätosi"
 
 #. Translators: "nothing" value of a nullable key; capitalized (if that makes sense); "nothing" here is a keyword, but you do not need to show it in your translation, that will be done with the non-capitalized version of the word
 #: editor/setting-object.vala:180
@@ -2304,12 +2303,12 @@ msgstr "Ei mitään"
 #. Translators: the boolean "true" value; non capitalized (if that makes sense)
 #: editor/setting-object.vala:186
 msgid "true"
-msgstr ""
+msgstr "tosi"
 
 #. Translators: the boolean "false" value; non capitalized (if that makes sense)
 #: editor/setting-object.vala:190
 msgid "false"
-msgstr ""
+msgstr "epätosi"
 
 #. Translators: "nothing" value of a nullable key; non capitalized (if that makes sense); the %s is replaced by the text "nothing" (as a technical keyword); it isn't introduced with quotation marks around it, but you might want to add some, depending of your language typographic rules
 #: editor/setting-object.vala:194
@@ -2320,17 +2319,17 @@ msgstr "ei mitään (%s)"
 #. Translators: "nothing" value of a nullable key; non capitalized (if that makes sense)
 #: editor/setting-object.vala:199
 msgid "nothing"
-msgstr ""
+msgstr "ei mitään"
 
 #. Translators: field content when displaying key properties; the field description is "Defined by", this text is displayed if the key is defined by a schema, and if this schema has a fixed path (it is not relocatable)
 #: editor/setting-object.vala:410
 msgid "Schema with path"
-msgstr ""
+msgstr "Skeema polulla"
 
 #. Translators: field content when displaying key properties; the field description is "Defined by", this text is displayed if the key is defined by a schema, and if this schema is relocatable (it has not a fixed path)
 #: editor/setting-object.vala:414
 msgid "Relocatable schema"
-msgstr ""
+msgstr "Uudelleensijoitettava skeema"
 
 #. Translators: field content when displaying key properties; the field description is "Defined by", this text is displayed if the key is not defined by a schema (the value is given by dconf but cannot be used by the GSettings functions)
 #: editor/setting-object.vala:417
