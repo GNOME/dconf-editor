@@ -8,25 +8,22 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dconf Editor\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2020-05-30 11:09+0000\n"
-"PO-Revision-Date: 2020-09-30 12:47+0300\n"
-"Last-Translator: Yosef Or Boczko <yoseforb@gmail.com>\n"
+"POT-Creation-Date: 2021-04-17 13:28+0000\n"
+"PO-Revision-Date: 2021-09-23 12:56+0300\n"
+"Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <yoseforb@gmail.com>\n"
 "Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"X-Poedit-Language: Hebrew\n"
-"X-Poedit-Country: ISRAEL\n"
-"X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Gtranslator 3.36.0\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : n==2 ? 1 : n>10 && n%10==0 ? "
+"2 : 3);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Poedit 3.0\n"
 
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the second is "Credits"
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the name of the view, displayed in the headerbar
 #: editor/about-list.vala:44 editor/base-headerbar.vala:310
-#| msgctxt "shortcut window"
-#| msgid "About"
 msgid "About"
 msgstr "על אודות"
 
@@ -49,7 +46,6 @@ msgstr "יוצרים"
 
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the header of the translators names
 #: editor/about-list.vala:166
-#| msgid "translator-credits"
 msgid "Translators"
 msgstr ""
 "ירון שהרבני <sh.yaron@gmail.com>\n"
@@ -106,26 +102,21 @@ msgstr "סימניות"
 
 #. Translators: hamburger menu entry on small windows (not used in current design)
 #: editor/bookmarks-headerbar.vala:254
-#| msgid "Bookmarks"
 msgid "Hide bookmarks"
 msgstr "הסתרת סימניות"
 
 #. Translators: hamburger menu entry on small windows, to unbookmark the currently browsed path
 #: editor/bookmarks-headerbar.vala:259
-#, fuzzy
-#| msgid "Bookmarks"
 msgid "Unbookmark"
-msgstr "סימניות"
+msgstr "ביטול סימניה"
 
 #. Translators: hamburger menu entry on small windows, to bookmark the currently browsed path
 #: editor/bookmarks-headerbar.vala:262
-#| msgid "Bookmarks"
 msgid "Bookmark"
 msgstr "סימנייה"
 
 #. Translators: hamburger menu entry on small windows, to show the bookmarks list
 #: editor/bookmarks-headerbar.vala:265
-#| msgid "Bookmarks"
 msgid "Show bookmarks"
 msgstr "הצגת סימניות"
 
@@ -141,7 +132,7 @@ msgstr ""
 #. Translators: label of one of the two buttons of the bookmarks list, to switch between using the bookmarks and editing the list; the second is "Edit"
 #: editor/bookmarks-list.vala:36
 msgid "Use"
-msgstr ""
+msgstr "להשתמש"
 
 #. Translators: label of one of the two buttons of the bookmarks list, to switch between using the bookmarks and editing the list; the first is "Use"
 #: editor/bookmarks-list.vala:38
@@ -170,8 +161,6 @@ msgstr "ניהול הסימניות שלך"
 
 #. Translators: label of the switch in the bookmarks popover, when searching
 #: editor/bookmarks.vala:404
-#| msgctxt "shortcut window"
-#| msgid "Bookmark this path"
 msgid "Bookmark this Search"
 msgstr "הוספת סימנייה לחיפוש זה"
 
@@ -188,7 +177,7 @@ msgstr "מאפיינים"
 #. Translators: text of an infobar to sort again the keys list ("refresh" only, no "reload")
 #: editor/browser-view.vala:81
 msgid "Sort preferences have changed. Do you want to refresh the view?"
-msgstr ""
+msgstr "העדפות המיון השתנו. לרענן את התצוגה?"
 
 #. Translators: button of an infobar to sort again the keys list ("refresh" only, no "reload")
 #. Translators: accessible name of the "refresh" button that is linked with the search entry on large windows
@@ -199,7 +188,7 @@ msgstr "רענון"
 #. Translators: text of an infobar to reload the keys list because of a new key (for example)
 #: editor/browser-view.vala:87
 msgid "This folder content has changed. Do you want to reload the view?"
-msgstr ""
+msgstr "תוכן התיקייה הזאת השתנה. לרענן את התצוגה?"
 
 #. Translators: button of an infobar to reload the keys list because of a new key (for example)
 #. Translators: button of an infobar to reload the key properties because something has changed
@@ -210,13 +199,13 @@ msgstr "טעינה מחדש"
 #. Translators: text of an infobar to reload the key properties because something has changed
 #: editor/browser-view.vala:93
 msgid "This key’s properties have changed. Do you want to reload the view?"
-msgstr ""
+msgstr "מאפייני המפתח הזה השתנו. לרענן את התצוגה?"
 
 #. Translators: command-line message, when the user uses the backward/forward buttons of the mouse
 #: editor/browser-window.vala:906
 msgid ""
 "The same mouse button is set for going backward and forward. Doing nothing."
-msgstr ""
+msgstr "אותו כפתור העכבר מוגדר להתקדמות קדימה ולחזרה אחורה. זה לא עושה כלום."
 
 #: editor/ca.desrt.dconf-editor.appdata.xml.in:9
 msgid "Dconf Editor"
@@ -327,9 +316,6 @@ msgstr "A flag to restore the last view"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/restore-view'
 #: editor/ca.desrt.dconf-editor.gschema.xml:140
-#| msgid ""
-#| "If 'true', Dconf Editor tries at launch to navigate to the path described "
-#| "in the 'saved-view' key."
 msgid ""
 "If “true”, Dconf Editor tries at launch to navigate to the path described in "
 "the “saved-view” key."
@@ -339,7 +325,6 @@ msgstr ""
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/saved-pathbar-path'
 #: editor/ca.desrt.dconf-editor.gschema.xml:145
-#| msgid "A path to restore the last view"
 msgid "A path to restore the pathbar state"
 msgstr "A path to restore the pathbar state"
 
@@ -361,9 +346,6 @@ msgstr "A path to restore the last view"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/saved-view'
 #: editor/ca.desrt.dconf-editor.gschema.xml:154
-#| msgid ""
-#| "If the 'restore-view' key is set to 'true', Dconf Editor tries at launch "
-#| "to navigate to this path."
 msgid ""
 "If the “restore-view” key is set to “true”, Dconf Editor tries at launch to "
 "navigate to this path."
@@ -378,9 +360,6 @@ msgstr "Show initial warning"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/show-warning'
 #: editor/ca.desrt.dconf-editor.gschema.xml:161
-#| msgid ""
-#| "If 'true', Dconf Editor opens a popup when launched reminding the user to "
-#| "be careful."
 msgid ""
 "If “true”, Dconf Editor opens a popup when launched reminding the user to be "
 "careful."
@@ -395,7 +374,6 @@ msgstr "A flag to enable small rows for keys list"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/small-keys-list-rows'
 #: editor/ca.desrt.dconf-editor.gschema.xml:168
-#| msgid "If 'true', the keys list use smaller rows."
 msgid "If “true”, the keys list use smaller rows."
 msgstr "If “true”, the keys list use smaller rows."
 
@@ -406,16 +384,6 @@ msgstr "Change the behaviour of a key value change request"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/behaviour'
 #: editor/ca.desrt.dconf-editor.gschema.xml:175
-#| msgid ""
-#| "The 'unsafe' value is discouraged: for keys that have a non-special-cased "
-#| "type, it updates the key value each time something changes in the entry, "
-#| "so including intermediate states. The 'safe' value asks for confirmation "
-#| "in these cases, but allows instant changes for booleans and nullable "
-#| "booleans, enums and flags. The 'always-confirm-implicit' and 'always-"
-#| "confirm-explicit' values always asks for confirmation, but the first "
-#| "applies the change if you change path whereas the second dismiss it. The "
-#| "'always-delay' value adds each change in delay mode, allowing to apply "
-#| "multiple keys at once."
 msgid ""
 "The “unsafe” value is discouraged: for keys that have a non-special-cased "
 "type, it updates the key value each time something changes in the entry, so "
@@ -437,7 +405,6 @@ msgstr ""
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/sort-case-sensitive'
 #: editor/ca.desrt.dconf-editor.gschema.xml:180
-#| msgid "A flag to restore the last view"
 msgid "A flag to sort keys list case-sensitively"
 msgstr "A flag to sort keys list case-sensitively"
 
@@ -591,7 +558,6 @@ msgstr "A flag to enable small rows for bookmarks list"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/small-bookmarks-rows'
 #: editor/ca.desrt.dconf-editor.gschema.xml:249
-#| msgid "If 'true', the bookmarks list use smaller rows."
 msgid "If “true”, the bookmarks list use smaller rows."
 msgstr "If “true”, the bookmarks list use smaller rows."
 
@@ -599,28 +565,21 @@ msgstr "If “true”, the bookmarks list use smaller rows."
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/relocatable/boolean' (with default /ca/desrt/dconf-editor/relocatable-* settings)
 #: editor/ca.desrt.dconf-editor.gschema.xml:275
 #: editor/ca.desrt.dconf-editor.gschema.xml:487
-#| msgid "A boolean, type \"b\""
 msgid "A boolean, type ‘b’"
 msgstr "A boolean, type ‘b’"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/boolean'
 #: editor/ca.desrt.dconf-editor.gschema.xml:277
-#| msgid "Booleans can only take two values, \"true\" or \"false\"."
 msgid "Booleans can only take two values, “true” or “false”."
 msgstr "Booleans can only take two values, “true” or “false”."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/boolean-nullable'
 #: editor/ca.desrt.dconf-editor.gschema.xml:282
-#| msgid "A nullable boolean, type \"mb\""
 msgid "A nullable boolean, type ‘mb’"
 msgstr "A nullable boolean, type ‘mb’"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/boolean-nullable'
 #: editor/ca.desrt.dconf-editor.gschema.xml:284
-#| msgid ""
-#| "GSettings allows nullable types, that are similar to other types but "
-#| "could take a \"nothing\" value. A nullable boolean can only take three "
-#| "values, \"true\", \"false\" and \"nothing\"."
 msgid ""
 "GSettings allows nullable types, that are similar to other types but could "
 "take a “nothing” value. A nullable boolean can only take three values, "
@@ -632,7 +591,6 @@ msgstr ""
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/byte'
 #: editor/ca.desrt.dconf-editor.gschema.xml:289
-#| msgid "A byte (unsigned), type \"y\""
 msgid "A byte (unsigned), type ‘y’"
 msgstr "A byte (unsigned), type ‘y’"
 
@@ -647,7 +605,6 @@ msgstr ""
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/bytestring'
 #: editor/ca.desrt.dconf-editor.gschema.xml:296
-#| msgid "A bytestring, type \"ay\""
 msgid "A bytestring, type ‘ay’"
 msgstr "A bytestring, type ‘ay’"
 
@@ -664,7 +621,6 @@ msgstr ""
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/bytestring-array'
 #: editor/ca.desrt.dconf-editor.gschema.xml:303
-#| msgid "A bytestring array, type \"aay\""
 msgid "A bytestring array, type ‘aay’"
 msgstr "A bytestring array, type ‘aay’"
 
@@ -679,7 +635,6 @@ msgstr ""
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-handle'
 #: editor/ca.desrt.dconf-editor.gschema.xml:310
-#| msgid "A D-Bus handle type, type \"h\""
 msgid "A D-Bus handle type, type ‘h’"
 msgstr "A D-Bus handle type, type ‘h’"
 
@@ -698,7 +653,6 @@ msgstr ""
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-object-path'
 #: editor/ca.desrt.dconf-editor.gschema.xml:317
-#| msgid "A D-Bus object path, type \"o\""
 msgid "A D-Bus object path, type ‘o’"
 msgstr "A D-Bus object path, type ‘o’"
 
@@ -715,7 +669,6 @@ msgstr ""
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-object-path-array'
 #: editor/ca.desrt.dconf-editor.gschema.xml:324
-#| msgid "A D-Bus object path array, type \"ao\""
 msgid "A D-Bus object path array, type ‘ao’"
 msgstr "A D-Bus object path array, type ‘ao’"
 
@@ -732,7 +685,6 @@ msgstr ""
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-signature'
 #: editor/ca.desrt.dconf-editor.gschema.xml:331
-#| msgid "A D-Bus signature, type \"g\""
 msgid "A D-Bus signature, type ‘g’"
 msgstr "A D-Bus signature, type ‘g’"
 
@@ -777,7 +729,6 @@ msgstr ""
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/double'
 #: editor/ca.desrt.dconf-editor.gschema.xml:352
-#| msgid "A double, type \"d\""
 msgid "A double, type ‘d’"
 msgstr "A double, type ‘d’"
 
@@ -793,9 +744,6 @@ msgstr "A 5-choices enumeration"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/enumeration'
 #: editor/ca.desrt.dconf-editor.gschema.xml:361
-#| msgid ""
-#| "Enumerations could be done either with the \"enum\" attribute, or with a "
-#| "\"choices\" tag."
 msgid ""
 "Enumerations could be done either with the “enum” attribute, or with a "
 "“choices” tag."
@@ -814,31 +762,26 @@ msgstr "Flags: choose-colors-you-love"
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/relocatable/flags' (with default /ca/desrt/dconf-editor/relocatable-* settings)
 #: editor/ca.desrt.dconf-editor.gschema.xml:368
 #: editor/ca.desrt.dconf-editor.gschema.xml:503
-#| msgid "Flags could be set by the \"enum\" attribute."
 msgid "Flags could be set by the “enum” attribute."
 msgstr "Flags could be set by the “enum” attribute."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-16-signed'
 #: editor/ca.desrt.dconf-editor.gschema.xml:373
-#| msgid "A short integer, type \"n\""
 msgid "A short integer, type ‘n’"
 msgstr "A short integer, type ‘n’"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-16-signed'
 #: editor/ca.desrt.dconf-editor.gschema.xml:375
-#| msgid "A 16bit signed integer. See also the \"integer-16-unsigned\" key."
 msgid "A 16-bit signed integer. See also the “integer-16-unsigned” key."
 msgstr "A 16-bit signed integer. See also the “integer-16-unsigned” key."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-16-unsigned'
 #: editor/ca.desrt.dconf-editor.gschema.xml:380
-#| msgid "An unsigned short integer, type \"q\""
 msgid "An unsigned short integer, type ‘q’"
 msgstr "An unsigned short integer, type ‘q’"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-16-unsigned'
 #: editor/ca.desrt.dconf-editor.gschema.xml:382
-#| msgid "A 16bit unsigned integer. See also the \"integer-16-signed\" key."
 msgid "A 16-bit unsigned integer. See also the “integer-16-signed” key."
 msgstr "A 16-bit unsigned integer. See also the “integer-16-signed” key."
 
@@ -846,49 +789,41 @@ msgstr "A 16-bit unsigned integer. See also the “integer-16-signed” key."
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/relocatable/integer' (with default /ca/desrt/dconf-editor/relocatable-* settings)
 #: editor/ca.desrt.dconf-editor.gschema.xml:387
 #: editor/ca.desrt.dconf-editor.gschema.xml:494
-#| msgid "An usual integer, type \"i\""
 msgid "An usual integer, type ‘i’"
 msgstr "An usual integer, type ‘i’"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-32-signed'
 #: editor/ca.desrt.dconf-editor.gschema.xml:389
-#| msgid "A 32bit signed integer. See also the \"integer-32-unsigned\" key."
 msgid "A 32-bit signed integer. See also the “integer-32-unsigned” key."
 msgstr "A 32-bit signed integer. See also the “integer-32-unsigned” key."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-32-unsigned'
 #: editor/ca.desrt.dconf-editor.gschema.xml:394
-#| msgid "An unsigned usual integer, type \"u\""
 msgid "An unsigned usual integer, type ‘u’"
 msgstr "An unsigned usual integer, type ‘u’"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-32-unsigned'
 #: editor/ca.desrt.dconf-editor.gschema.xml:396
-#| msgid "A 32bit unsigned integer. See also the \"integer-32-signed\" key."
 msgid "A 32-bit unsigned integer. See also the “integer-32-signed” key."
 msgstr "A 32-bit unsigned integer. See also the “integer-32-signed” key."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-64-signed'
 #: editor/ca.desrt.dconf-editor.gschema.xml:401
-#| msgid "A long integer, type \"x\""
 msgid "A long integer, type ‘x’"
 msgstr "A long integer, type ‘x’"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-64-signed'
 #: editor/ca.desrt.dconf-editor.gschema.xml:403
-#| msgid "A 64bit signed integer. See also the \"integer-64-unsigned\" key."
 msgid "A 64-bit signed integer. See also the “integer-64-unsigned” key."
 msgstr "A 64-bit signed integer. See also the “integer-64-unsigned” key."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-64-unsigned'
 #: editor/ca.desrt.dconf-editor.gschema.xml:408
-#| msgid "An unsigned long integer, type \"t\""
 msgid "An unsigned long integer, type ‘t’"
 msgstr "An unsigned long integer, type ‘t’"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-64-unsigned'
 #: editor/ca.desrt.dconf-editor.gschema.xml:410
-#| msgid "A 64bit unsigned integer. See also the \"integer-64-signed\" key."
 msgid "A 64-bit unsigned integer. See also the “integer-64-signed” key."
 msgstr "A 64-bit unsigned integer. See also the “integer-64-signed” key."
 
@@ -910,16 +845,11 @@ msgstr ""
 
 #. Translators: do not forget the parenthesis, they are meaningful; summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/pair-of-integers'
 #: editor/ca.desrt.dconf-editor.gschema.xml:424
-#| msgid "A custom type, here \"(ii)\""
 msgid "A custom type, here ‘(ii)’"
 msgstr "A custom type, here ‘(ii)’"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/pair-of-integers'
 #: editor/ca.desrt.dconf-editor.gschema.xml:426
-#| msgid ""
-#| "Dconf Editor lets you edit any settings type supported by GSettings, "
-#| "falling back on a string entry when it doesn't have a better way to do. "
-#| "Here is a tuple of two 32bit signed integers."
 msgid ""
 "Dconf Editor lets you edit any settings type supported by GSettings, falling "
 "back on a string entry when it doesn’t have a better way to do. Here is a "
@@ -931,16 +861,11 @@ msgstr ""
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string'
 #: editor/ca.desrt.dconf-editor.gschema.xml:431
-#| msgid "A string, type \"s\""
 msgid "A string, type ‘s’"
 msgstr "A string, type ‘s’"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string'
 #: editor/ca.desrt.dconf-editor.gschema.xml:433
-#| msgid ""
-#| "The string type could accept any utf8 string. Note that an empty string "
-#| "\"''\" is not the same as NULL (nothing); see also the \"string-nullable"
-#| "\" key."
 msgid ""
 "The string type could accept any utf8 string. Note that an empty string “''” "
 "is not the same as NULL (nothing); see also the “string-nullable” key."
@@ -950,15 +875,11 @@ msgstr ""
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string-array'
 #: editor/ca.desrt.dconf-editor.gschema.xml:438
-#| msgid "A string array, type \"as\""
 msgid "A string array, type ‘as’"
 msgstr "A string array, type ‘as’"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string-array'
 #: editor/ca.desrt.dconf-editor.gschema.xml:440
-#| msgid ""
-#| "A string array contains any number of strings of whatever length. It may "
-#| "be an empty array, \"[]\"."
 msgid ""
 "A string array contains any number of strings of whatever length. It may be "
 "an empty array, “[]”."
@@ -968,16 +889,11 @@ msgstr ""
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string-nullable'
 #: editor/ca.desrt.dconf-editor.gschema.xml:445
-#| msgid "A nullable string, type \"ms\""
 msgid "A nullable string, type ‘ms’"
 msgstr "A nullable string, type ‘ms’"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string-nullable'
 #: editor/ca.desrt.dconf-editor.gschema.xml:447
-#| msgid ""
-#| "GSettings allows nullable types, that are similar to other types but "
-#| "could take a \"nothing\" value. A nullable string can take any string as "
-#| "value, including the empty string \"''\", or can be NULL (nothing)."
 msgid ""
 "GSettings allows nullable types, that are similar to other types but could "
 "take a “nothing” value. A nullable string can take any string as value, "
@@ -1018,9 +934,6 @@ msgstr "A 1-choice enumeration"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-enum'
 #: editor/ca.desrt.dconf-editor.gschema.xml:461
-#| msgid ""
-#| "An enumeration could contain only one item, but that's probably an error. "
-#| "Dconf Editor warns you in that case."
 msgid ""
 "An enumeration could contain only one item, but that’s probably an error. "
 "Dconf Editor warns you in that case."
@@ -1030,15 +943,11 @@ msgstr ""
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-range'
 #: editor/ca.desrt.dconf-editor.gschema.xml:467
-#| msgid "A 1-choice enumeration"
 msgid "A 1-choice integer value"
 msgstr "A 1-choice integer value"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-range'
 #: editor/ca.desrt.dconf-editor.gschema.xml:469
-#| msgid ""
-#| "An enumeration could contain only one item, but that's probably an error. "
-#| "Dconf Editor warns you in that case."
 msgid ""
 "A range could limit an integer key to only allow one value, but that’s "
 "probably an error. Dconf Editor warns you in that case."
@@ -1190,19 +1099,16 @@ msgstr "Print release version and exit"
 
 #. Translators: command-line option description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:162
-#| msgid "Print release version and exit"
 msgid "Print relocatable schemas and exit"
 msgstr "Print relocatable schemas and exit"
 
 #. Translators: command-line option description, see 'dconf-editor --help'; the option removes the initial "use at your own risks" dialog
 #: editor/dconf-editor.vala:165
-#| msgid "Show initial warning"
 msgid "Do not show initial warning"
 msgstr "Do not show initial warning"
 
 #. Translators: command-line text, description of the application in 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
 #: editor/dconf-editor.vala:203
-#| msgid "A graphical tool for editing the dconf database"
 msgid "Graphical interface for editing other applications settings."
 msgstr "Graphical interface for editing other applications settings."
 
@@ -1213,7 +1119,6 @@ msgstr "Uses the gsettings API of the glib library, among others."
 
 #. Translators: command-line header description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:209
-#| msgid "Description"
 msgid "Arguments description:"
 msgstr "Arguments description:"
 
@@ -1354,7 +1259,6 @@ msgstr "Arnaud Bonatti"
 
 #. Translators: text crediting a maintainer, seen in the About dialog
 #: editor/dconf-editor.vala:669
-#| msgid "Copyright © Canonical Ltd"
 msgid "Copyright © 2010-2014 – Canonical Ltd"
 msgstr "כל הזכויות שמורות © 2010-2014 – Canonical בע״מ"
 
@@ -1383,7 +1287,6 @@ msgstr "עמוד ב־GNOME ויקי"
 
 #. Translators: usual menu entry of the hamburger menu
 #: editor/dconf-headerbar.vala:53
-#| msgid "Dconf Editor"
 msgid "About Dconf Editor"
 msgstr "_על אודות עורך Dconf"
 
@@ -1395,29 +1298,23 @@ msgstr "החלה"
 
 #. Translators: when a change is requested, on a small window, entry of the menu of the "delayed settings button" that appears in place of the close button
 #: editor/dconf-headerbar.vala:117
-#| msgid "Dismiss change"
 msgid "Dismiss"
 msgstr "דחייה"
 
 #. Translators: when in delayed mode, on a small window, entry of the "three-dots menu" that appears when showing the pending changes list (if there is pending changes)
 #: editor/dconf-headerbar.vala:141
-#| msgid "Apply"
 msgid "Apply all"
 msgstr "החלת הכל"
 
 #. Translators: when in delayed mode, on a small window, entry of the "three-dots menu" that appears when showing the pending changes list (if there is pending changes)
 #: editor/dconf-headerbar.vala:144
-#| msgid "Dismiss change"
 msgid "Dismiss all"
 msgstr "דחיית הכל"
 
 #. Translators: when in delayed mode, on a small window, entry of the "three-dots menu" that appears when showing the pending changes list (if there is no pending changes)
 #: editor/dconf-headerbar.vala:152
-#, fuzzy
-#| msgctxt "shortcut window"
-#| msgid "Quit"
 msgid "Quit mode"
-msgstr "יציאה"
+msgstr "יציאה ממצב"
 
 #. Translators: hamburger menu entry, to enter in a special mode called "delay mode" where changes are not applied until validation
 #: editor/dconf-headerbar.vala:201
@@ -1431,10 +1328,8 @@ msgstr "איפוס המפתחות המוצגות"
 
 #. Translators: hamburger menu entry that appears when browsing a folder path, to set to their default value all currently visible keys, and all keys in subfolders
 #: editor/dconf-headerbar.vala:208
-#, fuzzy
-#| msgid "Reset recursively"
 msgid "Reset view recursively"
-msgstr "איפוס רקורסיבי"
+msgstr "איפוס התצוגה רקורסיבית"
 
 #. Translators: on really small windows, the bottom bar that appears in "delay mode" or when there're pending changes is replaced by an in-window view; here is the name of the view, displayed in the headerbar
 #: editor/dconf-headerbar.vala:246
@@ -1450,23 +1345,23 @@ msgstr "%s (מפתח נמחק)"
 #. Translators: command-line startup warning, try 'dconf-editor ca.desrt.dconf-editor.Demo.Relocatable'
 #: editor/dconf-window.vala:124
 msgid "Schema is relocatable, a path is needed."
-msgstr ""
+msgstr "הסכמה ניידת, דרוש נתיב."
 
 #. Translators: command-line startup warning
 #: editor/dconf-window.vala:137
 msgid "Startup mappings are disabled."
-msgstr ""
+msgstr "מיפויי הפעלה מושבתים."
 
 #. Translators: command-line startup warning, try 'dconf-editor ca.desrt.dconf-editor.Settings:/org/gnome/dconf-editor/'
 #: editor/dconf-window.vala:152
 msgid "Schema is not installed on given path."
-msgstr ""
+msgstr "לא מותקנת סכמה בנתיב שצוין."
 
 #. Translators: command-line startup warning, try 'dconf-editor org.example.nothing'; the %s is the schema id
 #: editor/dconf-window.vala:168
 #, c-format
 msgid "Unknown schema “%s”."
-msgstr ""
+msgstr "סכמה לא ידועה: „%s”."
 
 #. Translators: initial "use at your own risk" dialog, the welcoming text
 #: editor/dconf-window.vala:274
@@ -1494,39 +1389,37 @@ msgid ""
 "There are pending changes. Use Shift+Ctrl+Q to apply changes and quit, or Alt"
 "+F4 to dismiss changes and quit."
 msgstr ""
+"יש שינויים ממתינים. ניתן להשתמש ב־Shift+Ctrl+Q כדי להחיל את השינויים ולצאת "
+"או ב־Alt+F4 כדי להתעלם מהשינויים ולצאת."
 
 #. Translators: notification text, when the requested folder has been removed; the %s is the folder path
 #: editor/dconf-window.vala:777
 #, c-format
 msgid "Folder “%s” is now empty."
-msgstr ""
+msgstr "התיקייה „%s” ריקה כעת."
 
 #. Translators: notification text, when the requested key has been removed; the %s is the key path
 #: editor/dconf-window.vala:788
-#, fuzzy, c-format
-#| msgid "Key \"%s\" has been removed."
+#, c-format
 msgid "Key “%s” has been deleted."
-msgstr "המפתח „%s” הוסר."
+msgstr "המפתח „%s” נמחק."
 
 #. Translators: notification text at startup, use 'dconf-editor /org/example/test'; the %s is the key path
 #: editor/dconf-window.vala:794
-#, fuzzy, c-format
-#| msgid "Cannot find key \"%s\" here."
+#, c-format
 msgid "Cannot find key “%s”."
-msgstr "לא נתן למצוא את המפתח „%s” כאן."
+msgstr "לא ניתן למצוא את המפתח „%s”."
 
 #. Translators: notification text at startup, use 'dconf-editor /org/example/empty/'; the %s is the folder path
 #: editor/dconf-window.vala:800
 #, c-format
 msgid "There’s nothing in requested folder “%s”."
-msgstr ""
+msgstr "אין שום דבר בתיקייה המבוקשת „%s”."
 
 #. Translators: displayed in the list of pending changes (could be an in-window panel, or in the popover of the bottom bar); for dconf keys
 #: editor/delayed-setting-view.vala:136
-#, fuzzy
-#| msgid "Key erased."
 msgid "Key erased"
-msgstr "מפתח נמחק."
+msgstr "מפתח נמחק"
 
 #. Translators: displayed in the list of pending changes (could be an in-window panel, or in the popover of the bottom bar); for gsettings keys
 #. Translators: "reset key value" option of a multi-choice list (checks or radios) in the right-click menu on the list of keys
@@ -1568,8 +1461,6 @@ msgstr "תפריט פעולה"
 
 #. Translators: Shift-F10 action
 #: editor/help-overlay.ui:66
-#| msgctxt "shortcut window"
-#| msgid "Path bar navigation"
 msgctxt "shortcut window"
 msgid "Path bar menu"
 msgstr "תפריט שורת הנתיב"
@@ -1606,7 +1497,6 @@ msgstr "פתיחת פעילות ילד אחרון"
 
 #. Translators: header in the shortcut window, for the various ways of opening search
 #: editor/help-overlay.ui:115
-#| msgid "Search keys"
 msgctxt "shortcut window"
 msgid "Search options"
 msgstr "אפשרויות חיפוש"
@@ -1619,8 +1509,6 @@ msgstr "הצגת חיפוש"
 
 #. Translators: Ctrl-Alt-F action; does the same thing as "Toggle search", but loads the search entry with the last searched text
 #: editor/help-overlay.ui:128
-#| msgctxt "shortcut window"
-#| msgid "Search bar"
 msgctxt "shortcut window"
 msgid "Search again"
 msgstr "חיפוש חוזר"
@@ -1641,13 +1529,13 @@ msgstr "חיפוש חוזר, מקומי"
 #: editor/help-overlay.ui:152
 msgctxt "shortcut window"
 msgid "Paste as search"
-msgstr "הדבקת חיפוש"
+msgstr "הדבקה כחיפוש"
 
 #. Translators: Ctrl-Shift-V action; does the same thing as "Paste as search", but works even if an entry or textview is selected; entry hidden for now
 #: editor/help-overlay.ui:160
 msgctxt "shortcut window"
 msgid "Paste as search (force)"
-msgstr ""
+msgstr "הדבקה כחיפוש (אילוץ)"
 
 #. Translators: Ctrl-L action when browsing; opens search on current path
 #: editor/help-overlay.ui:168
@@ -1657,7 +1545,6 @@ msgstr "עריכת נתיב"
 
 #. Translators: Ctrl-Shift-L action when browsing; opens search on parent path
 #: editor/help-overlay.ui:176
-#| msgid "Copy current path"
 msgctxt "shortcut window"
 msgid "Edit parent path"
 msgstr "עריכת נתיב הורה"
@@ -1684,7 +1571,7 @@ msgstr "פעולות על רשימת מפתחות"
 #: editor/help-overlay.ui:207
 msgctxt "shortcut window"
 msgid "Contextual menu"
-msgstr ""
+msgstr "תפריט הקשר"
 
 #. Translators: Ctrl-Shift-G action, when browsing
 #: editor/help-overlay.ui:215
@@ -1694,20 +1581,18 @@ msgstr "שורה קודמת"
 
 #. Translators: Ctrl-G action, when browsing
 #: editor/help-overlay.ui:223
-#| msgid "Next"
 msgctxt "shortcut window"
 msgid "Next line"
 msgstr "שורה הבאה"
 
-#. Translators: entry disabled for now; Ctrl-I action, when browsing; displays informations on selected folder
+#. Translators: entry disabled for now; Ctrl-I action, when browsing; displays information on selected folder
 #: editor/help-overlay.ui:231
 msgctxt "shortcut window"
 msgid "Toggle folder properties"
-msgstr ""
+msgstr "החלפת מצב מאפייני תיקייה"
 
 #. Translators: Ctrl-Delete action, when browsing; sets the selected key to its default value
 #: editor/help-overlay.ui:239
-#| msgid "Set to default"
 msgctxt "shortcut window"
 msgid "Set to default"
 msgstr "הגדרה כבררת מחדל"
@@ -1722,13 +1607,13 @@ msgstr "היפוך הערך הבוליאני"
 #: editor/help-overlay.ui:257
 msgctxt "shortcut window"
 msgid "Modifications list actions"
-msgstr ""
+msgstr "פעולות רשימת שינויים"
 
 #. Translators: Alt-I action if there are pending changes; the modifications list is either a popover, or an in-window panel
 #: editor/help-overlay.ui:262
 msgctxt "shortcut window"
 msgid "Toggle modifications list"
-msgstr ""
+msgstr "החלפת מצב רשימת שינויים"
 
 #. Translators: Return/Enter keys action in the list of pending modifications; go to the key with pending modification
 #: editor/help-overlay.ui:270
@@ -1738,7 +1623,6 @@ msgstr "פתיחת מפתח השורה הנבחרת"
 
 #. Translators: Ctrl-Delete action in the list of pending modifications; dismisses the selected modification
 #: editor/help-overlay.ui:278
-#| msgid "Dismiss change"
 msgctxt "shortcut window"
 msgid "Dismiss modification"
 msgstr "ביטול השינוי"
@@ -1789,26 +1673,24 @@ msgstr "יציאה"
 #: editor/help-overlay.ui:340
 msgctxt "shortcut window"
 msgid "Quit if there’s no pending changes"
-msgstr ""
+msgstr "לצאת אם אין שינויים ממתינים"
 
 #. Translators: Ctrl-Shift-Q action
 #: editor/help-overlay.ui:348
 msgctxt "shortcut window"
 msgid "Apply pending changes and quit"
-msgstr ""
+msgstr "להחיל שינויים ממתינים ולצאת"
 
 #. Translators: Alt-F4 action
 #: editor/help-overlay.ui:356
-#, fuzzy
-#| msgid "Dismiss change"
 msgctxt "shortcut window"
 msgid "Dismiss pending changes and quit"
-msgstr "ביטול השינוי"
+msgstr "להתעלם מהשינויים הממתינים ולצאת"
 
 #. Translators: tooltip text of the entry's icon when editing the value of a double or a 64-bit (signed or unsigned) key, if the key only allows a range of values and the written value is out of range
 #: editor/key-editor-child.vala:30
 msgid "Given value is out of range."
-msgstr ""
+msgstr "הערך שסופק הוא מחוץ לטווח."
 
 #. Translators: tooltip text of the entry's icon (if using an entry) or text displayed under the text view (if using a text view) when editing the value of a key, if the written text cannot be parsed regarding to the key's value type
 #: editor/key-editor-child.vala:33
@@ -1818,44 +1700,39 @@ msgstr "ערך זה אינו תקף עבור סוג המפתח."
 #. Translators: tooltip text of the entry's icon when editing the value of a double key, if the written value cannot be parsed
 #: editor/key-editor-child.vala:380
 msgid "Failed to parse as double."
-msgstr ""
+msgstr "פענוח כמספר ממשי גדול נכשל"
 
 #. Translators: tooltip text of the entry's icon when editing the value of a signed 64-bit key, if the written value cannot be parsed
 #: editor/key-editor-child.vala:449
 msgid "Failed to parse as 64-bit integer."
-msgstr ""
+msgstr "פענוח כמספר שלם בגודל 64 סיביות נכשל."
 
 #. Translators: tooltip text of the entry's icon when editing the value of an unsigned 64-bit key, if the written value cannot be parsed
 #: editor/key-editor-child.vala:518
 msgid "Failed to parse as unsigned 64-bit integer."
-msgstr ""
+msgstr "פענוח כמספר שלם בגודל 64 סיביות ללא סימן נכשל."
 
 #. Translators: first item of the keys list displayed during a search, the %s is a folder path usually
 #: editor/key-list-box-row.vala:118
 #, c-format
 msgid "Go to “%s”"
-msgstr ""
+msgstr "מעבר אל „%s”"
 
 #. Translators: first item of the keys list displayed during browsing, the %s is the current folder name
 #: editor/key-list-box-row.vala:149
 #, c-format
 msgid "Search in “%s” folder"
-msgstr ""
+msgstr "חיפוש בתיקייה „%s“"
 
 #. Translators: first item of the keys list displayed during browsing at root path
 #: editor/key-list-box-row.vala:153
-#, fuzzy
-#| msgctxt "shortcut window"
-#| msgid "Open parent folder"
 msgid "Open path entry"
-msgstr "פתיחת תיקיית ההורה"
+msgstr "פתיחת רשומת נתיב"
 
 #. Translators: last item of the keys list displayed during a local search
 #: editor/key-list-box-row.vala:157
-#, fuzzy
-#| msgid "Search keys"
 msgid "Search everywhere"
-msgstr "חיפוש מפתחות"
+msgstr "חיפוש בכל מקום"
 
 #. Translators: "copy to clipboard" action in the right-click menu on the list of keys
 #: editor/key-list-box-row.vala:449
@@ -1875,7 +1752,7 @@ msgstr "הגדרה לברירת מחדל"
 #. Translators: "open key-editor page" action in the right-click menu on the list of keys, when key is hard-conflicting
 #: editor/key-list-box-row.vala:460
 msgid "Show details…"
-msgstr ""
+msgstr "הצגת פרטים…"
 
 #. Translators: "dismiss change" action in the right-click menu on a key with pending changes
 #: editor/key-list-box-row.vala:463
@@ -1892,11 +1769,8 @@ msgstr "מחיקת מפתח"
 
 #. Translators: "go to" action in the right-click menu on a "go back" line during search
 #: editor/key-list-box-row.vala:469
-#, fuzzy
-#| msgctxt "shortcut window"
-#| msgid "Bookmark this path"
 msgid "Go to this path"
-msgstr "הוספת סימנייה לנתיב זה"
+msgstr "מעבר לנתיב זה"
 
 #. Translators: "open folder" action in the right-click menu on a folder
 #: editor/key-list-box-row.vala:472
@@ -1913,11 +1787,8 @@ msgstr "חיפוש"
 
 #. Translators: "open parent folder" action in the right-click menu on a folder in a search result
 #: editor/key-list-box-row.vala:481
-#, fuzzy
-#| msgctxt "shortcut window"
-#| msgid "Open parent folder"
 msgid "Open parent folder"
-msgstr "פתיחת תיקיית ההורה"
+msgstr "פתיחת תיקיית הורה"
 
 #. Translators: "reset recursively" action in the right-click menu on a folder
 #: editor/key-list-box-row.vala:484
@@ -1936,97 +1807,81 @@ msgstr "לא לשנות"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense); this handle type is an index; you may maintain the word "handle"
 #: editor/model-utils.vala:301
-#, fuzzy
-#| msgid "D-Bus handle type"
 msgctxt "capitalized"
 msgid "D-Bus handle type"
-msgstr "‏D-Bus מפתח"
+msgstr "סוג טיפול ב־D-Bus"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:305
-#, fuzzy
-#| msgid "D-Bus object path"
 msgctxt "capitalized"
 msgid "D-Bus object path"
-msgstr "‏D-Bus נתיב"
+msgstr "נתיב עצם ב־D-Bus"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:309
-#, fuzzy
-#| msgid "D-Bus object path array"
 msgctxt "capitalized"
 msgid "D-Bus object path array"
-msgstr "‏D-Bus מערך נתיבים"
+msgstr "מערך נתיבי עצמים ב־D-Bus"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:313
-#, fuzzy
-#| msgid "D-Bus signature"
 msgctxt "capitalized"
 msgid "D-Bus signature"
-msgstr "‏D-Bus חתימה"
+msgstr "חתימה ב־D-Bus"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense); this handle type is an index; you may maintain the word "handle"
 #: editor/model-utils.vala:342
-#, fuzzy
-#| msgid "D-Bus handle type"
 msgctxt "non-capitalized"
 msgid "D-Bus handle type"
-msgstr "‏D-Bus מפתח"
+msgstr "סוג טיפול ב־D-Bus"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:346
-#, fuzzy
-#| msgid "D-Bus object path"
 msgctxt "non-capitalized"
 msgid "D-Bus object path"
-msgstr "‏D-Bus נתיב"
+msgstr "נתיב עצם ב־D-Bus"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:350
-#, fuzzy
-#| msgid "D-Bus object path array"
 msgctxt "non-capitalized"
 msgid "D-Bus object path array"
-msgstr "‏D-Bus מערך נתיבים"
+msgstr "מערך נתיבי עצמים ב־D-Bus"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:354
-#, fuzzy
-#| msgid "D-Bus signature"
 msgctxt "non-capitalized"
 msgid "D-Bus signature"
-msgstr "‏D-Bus חתימה"
+msgstr "חתימה ב־D-Bus"
 
 #. Translators: that's a name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:373
 msgid "Signed 16-bit integer"
-msgstr ""
+msgstr "מספר שלם ב־16 סיביות עם סימן"
 
 #. Translators: that's a name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:376
 msgid "Unsigned 16-bit integer"
-msgstr ""
+msgstr "מספר שלם ב־16 סיביות בלי סימן"
 
 #. Translators: that's a name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:379
 msgid "Signed 32-bit integer"
-msgstr ""
+msgstr "מספר שלם ב־32 סיביות עם סימן"
 
 #. Translators: that's a name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:382
 msgid "Unsigned 32-bit integer"
-msgstr ""
+msgstr "מספר שלם ב־32 סיביות בלי סימן"
 
 #. Translators: that's a name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:385
 msgid "Signed 64-bit integer"
-msgstr ""
+msgstr "מספר שלם ב־64 סיביות עם סימן"
 
 #. Translators: that's a name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:388
 msgid "Unsigned 64-bit integer"
-msgstr ""
+msgstr "מספר שלם ב־64 סיביות בלי סימן"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:391
@@ -2035,8 +1890,6 @@ msgstr "בוליאני"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:394
-#, fuzzy
-#| msgid "Boolean"
 msgid "boolean"
 msgstr "בוליאני"
 
@@ -2047,8 +1900,6 @@ msgstr "מחרוזת"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:400
-#, fuzzy
-#| msgid "String"
 msgid "string"
 msgstr "מחרוזת"
 
@@ -2059,8 +1910,6 @@ msgstr "מערך מחרוזות"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:406
-#, fuzzy
-#| msgid "String array"
 msgid "string array"
 msgstr "מערך מחרוזות"
 
@@ -2071,8 +1920,6 @@ msgstr "מנייה"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:412
-#, fuzzy
-#| msgid "Enumeration"
 msgid "enumeration"
 msgstr "מנייה"
 
@@ -2083,10 +1930,8 @@ msgstr "דגלים"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:418
-#, fuzzy
-#| msgid "Flags"
 msgid "flags"
-msgstr "דגלים"
+msgstr "דגלונים"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:421
@@ -2095,8 +1940,6 @@ msgstr "מספר ממשי גדול (נקודה צפה)"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:424
-#, fuzzy
-#| msgid "Double"
 msgid "double"
 msgstr "מספר ממשי גדול (נקודה צפה)"
 
@@ -2123,30 +1966,28 @@ msgstr "מספר שלם"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:454
-#, fuzzy
-#| msgid "Integer"
 msgid "integer"
 msgstr "מספר שלם"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:457
 msgid "Variant"
-msgstr ""
+msgstr "הגוון"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:460
 msgid "variant"
-msgstr ""
+msgstr "הגוון"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:463
 msgid "Empty tuple"
-msgstr ""
+msgstr "רשימה מקובעת ריקה"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:466
 msgid "empty tuple"
-msgstr ""
+msgstr "רשימה מקובעת ריקה"
 
 #. Translators: placeholder text of the list of pending modifications, displayed when the user is in delayed mode but has no pending modifications
 #: editor/modifications-list.vala:28
@@ -2155,16 +1996,21 @@ msgid ""
 "but\n"
 "no pending changes"
 msgstr ""
+"מצה ההשהיה פעיל\n"
+"‬\n"
+"‫אבל\n"
+"‬\n"
+"‫אין שינויים ממתינים"
 
 #. Translators: label of one of the two buttons of the list of pending modifications, to switch between applying changes to the whole list and selecting some items for more advanced things (not displayed currently, but this change is wanted); the second is "Select"
 #: editor/modifications-list.vala:32
 msgid "Rule all"
-msgstr ""
+msgstr "כלל על הכול"
 
 #. Translators: label of one of the two buttons of the list of pending modifications, to switch between applying changes to the whole list and selecting some items for more advanced things (not displayed currently, but this change is wanted); the first is "Rule all"
 #: editor/modifications-list.vala:34
 msgid "Select"
-msgstr ""
+msgstr "בחירה"
 
 #. Translators: displayed in the bottom bar in normal sized windows, when the user tries to reset keys from/for a folder that has nothing to reset
 #: editor/modifications-revealer.vala:136
@@ -2197,16 +2043,20 @@ msgstr "השינוי יוצג כל עוד תבקש זאת."
 #, c-format
 msgid "One gsettings operation delayed."
 msgid_plural "%u gsettings operations delayed."
-msgstr[0] "פעולת gsettings אחת מושהית"
-msgstr[1] "%u פעולות gsettings מושהות"
+msgstr[0] "פעולת gsettings אחת מושהית."
+msgstr[1] "שתי פעולות gsettings מושהות."
+msgstr[2] "‫%u פעולות gsettings מושהות."
+msgstr[3] "‫%u פעולות gsettings מושהות."
 
 #. Translators: Text displayed in the bottom bar; "dconf" is a technical term, notably a shell command, so you probably should not translate it.
 #: editor/modifications-revealer.vala:344
 #, c-format
 msgid "One dconf operation delayed."
 msgid_plural "%u dconf operations delayed."
-msgstr[0] "פעולת dconf אחת מושהית"
-msgstr[1] "%u פעולות dconf מושהות"
+msgstr[0] "פעולת dconf אחת מושהית."
+msgstr[1] "שתי פעולות dconf מושהות."
+msgstr[2] "‫%u פעולות dconf מושהות."
+msgstr[3] "‫%u פעולות dconf מושהות."
 
 #. Translators: Text displayed in the bottom bar. Hacky: I split a sentence like "One gsettings operation and 2 dconf operations delayed." in two parts, before the "and"; there is at least one gsettings operation and one dconf operation. So, you can either keep "%s%s" like that, and have the second part of the translation starting with a space (if that makes sense in your language), or you might use "%s %s" here.
 #: editor/modifications-revealer.vala:347
@@ -2221,7 +2071,9 @@ msgstr "%s%s"
 msgid "One gsettings operation"
 msgid_plural "%u gsettings operations"
 msgstr[0] "פעולת gsettings אחת"
-msgstr[1] "%u פעולות gsettings"
+msgstr[1] "שתי פעולות gsettings"
+msgstr[2] "‫%u פעולות gsettings"
+msgstr[3] "‫%u פעולות gsettings"
 
 #. Translators: Text displayed in the bottom bar; second part (and end) of a sentence like "One gsettings operation and 2 dconf operations delayed.", so:
 #. * the space before the "and" is probably wanted, if you keeped the "%s%s" translation as-is, and
@@ -2231,23 +2083,25 @@ msgstr[1] "%u פעולות gsettings"
 #, c-format
 msgid " and one dconf operation delayed."
 msgid_plural " and %u dconf operations delayed."
-msgstr[0] " ופעולת dconf אחת מושהים."
-msgstr[1] " ו־%u פעולות dconf מושהים."
+msgstr[0] " ופעולת dconf אחת מושהות."
+msgstr[1] " ושתי פעולות dconf מושהות."
+msgstr[2] " ו־%u פעולות dconf מושהות."
+msgstr[3] " ו־%u פעולות dconf מושהות."
 
 #. Translators: accessible name of the "close" button that is linked with the search entry on small windows
 #: editor/pathentry.ui:66
 msgid "Close search"
-msgstr ""
+msgstr "סגירת החיפוש"
 
 #. Translators: accessible description of the "close" button that is linked with the search entry on small windows
 #: editor/pathentry.ui:68
 msgid "Close search results"
-msgstr ""
+msgstr "סגירת תוצאות החיפוש"
 
 #. Translators: accessible description of the "refresh" button that is linked with the search entry on large windows
 #: editor/pathentry.ui:92
 msgid "Refresh search results"
-msgstr ""
+msgstr "רענון תוצאות החיפוש"
 
 #. Translators: accessible description of the enter-search button displayed in small-size windows
 #. Translators: accessible description of the search togglebutton displayed in usual-size windows
@@ -2261,6 +2115,8 @@ msgid ""
 "This key is defined and used by more than one schema. This could lead to "
 "problems. Edit value at your own risk."
 msgstr ""
+"מפתח זה מוגדר ובשימוש על ידי יותר מסכמה אחת. זה יכול להוביל לבעיות. עריכת "
+"הערך הזה היא על אחריותך בלבד."
 
 #. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/Conflict/type-conflict'
 #: editor/registry-info.ui:87
@@ -2268,24 +2124,20 @@ msgid ""
 "This key is incompatibly defined and used by more than one schema. It is "
 "impossible to work with its value in a meaningful way."
 msgstr ""
+"מפתח זה מוגדר באופן בלתי מתואם ובשימוש על ידי יותר מסכמה אחת. אי אפשר לעבוד "
+"עם הערך שלו בצורה משמעותית."
 
 #. Translators: warning text of an infobar, when a key is not defined by a schema
 #: editor/registry-info.ui:125
-#, fuzzy
-#| msgid ""
-#| "No schema available. Dconf Editor can’t find a schema associated with "
-#| "this key. The application that installed this key may have been removed, "
-#| "may have stop the use of this key, or may use a relocatable schema for "
-#| "defining its keys."
 msgid ""
 "No schema available. A schema is what describes the use of a key, and Dconf "
 "Editor can’t find one associated with this key. If the application that was "
 "using this key has been uninstalled, or if this key is obsolete, you may "
 "want to erase it."
 msgstr ""
-"אין תרשים זמין. עורך Dconf לא מצא תרשים הקשור למפתח זה. יתכן והיישום שהתקין "
-"מפתח זה הוסר, הפסיק להשתמש במפתח זה, או אולי השתמש בתרשים אחרת עבור הגדרת "
-"מפתח זה."
+"אין סכמה זמינה. עורך Dconf לא מצא סכמה הקשורה למפתח זה. אולי היישום שהתקין "
+"מפתח זה הוסר, הפסיק להשתמש במפתח זה או אולי השתמש בסכמה אחרת עבור הגדרת מפתח "
+"זה."
 
 #. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-enum'
 #: editor/registry-info.ui:172
@@ -2299,33 +2151,23 @@ msgstr ""
 
 #. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-range'
 #: editor/registry-info.ui:183
-#, fuzzy
-#| msgid ""
-#| "This enumeration offers only one choice. That’s probably an error of the "
-#| "application that installed this schema. If possible, please open a bug "
-#| "about it."
 msgid ""
 "This integer key can only take one value. That’s probably an error of the "
 "application that installed this schema. If possible, please open a bug about "
 "it."
 msgstr ""
-"רשומה זו מציעה בחירה אחת בלבד. זו כנראה שגיאה של היישום שהתקין תרשים זה. אם "
-"אפשרי, נא לפתוח באג על כך."
+"מפתח מספר שלם זה יכול לקבל ערך אחד בלבד. זה כנראה עקב שגיאה של היישום שהתקין "
+"את הסכמה הזאת. אם ניתן, נא לדווח על התקלה הזאת."
 
 #. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-triv'
 #: editor/registry-info.ui:194
-#, fuzzy
-#| msgid ""
-#| "This enumeration offers only one choice. That’s probably an error of the "
-#| "application that installed this schema. If possible, please open a bug "
-#| "about it."
 msgid ""
 "This key has a special “empty tuple” type. That’s probably an error of the "
 "application that installed this schema. If possible, please open a bug about "
 "it."
 msgstr ""
-"רשומה זו מציעה בחירה אחת בלבד. זו כנראה שגיאה של היישום שהתקין תרשים זה. אם "
-"אפשרי, נא לפתוח באג על כך."
+"למפתח הזה יש טיפוס מיוחד מסוג „רשימה מקובעת ריקה”. זאת כנראה שגיאה ביישום "
+"שהתקין את הסכמה הזאת. אם ניתן, נא לדווח על התקלה הזאת."
 
 #. Translators: field description when displaying folder properties; name of the folder
 #: editor/registry-info.vala:70
@@ -2335,7 +2177,7 @@ msgstr "שם"
 #. Translators: field description when displaying key properties; the key can be defined by a schema or by the dconf engine
 #: editor/registry-info.vala:73
 msgid "Defined by"
-msgstr ""
+msgstr "מוגדר על ידי"
 
 #. Translators: field description when displaying key properties; the schema id (if the key is defined by a schema)
 #: editor/registry-info.vala:76
@@ -2359,22 +2201,18 @@ msgstr "סוג"
 
 #. Translators: field description when displaying key properties; specific name of the datatype of the key ("Signed 32-bit integer" for example)
 #: editor/registry-info.vala:89
-#, fuzzy
-#| msgid "Type"
 msgid "Type name"
-msgstr "סוג"
+msgstr "שם הטיפוס"
 
 #. Translators: field description when displaying key properties; technical code of the datatype of the key ("q" for uint16, "b" for boolean, etc.)
 #: editor/registry-info.vala:93
-#, fuzzy
-#| msgid "Type"
 msgid "Type code"
-msgstr "סוג"
+msgstr "קוד טיפוס"
 
 #. Translators: field description when displaying key properties; if the numeral key has a minimum or a maximum set
 #: editor/registry-info.vala:96
 msgid "Forced range"
-msgstr ""
+msgstr "טווח מקובע"
 
 #. Translators: field description when displaying key properties; the minimum value a numeral key can take
 #: editor/registry-info.vala:99
@@ -2410,32 +2248,29 @@ msgstr "ערך מותאם"
 #. Translators: "subtitle" in the keys list of a key defined by a schema but missing a summary describing the key use
 #: editor/registry-info.vala:202 editor/registry-list.vala:491
 msgid "No summary provided"
-msgstr ""
+msgstr "לא סופק תקציר"
 
 #. Translators: field content when displaying key properties; if the key does not have a description describing deeply its use
 #: editor/registry-info.vala:212
-#, fuzzy
-#| msgctxt "shortcut window"
-#| msgid "Copy descriptor"
 msgid "No description provided"
-msgstr "העתקת מתאר"
+msgstr "לא סופק תיאור"
 
 #. Translators: field content when displaying key properties; "Yes" if the key has a range set, "No" if not
 #: editor/registry-info.vala:249
 msgid "Yes"
-msgstr ""
+msgstr "כן"
 
 #. Translators: field content when displaying key properties; "Yes" if the key has a range set, "No" if not
 #: editor/registry-info.vala:252
 msgid "No"
-msgstr ""
+msgstr "לא"
 
 #. Translators: field content when displaying key properties; displayed instead of the value, in case of conflicting keys
 #: editor/registry-info.vala:280
 msgid ""
 "There are conflicting definitions of this key, getting value would be either "
 "problematic or meaningless."
-msgstr ""
+msgstr "יש הגדרות סותרות למפתח הזה, קבלת הערך תהיה או בעייתית או חסרת משמעות."
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of type "double"
 #: editor/registry-info.vala:615
@@ -2443,6 +2278,8 @@ msgid ""
 "Use a dot as decimal mark and no thousands separator. You can use the X.Ye+Z "
 "notation."
 msgstr ""
+"יש להשתמש בנקודה כסימן עשרוני ולא כמפריד אלפים. ניתן להשתמש בצורת הסימון X.Ye"
+"+Z."
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of type "variant" (or of a type composed with a variant)
 #: editor/registry-info.vala:620
@@ -2451,6 +2288,8 @@ msgid ""
 "https://developer.gnome.org/glib/stable/gvariant-text.html for complete "
 "documentation."
 msgstr ""
+"תוכן ההגוונים צריך להיות מוקף בסוגריים של XML (‚<’ ו־‚>’). התיעוד המלא מופיע "
+"כאן: https://developer.gnome.org/glib/stable/gvariant-text.html."
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a "maybe type" and with a string type (or similar); neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
 #: editor/registry-info.vala:627
@@ -2483,80 +2322,69 @@ msgstr "מפתח נמחק."
 #. Translators: means that the key has (at least) one other key defined by a different schema but at the same path and with the same name; used on large windows ("conflict" is used on small windows)
 #: editor/registry-list.vala:518
 msgid "conflicting keys"
-msgstr ""
+msgstr "מפתחות סותרים"
 
 #. Translators: means that the key has (at least) one other key defined by a different schema but at the same path and with the same name; used on small windows ("conflicting keys" is used on large windows)
 #: editor/registry-list.vala:521
-#, fuzzy
-#| msgid "Dconf Editor"
 msgid "conflict"
-msgstr "עורך Dconf"
+msgstr "סתירה"
 
 #. Translators: "subtitle" in the keys list of a key not defined by a schema; keys defined by a schema have in place a summary describing the key use
 #: editor/registry-list.vala:537
-#, fuzzy
-#| msgid "No Schema Found"
 msgid "No schema found"
-msgstr "לא נמצא תרשים"
+msgstr "לא נמצאה סכמה"
 
 #. Translators: means that the key has been erased; used on large windows ("erased" is used on small windows)
 #: editor/registry-list.vala:638
-#, fuzzy
-#| msgid "Key erased."
 msgid "key erased"
-msgstr "מפתח נמחק."
+msgstr "מפתח נמחק"
 
 #. Translators: means that the key has been erased; used on small windows ("key erased" is used on large windows)
 #: editor/registry-list.vala:641
-#, fuzzy
-#| msgid "Key erased."
 msgid "erased"
-msgstr "מפתח נמחק."
+msgstr "נמחק"
 
 #. Translators: displayed on small windows; indicates the data type of the key (the %s is the variant type code)
 #: editor/registry-list.vala:679
 #, c-format
 msgid "type “%s”"
-msgstr ""
+msgstr "טיפוס „%s”"
 
 #. Translators: header displayed in the keys list during a search only; indicates that the schema (the %s is the schema id) is installed at the path where the search has started
 #: editor/registry-list.vala:1176
-#, fuzzy, c-format
-#| msgid "%s (key erased)"
+#, c-format
 msgid "%s (local keys)"
-msgstr "%s (מפתח נמחק)"
+msgstr "‫%s (מפתחות מקומיים)"
 
 #. Translators: header displayed in the keys list during a search only; indicates that the following non-defined keys are installed at the path where the search has started
 #: editor/registry-list.vala:1182
 msgid "Local keys not defined by a schema"
-msgstr ""
+msgstr "מפתחות מקומיים לא מוגדרים על ידי סכמה"
 
 #. Translators: header displayed in the keys list during a search or during browsing
 #: editor/registry-list.vala:1186
 msgid "Keys not defined by a schema"
-msgstr ""
+msgstr "מפתחות לא מוגדרים על ידי סכמה"
 
 #. Translators: header displayed in the keys list during a search or during browsing
 #: editor/registry-list.vala:1196
 msgid "Subfolders"
-msgstr ""
+msgstr "תת־תיקיות"
 
 #. Translators: last header displayed in the keys list during a local search
 #: editor/registry-list.vala:1201
-#, fuzzy
-#| msgid "Current view actions"
 msgid "Other actions"
-msgstr "פעולות בתצוגה הנוכחית"
+msgstr "פעולות אחרות"
 
 #. Translators: placeholder text of the search list when there's no search results (not used in current design)
 #: editor/registry-search.vala:26
 msgid "No matches"
-msgstr ""
+msgstr "אין תוצאות"
 
 #. Translators: header displayed in the keys list during a search only
 #: editor/registry-search.vala:556
 msgid "Folders"
-msgstr ""
+msgstr "תיקיות"
 
 #. Translators: placeholder text of the keys list when there's nothing to display in a path (not used in current design)
 #: editor/registry-view.vala:23
@@ -2590,10 +2418,10 @@ msgstr "שקר"
 
 #. Translators: "nothing" value of a nullable key; non capitalized (if that makes sense); the %s is replaced by the text "nothing" (as a technical keyword); it isn't introduced with quotation marks around it, but you might want to add some, depending of your language typographic rules
 #: editor/setting-object.vala:194
-#, fuzzy, c-format
+#, c-format
 #| msgid "nothing"
 msgid "nothing (%s)"
-msgstr "כלום"
+msgstr "כלום (%s)"
 
 #. Translators: "nothing" value of a nullable key; non capitalized (if that makes sense)
 #: editor/setting-object.vala:199
@@ -2603,17 +2431,17 @@ msgstr "כלום"
 #. Translators: field content when displaying key properties; the field description is "Defined by", this text is displayed if the key is defined by a schema, and if this schema has a fixed path (it is not relocatable)
 #: editor/setting-object.vala:410
 msgid "Schema with path"
-msgstr ""
+msgstr "סכמה עם נתיב"
 
 #. Translators: field content when displaying key properties; the field description is "Defined by", this text is displayed if the key is defined by a schema, and if this schema is relocatable (it has not a fixed path)
 #: editor/setting-object.vala:414
 msgid "Relocatable schema"
-msgstr ""
+msgstr "סכמה ניידת"
 
 #. Translators: field content when displaying key properties; the field description is "Defined by", this text is displayed if the key is not defined by a schema (the value is given by dconf but cannot be used by the GSettings functions)
 #: editor/setting-object.vala:417
 msgid "DConf backend"
-msgstr ""
+msgstr "מנגנון DConf"
 
 #~ msgid "Remove"
 #~ msgstr "הסרה"
