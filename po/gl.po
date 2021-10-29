@@ -450,7 +450,7 @@ msgstr ""
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-back-buttons'
 #: editor/ca.desrt.dconf-editor.gschema.xml:195
 msgid "Mouse button to activate the “Back” command in browser window"
-msgstr "Botón do rato que activa a orde «Anterior» na xanela  de navegación"
+msgstr "Botón do rato que activa a orde «Anterior» na xanela de navegación"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-back-buttons'
 #: editor/ca.desrt.dconf-editor.gschema.xml:197
@@ -476,7 +476,7 @@ msgid ""
 "Possible values range between 6 and 14."
 msgstr ""
 "Para os usuarios con rato que teñen botóns «Seguinte» e «Anterior», esta "
-"chave determinará  que botón activa a orde «Seguinte» nunha xanela de "
+"chave determinará que botón activa a orde «Seguinte» nunha xanela de "
 "navegador. O intervalo de valores posíbeis está entre 6 e 14."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/refresh-settings-schema-source'
@@ -1306,7 +1306,7 @@ msgstr ""
 "Fran Diéguez <frandieguez@gnome.org>, 2015-2020.\n"
 "Leandro Regueiro <leandro.regueiro@gmail.com>, 2012.\n"
 "\n"
-"Proxecto Trasno - Adaptación do software libre á lingua galega:  Se desexas\n"
+"Proxecto Trasno - Adaptación do software libre á lingua galega: Se desexas\n"
 "colaborar connosco, podes atopar máis información en <http://www.trasno.net>"
 
 #. Translators: about dialog text; label of the website link
