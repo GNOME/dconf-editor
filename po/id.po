@@ -4,23 +4,23 @@
 #
 # Dirgita <dirgitadevina@yahoo.co.id>, 2012, 2014.
 # Andika Triwidada <andika@gmail.com>, 2012, 2013, 2014.
-# Kukuh Syafaat <kukuhsyafaat@gnome.org>, 2017-2020.
+# Kukuh Syafaat <kukuhsyafaat@gnome.org>, 2017-2021.
 # Sucipto <sucipto@pm.me>, 2020.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2020-04-22 13:49+0000\n"
-"PO-Revision-Date: 2020-05-30 18:08+0700\n"
+"POT-Creation-Date: 2021-04-17 13:28+0000\n"
+"PO-Revision-Date: 2021-12-22 10:29+0700\n"
 "Last-Translator: Kukuh Syafaat <kukuhsyafaat@gnome.org>\n"
 "Language-Team: Indonesian <gnome-l10n-id@googlegroups.com>\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural= n!=1;\n"
-"X-Generator: Poedit 2.3.1\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.0\n"
 
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the second is "Credits"
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the name of the view, displayed in the headerbar
@@ -1314,7 +1314,7 @@ msgid "translator-credits"
 msgstr ""
 "Dirgita <dirgitadevina@yahoo.co.id>, 2012.\n"
 "Andika Triwidada <andika@gmail.com>, 2012, 2013, 2018.\n"
-"Kukuh Syafaat <kukuhsyafaat@gnome.org>, 2017-2020.\n"
+"Kukuh Syafaat <kukuhsyafaat@gnome.org>, 2017-2021.\n"
 "Sucipto <sucipto@pm.me>, 2020."
 
 #. Translators: about dialog text; label of the website link
@@ -1626,7 +1626,7 @@ msgctxt "shortcut window"
 msgid "Next line"
 msgstr "Baris berikutnya"
 
-#. Translators: entry disabled for now; Ctrl-I action, when browsing; displays informations on selected folder
+#. Translators: entry disabled for now; Ctrl-I action, when browsing; displays information on selected folder
 #: editor/help-overlay.ui:231
 msgctxt "shortcut window"
 msgid "Toggle folder properties"
@@ -2085,7 +2085,6 @@ msgstr "Perubahan akan ditunda sampai Anda memintanya."
 msgid "One gsettings operation delayed."
 msgid_plural "%u gsettings operations delayed."
 msgstr[0] "%u operasi gsettings ditunda."
-msgstr[1] "%u operasi gsettings ditunda."
 
 #. Translators: Text displayed in the bottom bar; "dconf" is a technical term, notably a shell command, so you probably should not translate it.
 #: editor/modifications-revealer.vala:344
@@ -2093,7 +2092,6 @@ msgstr[1] "%u operasi gsettings ditunda."
 msgid "One dconf operation delayed."
 msgid_plural "%u dconf operations delayed."
 msgstr[0] "%u operasi dconf ditunda."
-msgstr[1] "%u operasi dconf ditunda."
 
 #. Translators: Text displayed in the bottom bar. Hacky: I split a sentence like "One gsettings operation and 2 dconf operations delayed." in two parts, before the "and"; there is at least one gsettings operation and one dconf operation. So, you can either keep "%s%s" like that, and have the second part of the translation starting with a space (if that makes sense in your language), or you might use "%s %s" here.
 #: editor/modifications-revealer.vala:347
@@ -2108,7 +2106,6 @@ msgstr "%s%s"
 msgid "One gsettings operation"
 msgid_plural "%u gsettings operations"
 msgstr[0] "%u operasi gsettings"
-msgstr[1] "%u operasi gsettings"
 
 #. Translators: Text displayed in the bottom bar; second part (and end) of a sentence like "One gsettings operation and 2 dconf operations delayed.", so:
 #. * the space before the "and" is probably wanted, if you keeped the "%s%s" translation as-is, and
@@ -2119,7 +2116,6 @@ msgstr[1] "%u operasi gsettings"
 msgid " and one dconf operation delayed."
 msgid_plural " and %u dconf operations delayed."
 msgstr[0] " dan %u operasi dconf ditunda."
-msgstr[1] " dan %u operasi dconf ditunda."
 
 #. Translators: accessible name of the "close" button that is linked with the search entry on small windows
 #: editor/pathentry.ui:66
