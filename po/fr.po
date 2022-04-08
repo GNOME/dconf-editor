@@ -5,22 +5,22 @@
 # Claude Paroz <claude@2xlibre.net>, 2017-2020
 # Alain Lojewski <allomervan@gmail.com>, 2016-2018.
 # Guillaume Bernard <associations@guillaume-bernard.fr>, 2018.
-# Charles Monzat <charles.monzat@numericable.fr>, 2017-2018.
+# Charles Monzat <charles.monzat@free.fr>, 2017-2022.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2020-05-30 11:09+0000\n"
-"PO-Revision-Date: 2021-03-07 10:30+0100\n"
-"Last-Translator: Guillaume Bernard <associations@guillaume-bernard.fr>\n"
+"POT-Creation-Date: 2021-08-31 10:45+0000\n"
+"PO-Revision-Date: 2022-04-07 23:39+0200\n"
+"Last-Translator: Charles Monzat <charles.monzat@free.fr>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 2.4.2\n"
+"X-Generator: Gtranslator 40.0\n"
 
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the second is "Credits"
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the name of the view, displayed in the headerbar
@@ -434,7 +434,7 @@ msgstr ""
 #: editor/ca.desrt.dconf-editor.gschema.xml:187
 msgid "Use “Back” and “Forward” mouse button events"
 msgstr ""
-"Utiliser les événements des boutons de souris « Suivant » et « Précédent »"
+"Utiliser les évènements des boutons de souris « Suivant » et « Précédent »"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-use-extra-buttons'
 #: editor/ca.desrt.dconf-editor.gschema.xml:189
@@ -1636,7 +1636,7 @@ msgctxt "shortcut window"
 msgid "Next line"
 msgstr "Ligne suivante"
 
-#. Translators: entry disabled for now; Ctrl-I action, when browsing; displays informations on selected folder
+#. Translators: entry disabled for now; Ctrl-I action, when browsing; displays information on selected folder
 #: editor/help-overlay.ui:231
 msgctxt "shortcut window"
 msgid "Toggle folder properties"
