@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2021-08-31 10:45+0000\n"
-"PO-Revision-Date: 2022-04-07 23:39+0200\n"
+"POT-Creation-Date: 2022-04-08 09:18+0000\n"
+"PO-Revision-Date: 2022-06-16 10:40+0200\n"
 "Last-Translator: Charles Monzat <charles.monzat@free.fr>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "Language: fr\n"
@@ -411,7 +411,7 @@ msgstr ""
 "explicit » (toujours confirmer explicitement) demandent confirmation mais la "
 "première applique la modification quand vous changez le chemin alors que la "
 "seconde l’ignore. La valeur « always-delay » applique chaque modification à "
-"retardement, autorisant ainsi l’application de plusieurs clés à la fois."
+"en différé, autorisant ainsi l’application de plusieurs clés à la fois."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/sort-case-sensitive'
 #: editor/ca.desrt.dconf-editor.gschema.xml:180
@@ -1367,7 +1367,7 @@ msgstr "Quitter le mode"
 #. Translators: hamburger menu entry, to enter in a special mode called "delay mode" where changes are not applied until validation
 #: editor/dconf-headerbar.vala:201
 msgid "Enter delay mode"
-msgstr "Activer le mode retardé"
+msgstr "Activer le mode différé"
 
 #. Translators: hamburger menu entry that appears when browsing a folder path, to set to their default value all currently visible keys, not including keys in subfolders
 #: editor/dconf-headerbar.vala:205
@@ -2047,7 +2047,7 @@ msgid ""
 "but\n"
 "no pending changes"
 msgstr ""
-"Le mode retardé est actif\n"
+"Le mode différé est actif\n"
 "mais\n"
 "pas de modification en attente"
 
@@ -2087,23 +2087,23 @@ msgstr ""
 #. Translators: Text displayed in the bottom bar; displayed if there are no pending changes, to document what is the "delay mode".
 #: editor/modifications-revealer.vala:337
 msgid "Changes will be delayed until you request it."
-msgstr "Les modifications seront retardées jusqu’à votre demande."
+msgstr "Les modifications seront différées jusqu’à votre demande."
 
 #. Translators: Text displayed in the bottom bar; "gsettings" is a technical term, notably a shell command, so you probably should not translate it.
 #: editor/modifications-revealer.vala:340
 #, c-format
 msgid "One gsettings operation delayed."
 msgid_plural "%u gsettings operations delayed."
-msgstr[0] "%u opération gsetting est retardée."
-msgstr[1] "%u opérations gsetting sont retardées."
+msgstr[0] "%u opération gsetting est différée."
+msgstr[1] "%u opérations gsetting sont différées."
 
 #. Translators: Text displayed in the bottom bar; "dconf" is a technical term, notably a shell command, so you probably should not translate it.
 #: editor/modifications-revealer.vala:344
 #, c-format
 msgid "One dconf operation delayed."
 msgid_plural "%u dconf operations delayed."
-msgstr[0] "%u opération dconf est retardée."
-msgstr[1] "%u opérations dconf sont retardées."
+msgstr[0] "%u opération dconf est différée."
+msgstr[1] "%u opérations dconf sont différées."
 
 #. Translators: Text displayed in the bottom bar. Hacky: I split a sentence like "One gsettings operation and 2 dconf operations delayed." in two parts, before the "and"; there is at least one gsettings operation and one dconf operation. So, you can either keep "%s%s" like that, and have the second part of the translation starting with a space (if that makes sense in your language), or you might use "%s %s" here.
 #: editor/modifications-revealer.vala:347
@@ -2128,8 +2128,8 @@ msgstr[1] "%u opérations gsettings"
 #, c-format
 msgid " and one dconf operation delayed."
 msgid_plural " and %u dconf operations delayed."
-msgstr[0] "et %u opération dconf retardée."
-msgstr[1] "et %u opérations dconf retardées."
+msgstr[0] "et %u opération dconf différée."
+msgstr[1] "et %u opérations dconf différées."
 
 #. Translators: accessible name of the "close" button that is linked with the search entry on small windows
 #: editor/pathentry.ui:66
