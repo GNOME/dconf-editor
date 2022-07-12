@@ -1,0 +1,12 @@
+include:
+  - project: 'gnome/citemplates'
+    file: 'flatpak/flatpak_ci_initiative.yml'
+
+flatpak:
+    variables:
+        BUNDLE: "dconf-editor-dev.flatpak"
+        MANIFEST_PATH: "build-aux/ca.desrt.dconf-editor.json"
+        FLATPAK_MODULE: "dconf-editor"
+        RUNTIME_REPO: "https://nightly.gnome.org/gnome-nightly.flatpakrepo"
+        APP_ID: "ca.desrt.dconf-editor"
+    extends: ".flatpak"
