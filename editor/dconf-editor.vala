@@ -330,8 +330,12 @@ private class ConfigurationEditor : Gtk.Application, BaseApplication
     {
         base.startup ();
 
+        Hdy.init ();
+
         Environment.set_application_name (PROGRAM_NAME);
         Gtk.Window.set_default_icon_name ("ca.desrt.dconf-editor");
+
+        Hdy.StyleManager.get_default ().set_color_scheme (PREFER_LIGHT);
 
         add_action_entries (action_entries, this);
         set_accels_for_action ("bw.toggle-bookmark",        {        "<Primary>b",

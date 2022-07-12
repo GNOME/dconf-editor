@@ -162,6 +162,7 @@ deps = [
   dependency('glib-2.0', version: '>= 2.56.0'),
   dependency('gmodule-2.0'),
   dependency('gtk+-3.0', version: '>= 3.22.27'),
+  dependency('libhandy-1', version: '>= 1.6'),
   valac.find_library('config', dirs: meson.current_source_dir()),
   valac.find_library('posix')
 ]

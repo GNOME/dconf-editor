@@ -208,15 +208,15 @@ private class NightLightMonitor : Object
     }
     private static bool _set_dark_theme_real (bool night_mode)
     {
-        Gtk.Settings? gtk_settings = Gtk.Settings.get_default ();
-        if (gtk_settings == null)
-        {
-            warning (warning_get_gtksettings);
-            return false;
-        }
+        Hdy.StyleManager style_manager = Hdy.StyleManager.get_default ();
 
-        if (night_mode != ((!) gtk_settings).gtk_application_prefer_dark_theme)
-            ((!) gtk_settings).@set ("gtk-application-prefer-dark-theme", night_mode);
+        if (night_mode != style_manager.get_dark ())
+        {
+            if (night_mode)
+                style_manager.set_color_scheme (FORCE_DARK);
+            else
+                style_manager.set_color_scheme (PREFER_LIGHT);
+        }
         return true;
     }
 }
