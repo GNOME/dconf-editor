@@ -1,3 +1,9 @@
+dconf-editor 43.alpha
+=====================
+
+This release contains a new app icon, various fixes to build with newer vala,
+support for building with meson 0.61, and many translation updates.
+
 dconf-editor 3.38.2
 =====================
 
