@@ -68,41 +68,18 @@ private interface AdaptativeWidget : Object
     internal abstract void set_window_size (WindowSize new_size);
 }
 
-private abstract class NightTimeAwareHeaderBar : HeaderBar
-{
-    /*\
-    * * high-contrast state
-    \*/
-
-    private bool highcontrast_state = false;
-
-    internal void set_highcontrast_state (bool highcontrast_new_state)
-    {
-        if (highcontrast_state == highcontrast_new_state)
-            return;
-        highcontrast_state = highcontrast_new_state;
-        update_hamburger_menu ();
-    }
-
-    /*\
-    * * hamburger menu
-    \*/
-
-    protected abstract void update_hamburger_menu ();
-}
-
 private const int LARGE_WINDOW_SIZE = 1042;
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/adaptative-window.ui")]
 private abstract class AdaptativeWindow : ApplicationWindow
 {
-    private NightTimeAwareHeaderBar headerbar;
-    [CCode (notify = false)] public NightTimeAwareHeaderBar nta_headerbar
+    private BaseHeaderBar headerbar;
+    [CCode (notify = false)] public BaseHeaderBar nta_headerbar
     {
         protected get { return headerbar; }
         protected construct
         {
-            NightTimeAwareHeaderBar? _value = value;
+            BaseHeaderBar? _value = value;
             if (_value == null)
                 assert_not_reached ();
 
@@ -371,7 +348,7 @@ private abstract class AdaptativeWindow : ApplicationWindow
         if (highcontrast_new_state == highcontrast_state)
             return;
         highcontrast_state = highcontrast_new_state;
-        headerbar.set_highcontrast_state (highcontrast_new_state);
+        headerbar.update_hamburger_menu ();
 
         if (highcontrast_new_state)
             window_style_context.add_class ("hc-theme");

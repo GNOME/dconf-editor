@@ -48,7 +48,7 @@ private class DConfWindow : BookmarksWindow, AdaptativeWidget
         DConfHeaderBar _headerbar = new DConfHeaderBar ();
         DConfView _main_view = new DConfView (_modifications_handler);
 
-        Object (nta_headerbar               : (NightTimeAwareHeaderBar) _headerbar,
+        Object (nta_headerbar               : (BaseHeaderBar) _headerbar,
                 base_view                   : (BaseView) _main_view,
                 window_title                : ConfigurationEditor.PROGRAM_NAME,
                 specific_css_class_or_empty : "dconf-editor",
