@@ -171,7 +171,6 @@ private class ConfigurationEditor : Gtk.Application, BaseApplication
     private const GLib.ActionEntry [] action_entries =
     {
         // generic
-        { "set-use-night-mode", set_use_night_mode, "b" },
         { "copy", copy_cb, "s" },   // TODO is that really the good way to do things? (see Taquin)
 
         // quit
@@ -381,8 +380,6 @@ private class ConfigurationEditor : Gtk.Application, BaseApplication
                                                                      "<Primary>question",
                                                               "<Shift><Primary>question"}); // "<Primary>F1" is automatically done
 
-        init_night_mode ();
-
         Gtk.CssProvider css_provider = new Gtk.CssProvider ();
         css_provider.load_from_resource ("/ca/desrt/dconf-editor/ui/dconf-editor.css");
         Gdk.Screen? screen = Gdk.Screen.get_default ();
@@ -407,23 +404,6 @@ private class ConfigurationEditor : Gtk.Application, BaseApplication
         else                                                // called by default or with GSETTINGS_BACKEND=dconf
             info (_("Looks like the DConf settings backend is used, all looks good."));
     } */
-
-    /*\
-    * * Night mode
-    \*/
-
-    NightLightMonitor night_light_monitor;  // keep it here or it is unrefed
-
-    private void init_night_mode ()
-    {
-        night_light_monitor = new NightLightMonitor ("/ca/desrt/dconf-editor/");
-    }
-
-    private void set_use_night_mode (SimpleAction action, Variant? gvariant)
-        requires (gvariant != null)
-    {
-        night_light_monitor.set_use_night_mode (((!) gvariant).get_boolean ());
-    }
 
     /*\
     * * Window activation
@@ -567,7 +547,7 @@ private class ConfigurationEditor : Gtk.Application, BaseApplication
 
     private Gtk.Window get_new_window (string? schema, string? path, string? key_name)
     {
-        DConfWindow window = new DConfWindow (disable_warning, schema, path, key_name, night_light_monitor);
+        DConfWindow window = new DConfWindow (disable_warning, schema, path, key_name);
         add_window (window);
 
         return (Gtk.Window) window;

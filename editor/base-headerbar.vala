@@ -96,7 +96,6 @@ private class BaseHeaderBar : NightTimeAwareHeaderBar, AdaptativeWidget
     private void append_app_actions_section (ref GLib.Menu menu)    // FIXME mnemonics?
     {
         GLib.Menu section = new GLib.Menu ();
-        append_or_not_night_mode_entry (ref section);
         append_or_not_keyboard_shortcuts_entry (has_keyboard_shortcuts, !has_a_phone_size, ref section);
         append_or_not_help_entry (has_help, ref section);
         append_about_entry (about_action_label, ref section);

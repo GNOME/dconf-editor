@@ -95,7 +95,6 @@ sources = files(
   'modifications-handler.vala',
   'modifications-list.vala',
   'modifications-revealer.vala',
-  'night-light-monitor.vala',
   'notifications-revealer.vala',
   'overlayed-list.vala',
   'pathentry.vala',

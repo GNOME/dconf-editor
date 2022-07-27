@@ -83,13 +83,6 @@
 
 <schemalist gettext-domain='dconf-editor'>
   <schema id="ca.desrt.dconf-editor.Lib">
-    <key name="automatic-night-mode" type="b">
-      <default>false</default>
-      <!-- Translators: summary of a settings key, see 'dconf-editor /org/gnome/iagno/automatic-night-mode' -->
-      <summary>A flag to follow system night light</summary>
-      <!-- Translators: description of a settings key, see 'dconf-editor /org/gnome/iagno/automatic-night-mode' -->
-      <description>Use GNOME night light setting to activate night-mode.</description>
-    </key>
     <key name="window-width" type="i">
       <default>540</default>
       <!-- see AdaptativeWindow.width-request at data/ui/adaptative-window.ui:22 -->
