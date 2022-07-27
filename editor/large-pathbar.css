@@ -117,7 +117,7 @@ button.invisible.invisible-menu-button:dir(rtl) { padding-right:1.4rem; backgrou
 }
 
 .pathbar                > button:hover                          > label.item {
-  border-bottom-color:@borders;
+  border-bottom-color:alpha(currentColor, 0.15);
 }
 
 .pathbar                > button.active                         > label.item,
@@ -131,7 +131,7 @@ button.invisible.invisible-menu-button:dir(rtl) { padding-right:1.4rem; backgrou
 .pathbar:backdrop       > button.active:hover                   > label.item,
 .pathbar:backdrop       > button.active.inexistent              > label.item,
 .pathbar:backdrop       > button.active.inexistent:hover        > label.item {
-  border-bottom-color:@borders;
+  border-bottom-color:alpha(currentColor, 0.15);
 }
 
 .pathbar                > button.inexistent:not(.active):hover  > label.item {
