@@ -41,14 +41,14 @@ private class DConfWindow : BookmarksWindow, AdaptativeWidget
     private DConfHeaderBar headerbar;
     private DConfView      main_view;
 
-    internal DConfWindow (bool disable_warning, string? schema, string? path, string? key_name, NightLightMonitor night_light_monitor)
+    internal DConfWindow (bool disable_warning, string? schema, string? path, string? key_name)
     {
         SettingsModel _model = new SettingsModel ();
         ModificationsHandler _modifications_handler = new ModificationsHandler (_model);
-        DConfHeaderBar _headerbar = new DConfHeaderBar (night_light_monitor);
+        DConfHeaderBar _headerbar = new DConfHeaderBar ();
         DConfView _main_view = new DConfView (_modifications_handler);
 
-        Object (nta_headerbar               : (NightTimeAwareHeaderBar) _headerbar,
+        Object (nta_headerbar               : (BaseHeaderBar) _headerbar,
                 base_view                   : (BaseView) _main_view,
                 window_title                : ConfigurationEditor.PROGRAM_NAME,
                 specific_css_class_or_empty : "dconf-editor",

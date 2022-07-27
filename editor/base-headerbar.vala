@@ -18,7 +18,7 @@
 using Gtk;
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/base-headerbar.ui")]
-private class BaseHeaderBar : NightTimeAwareHeaderBar, AdaptativeWidget
+private class BaseHeaderBar : HeaderBar, AdaptativeWidget
 {
     [GtkChild] protected unowned Box center_box;
 
@@ -72,7 +72,7 @@ private class BaseHeaderBar : NightTimeAwareHeaderBar, AdaptativeWidget
     [CCode (notify = false)] public bool   has_help               { private  get; protected construct; default = false; }
     [CCode (notify = false)] public bool   has_keyboard_shortcuts { private  get; protected construct; default = false; }
 
-    protected override void update_hamburger_menu ()
+    public void update_hamburger_menu ()
     {
         GLib.Menu menu = new GLib.Menu ();
 
@@ -96,7 +96,6 @@ private class BaseHeaderBar : NightTimeAwareHeaderBar, AdaptativeWidget
     private void append_app_actions_section (ref GLib.Menu menu)    // FIXME mnemonics?
     {
         GLib.Menu section = new GLib.Menu ();
-        append_or_not_night_mode_entry (ref section);
         append_or_not_keyboard_shortcuts_entry (has_keyboard_shortcuts, !has_a_phone_size, ref section);
         append_or_not_help_entry (has_help, ref section);
         append_about_entry (about_action_label, ref section);

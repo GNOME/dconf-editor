@@ -68,108 +68,18 @@ private interface AdaptativeWidget : Object
     internal abstract void set_window_size (WindowSize new_size);
 }
 
-private abstract class NightTimeAwareHeaderBar : HeaderBar
-{
-    private bool night_time           = false; // no need to use NightTime here (that allows an "Unknown" value)
-    private bool dark_theme           = false;
-    private bool automatic_night_mode = false;
-
-    /*\
-    * * construct
-    \*/
-
-    [CCode (notify = false)] public NightLightMonitor night_light_monitor
-    {
-        protected construct
-        {
-            night_time = NightLightMonitor.NightTime.should_use_dark_theme (value.night_time);
-            dark_theme = value.dark_theme;
-            automatic_night_mode = value.automatic_night_mode;
-            // menu is already updated three times at startup, let's not add one
-
-            ulong night_time_handler = value.notify ["night-time"].connect (night_time_changed);
-            ulong dark_theme_handler = value.notify ["dark-theme"].connect (dark_theme_changed);
-            ulong auto_night_handler = value.notify ["automatic-night-mode"].connect (automatic_night_mode_changed);
-
-            destroy.connect (() => {
-                    value.disconnect (night_time_handler);
-                    value.disconnect (dark_theme_handler);
-                    value.disconnect (auto_night_handler);
-                });
-        }
-    }
-
-    private void night_time_changed (Object nlm, ParamSpec thing)
-    {
-        night_time = NightLightMonitor.NightTime.should_use_dark_theme (((NightLightMonitor) nlm).night_time);
-        update_hamburger_menu ();
-    }
-
-    private void dark_theme_changed (Object nlm, ParamSpec thing)
-    {
-        dark_theme = ((NightLightMonitor) nlm).dark_theme;
-        update_hamburger_menu ();
-    }
-
-    private void automatic_night_mode_changed (Object nlm, ParamSpec thing)
-    {
-        automatic_night_mode = ((NightLightMonitor) nlm).automatic_night_mode;
-        // menu update not needed
-    }
-
-    /*\
-    * * high-contrast state
-    \*/
-
-    private bool highcontrast_state = false;
-
-    internal void set_highcontrast_state (bool highcontrast_new_state)
-    {
-        if (highcontrast_state == highcontrast_new_state)
-            return;
-        highcontrast_state = highcontrast_new_state;
-        update_hamburger_menu ();
-    }
-
-    /*\
-    * * hamburger menu
-    \*/
-
-    protected abstract void update_hamburger_menu ();
-
-    protected void append_or_not_night_mode_entry (ref GLib.Menu section)
-    {
-        if (night_time && !highcontrast_state)
-            append_night_mode_entry (dark_theme, automatic_night_mode, ref section);
-    }
-    private static inline void append_night_mode_entry (bool dark_theme, bool auto_night, ref GLib.Menu section)
-    {
-        if (dark_theme)
-            /* Translators: there are three related actions: "use", "reuse" and "pause"; displayed in the hamburger menu at night */
-            section.append (_("Pause night mode"), "app.set-use-night-mode(false)");
-
-        else if (auto_night)
-            /* Translators: there are three related actions: "use", "reuse" and "pause"; displayed in the hamburger menu at night */
-            section.append (_("Reuse night mode"), "app.set-use-night-mode(true)");
-
-        else
-            /* Translators: there are three related actions: "use", "reuse" and "pause"; displayed in the hamburger menu at night */
-            section.append (_("Use night mode"), "app.set-use-night-mode(true)");
-    }
-}
-
 private const int LARGE_WINDOW_SIZE = 1042;
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/adaptative-window.ui")]
 private abstract class AdaptativeWindow : ApplicationWindow
 {
-    private NightTimeAwareHeaderBar headerbar;
-    [CCode (notify = false)] public NightTimeAwareHeaderBar nta_headerbar
+    private BaseHeaderBar headerbar;
+    [CCode (notify = false)] public BaseHeaderBar nta_headerbar
     {
         protected get { return headerbar; }
         protected construct
         {
-            NightTimeAwareHeaderBar? _value = value;
+            BaseHeaderBar? _value = value;
             if (_value == null)
                 assert_not_reached ();
 
@@ -438,7 +348,7 @@ private abstract class AdaptativeWindow : ApplicationWindow
         if (highcontrast_new_state == highcontrast_state)
             return;
         highcontrast_state = highcontrast_new_state;
-        headerbar.set_highcontrast_state (highcontrast_new_state);
+        headerbar.update_hamburger_menu ();
 
         if (highcontrast_new_state)
             window_style_context.add_class ("hc-theme");
