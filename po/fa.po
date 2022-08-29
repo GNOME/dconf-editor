@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2022-07-27 15:55+0000\n"
-"PO-Revision-Date: 2022-08-29 10:25+0430\n"
+"POT-Creation-Date: 2022-08-29 05:56+0000\n"
+"PO-Revision-Date: 2022-08-29 10:35+0430\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: Persian\n"
 "Language: fa\n"
@@ -221,16 +221,16 @@ msgstr ""
 "ویرایش پیکربندی‌های شما به صورت مستقیم یک ویژگی حرفه‌ای است و ممکن است باعث عدم "
 "کارکرد درست برنامه شود."
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:32
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:33
 msgid "Browse the keys used by installed applications"
 msgstr "کلیدهایی که توسط نرم‌افزارهای نصب شده استفاده شده را مرور کنید"
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:36
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:37
 msgid "Read keys descriptions and edit their values"
 msgstr "خواندن توضیحات کلیدها و تغییر مقادیر آن‌ها"
 
 #. a translatable version of project_group
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:51
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:52
 msgid "The GNOME Project"
 msgstr "پروژهٔ گنوم"
 
@@ -365,6 +365,11 @@ msgstr ""
 "«بازگشت»، کدام دکمه دستور «پیش‌روی» را در پنجرهٔ مرورگر فعّال می‌کند. دامنهٔ "
 "مقدارهای ممکن بین ۶ و ۱۴ است."
 
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/relocatable-schemas-enabled-mappings'
+#: editor/ca.desrt.dconf-editor.gschema.xml:210
+msgid "Enabled relocatable schema mapping facilities"
+msgstr ""
+
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/small-bookmarks-rows'
 #: editor/ca.desrt.dconf-editor.gschema.xml:240
 msgid "A flag to enable small rows for bookmarks list"
@@ -374,6 +379,16 @@ msgstr "پرچمی برای به کار انداختن ردیف‌های کوچ�
 #: editor/ca.desrt.dconf-editor.gschema.xml:242
 msgid "If “true”, the bookmarks list use smaller rows."
 msgstr "اگر «درست» باشد، سیاههٔ نشانک‌ها از ردیف‌های کوچک‌تری استفاده می‌کند."
+
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/enumeration'
+#: editor/ca.desrt.dconf-editor.gschema.xml:352
+msgid "A 5-choices enumeration"
+msgstr "یک موجودیت شمارشی ۵ گزینه‌ای"
+
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-enum'
+#: editor/ca.desrt.dconf-editor.gschema.xml:452
+msgid "A 1-choice enumeration"
+msgstr "یک موجودیت شمارشی ۱ گزینه‌ای"
 
 #. Translators: command-line option description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:159
