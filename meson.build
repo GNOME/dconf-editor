@@ -6,7 +6,7 @@ project(
     'buildtype=debugoptimized',
     'warning_level=1'
   ],
-  meson_version: '>= 0.41.0'
+  meson_version: '>= 0.59.0',
 )
 
 dconf_editor_name = meson.project_name()
@@ -121,7 +121,8 @@ configure_file(
   configuration: config_h
 )
 
-meson.add_install_script(
-  'meson_post_install.py',
-  dconf_editor_datadir
+gnome.post_install(
+  glib_compile_schemas: true,
+  gtk_update_icon_cache: true,
+  update_desktop_database: true,
 )
