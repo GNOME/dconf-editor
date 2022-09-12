@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2022-09-12 08:20+0000\n"
-"PO-Revision-Date: 2022-09-12 12:56+0430\n"
+"POT-Creation-Date: 2022-09-12 08:27+0000\n"
+"PO-Revision-Date: 2022-09-12 13:06+0430\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: Persian\n"
 "Language: fa\n"
@@ -379,6 +379,38 @@ msgstr "پرچمی برای به کار انداختن ردیف‌های کوچ�
 msgid "If “true”, the bookmarks list use smaller rows."
 msgstr "اگر «درست» باشد، سیاههٔ نشانک‌ها از ردیف‌های کوچک‌تری استفاده می‌کند."
 
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/boolean'
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/relocatable/boolean' (with default /ca/desrt/dconf-editor/relocatable-* settings)
+#: editor/ca.desrt.dconf-editor.gschema.xml:268
+#: editor/ca.desrt.dconf-editor.gschema.xml:480
+msgid "A boolean, type ‘b’"
+msgstr "یک بولی، گونهٔ b"
+
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/boolean-nullable'
+#: editor/ca.desrt.dconf-editor.gschema.xml:275
+msgid "A nullable boolean, type ‘mb’"
+msgstr "یک بولی پوچ‌پذیر گونهٔ mb"
+
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/byte'
+#: editor/ca.desrt.dconf-editor.gschema.xml:282
+msgid "A byte (unsigned), type ‘y’"
+msgstr "یک بایت (بدون علامت)، گونهٔ y"
+
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/bytestring'
+#: editor/ca.desrt.dconf-editor.gschema.xml:289
+msgid "A bytestring, type ‘ay’"
+msgstr "یک رشته بایت، گونهٔ ay"
+
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/bytestring-array'
+#: editor/ca.desrt.dconf-editor.gschema.xml:296
+msgid "A bytestring array, type ‘aay’"
+msgstr "یک آرایهٔ رشته بایت، گونهٔ aay"
+
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-handle'
+#: editor/ca.desrt.dconf-editor.gschema.xml:303
+msgid "A D-Bus handle type, type ‘h’"
+msgstr "یک گونهٔ مدیریت D-Bus، گونهٔ h"
+
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-object-path'
 #: editor/ca.desrt.dconf-editor.gschema.xml:310
 msgid "A D-Bus object path, type ‘o’"
@@ -394,10 +426,82 @@ msgstr "یک آرایهٔ مسیر شی D-Bus،گونهٔ ao"
 msgid "A D-Bus signature, type ‘g’"
 msgstr "یک امضای D-Bus، گونهٔ g"
 
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dict-entry'
+#: editor/ca.desrt.dconf-editor.gschema.xml:331
+msgid "A dictionary entry of type ‘{ss}’"
+msgstr "یک ورودی دیکشنری از گونهٔ {ss}"
+
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dictionary'
+#: editor/ca.desrt.dconf-editor.gschema.xml:338
+msgid "A “vardict”, type ‘a{sv}’"
+msgstr "یک vardict، گونهٔ a{sv}"
+
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/double'
+#: editor/ca.desrt.dconf-editor.gschema.xml:345
+msgid "A double, type ‘d’"
+msgstr "یک دابل گونهٔ d"
+
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/enumeration'
 #: editor/ca.desrt.dconf-editor.gschema.xml:352
 msgid "A 5-choices enumeration"
 msgstr "یک موجودیت شمارشی ۵ گزینه‌ای"
+
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-16-signed'
+#: editor/ca.desrt.dconf-editor.gschema.xml:366
+msgid "A short integer, type ‘n’"
+msgstr "یک عدد صحیح کوتاه، گونهٔ n"
+
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-16-unsigned'
+#: editor/ca.desrt.dconf-editor.gschema.xml:373
+msgid "An unsigned short integer, type ‘q’"
+msgstr "یک عدد صحیح کوتاه بدون علامت، گونهٔ q"
+
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-32-signed'
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/relocatable/integer' (with default /ca/desrt/dconf-editor/relocatable-* settings)
+#: editor/ca.desrt.dconf-editor.gschema.xml:380
+#: editor/ca.desrt.dconf-editor.gschema.xml:487
+msgid "An usual integer, type ‘i’"
+msgstr "یک عدد صحیح عادی، گونهٔ i"
+
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-32-unsigned'
+#: editor/ca.desrt.dconf-editor.gschema.xml:387
+msgid "An unsigned usual integer, type ‘u’"
+msgstr "یک عدد صحیح عادی بدون علامت، گونهٔ u"
+
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-64-signed'
+#: editor/ca.desrt.dconf-editor.gschema.xml:394
+msgid "A long integer, type ‘x’"
+msgstr "یک عدد صحیح بلند، گونهٔ x"
+
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-64-unsigned'
+#: editor/ca.desrt.dconf-editor.gschema.xml:401
+msgid "An unsigned long integer, type ‘t’"
+msgstr "یک عدد صحیح بلند بدون علامت، گونهٔ t"
+
+#. Translators: do not forget the parenthesis, they are meaningful; summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/pair-of-integers'
+#: editor/ca.desrt.dconf-editor.gschema.xml:417
+msgid "A custom type, here ‘(ii)’"
+msgstr "یک گونهٔ شخصی، این‌جا (ii)"
+
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string'
+#: editor/ca.desrt.dconf-editor.gschema.xml:424
+msgid "A string, type ‘s’"
+msgstr "یک رشته، گونهٔ s"
+
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string-array'
+#: editor/ca.desrt.dconf-editor.gschema.xml:431
+msgid "A string array, type ‘as’"
+msgstr "یک آرایهٔ رشته‌ای، گونهٔ as"
+
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string-nullable'
+#: editor/ca.desrt.dconf-editor.gschema.xml:438
+msgid "A nullable string, type ‘ms’"
+msgstr "یک رشتهٔ پوچ‌پذیر گونهٔ ms"
+
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/variant'
+#: editor/ca.desrt.dconf-editor.gschema.xml:445
+msgid "A variant, type ‘v’"
+msgstr "یک دگرگونه، گونهٔ v"
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-enum'
 #: editor/ca.desrt.dconf-editor.gschema.xml:452
