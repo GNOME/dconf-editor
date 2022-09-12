@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2022-08-29 06:06+0000\n"
-"PO-Revision-Date: 2022-09-12 12:48+0430\n"
+"POT-Creation-Date: 2022-09-12 08:20+0000\n"
+"PO-Revision-Date: 2022-09-12 12:56+0430\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: Persian\n"
 "Language: fa\n"
@@ -364,6 +364,11 @@ msgstr ""
 "«بازگشت»، کدام دکمه دستور «پیش‌روی» را در پنجرهٔ مرورگر فعّال می‌کند. دامنهٔ "
 "مقدارهای ممکن بین ۶ و ۱۴ است."
 
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/relocatable-schemas-enabled-mappings'
+#: editor/ca.desrt.dconf-editor.gschema.xml:210
+msgid "Enabled relocatable schema mapping facilities"
+msgstr "امکانات نگاشت شمای جابه‌جایی‌پذیر به کار افتاد"
+
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/small-bookmarks-rows'
 #: editor/ca.desrt.dconf-editor.gschema.xml:240
 msgid "A flag to enable small rows for bookmarks list"
@@ -373,6 +378,21 @@ msgstr "پرچمی برای به کار انداختن ردیف‌های کوچ�
 #: editor/ca.desrt.dconf-editor.gschema.xml:242
 msgid "If “true”, the bookmarks list use smaller rows."
 msgstr "اگر «درست» باشد، سیاههٔ نشانک‌ها از ردیف‌های کوچک‌تری استفاده می‌کند."
+
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-object-path'
+#: editor/ca.desrt.dconf-editor.gschema.xml:310
+msgid "A D-Bus object path, type ‘o’"
+msgstr "یک مسیر شی D-Bus، گونهٔ o"
+
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-object-path-array'
+#: editor/ca.desrt.dconf-editor.gschema.xml:317
+msgid "A D-Bus object path array, type ‘ao’"
+msgstr "یک آرایهٔ مسیر شی D-Bus،گونهٔ ao"
+
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-signature'
+#: editor/ca.desrt.dconf-editor.gschema.xml:324
+msgid "A D-Bus signature, type ‘g’"
+msgstr "یک امضای D-Bus، گونهٔ g"
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/enumeration'
 #: editor/ca.desrt.dconf-editor.gschema.xml:352
@@ -453,7 +473,7 @@ msgstr "دیدن سیاهه با گزینهٔ ‪--list-relocatable-schemas"
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:230
 msgid "the path where to map the relocatable schema"
-msgstr "مسیر نگاشت شمای قابل تغییر مکان"
+msgstr "مسیر نگاشت شمای جابه‌جایی‌پذیر"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:232
@@ -644,7 +664,7 @@ msgstr "%s (کلید پاک شد)"
 #. Translators: command-line startup warning, try 'dconf-editor ca.desrt.dconf-editor.Demo.Relocatable'
 #: editor/dconf-window.vala:124
 msgid "Schema is relocatable, a path is needed."
-msgstr "شِما قابل تغییر موقعیت است. نیازمند یک مسیر."
+msgstr "شما جابه‌جایی‌پذیر است. نیازمند یک مسیر."
 
 #. Translators: command-line startup warning
 #: editor/dconf-window.vala:137
@@ -1109,7 +1129,7 @@ msgstr "بدون تغییر"
 #: editor/model-utils.vala:301
 msgctxt "capitalized"
 msgid "D-Bus handle type"
-msgstr ""
+msgstr "گونهٔ مدیریت D-Bus"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:305
@@ -1133,7 +1153,7 @@ msgstr "امضای D-Bus"
 #: editor/model-utils.vala:342
 msgctxt "non-capitalized"
 msgid "D-Bus handle type"
-msgstr ""
+msgstr "گونهٔ مدیریت D-Bus"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:346
@@ -1724,7 +1744,7 @@ msgstr "شِما با مسیر"
 #. Translators: field content when displaying key properties; the field description is "Defined by", this text is displayed if the key is defined by a schema, and if this schema is relocatable (it has not a fixed path)
 #: editor/setting-object.vala:414
 msgid "Relocatable schema"
-msgstr "شِمای قابل تغییر موقعیت"
+msgstr "شِمای جابه‌جایی‌پذیر"
 
 #. Translators: field content when displaying key properties; the field description is "Defined by", this text is displayed if the key is not defined by a schema (the value is given by dconf but cannot be used by the GSettings functions)
 #: editor/setting-object.vala:417
