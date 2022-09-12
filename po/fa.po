@@ -2,13 +2,14 @@
 # Copyright (C) 2012 dconf's COPYRIGHT HOLDER
 # This file is distributed under the same license as the dconf package.
 # Arash Mousavi <mousavi.arash@gmail.com>, 2012, 2013, 2015.
+# Danial Behzadi <d.behzadi@ubuntu.com>, 2022.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2022-08-29 05:56+0000\n"
-"PO-Revision-Date: 2022-08-29 10:35+0430\n"
+"POT-Creation-Date: 2022-08-29 06:06+0000\n"
+"PO-Revision-Date: 2022-09-12 12:48+0430\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: Persian\n"
 "Language: fa\n"
@@ -164,7 +165,7 @@ msgstr "ویژگی‌ها"
 #. Translators: text of an infobar to sort again the keys list ("refresh" only, no "reload")
 #: editor/browser-view.vala:81
 msgid "Sort preferences have changed. Do you want to refresh the view?"
-msgstr "ترجیحات مرتب‌سازی تغییر کرده است. آیا می‌خواهید تازه‌سازی کنید؟"
+msgstr "ترجیحات مرتب‌سازی تغییر کرده. می‌خواهید نما را تازه‌سازی کنید؟"
 
 #. Translators: button of an infobar to sort again the keys list ("refresh" only, no "reload")
 #. Translators: accessible name of the "refresh" button that is linked with the search entry on large windows
@@ -175,20 +176,18 @@ msgstr "تازه‌سازی"
 #. Translators: text of an infobar to reload the keys list because of a new key (for example)
 #: editor/browser-view.vala:87
 msgid "This folder content has changed. Do you want to reload the view?"
-msgstr ""
-"محتویات این پوشه تغییر کرده است. آیا می‌خواهید نما را دوباره بارگزاری کنید؟"
+msgstr "محتوای شاخه تغییر کرده. می‌خواهید نما را بازآوری کنید؟"
 
 #. Translators: button of an infobar to reload the keys list because of a new key (for example)
 #. Translators: button of an infobar to reload the key properties because something has changed
 #: editor/browser-view.vala:90 editor/browser-view.vala:96
 msgid "Reload"
-msgstr "بارگزاری دوباره"
+msgstr "بار کردن دوباره"
 
 #. Translators: text of an infobar to reload the key properties because something has changed
 #: editor/browser-view.vala:93
 msgid "This key’s properties have changed. Do you want to reload the view?"
-msgstr ""
-"ویژگی‌های این کلید تغییر کرده است. آیا می‌خواهید نما را دوباره بارگزاری کنید؟"
+msgstr "ویژگی‌های این کلید تغییر کرده. می‌خواهید نما را بازآوری کنید؟"
 
 #. Translators: command-line message, when the user uses the backward/forward buttons of the mouse
 #: editor/browser-window.vala:906
@@ -365,11 +364,6 @@ msgstr ""
 "«بازگشت»، کدام دکمه دستور «پیش‌روی» را در پنجرهٔ مرورگر فعّال می‌کند. دامنهٔ "
 "مقدارهای ممکن بین ۶ و ۱۴ است."
 
-#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/relocatable-schemas-enabled-mappings'
-#: editor/ca.desrt.dconf-editor.gschema.xml:210
-msgid "Enabled relocatable schema mapping facilities"
-msgstr ""
-
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/small-bookmarks-rows'
 #: editor/ca.desrt.dconf-editor.gschema.xml:240
 msgid "A flag to enable small rows for bookmarks list"
@@ -389,6 +383,11 @@ msgstr "یک موجودیت شمارشی ۵ گزینه‌ای"
 #: editor/ca.desrt.dconf-editor.gschema.xml:452
 msgid "A 1-choice enumeration"
 msgstr "یک موجودیت شمارشی ۱ گزینه‌ای"
+
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-range'
+#: editor/ca.desrt.dconf-editor.gschema.xml:460
+msgid "A 1-choice integer value"
+msgstr "یک مقدار عددی ۱ گزینه‌ای"
 
 #. Translators: command-line option description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:159
@@ -454,7 +453,7 @@ msgstr "دیدن سیاهه با گزینهٔ ‪--list-relocatable-schemas"
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:230
 msgid "the path where to map the relocatable schema"
-msgstr ""
+msgstr "مسیر نگاشت شمای قابل تغییر مکان"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:232
@@ -464,7 +463,7 @@ msgstr "مثال: «ca.desrt.dconf-editor.Bookmarks:/ca/desrt/dconf-editor/»"
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:236
 msgid "the name of a key from the schema"
-msgstr ""
+msgstr "نام کلیدی برای شما"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:238
@@ -474,22 +473,22 @@ msgstr "مثال: «نشانک‌ها»"
 #. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
 #: editor/dconf-editor.vala:294
 msgid "Known schemas installed:"
-msgstr ""
+msgstr "شماهای شناختهٔ نصب شده:"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given
 #: editor/dconf-editor.vala:300
 msgid "No known schemas installed."
-msgstr ""
+msgstr "هیچ شمای شناخته‌ای نصب نشده."
 
 #. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
 #: editor/dconf-editor.vala:305
 msgid "Known schemas skipped:"
-msgstr ""
+msgstr "شماهای شناختهٔ پریده:"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given
 #: editor/dconf-editor.vala:311
 msgid "No known schemas skipped."
-msgstr ""
+msgstr "هیچ شمای شناخته‌ای نپریده."
 
 #. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
 #: editor/dconf-editor.vala:316
@@ -504,37 +503,37 @@ msgstr "بدون شِماهای ناشناخته."
 #. Translators: command-line error message, when the user requests a specific path while there is already a window opened
 #: editor/dconf-editor.vala:441
 msgid "Only one window can be opened for now.\n"
-msgstr ""
+msgstr "اکنون فقط یک پنچره می‌تواند گشوده شود.\n"
 
 #. Translators: command-line error message, try 'dconf-editor a b c d'
 #: editor/dconf-editor.vala:461
 msgid "Cannot understand: too many arguments.\n"
-msgstr ""
+msgstr "نتوانست بفهمد: آرکومان‌های بیش از حد.\n"
 
 #. Translators: command-line error message, try 'dconf-editor / a'
 #: editor/dconf-editor.vala:475
 msgid "Cannot understand second argument in this context.\n"
-msgstr ""
+msgstr "نتوانست دومین آرکومان در این بافتار را بفهمد.\n"
 
 #. Translators: command-line error message, try 'dconf-editor org.example /'
 #: editor/dconf-editor.vala:496
 msgid "Cannot understand: slash character in second argument.\n"
-msgstr ""
+msgstr "نتوانست بفهمد: نویسه‌های اسلش‌دار در آرگومان دوم.\n"
 
 #. Translators: command-line error message, try 'dconf-editor org.example:a'
 #: editor/dconf-editor.vala:511
 msgid "Schema path should start and end with a “/”.\n"
-msgstr ""
+msgstr "مسیر شما باید با یک / آغاز و پایان یابد.\n"
 
 #. Translators: command-line error message, try 'dconf-editor //'
 #: editor/dconf-editor.vala:527
 msgid "Cannot understand: given path contains “//”.\n"
-msgstr ""
+msgstr "نتوانست بفهمد: مسیر داده شامل // است.\n"
 
 #. Translators: command-line error message, try 'dconf-editor "org example" a'
 #: editor/dconf-editor.vala:535
 msgid "Cannot understand: space character in argument.\n"
-msgstr ""
+msgstr "نتوانست بفهمد: نویسهٔ فاصله در آرگومان.\n"
 
 #. Translators: notification header, try ctrl-c while in the keys list
 #: editor/dconf-editor.vala:563
@@ -1116,19 +1115,19 @@ msgstr ""
 #: editor/model-utils.vala:305
 msgctxt "capitalized"
 msgid "D-Bus object path"
-msgstr ""
+msgstr "مسیر شی D-Bus"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:309
 msgctxt "capitalized"
 msgid "D-Bus object path array"
-msgstr ""
+msgstr "آرایهٔ مسیر شی D-Bus"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:313
 msgctxt "capitalized"
 msgid "D-Bus signature"
-msgstr ""
+msgstr "امضای D-Bus"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense); this handle type is an index; you may maintain the word "handle"
 #: editor/model-utils.vala:342
@@ -1140,19 +1139,19 @@ msgstr ""
 #: editor/model-utils.vala:346
 msgctxt "non-capitalized"
 msgid "D-Bus object path"
-msgstr ""
+msgstr "مسیر شی D-Bus"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:350
 msgctxt "non-capitalized"
 msgid "D-Bus object path array"
-msgstr ""
+msgstr "آرایهٔ مسیر شی D-Bus"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:354
 msgctxt "non-capitalized"
 msgid "D-Bus signature"
-msgstr ""
+msgstr "امضای D-Bus"
 
 #. Translators: that's a name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:373
@@ -1297,11 +1296,14 @@ msgid ""
 "but\n"
 "no pending changes"
 msgstr ""
+"حالت تأخیری روشن است\n"
+"ولی\n"
+"هیچ تغییری منتظر نیست"
 
 #. Translators: label of one of the two buttons of the list of pending modifications, to switch between applying changes to the whole list and selecting some items for more advanced things (not displayed currently, but this change is wanted); the second is "Select"
 #: editor/modifications-list.vala:32
 msgid "Rule all"
-msgstr ""
+msgstr "اعمال همه"
 
 #. Translators: label of one of the two buttons of the list of pending modifications, to switch between applying changes to the whole list and selecting some items for more advanced things (not displayed currently, but this change is wanted); the first is "Rule all"
 #: editor/modifications-list.vala:34
@@ -1321,33 +1323,33 @@ msgstr "مقدار نامعتبر است."
 #. Translators: displayed in the bottom bar in normal sized windows, when the user edits a key (with the "always confirm explicit" behaviour)
 #: editor/modifications-revealer.vala:307
 msgid "The change will be dismissed if you quit this view without applying."
-msgstr ""
+msgstr "اگر بدون اعمال از این نما خارج شوید، تغییر دور انداخته خواهد شد."
 
 #. Translators: displayed in the bottom bar in normal sized windows, when the user edits a key (with default "always confirm implicit" behaviour notably)
 #: editor/modifications-revealer.vala:313
 msgid "The change will be applied on such request or if you quit this view."
-msgstr ""
+msgstr "تغییر در صورت درخواست اعمال یا خروجتان از نما، اعمال خواهد شد."
 
 #. Translators: Text displayed in the bottom bar; displayed if there are no pending changes, to document what is the "delay mode".
 #: editor/modifications-revealer.vala:337
 msgid "Changes will be delayed until you request it."
-msgstr ""
+msgstr "تغییرات تا زمانی که درخواست دهید، تأخیر خواهند خورد."
 
 #. Translators: Text displayed in the bottom bar; "gsettings" is a technical term, notably a shell command, so you probably should not translate it.
 #: editor/modifications-revealer.vala:340
 #, c-format
 msgid "One gsettings operation delayed."
 msgid_plural "%u gsettings operations delayed."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%Iu عملیات gsesstings تأخیر خورده."
+msgstr[1] "یک عملیات gsesstings تأخیر خورده."
 
 #. Translators: Text displayed in the bottom bar; "dconf" is a technical term, notably a shell command, so you probably should not translate it.
 #: editor/modifications-revealer.vala:344
 #, c-format
 msgid "One dconf operation delayed."
 msgid_plural "%u dconf operations delayed."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%Iu عملیات dconf تأخیر خورده."
+msgstr[1] "یک عملیات dconf تأخیر خورده."
 
 #. Translators: Text displayed in the bottom bar. Hacky: I split a sentence like "One gsettings operation and 2 dconf operations delayed." in two parts, before the "and"; there is at least one gsettings operation and one dconf operation. So, you can either keep "%s%s" like that, and have the second part of the translation starting with a space (if that makes sense in your language), or you might use "%s %s" here.
 #: editor/modifications-revealer.vala:347
@@ -1372,8 +1374,8 @@ msgstr[1] "یک عملیات gsettings"
 #, c-format
 msgid " and one dconf operation delayed."
 msgid_plural " and %u dconf operations delayed."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] " و %Iu عملیات dconf تأخیر خورده."
+msgstr[1] " و یک عملیات dconf تأخیر خورده."
 
 #. Translators: accessible name of the "close" button that is linked with the search entry on small windows
 #: editor/pathentry.ui:66
@@ -1402,6 +1404,8 @@ msgid ""
 "This key is defined and used by more than one schema. This could lead to "
 "problems. Edit value at your own risk."
 msgstr ""
+"کلید به دست بیش از یک شما تعریف و استفاده شده. این امر می‌تواند مشکل‌زا باشد. "
+"مقدار را با مسئولیت خودتان ویرایش کنید."
 
 #. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/Conflict/type-conflict'
 #: editor/registry-info.ui:87
@@ -1409,6 +1413,8 @@ msgid ""
 "This key is incompatibly defined and used by more than one schema. It is "
 "impossible to work with its value in a meaningful way."
 msgstr ""
+"کلید به صورت ناسازگاری به دست بیش از یک شما تعریف و استفاده شده. کار با مقدارش "
+"به روشی بامعنی غیرممکن است."
 
 #. Translators: warning text of an infobar, when a key is not defined by a schema
 #: editor/registry-info.ui:125
@@ -1418,6 +1424,9 @@ msgid ""
 "using this key has been uninstalled, or if this key is obsolete, you may want "
 "to erase it."
 msgstr ""
+"شمایی موجود نیست. شما چیزیست که کاربرد یک کلید را تعریف می‌کند و ویرایشگر Dconf "
+"نمی‌تواند شمایی مربوط به این کلید بیابد. اگر برنامه‌ای که از این کلید استفاده "
+"می‌کرد حذف نصب شده یا این کلید بی‌استفاده است، می‌توانید پاکش کنید."
 
 #. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-enum'
 #: editor/registry-info.ui:172
@@ -1425,6 +1434,8 @@ msgid ""
 "This enumeration offers only one choice. That’s probably an error of the "
 "application that installed this schema. If possible, please open a bug about it."
 msgstr ""
+"این شمارش فقط یک گزینه فراهم می‌کند. احتمالاً خطای برنامه‌ایست که این شما را نصب "
+"کرده. در صورت امکان مشکل را گزارش دهید."
 
 #. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-range'
 #: editor/registry-info.ui:183
@@ -1432,6 +1443,8 @@ msgid ""
 "This integer key can only take one value. That’s probably an error of the "
 "application that installed this schema. If possible, please open a bug about it."
 msgstr ""
+"این کلید عددی فقط یک مقدار می‌گیرد. احتمالاً خطای برنامه‌ایست که این شما را نصب "
+"کرده. در صورت امکان مشکل را گزارش دهید."
 
 #. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-triv'
 #: editor/registry-info.ui:194
@@ -1439,6 +1452,8 @@ msgid ""
 "This key has a special “empty tuple” type. That’s probably an error of the "
 "application that installed this schema. If possible, please open a bug about it."
 msgstr ""
+"این کلید یک گونهٔ «جفت خالی» خاص دارد. احتمالاً خطای برنامه‌ایست که این شما را نصب "
+"کرده. در صورت امکان مشکل را گزارش دهید."
 
 #. Translators: field description when displaying folder properties; name of the folder
 #: editor/registry-info.vala:70
@@ -1542,6 +1557,7 @@ msgid ""
 "There are conflicting definitions of this key, getting value would be either "
 "problematic or meaningless."
 msgstr ""
+"تعریف‌های متضادی از این کلید وجود دارد. گرفتن مقدار مشکل‌زا یا بی‌معنی خواهد بود."
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of type "double"
 #: editor/registry-info.vala:615
@@ -1549,6 +1565,8 @@ msgid ""
 "Use a dot as decimal mark and no thousands separator. You can use the X.Ye+Z "
 "notation."
 msgstr ""
+"از نقطه به عنوان ممیز و نه جداساز هزارگان استفاده کنید. می‌توانید از شیوهٔ نوشتن "
+"X.Ye+Z استفاده کنید."
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of type "variant" (or of a type composed with a variant)
 #: editor/registry-info.vala:620
@@ -1557,6 +1575,8 @@ msgid ""
 "https://developer.gnome.org/glib/stable/gvariant-text.html for complete "
 "documentation."
 msgstr ""
+"محتوای دگرگونه‌ها باید با برچسب‌های XML جدا شوند. برای مستندات کامل https://"
+"developer.gnome.org/glib/stable/gvariant-text.html را ببینید."
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a "maybe type" and with a string type (or similar); neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
 #: editor/registry-info.vala:627
@@ -1565,12 +1585,14 @@ msgid ""
 "value. Strings, signatures and object paths should be surrounded by quotation "
 "marks."
 msgstr ""
+"برای تنظیم یک گونهٔ شاید (آغاز شده با m) به مقدار خالیش، از کلیدواژهٔ «nothing» "
+"استفاده کنید. میسرهای رشته‌ها، امضاها و اشیا باید با علامت نقل‌قول احاطه شوند."
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a string type (or similar)
 #: editor/registry-info.vala:630
 msgid ""
 "Strings, signatures and object paths should be surrounded by quotation marks."
-msgstr ""
+msgstr "میسرهای رشته‌ها، امضاها و اشیا باید با علامت نقل‌قول احاطه شوند."
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a "maybe type"; neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
 #: editor/registry-info.vala:635
@@ -1578,6 +1600,8 @@ msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its empty "
 "value."
 msgstr ""
+"برای تنظیم یک گونهٔ شاید (آغاز شده با m) به مقدار خالیش، از کلیدواژهٔ «nothing» "
+"استفاده کنید."
 
 #. Translators: field content when displaying key properties; the field description is "Current value", this text displayed if the key, not defined by a schema, has been erased (and so has no value anymore)
 #: editor/registry-info.vala:674
