@@ -28,6 +28,8 @@ msgid ""
 "GNU General Public License\n"
 "version 3 or later"
 msgstr ""
+"GNU General Public License\n"
+"аверсиа 3 мамзар еиҳа иҿыцу "
 
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the header of the programmers names
 #: editor/about-list.vala:154
@@ -48,7 +50,7 @@ msgstr "Уажәтәи амҩа ахкьыҧхьаара"
 #. Translators: "open" action in the right-click menu on a "show folder info" row
 #: editor/adaptative-pathbar.vala:264 editor/key-list-box-row.vala:475
 msgid "Show properties"
-msgstr "Аҟазшьаҷыда арбара"
+msgstr "Аазшьаҷыдақәа рырбара"
 
 #. Translators: accessible name of the hamburger menu
 #: editor/base-headerbar.ui:113
@@ -81,7 +83,7 @@ msgstr "Агәылаҵақәа рҵәахра"
 #. Translators: hamburger menu entry on small windows, to unbookmark the currently browsed path
 #: editor/bookmarks-headerbar.vala:259
 msgid "Unbookmark"
-msgstr "Агәылаҵақәа рҟынтә ақәгара"
+msgstr "Агәылаҵақәа рҟынтә ақәагара"
 
 #. Translators: hamburger menu entry on small windows, to bookmark the currently browsed path
 #: editor/bookmarks-headerbar.vala:262
@@ -98,7 +100,7 @@ msgstr "Агәылаҵақәа рырбара"
 msgid ""
 "Bookmarks will\n"
 "be added here"
-msgstr ""
+msgstr "Агәылаҵақәа абраҟа иацҵахоит"
 
 #. Translators: label of one of the two buttons of the bookmarks list, to switch between using the bookmarks and editing the list; the second is "Edit"
 #: editor/bookmarks-list.vala:36
@@ -113,7 +115,7 @@ msgstr "Аредакциа азура"
 #. Translators: accessible name of the switch for bookmarking current path in the bookmarks popover
 #: editor/bookmarks.ui:69
 msgid "Location bookmarked"
-msgstr "Агәылаҵақәа рҭыҧыркра"
+msgstr "Агәылаҵақәа рҭыԥ аанкылара"
 
 #. Translators: accessible description of the switch for bookmarking current path in the bookmarks popover
 #: editor/bookmarks.ui:71
@@ -1265,7 +1267,7 @@ msgstr "Ацаҧха аныхуп"
 #: editor/delayed-setting-view.vala:151 editor/key-list-box-row.vala:649
 #: editor/registry-info.vala:469
 msgid "Default value"
-msgstr "Ишыҟоу еиҧш ҵакы"
+msgstr "Ишыҟоу еиҧш аҵакы"
 
 #. Translators: header in the shortcut window, for usual headerbar menus actions
 #: editor/help-overlay.ui:29
