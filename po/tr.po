@@ -1,20 +1,20 @@
 # Turkish translation for dconf.
-# Copyright (C) 2013-2022 dconf's COPYRIGHT HOLDER
+# Copyright (C) 2013-2023 dconf's COPYRIGHT HOLDER
 # This file is distributed under the same license as the dconf package.
 #
 # Osman Karagöz <osmank3@gmail.com>, 2017.
 # Muhammet Kara <muhammetk@gmail.com>, 2013, 2015, 2016, 2017, 2018.
 # Emin Tufan Çetin <etcetin@gmail.com>, 2017-2019.
-# Sabri Ünal <libreajans@gmail.com>, 2019.
+# Sabri Ünal <libreajans@gmail.com>, 2019, 2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2022-07-27 15:55+0000\n"
+"POT-Creation-Date: 2023-04-05 09:13+0000\n"
 "PO-Revision-Date: 2020-02-05 19:05+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
-"Language-Team: Türkçe <gnome-turk@gnome.org>\n"
+"Language-Team: Türkçe <takim@gnome.org.tr>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -124,7 +124,7 @@ msgstr "Kullan"
 #. Translators: label of one of the two buttons of the bookmarks list, to switch between using the bookmarks and editing the list; the first is "Use"
 #: editor/bookmarks-list.vala:38
 msgid "Edit"
-msgstr "Düzenle"
+msgstr "Düzenle"
 
 #. Translators: accessible name of the switch for bookmarking current path in the bookmarks popover
 #: editor/bookmarks.ui:69
@@ -222,16 +222,16 @@ msgstr ""
 "Yapılandırmanızı doğrudan düzenlemek ileri düzey bir özelliktir ve "
 "uygulamaların düzgün çalışmamasına neden olabilir."
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:32
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:34
 msgid "Browse the keys used by installed applications"
 msgstr "Kurulan uygulamalar tarafından kullanılan anahtarlara göz atın"
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:36
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:38
 msgid "Read keys descriptions and edit their values"
 msgstr "Anahtarların açıklamalarını okuyup değerlerini düzenleyin"
 
 #. a translatable version of project_group
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:51
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:53
 msgid "The GNOME Project"
 msgstr "GNOME Projesi"
 
@@ -1389,8 +1389,8 @@ msgstr "Bu pencereyi sonraki sefer göster."
 #. Translators: notification text, after a user Ctrl+Q keyboard action; same way to spell the shortcut as in the Settings application
 #: editor/dconf-window.vala:305
 msgid ""
-"There are pending changes. Use Shift+Ctrl+Q to apply changes and quit, or Alt"
-"+F4 to dismiss changes and quit."
+"There are pending changes. Use Shift+Ctrl+Q to apply changes and quit, or "
+"Alt+F4 to dismiss changes and quit."
 msgstr ""
 "Bekleyen değişiklikler var. Bekleyen değişikleri uygulamak ve çıkmak için "
 "Shift+Ctrl+Q tuşlarını kullanın; veya değişikliklerden vazgeçip çıkmak için "
