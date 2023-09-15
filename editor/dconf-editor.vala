@@ -189,6 +189,7 @@ private class ConfigurationEditor : Gtk.Application, BaseApplication
         Intl.bind_textdomain_codeset (Config.GETTEXT_PACKAGE, "UTF-8");
         Intl.textdomain (Config.GETTEXT_PACKAGE);
 
+        typeof (RegistryWarning).ensure();
         ConfigurationEditor app = new ConfigurationEditor ();
         return app.run (args);
     }
