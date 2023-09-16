@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: for dconf-editor\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2023-04-05 09:13+0000\n"
-"PO-Revision-Date: 2023-04-10 18:41+0200\n"
+"POT-Creation-Date: 2023-04-10 16:43+0000\n"
+"PO-Revision-Date: 2023-09-16 18:26+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.3.2\n"
 
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the second is "Credits"
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the name of the view, displayed in the headerbar
@@ -35,6 +35,8 @@ msgid ""
 "GNU General Public License\n"
 "version 3 or later"
 msgstr ""
+"GNU General Public License\n"
+"ვერსია 3 ან უფრო ახალი"
 
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the header of the programmers names
 #: editor/about-list.vala:154
@@ -127,7 +129,7 @@ msgstr "მდებარეობა სანიშნეები ჩაე�
 #. Translators: accessible description of the switch for bookmarking current path in the bookmarks popover
 #: editor/bookmarks.ui:71
 msgid "Toggle to bookmark this location"
-msgstr ""
+msgstr "გადართეთ ამ მდებარეობის ჩასანიშნად"
 
 #. Translators: text that might appear in the bookmarks popover in place of the switch and its label
 #: editor/bookmarks.ui:96
@@ -189,7 +191,7 @@ msgstr ""
 
 #: editor/ca.desrt.dconf-editor.appdata.xml.in:9
 msgid "Dconf Editor"
-msgstr ""
+msgstr "Dconf-ის რედაქტორი"
 
 #: editor/ca.desrt.dconf-editor.appdata.xml.in:10
 msgid "A graphical tool for editing the dconf database"
@@ -224,12 +226,12 @@ msgstr "პროექტი \"GNOME\""
 #. Translators: application name, as used in the window manager, the window title, the about dialog...
 #: editor/ca.desrt.dconf-editor.desktop.in:3 editor/dconf-editor.vala:21
 msgid "dconf Editor"
-msgstr ""
+msgstr "dconf-ის რედაქტორი"
 
 #. Translators: a GenericName that gives the application goal, as defined in the desktop file spec
 #: editor/ca.desrt.dconf-editor.desktop.in:5
 msgid "Configuration editor for dconf"
-msgstr ""
+msgstr "კონფიგურაციის რედაქტორი dconf-სთვის"
 
 #. Translators: a Comment that gives the application function, as defined in the desktop file spec
 #: editor/ca.desrt.dconf-editor.desktop.in:7
@@ -239,7 +241,7 @@ msgstr ""
 #. Translators: some search Keywords to find this application, as defined in the desktop file spec. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: editor/ca.desrt.dconf-editor.desktop.in:9
 msgid "settings;configuration;"
-msgstr ""
+msgstr "settings;configuration;პარამეტრები;მორგება;"
 
 #. see AdaptativeWindow.width-request at data/ui/adaptative-window.ui:22
 #. range min="350"/ FIXME
@@ -278,7 +280,7 @@ msgstr "თუ ჩართულია, ფანჯარა გაშლი�
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/restore-view'
 #: editor/ca.desrt.dconf-editor.gschema.xml:131
 msgid "A flag to restore the last view"
-msgstr ""
+msgstr "ბოლო ხედის აღსადგენი ალამი"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/restore-view'
 #: editor/ca.desrt.dconf-editor.gschema.xml:133
@@ -315,7 +317,7 @@ msgstr ""
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/show-warning'
 #: editor/ca.desrt.dconf-editor.gschema.xml:152
 msgid "Show initial warning"
-msgstr ""
+msgstr "საწყისი გაფრთხილების ჩვენება"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/show-warning'
 #: editor/ca.desrt.dconf-editor.gschema.xml:154
@@ -464,7 +466,7 @@ msgstr ""
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/bookmarks'
 #: editor/ca.desrt.dconf-editor.gschema.xml:233
 msgid "A list of bookmarked paths"
-msgstr ""
+msgstr "ჩანიშნული ბილიკების სია"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/bookmarks'
 #: editor/ca.desrt.dconf-editor.gschema.xml:235
@@ -486,7 +488,7 @@ msgstr ""
 #: editor/ca.desrt.dconf-editor.gschema.xml:268
 #: editor/ca.desrt.dconf-editor.gschema.xml:480
 msgid "A boolean, type ‘b’"
-msgstr ""
+msgstr "ლოგიკური. აკრიფეთ 'b'"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/boolean'
 #: editor/ca.desrt.dconf-editor.gschema.xml:270
@@ -496,7 +498,7 @@ msgstr ""
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/boolean-nullable'
 #: editor/ca.desrt.dconf-editor.gschema.xml:275
 msgid "A nullable boolean, type ‘mb’"
-msgstr ""
+msgstr "განულებადი ლოგიკური. აკრიფეთ 'mb'"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/boolean-nullable'
 #: editor/ca.desrt.dconf-editor.gschema.xml:277
@@ -659,7 +661,7 @@ msgstr ""
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-16-signed'
 #: editor/ca.desrt.dconf-editor.gschema.xml:366
 msgid "A short integer, type ‘n’"
-msgstr ""
+msgstr "მოკლე მთელი რიცხვი. ტიპი 'n'"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-16-signed'
 #: editor/ca.desrt.dconf-editor.gschema.xml:368
@@ -669,7 +671,7 @@ msgstr ""
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-16-unsigned'
 #: editor/ca.desrt.dconf-editor.gschema.xml:373
 msgid "An unsigned short integer, type ‘q’"
-msgstr ""
+msgstr "უნიშნო მოკლე მთელი რიცხვი. ტიპი 'q'"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-16-unsigned'
 #: editor/ca.desrt.dconf-editor.gschema.xml:375
@@ -681,7 +683,7 @@ msgstr ""
 #: editor/ca.desrt.dconf-editor.gschema.xml:380
 #: editor/ca.desrt.dconf-editor.gschema.xml:487
 msgid "An usual integer, type ‘i’"
-msgstr ""
+msgstr "ჩვეულებრივი მთელი რიცხვი. ტიპი \"i\""
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-32-signed'
 #: editor/ca.desrt.dconf-editor.gschema.xml:382
@@ -691,7 +693,7 @@ msgstr ""
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-32-unsigned'
 #: editor/ca.desrt.dconf-editor.gschema.xml:387
 msgid "An unsigned usual integer, type ‘u’"
-msgstr ""
+msgstr "უნიშნო ჩვეულებრივი მთელი რიცხვი. ტიპი \"u\""
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-32-unsigned'
 #: editor/ca.desrt.dconf-editor.gschema.xml:389
@@ -701,7 +703,7 @@ msgstr ""
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-64-signed'
 #: editor/ca.desrt.dconf-editor.gschema.xml:394
 msgid "A long integer, type ‘x’"
-msgstr ""
+msgstr "გრძელი მთელი რიცხვი. ტიპი 'x'"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-64-signed'
 #: editor/ca.desrt.dconf-editor.gschema.xml:396
@@ -711,7 +713,7 @@ msgstr ""
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-64-unsigned'
 #: editor/ca.desrt.dconf-editor.gschema.xml:401
 msgid "An unsigned long integer, type ‘t’"
-msgstr ""
+msgstr "უნიშნო გრძელი მთელი რიცხვი. ტიპი 't'"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-64-unsigned'
 #: editor/ca.desrt.dconf-editor.gschema.xml:403
@@ -721,7 +723,7 @@ msgstr ""
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/number-with-range'
 #: editor/ca.desrt.dconf-editor.gschema.xml:410
 msgid "A number with range"
-msgstr ""
+msgstr "რიცხვი დიაპაზონით"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/number-with-range'
 #: editor/ca.desrt.dconf-editor.gschema.xml:412
@@ -747,7 +749,7 @@ msgstr ""
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string'
 #: editor/ca.desrt.dconf-editor.gschema.xml:424
 msgid "A string, type ‘s’"
-msgstr ""
+msgstr "სტრიქონი. ტიპი 's'"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string'
 #: editor/ca.desrt.dconf-editor.gschema.xml:426
@@ -759,7 +761,7 @@ msgstr ""
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string-array'
 #: editor/ca.desrt.dconf-editor.gschema.xml:431
 msgid "A string array, type ‘as’"
-msgstr ""
+msgstr "სტრიქონების მასივი. ტიპი 'as'"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string-array'
 #: editor/ca.desrt.dconf-editor.gschema.xml:433
@@ -771,7 +773,7 @@ msgstr ""
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string-nullable'
 #: editor/ca.desrt.dconf-editor.gschema.xml:438
 msgid "A nullable string, type ‘ms’"
-msgstr ""
+msgstr "განულებადი სტრიქონი. ტპი 'ms'"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string-nullable'
 #: editor/ca.desrt.dconf-editor.gschema.xml:440
@@ -784,7 +786,7 @@ msgstr ""
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/variant'
 #: editor/ca.desrt.dconf-editor.gschema.xml:445
 msgid "A variant, type ‘v’"
-msgstr ""
+msgstr "ვარიანტი. ტიპი 'v'"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/variant'
 #: editor/ca.desrt.dconf-editor.gschema.xml:447
@@ -801,7 +803,7 @@ msgstr ""
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-enum'
 #: editor/ca.desrt.dconf-editor.gschema.xml:452
 msgid "A 1-choice enumeration"
-msgstr ""
+msgstr "1 არჩევნიანი ჩამონათვალი"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-enum'
 #: editor/ca.desrt.dconf-editor.gschema.xml:454
@@ -813,7 +815,7 @@ msgstr ""
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-range'
 #: editor/ca.desrt.dconf-editor.gschema.xml:460
 msgid "A 1-choice integer value"
-msgstr ""
+msgstr "1 არჩევნიანი მთელი მნიშვნელობა"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-range'
 #: editor/ca.desrt.dconf-editor.gschema.xml:462
@@ -956,7 +958,7 @@ msgstr ""
 #. Translators: command-line option description, see 'dconf-editor --help'; the option removes the initial "use at your own risks" dialog
 #: editor/dconf-editor.vala:165
 msgid "Do not show initial warning"
-msgstr ""
+msgstr "საწყისი გაფრთხილება ნაჩვენები არ იქნება"
 
 #. Translators: command-line text, description of the application in 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
 #: editor/dconf-editor.vala:202
@@ -971,17 +973,17 @@ msgstr ""
 #. Translators: command-line header description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:208
 msgid "Arguments description:"
-msgstr ""
+msgstr "არგუმენტების აღწერა:"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:212
 msgid "a folder path or a key path"
-msgstr ""
+msgstr "საქაღალდის ბილიკი ან გასაღების ბილიკი"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:214
 msgid "example: “/org/gnome/” or “/ca/desrt/dconf-editor/Demo/boolean”"
-msgstr ""
+msgstr "მაგალითად: “/org/gnome/” ან “/ca/desrt/dconf-editor/Demo/boolean”"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:218
@@ -1021,37 +1023,37 @@ msgstr ""
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:238
 msgid "example: “bookmarks”"
-msgstr ""
+msgstr "მაგალითად: “bookmarks”"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
 #: editor/dconf-editor.vala:294
 msgid "Known schemas installed:"
-msgstr ""
+msgstr "ცნობილი დაყენებული სქემები:"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given
 #: editor/dconf-editor.vala:300
 msgid "No known schemas installed."
-msgstr ""
+msgstr "ცნობილი დაყენებული სქემები აღმოჩენილი არაა."
 
 #. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
 #: editor/dconf-editor.vala:305
 msgid "Known schemas skipped:"
-msgstr ""
+msgstr "ცნობილი გამოტოვებული სქემები:"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given
 #: editor/dconf-editor.vala:311
 msgid "No known schemas skipped."
-msgstr ""
+msgstr "ცნობილი გამოტოვებული სქემები აღმოჩენილი არაა."
 
 #. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
 #: editor/dconf-editor.vala:316
 msgid "Unknown schemas:"
-msgstr ""
+msgstr "უცნობი სქემები:"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given
 #: editor/dconf-editor.vala:322
 msgid "No unknown schemas."
-msgstr ""
+msgstr "უცნობი სქემების გარეშე."
 
 #. Translators: command-line error message, when the user requests a specific path while there is already a window opened
 #: editor/dconf-editor.vala:441
@@ -1061,12 +1063,12 @@ msgstr ""
 #. Translators: command-line error message, try 'dconf-editor a b c d'
 #: editor/dconf-editor.vala:461
 msgid "Cannot understand: too many arguments.\n"
-msgstr ""
+msgstr "ვერ გავიგე: მეტისმეტად ბევრი არგუმენტი.\n"
 
 #. Translators: command-line error message, try 'dconf-editor / a'
 #: editor/dconf-editor.vala:475
 msgid "Cannot understand second argument in this context.\n"
-msgstr ""
+msgstr "ვერ გავიგე: მეორე არგუმენტი ამ კონტექსტში.\n"
 
 #. Translators: command-line error message, try 'dconf-editor org.example /'
 #: editor/dconf-editor.vala:496
@@ -1137,7 +1139,7 @@ msgstr "გვერდი GNOME-ის ვიკიზე"
 #. Translators: usual menu entry of the hamburger menu
 #: editor/dconf-headerbar.vala:53
 msgid "About Dconf Editor"
-msgstr ""
+msgstr "Dconf-ის რედაქტორის შესახებ"
 
 #. Translators: when a change is requested, on a small window, entry of the menu of the "delayed settings button" that appears in place of the close button
 #. Translators: when there are pending changes, label of the "apply" button in the bottom bar, on large windows
@@ -1189,7 +1191,7 @@ msgstr "დარჩენილი"
 #: editor/dconf-model.vala:945
 #, c-format
 msgid "%s (key erased)"
-msgstr ""
+msgstr "%s (გასაღები წაშლილია)"
 
 #. Translators: command-line startup warning, try 'dconf-editor ca.desrt.dconf-editor.Demo.Relocatable'
 #: editor/dconf-window.vala:124
@@ -1210,7 +1212,7 @@ msgstr ""
 #: editor/dconf-window.vala:168
 #, c-format
 msgid "Unknown schema “%s”."
-msgstr ""
+msgstr "უცნობი სქემა “%s”."
 
 #. Translators: initial "use at your own risk" dialog, the welcoming text
 #: editor/dconf-window.vala:274
@@ -1225,7 +1227,7 @@ msgstr ""
 #. Translators: initial "use at your own risk" dialog, the button label
 #: editor/dconf-window.vala:280
 msgid "I’ll be careful."
-msgstr ""
+msgstr "ფრთხილად ვიქნები."
 
 #. Translators: initial "use at your own risk" dialog, the checkbox label
 #: editor/dconf-window.vala:284
@@ -1243,19 +1245,19 @@ msgstr ""
 #: editor/dconf-window.vala:777
 #, c-format
 msgid "Folder “%s” is now empty."
-msgstr ""
+msgstr "საქაღალდე \"%s\" ახლა ცარიელია."
 
 #. Translators: notification text, when the requested key has been removed; the %s is the key path
 #: editor/dconf-window.vala:788
 #, c-format
 msgid "Key “%s” has been deleted."
-msgstr ""
+msgstr "გასაღები \"%s\" წაიშალა."
 
 #. Translators: notification text at startup, use 'dconf-editor /org/example/test'; the %s is the key path
 #: editor/dconf-window.vala:794
 #, c-format
 msgid "Cannot find key “%s”."
-msgstr ""
+msgstr "გასაღები \"%s\" ვერ ვიპოვე."
 
 #. Translators: notification text at startup, use 'dconf-editor /org/example/empty/'; the %s is the folder path
 #: editor/dconf-window.vala:800
@@ -1266,7 +1268,7 @@ msgstr ""
 #. Translators: displayed in the list of pending changes (could be an in-window panel, or in the popover of the bottom bar); for dconf keys
 #: editor/delayed-setting-view.vala:136
 msgid "Key erased"
-msgstr ""
+msgstr "გასაღები წაიშალა"
 
 #. Translators: displayed in the list of pending changes (could be an in-window panel, or in the popover of the bottom bar); for gsettings keys
 #. Translators: "reset key value" option of a multi-choice list (checks or radios) in the right-click menu on the list of keys
@@ -1286,61 +1288,61 @@ msgstr "ქმედებები"
 #: editor/help-overlay.ui:34
 msgctxt "shortcut window"
 msgid "Bookmarks menu"
-msgstr ""
+msgstr "სანიშნების მენიუ"
 
 #. Translators: Ctrl-D action
 #: editor/help-overlay.ui:42
 msgctxt "shortcut window"
 msgid "Bookmark this path"
-msgstr ""
+msgstr "ამ ბილიკის ჩანიშვნა"
 
 #. Translators: Ctrl-Shift-D action
 #: editor/help-overlay.ui:50
 msgctxt "shortcut window"
 msgid "Unbookmark this path"
-msgstr ""
+msgstr "სანიშნეებიდან წაშლა"
 
 #. Translators: F10 key action
 #: editor/help-overlay.ui:58
 msgctxt "shortcut window"
 msgid "Actions menu"
-msgstr ""
+msgstr "ქმედებების მენიუ"
 
 #. Translators: Shift-F10 action
 #: editor/help-overlay.ui:66
 msgctxt "shortcut window"
 msgid "Path bar menu"
-msgstr ""
+msgstr "ბილიკის ზოლის მენიუ"
 
 #. Translators: header in the shortcut window, for moving to paths known by the headerbar
 #: editor/help-overlay.ui:76
 msgctxt "shortcut window"
 msgid "Path bar navigation"
-msgstr ""
+msgstr "ბილიკის პანელის ნავიგაცია"
 
 #. Translators: Alt-Shift-Up action; browse to the '/' folder
 #: editor/help-overlay.ui:81
 msgctxt "shortcut window"
 msgid "Open root folder"
-msgstr ""
+msgstr "Root საქაღალდის გახსნა"
 
 #. Translators: Alt-Up action; browse to the parent folder
 #: editor/help-overlay.ui:89
 msgctxt "shortcut window"
 msgid "Open parent folder"
-msgstr ""
+msgstr "მშობელი საქაღალდის გახსნა"
 
 #. Translators: Alt-Down action; browse to the child of the current path displayed in the headerbar, if any
 #: editor/help-overlay.ui:97
 msgctxt "shortcut window"
 msgid "Open active direct child"
-msgstr ""
+msgstr "აქტიური პირდაპირი შვილის გახსნა"
 
 #. Translators: Alt-Shift-Down action; browse to the complete path of the headerbar
 #: editor/help-overlay.ui:105
 msgctxt "shortcut window"
 msgid "Open active last child"
-msgstr ""
+msgstr "აქტიური ბოლო შვილის გახსნა"
 
 #. Translators: header in the shortcut window, for the various ways of opening search
 #: editor/help-overlay.ui:115
@@ -1352,7 +1354,7 @@ msgstr "ძებნის მორგება"
 #: editor/help-overlay.ui:120
 msgctxt "shortcut window"
 msgid "Toggle search"
-msgstr ""
+msgstr "ძებნის გადართვა"
 
 #. Translators: Ctrl-Alt-F action; does the same thing as "Toggle search", but loads the search entry with the last searched text
 #: editor/help-overlay.ui:128
@@ -1364,43 +1366,43 @@ msgstr "თავიდან ძებნა"
 #: editor/help-overlay.ui:136
 msgctxt "shortcut window"
 msgid "Toggle local search"
-msgstr ""
+msgstr "ლოკალური ძებნის გადართვა"
 
 #. Translators: Ctrl-Shift-Alt-F action; does the same thing as "Toggle local search", but loads the search entry with the last searched text
 #: editor/help-overlay.ui:144
 msgctxt "shortcut window"
 msgid "Search again, locally"
-msgstr ""
+msgstr "თავიდან, ლოკალურად ძებნა"
 
 #. Translators: Ctrl-V action; open search with clipboard content
 #: editor/help-overlay.ui:152
 msgctxt "shortcut window"
 msgid "Paste as search"
-msgstr ""
+msgstr "ჩასმა მოსაძებნად"
 
 #. Translators: Ctrl-Shift-V action; does the same thing as "Paste as search", but works even if an entry or textview is selected; entry hidden for now
 #: editor/help-overlay.ui:160
 msgctxt "shortcut window"
 msgid "Paste as search (force)"
-msgstr ""
+msgstr "ჩასმა მოსაძებნად (ძალით)"
 
 #. Translators: Ctrl-L action when browsing; opens search on current path
 #: editor/help-overlay.ui:168
 msgctxt "shortcut window"
 msgid "Edit path"
-msgstr ""
+msgstr "ბილიკის ჩასწორება"
 
 #. Translators: Ctrl-Shift-L action when browsing; opens search on parent path
 #: editor/help-overlay.ui:176
 msgctxt "shortcut window"
 msgid "Edit parent path"
-msgstr ""
+msgstr "მშობელი ბილიკის ჩასწორება"
 
 #. Translators: '/' key action when browsing; opens search on root path
 #: editor/help-overlay.ui:184
 msgctxt "shortcut window"
 msgid "Edit root path"
-msgstr ""
+msgstr "Root ბილიკის ჩასწორება"
 
 #. Translators: Escape key action, when searching; cancels search
 #: editor/help-overlay.ui:192
@@ -1418,25 +1420,25 @@ msgstr ""
 #: editor/help-overlay.ui:207
 msgctxt "shortcut window"
 msgid "Contextual menu"
-msgstr ""
+msgstr "კონტექსტური მენიუ"
 
 #. Translators: Ctrl-Shift-G action, when browsing
 #: editor/help-overlay.ui:215
 msgctxt "shortcut window"
 msgid "Previous line"
-msgstr ""
+msgstr "წინა ხაზი"
 
 #. Translators: Ctrl-G action, when browsing
 #: editor/help-overlay.ui:223
 msgctxt "shortcut window"
 msgid "Next line"
-msgstr ""
+msgstr "შემდეგი ხაზი"
 
 #. Translators: entry disabled for now; Ctrl-I action, when browsing; displays information on selected folder
 #: editor/help-overlay.ui:231
 msgctxt "shortcut window"
 msgid "Toggle folder properties"
-msgstr ""
+msgstr "საქაღალდის თვისებების გადართვა"
 
 #. Translators: Ctrl-Delete action, when browsing; sets the selected key to its default value
 #: editor/help-overlay.ui:239
@@ -1448,7 +1450,7 @@ msgstr "ნაგულისხმები მნიშვნელობე�
 #: editor/help-overlay.ui:247
 msgctxt "shortcut window"
 msgid "Toggle boolean value"
-msgstr ""
+msgstr "ლოგიკური მნიშვნელობის გადართვა"
 
 #. Translators: header in the shortcut window, for when there are pending changes
 #: editor/help-overlay.ui:257
@@ -1502,13 +1504,13 @@ msgstr "გაცვლის ბაფერი"
 #: editor/help-overlay.ui:316
 msgctxt "shortcut window"
 msgid "Copy descriptor"
-msgstr ""
+msgstr "დესკრიპტორის კოპირება"
 
 #. Translators: Ctrl-Shift-C action; copies to clipboard the path of the currently browsed key or folder
 #: editor/help-overlay.ui:324
 msgctxt "shortcut window"
 msgid "Copy path"
-msgstr ""
+msgstr "ბილიკის კოპირება"
 
 #. Translators: header in the shortcut window, for the various ways of quitting the application
 #: editor/help-overlay.ui:334
@@ -1537,7 +1539,7 @@ msgstr ""
 #. Translators: tooltip text of the entry's icon when editing the value of a double or a 64-bit (signed or unsigned) key, if the key only allows a range of values and the written value is out of range
 #: editor/key-editor-child.vala:30
 msgid "Given value is out of range."
-msgstr ""
+msgstr "მითითებული მნიშვნელობა დიაპაზონს გარეთაა."
 
 #. Translators: tooltip text of the entry's icon (if using an entry) or text displayed under the text view (if using a text view) when editing the value of a key, if the written text cannot be parsed regarding to the key's value type
 #: editor/key-editor-child.vala:33
@@ -1563,23 +1565,23 @@ msgstr ""
 #: editor/key-list-box-row.vala:118
 #, c-format
 msgid "Go to “%s”"
-msgstr ""
+msgstr "“%s”-ზე გდასვლა"
 
 #. Translators: first item of the keys list displayed during browsing, the %s is the current folder name
 #: editor/key-list-box-row.vala:149
 #, c-format
 msgid "Search in “%s” folder"
-msgstr ""
+msgstr "\"%s\" საქაღალდეში ძებნა"
 
 #. Translators: first item of the keys list displayed during browsing at root path
 #: editor/key-list-box-row.vala:153
 msgid "Open path entry"
-msgstr ""
+msgstr "ბილიკის ელემენტის გახსნა"
 
 #. Translators: last item of the keys list displayed during a local search
 #: editor/key-list-box-row.vala:157
 msgid "Search everywhere"
-msgstr ""
+msgstr "ყველგან ძებნა"
 
 #. Translators: "copy to clipboard" action in the right-click menu on the list of keys
 #: editor/key-list-box-row.vala:449
@@ -1589,7 +1591,7 @@ msgstr "დააკოპირე"
 #. Translators: "open key-editor page" action in the right-click menu on the list of keys
 #: editor/key-list-box-row.vala:452
 msgid "Customize…"
-msgstr ""
+msgstr "მორგება…"
 
 #. Translators: "reset key value" action in the right-click menu on the list of keys
 #: editor/key-list-box-row.vala:455
@@ -1599,12 +1601,12 @@ msgstr "ნაგულისხმები მნიშვნელობე�
 #. Translators: "open key-editor page" action in the right-click menu on the list of keys, when key is hard-conflicting
 #: editor/key-list-box-row.vala:460
 msgid "Show details…"
-msgstr ""
+msgstr "დეტალების ჩვენება…"
 
 #. Translators: "dismiss change" action in the right-click menu on a key with pending changes
 #: editor/key-list-box-row.vala:463
 msgid "Dismiss change"
-msgstr ""
+msgstr "ცვლილების გაუქმება"
 
 #. Translators: "erase key" action in the right-click menu on a key without schema
 #. Translators: "erase key" option in the right-click menu on a key without schema when on delayed mode
@@ -1612,17 +1614,17 @@ msgstr ""
 #: editor/key-list-box-row.vala:466 editor/key-list-box-row.vala:582
 #: editor/registry-info.ui:132
 msgid "Erase key"
-msgstr ""
+msgstr "გასაღების წაშლა"
 
 #. Translators: "go to" action in the right-click menu on a "go back" line during search
 #: editor/key-list-box-row.vala:469
 msgid "Go to this path"
-msgstr ""
+msgstr "ამ ბილიკზე გადასვლა"
 
 #. Translators: "open folder" action in the right-click menu on a folder
 #: editor/key-list-box-row.vala:472
 msgid "Open"
-msgstr ""
+msgstr "გახსნა"
 
 #. Translators: "open search" action in the right-click menu on a search
 #. Translators: accessible name of the enter-search button displayed in small-size windows
@@ -1630,12 +1632,12 @@ msgstr ""
 #: editor/key-list-box-row.vala:478 editor/pathwidget.ui:83
 #: editor/pathwidget.ui:109
 msgid "Search"
-msgstr ""
+msgstr "ძებნა"
 
 #. Translators: "open parent folder" action in the right-click menu on a folder in a search result
 #: editor/key-list-box-row.vala:481
 msgid "Open parent folder"
-msgstr ""
+msgstr "მშობელი საქაღალდის გახსნა"
 
 #. Translators: "reset recursively" action in the right-click menu on a folder
 #: editor/key-list-box-row.vala:484
@@ -1645,7 +1647,7 @@ msgstr ""
 #. Translators: "dismiss change" action in the right-click menu on a key without schema planned to be erased
 #: editor/key-list-box-row.vala:487
 msgid "Do not erase"
-msgstr ""
+msgstr "არ წაშალო"
 
 #. Translators: "no change" option in the right-click menu on a key when on delayed mode
 #: editor/key-list-box-row.vala:576
@@ -1656,79 +1658,79 @@ msgstr "ცვლილების გარეშე"
 #: editor/model-utils.vala:301
 msgctxt "capitalized"
 msgid "D-Bus handle type"
-msgstr ""
+msgstr "D-Bus-ის დამმუშავებლის ტიპი"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:305
 msgctxt "capitalized"
 msgid "D-Bus object path"
-msgstr ""
+msgstr "D-Bus-ის ობიექტის ბილიკი"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:309
 msgctxt "capitalized"
 msgid "D-Bus object path array"
-msgstr ""
+msgstr "D-Bus-ის ობიექტის ბილიკის მასივი"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:313
 msgctxt "capitalized"
 msgid "D-Bus signature"
-msgstr ""
+msgstr "D-Bus-ის ხელმოწერა"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense); this handle type is an index; you may maintain the word "handle"
 #: editor/model-utils.vala:342
 msgctxt "non-capitalized"
 msgid "D-Bus handle type"
-msgstr ""
+msgstr "D-Bus-ის დამმუშავებლის ტიპი"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:346
 msgctxt "non-capitalized"
 msgid "D-Bus object path"
-msgstr ""
+msgstr "D-Bus-ის ობიექტის ბილიკი"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:350
 msgctxt "non-capitalized"
 msgid "D-Bus object path array"
-msgstr ""
+msgstr "D-Bus-ის ობიექტის ბილიკის მასივი"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:354
 msgctxt "non-capitalized"
 msgid "D-Bus signature"
-msgstr ""
+msgstr "D-Bus-ის ხელმოწერა"
 
 #. Translators: that's a name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:373
 msgid "Signed 16-bit integer"
-msgstr ""
+msgstr "ნიშნიანი 16-ბიტიანი მთელი რიცხვი"
 
 #. Translators: that's a name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:376
 msgid "Unsigned 16-bit integer"
-msgstr ""
+msgstr "უნიშნო 16-ბიტიანი მთელი რიცხვი"
 
 #. Translators: that's a name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:379
 msgid "Signed 32-bit integer"
-msgstr ""
+msgstr "ნიშნიანი 32-ბიტიანი მთელი რიცხვი"
 
 #. Translators: that's a name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:382
 msgid "Unsigned 32-bit integer"
-msgstr ""
+msgstr "უნიშნო 32-ბიტიანი მთელი რიცხვი"
 
 #. Translators: that's a name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:385
 msgid "Signed 64-bit integer"
-msgstr ""
+msgstr "ნიშნიანი 64-ბიტიანი მთელი რიცხვი"
 
 #. Translators: that's a name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:388
 msgid "Unsigned 64-bit integer"
-msgstr ""
+msgstr "უნიშნო 64-ბიტიანი მთელი რიცხვი"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:391
@@ -1753,17 +1755,17 @@ msgstr "სტრიქონი"
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:403
 msgid "String array"
-msgstr ""
+msgstr "სტრიქონების მასივი"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:406
 msgid "string array"
-msgstr ""
+msgstr "სტრიქონების მასივი"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:409
 msgid "Enumeration"
-msgstr ""
+msgstr "ჩამონათვალი"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:412
@@ -1829,12 +1831,12 @@ msgstr "variant"
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:463
 msgid "Empty tuple"
-msgstr ""
+msgstr "ცარიელი კორტეჟი"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:466
 msgid "empty tuple"
-msgstr ""
+msgstr "ცარიელი კორტეჟი"
 
 #. Translators: placeholder text of the list of pending modifications, displayed when the user is in delayed mode but has no pending modifications
 #: editor/modifications-list.vala:28
@@ -1847,12 +1849,12 @@ msgstr ""
 #. Translators: label of one of the two buttons of the list of pending modifications, to switch between applying changes to the whole list and selecting some items for more advanced things (not displayed currently, but this change is wanted); the second is "Select"
 #: editor/modifications-list.vala:32
 msgid "Rule all"
-msgstr ""
+msgstr "ყველას მართვა"
 
 #. Translators: label of one of the two buttons of the list of pending modifications, to switch between applying changes to the whole list and selecting some items for more advanced things (not displayed currently, but this change is wanted); the first is "Rule all"
 #: editor/modifications-list.vala:34
 msgid "Select"
-msgstr ""
+msgstr "აირჩიეთ"
 
 #. Translators: displayed in the bottom bar in normal sized windows, when the user tries to reset keys from/for a folder that has nothing to reset
 #: editor/modifications-revealer.vala:136
@@ -1863,7 +1865,7 @@ msgstr ""
 #. Translators: displayed in the bottom bar in normal sized windows, when the user edits a key and enters in the entry or text view a value that cannot be parsed to the correct data type
 #: editor/modifications-revealer.vala:299
 msgid "The value is invalid."
-msgstr ""
+msgstr "მნიშვნელობა არასწორია."
 
 #. Translators: displayed in the bottom bar in normal sized windows, when the user edits a key (with the "always confirm explicit" behaviour)
 #: editor/modifications-revealer.vala:307
@@ -1930,18 +1932,18 @@ msgstr "ძებნის დახურვა"
 #. Translators: accessible description of the "close" button that is linked with the search entry on small windows
 #: editor/pathentry.ui:68
 msgid "Close search results"
-msgstr ""
+msgstr "ძებნის შედეგების დახურვა"
 
 #. Translators: accessible description of the "refresh" button that is linked with the search entry on large windows
 #: editor/pathentry.ui:92
 msgid "Refresh search results"
-msgstr ""
+msgstr "ძებნის შედეგების განახლება"
 
 #. Translators: accessible description of the enter-search button displayed in small-size windows
 #. Translators: accessible description of the search togglebutton displayed in usual-size windows
 #: editor/pathwidget.ui:85 editor/pathwidget.ui:111
 msgid "Search keys"
-msgstr ""
+msgstr "გასაღებების ძებნა"
 
 #. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/Conflict/warning-similar'
 #: editor/registry-info.ui:49
@@ -2013,7 +2015,7 @@ msgstr "შეჯამება"
 #. Translators: field description when displaying key properties; a description describing deeply the key use
 #: editor/registry-info.vala:82
 msgid "Description"
-msgstr ""
+msgstr "აღწერა"
 
 #. Translators: field description when displaying key properties; the datatype of the key (integer, boolean, string, etc.)
 #: editor/registry-info.vala:85
@@ -2132,12 +2134,12 @@ msgstr ""
 #. Translators: field content when displaying key properties; the field description is "Current value", this text displayed if the key, not defined by a schema, has been erased (and so has no value anymore)
 #: editor/registry-info.vala:674
 msgid "Key erased."
-msgstr ""
+msgstr "გასაღები წაიშალა."
 
 #. Translators: means that the key has (at least) one other key defined by a different schema but at the same path and with the same name; used on large windows ("conflict" is used on small windows)
 #: editor/registry-list.vala:518
 msgid "conflicting keys"
-msgstr ""
+msgstr "კონფლიქტური გასაღებები"
 
 #. Translators: means that the key has (at least) one other key defined by a different schema but at the same path and with the same name; used on small windows ("conflicting keys" is used on large windows)
 #: editor/registry-list.vala:521
@@ -2147,49 +2149,49 @@ msgstr "კონფლიქტი"
 #. Translators: "subtitle" in the keys list of a key not defined by a schema; keys defined by a schema have in place a summary describing the key use
 #: editor/registry-list.vala:537
 msgid "No schema found"
-msgstr ""
+msgstr "სქემა ვერ ვიპოვე"
 
 #. Translators: means that the key has been erased; used on large windows ("erased" is used on small windows)
 #: editor/registry-list.vala:638
 msgid "key erased"
-msgstr ""
+msgstr "გასაღები წაიშალა"
 
 #. Translators: means that the key has been erased; used on small windows ("key erased" is used on large windows)
 #: editor/registry-list.vala:641
 msgid "erased"
-msgstr ""
+msgstr "წაშლილია"
 
 #. Translators: displayed on small windows; indicates the data type of the key (the %s is the variant type code)
 #: editor/registry-list.vala:679
 #, c-format
 msgid "type “%s”"
-msgstr ""
+msgstr "ტიპი “%s”"
 
 #. Translators: header displayed in the keys list during a search only; indicates that the schema (the %s is the schema id) is installed at the path where the search has started
 #: editor/registry-list.vala:1176
 #, c-format
 msgid "%s (local keys)"
-msgstr ""
+msgstr "%s (ლოკალური გასაღებები)"
 
 #. Translators: header displayed in the keys list during a search only; indicates that the following non-defined keys are installed at the path where the search has started
 #: editor/registry-list.vala:1182
 msgid "Local keys not defined by a schema"
-msgstr ""
+msgstr "ლოკალური გასაღებები სქემის მიერ აღწერილი არაა"
 
 #. Translators: header displayed in the keys list during a search or during browsing
 #: editor/registry-list.vala:1186
 msgid "Keys not defined by a schema"
-msgstr ""
+msgstr "გასაღებები სქემის მიერ აღწერილი არაა"
 
 #. Translators: header displayed in the keys list during a search or during browsing
 #: editor/registry-list.vala:1196
 msgid "Subfolders"
-msgstr ""
+msgstr "ქვესაქაღალდეები"
 
 #. Translators: last header displayed in the keys list during a local search
 #: editor/registry-list.vala:1201
 msgid "Other actions"
-msgstr ""
+msgstr "სხვა ქმედებები"
 
 #. Translators: placeholder text of the search list when there's no search results (not used in current design)
 #: editor/registry-search.vala:26
@@ -2204,7 +2206,7 @@ msgstr "საქაღალდეები"
 #. Translators: placeholder text of the keys list when there's nothing to display in a path (not used in current design)
 #: editor/registry-view.vala:23
 msgid "No keys in this path"
-msgstr ""
+msgstr "ამ ბილიკზე გასაღებები ვერ ვიპოვე"
 
 #. Translators: the boolean "true" value; capitalized (if that makes sense)
 #: editor/setting-object.vala:173
@@ -2235,7 +2237,7 @@ msgstr "მცდარი"
 #: editor/setting-object.vala:194
 #, c-format
 msgid "nothing (%s)"
-msgstr ""
+msgstr "არაფერი (%s)"
 
 #. Translators: "nothing" value of a nullable key; non capitalized (if that makes sense)
 #: editor/setting-object.vala:199
@@ -2245,17 +2247,17 @@ msgstr "არაფერი"
 #. Translators: field content when displaying key properties; the field description is "Defined by", this text is displayed if the key is defined by a schema, and if this schema has a fixed path (it is not relocatable)
 #: editor/setting-object.vala:410
 msgid "Schema with path"
-msgstr ""
+msgstr "სქემა ბილიკით"
 
 #. Translators: field content when displaying key properties; the field description is "Defined by", this text is displayed if the key is defined by a schema, and if this schema is relocatable (it has not a fixed path)
 #: editor/setting-object.vala:414
 msgid "Relocatable schema"
-msgstr ""
+msgstr "გადაადგილებადი სქემა"
 
 #. Translators: field content when displaying key properties; the field description is "Defined by", this text is displayed if the key is not defined by a schema (the value is given by dconf but cannot be used by the GSettings functions)
 #: editor/setting-object.vala:417
 msgid "DConf backend"
-msgstr ""
+msgstr "DConf-ის უკანაბოლო"
 
 #~ msgid "Pause night mode"
 #~ msgstr "ღამის რეჟიმის შეჩერება"
