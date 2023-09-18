@@ -1,3 +1,9 @@
+dconf-editor 45.0
+=================
+
+Fix UI not displaying with latest GTK
+Misc fixes and translation updates
+
 dconf-editor 43.0
 =====================
 
