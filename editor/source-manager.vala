@@ -122,8 +122,11 @@ private class SourceManager : Object
         string user_data_dir = GLib.Environment.get_user_data_dir ();
         source = try_prepend_dir (source, Path.build_filename (user_data_dir, "glib-2.0", "schemas"));
         string? var_schema_dir = GLib.Environment.get_variable ("GSETTINGS_SCHEMA_DIR");
-        if (var_schema_dir != null)
-            source = try_prepend_dir (source, (!) var_schema_dir);
+        if (var_schema_dir != null) {
+            string[] extra_schema_dirs = ((!) var_schema_dir).split (Path.SEARCHPATH_SEPARATOR_S);
+            for (int i = system_data_dirs.length - 1; i >= 0; i--)
+                source = try_prepend_dir (source, extra_schema_dirs[i]);
+        }
         return source;
     }
 
