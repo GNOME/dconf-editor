@@ -3,13 +3,13 @@
 # This file is distributed under the same license as the dconf package.
 # Daniel <ted.korostiled@gmail.com>, 2012.
 # Daniel Korostil <ted.korostiled@gmail.com>, 2014, 2015.
-# Yuri Chornoivan <yurchor@ukr.net>, 2020.
+# Yuri Chornoivan <yurchor@ukr.net>, 2020, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2020-03-17 16:55+0000\n"
-"PO-Revision-Date: 2020-03-18 10:25+0200\n"
+"POT-Creation-Date: 2023-09-18 15:05+0000\n"
+"PO-Revision-Date: 2023-09-18 22:50+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -18,12 +18,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
 "%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Lokalize 20.03.70\n"
+"X-Generator: Lokalize 20.12.0\n"
 "X-Project-Style: gnome\n"
 
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the second is "Credits"
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the name of the view, displayed in the headerbar
-#: editor/about-list.vala:44 editor/base-headerbar.vala:310
+#: editor/about-list.vala:44 editor/base-headerbar.vala:309
 msgid "About"
 msgstr "Про програму"
 
@@ -62,21 +62,6 @@ msgstr "Копіювати поточний шлях"
 msgid "Show properties"
 msgstr "Показати властивості"
 
-#. Translators: there are three related actions: "use", "reuse" and "pause"; displayed in the hamburger menu at night
-#: editor/adaptative-window.vala:149
-msgid "Pause night mode"
-msgstr "Призупинити нічний режим"
-
-#. Translators: there are three related actions: "use", "reuse" and "pause"; displayed in the hamburger menu at night
-#: editor/adaptative-window.vala:153
-msgid "Reuse night mode"
-msgstr "Повторно використати нічний режим"
-
-#. Translators: there are three related actions: "use", "reuse" and "pause"; displayed in the hamburger menu at night
-#: editor/adaptative-window.vala:157
-msgid "Use night mode"
-msgstr "Використати нічний режим"
-
 #. Translators: accessible name of the hamburger menu
 #: editor/base-headerbar.ui:113
 msgid "Actions"
@@ -88,7 +73,7 @@ msgid "Current view actions"
 msgstr "Дії з поточною панеллю перегляду"
 
 #. Translators: usual menu entry of the hamburger menu
-#: editor/base-headerbar.vala:116
+#: editor/base-headerbar.vala:115
 msgid "Keyboard Shortcuts"
 msgstr "Клавіатурні скорочення"
 
@@ -240,16 +225,16 @@ msgstr ""
 "Безпосереднє редагування налаштувань потребує певного досвіду. Необдумані "
 "зміни можуть призвести до помилок у роботі програм."
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:31
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:34
 msgid "Browse the keys used by installed applications"
 msgstr "Навігація ключами, які використано у встановлених програмах"
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:35
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:38
 msgid "Read keys descriptions and edit their values"
 msgstr "Читання описів ключів та редагування значень ключів"
 
 #. a translatable version of project_group
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:50
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:53
 msgid "The GNOME Project"
 msgstr "Проєкт GNOME"
 
@@ -273,61 +258,48 @@ msgstr "Безпосереднє редагування бази даних на
 msgid "settings;configuration;"
 msgstr "параметри;налаштування;"
 
-#. Translators: summary of a settings key, see 'dconf-editor /org/gnome/iagno/automatic-night-mode'
-#: editor/ca.desrt.dconf-editor.gschema.xml:89
-msgid "A flag to follow system night light"
-msgstr ""
-"Автоматичне використання загальносистемних умов вмикання нічного освітлення"
-
-#. Translators: description of a settings key, see 'dconf-editor /org/gnome/iagno/automatic-night-mode'
-#: editor/ca.desrt.dconf-editor.gschema.xml:91
-msgid "Use GNOME night light setting to activate night-mode."
-msgstr ""
-"Використовувати параметр нічного освітлення GNOME для вмикання нічного "
-"режиму."
-
 #. see AdaptativeWindow.width-request at data/ui/adaptative-window.ui:22
 #. range min="350"/ FIXME
 #. Translators: summary of a settings key, see 'dconf-editor /org/gnome/iagno/window-width'
-#: editor/ca.desrt.dconf-editor.gschema.xml:98
+#: editor/ca.desrt.dconf-editor.gschema.xml:91
 msgid "The width of the window"
 msgstr "Ширина вікна"
 
 #. Translators: summary of a settings key, see 'dconf-editor /org/gnome/iagno/window-width'
-#: editor/ca.desrt.dconf-editor.gschema.xml:100
+#: editor/ca.desrt.dconf-editor.gschema.xml:93
 msgid "The width of the main window in pixels."
 msgstr "Ширина вікна в точках."
 
 #. see AdaptativeWindow.height-request at data/ui/adaptative-window.ui:21
 #. range min="284"/ FIXME
 #. Translators: summary of a settings key, see 'dconf-editor /org/gnome/iagno/window-height'
-#: editor/ca.desrt.dconf-editor.gschema.xml:107
+#: editor/ca.desrt.dconf-editor.gschema.xml:100
 msgid "The height of the window"
 msgstr "Висота вікна"
 
 #. Translators: description of a settings key, see 'dconf-editor /org/gnome/iagno/window-height'
-#: editor/ca.desrt.dconf-editor.gschema.xml:109
+#: editor/ca.desrt.dconf-editor.gschema.xml:102
 msgid "The height of the main window in pixels."
 msgstr "Висота вікна у точках."
 
 #. Translators: summary of a settings key, see 'dconf-editor /org/gnome/iagno/window-is-maximized'
-#: editor/ca.desrt.dconf-editor.gschema.xml:114
+#: editor/ca.desrt.dconf-editor.gschema.xml:107
 msgid "A flag to enable maximized mode"
 msgstr "Увімкнути режим розгорнутого вікна"
 
 #. Translators: description of a settings key, see 'dconf-editor /org/gnome/iagno/window-is-maximized'
-#: editor/ca.desrt.dconf-editor.gschema.xml:116
+#: editor/ca.desrt.dconf-editor.gschema.xml:109
 msgid "If “true”, the main window starts in maximized mode."
 msgstr ""
 "Якщо вказано «true», основне вікно відкриватиметься у максимізованому режимі."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/restore-view'
-#: editor/ca.desrt.dconf-editor.gschema.xml:138
+#: editor/ca.desrt.dconf-editor.gschema.xml:131
 msgid "A flag to restore the last view"
 msgstr "Прапорець для відновлення останньої панелі перегляду"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/restore-view'
-#: editor/ca.desrt.dconf-editor.gschema.xml:140
+#: editor/ca.desrt.dconf-editor.gschema.xml:133
 msgid ""
 "If “true”, Dconf Editor tries at launch to navigate to the path described in "
 "the “saved-view” key."
@@ -336,68 +308,69 @@ msgstr ""
 "перейти за адресою, яку збережено у ключі «saved-view»."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/saved-pathbar-path'
-#: editor/ca.desrt.dconf-editor.gschema.xml:145
+#: editor/ca.desrt.dconf-editor.gschema.xml:138
 msgid "A path to restore the pathbar state"
 msgstr "Шлях, який слід відновити на панелі шляху"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/saved-pathbar-path'
-#: editor/ca.desrt.dconf-editor.gschema.xml:147
+#: editor/ca.desrt.dconf-editor.gschema.xml:140
 msgid ""
 "If the “restore-view” key is set to “true”, and if the path requested at "
 "startup is a parent path of this one, Dconf Editor tries to restore the "
 "pathbar state at this path."
 msgstr ""
-"Якщо для ключа «restore-view» встановлено значення «true» і якщо шлях, який"
-" вказано під час запуску програми є батьківським для цього шляху, Редактор"
-" Dconf спробує відновити стан смужки шляху так, щоб вона вказувала на цей"
-" шлях."
+"Якщо для ключа «restore-view» встановлено значення «true» і якщо шлях, який "
+"вказано під час запуску програми є батьківським для цього шляху, Редактор "
+"Dconf спробує відновити стан смужки шляху так, щоб вона вказувала на цей "
+"шлях."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/saved-view'
-#: editor/ca.desrt.dconf-editor.gschema.xml:152
+#: editor/ca.desrt.dconf-editor.gschema.xml:145
 msgid "A path to restore the last view"
 msgstr "Шлях для відновлення на панелі перегляду"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/saved-view'
-#: editor/ca.desrt.dconf-editor.gschema.xml:154
+#: editor/ca.desrt.dconf-editor.gschema.xml:147
 msgid ""
 "If the “restore-view” key is set to “true”, Dconf Editor tries at launch to "
 "navigate to this path."
 msgstr ""
-"Якщо для ключа «restore-view» вказано значення «true», Редактор Dconf спробує"
-" після запуску перейти до цього шляху."
+"Якщо для ключа «restore-view» вказано значення «true», Редактор Dconf "
+"спробує після запуску перейти до цього шляху."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/show-warning'
-#: editor/ca.desrt.dconf-editor.gschema.xml:159
+#: editor/ca.desrt.dconf-editor.gschema.xml:152
 msgid "Show initial warning"
 msgstr "Показ початкового попередження"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/show-warning'
-#: editor/ca.desrt.dconf-editor.gschema.xml:161
+#: editor/ca.desrt.dconf-editor.gschema.xml:154
 msgid ""
 "If “true”, Dconf Editor opens a popup when launched reminding the user to be "
 "careful."
 msgstr ""
-"Якщо вказано значення «true», Редактор Dconf після запуску відкриє контекстне"
-" вікно, у якому нагадає про те, що слід зважати на небезпеку необдуманих змін."
+"Якщо вказано значення «true», Редактор Dconf після запуску відкриє "
+"контекстне вікно, у якому нагадає про те, що слід зважати на небезпеку "
+"необдуманих змін."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/small-keys-list-rows'
-#: editor/ca.desrt.dconf-editor.gschema.xml:166
+#: editor/ca.desrt.dconf-editor.gschema.xml:159
 msgid "A flag to enable small rows for keys list"
 msgstr "Прапорець для вмикання малих рядків у списку ключів"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/small-keys-list-rows'
-#: editor/ca.desrt.dconf-editor.gschema.xml:168
+#: editor/ca.desrt.dconf-editor.gschema.xml:161
 msgid "If “true”, the keys list use smaller rows."
 msgstr ""
 "Якщо має значення «true», у списку ключів буде використано менші рядки."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/behaviour'
-#: editor/ca.desrt.dconf-editor.gschema.xml:173
+#: editor/ca.desrt.dconf-editor.gschema.xml:166
 msgid "Change the behaviour of a key value change request"
 msgstr "Зміна поведінки для запиту щодо зміни значення ключа"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/behaviour'
-#: editor/ca.desrt.dconf-editor.gschema.xml:175
+#: editor/ca.desrt.dconf-editor.gschema.xml:168
 msgid ""
 "The “unsafe” value is discouraged: for keys that have a non-special-cased "
 "type, it updates the key value each time something changes in the entry, so "
@@ -408,45 +381,46 @@ msgid ""
 "change path whereas the second dismiss it. The “always-delay” value adds "
 "each change in delay mode, allowing to apply multiple keys at once."
 msgstr ""
-"Не варто використовувати значення «unsafe»: для ключів, які належать до типу"
-" без спеціальних випадків, його використання призводитиме до оновлення"
-" значення ключа кожного разу, коли змінюватиметься запис, зокрема у випадках,"
-" коли ця зміна буде тимчасовою. Використання значення «safe» уможливить"
-" надсилання у таких випадках запиту щодо підтвердження, але даватиме змогу"
-" вносити негайні зміни для булевих і нульованих булевих змінних, переліків та"
-" прапорців. Якщо буде використано значення «always-confirm-implicit» і"
-" «always-confirm-explicit», програма завжди проситиме про підтвердження, але"
-" у першому варіанті спочатку застосовуватиме зміни при зміні шляху, а у"
-" другому — відтерміновуватиме їх. Якщо буде вказано значення «always-delay»,"
-" кожна зміна враховуватиметься із затримкою, що уможливлює наступний запис"
-" змін до декількох ключів одночасно."
+"Не варто використовувати значення «unsafe»: для ключів, які належать до типу "
+"без спеціальних випадків, його використання призводитиме до оновлення "
+"значення ключа кожного разу, коли змінюватиметься запис, зокрема у випадках, "
+"коли ця зміна буде тимчасовою. Використання значення «safe» уможливить "
+"надсилання у таких випадках запиту щодо підтвердження, але даватиме змогу "
+"вносити негайні зміни для булевих і нульованих булевих змінних, переліків та "
+"прапорців. Якщо буде використано значення «always-confirm-implicit» і "
+"«always-confirm-explicit», програма завжди проситиме про підтвердження, але "
+"у першому варіанті спочатку застосовуватиме зміни при зміні шляху, а у "
+"другому — відтерміновуватиме їх. Якщо буде вказано значення «always-delay», "
+"кожна зміна враховуватиметься із затримкою, що уможливлює наступний запис "
+"змін до декількох ключів одночасно."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/sort-case-sensitive'
-#: editor/ca.desrt.dconf-editor.gschema.xml:180
+#: editor/ca.desrt.dconf-editor.gschema.xml:173
 msgid "A flag to sort keys list case-sensitively"
 msgstr ""
 "Прапорець для упорядковування списку ключів без врахування регістру символів"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/sort-case-sensitive'
-#: editor/ca.desrt.dconf-editor.gschema.xml:182
+#: editor/ca.desrt.dconf-editor.gschema.xml:175
 msgid ""
 "GSettings doesn’t allow keys to use upper-case in their names, but "
 "installation paths of schemas can. If “true”, the keys list is sorted case-"
 "sensitively, with in usual order upper-case folders first."
 msgstr ""
-"У GSettings не можна використовувати великі літери у назвах ключів, але можна"
-" використовувати великі літери у шляхах для встановлення схем. Якщо для цього"
-" ключа вказано значення «true», список ключів буде упорядковано з врахуванням"
-" регістру літер у звичний спосіб — теки і назви з великими літерами"
-" перебуватимуть вище у списку за звичайні записи і записи із малими літерами."
+"У GSettings не можна використовувати великі літери у назвах ключів, але "
+"можна використовувати великі літери у шляхах для встановлення схем. Якщо для "
+"цього ключа вказано значення «true», список ключів буде упорядковано з "
+"врахуванням регістру літер у звичний спосіб — теки і назви з великими "
+"літерами перебуватимуть вище у списку за звичайні записи і записи із малими "
+"літерами."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-use-extra-buttons'
-#: editor/ca.desrt.dconf-editor.gschema.xml:187
+#: editor/ca.desrt.dconf-editor.gschema.xml:180
 msgid "Use “Back” and “Forward” mouse button events"
 msgstr "Використовувати події миші «Назад» і «Вперед»"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-use-extra-buttons'
-#: editor/ca.desrt.dconf-editor.gschema.xml:189
+#: editor/ca.desrt.dconf-editor.gschema.xml:182
 msgid ""
 "For users with mice that have buttons for “Forward” and “Back”, this key "
 "will determine if any action is taken inside of a browser window when either "
@@ -457,12 +431,12 @@ msgstr ""
 "Можливі значення у діапазоні від 6 до 14."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-back-buttons'
-#: editor/ca.desrt.dconf-editor.gschema.xml:195
+#: editor/ca.desrt.dconf-editor.gschema.xml:188
 msgid "Mouse button to activate the “Back” command in browser window"
 msgstr "Кнопка миші, що здійснює команду «Назад» у вікні переглядача"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-back-buttons'
-#: editor/ca.desrt.dconf-editor.gschema.xml:197
+#: editor/ca.desrt.dconf-editor.gschema.xml:190
 msgid ""
 "For users with mice that have buttons for “Forward” and “Back”, this key "
 "will set which button activates the “Back” command in a browser window. "
@@ -473,12 +447,12 @@ msgstr ""
 "Можливі значення у діапазоні від 6 до 14."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-forward-buttons'
-#: editor/ca.desrt.dconf-editor.gschema.xml:203
+#: editor/ca.desrt.dconf-editor.gschema.xml:196
 msgid "Mouse button to activate the “Forward” command in browser window"
 msgstr "Кнопка миші, що здійснює команду «Вперед» у вікні переглядача"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-forward-buttons'
-#: editor/ca.desrt.dconf-editor.gschema.xml:205
+#: editor/ca.desrt.dconf-editor.gschema.xml:198
 msgid ""
 "For users with mice that have buttons for “Forward” and “Back”, this key "
 "will set which button activates the “Forward” command in a browser window. "
@@ -489,12 +463,12 @@ msgstr ""
 "Можливі значення у діапазоні від 6 до 14."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/refresh-settings-schema-source'
-#: editor/ca.desrt.dconf-editor.gschema.xml:210
+#: editor/ca.desrt.dconf-editor.gschema.xml:203
 msgid "A flag to check for added or removed schemas"
 msgstr "Прапорець для перевірки додавання та вилучення схем"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/refresh-settings-schema-source'
-#: editor/ca.desrt.dconf-editor.gschema.xml:212
+#: editor/ca.desrt.dconf-editor.gschema.xml:205
 msgid ""
 "Dconf Editor can monitor if schemas are added or removed from the multiple "
 "possible locations. That’s done by checking every three seconds if the "
@@ -502,20 +476,20 @@ msgid ""
 "be disabled by setting this flag to “false”. Note that this option will be "
 "removed when a better way to do things is found."
 msgstr ""
-"Редактор Dconf може стежити за додаванням або вилученням схем у декількох"
-" можливих місцях. Стеження виконується шляхом опитування файлів схем за"
-" списком кожні три секунди. Оскільки такий варіант обробки є далеко не"
-" оптимальним, стеження можна вимкнути встановленням для цього прапорця"
-" значення «false». Зауважте, що цей ключ буде вилучено, щойно буде винайдено"
-" ліпший спосіб стеження за змінами."
+"Редактор Dconf може стежити за додаванням або вилученням схем у декількох "
+"можливих місцях. Стеження виконується шляхом опитування файлів схем за "
+"списком кожні три секунди. Оскільки такий варіант обробки є далеко не "
+"оптимальним, стеження можна вимкнути встановленням для цього прапорця "
+"значення «false». Зауважте, що цей ключ буде вилучено, щойно буде винайдено "
+"ліпший спосіб стеження за змінами."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/relocatable-schemas-enabled-mappings'
-#: editor/ca.desrt.dconf-editor.gschema.xml:217
+#: editor/ca.desrt.dconf-editor.gschema.xml:210
 msgid "Enabled relocatable schema mapping facilities"
 msgstr "Увімкнено можливості пересувної прив'язки схем"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/relocatable-schemas-enabled-mappings'
-#: editor/ca.desrt.dconf-editor.gschema.xml:219
+#: editor/ca.desrt.dconf-editor.gschema.xml:212
 msgid ""
 "Flags for the relocatable schemas mapping facilities. “User” enables "
 "mappings defined by the “relocatable-schemas-user-paths” key; “Built-in” "
@@ -523,19 +497,19 @@ msgid ""
 "reserved for Dconf Editor own mappings; “Startup” is for mapping a "
 "relocatable schema from the command-line."
 msgstr ""
-"Прапорці для можливостей прив'язки придатних до пересування схем. «User»"
-" вмикає прив'язки, які визначено ключем «relocatable-schemas-user-paths»;"
-" «Built-in» вмикає добре відомі прив'язки, які вбудовано до Редактора Dconf;"
-" «Internal» зарезервовано для власних прив'язок Редактора Dconf; «Startup»"
-" призначено для прив'язок придатної до пересування схеми з командного рядка."
+"Прапорці для можливостей прив'язки придатних до пересування схем. «User» "
+"вмикає прив'язки, які визначено ключем «relocatable-schemas-user-paths»; "
+"«Built-in» вмикає добре відомі прив'язки, які вбудовано до Редактора Dconf; "
+"«Internal» зарезервовано для власних прив'язок Редактора Dconf; «Startup» "
+"призначено для прив'язок придатної до пересування схеми з командного рядка."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/relocatable-schemas-user-paths'
-#: editor/ca.desrt.dconf-editor.gschema.xml:224
+#: editor/ca.desrt.dconf-editor.gschema.xml:217
 msgid "Mapping of paths to manually associated schemas"
 msgstr "Прив'язка шляхів до визначених вручну схем"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/relocatable-schemas-user-paths'
-#: editor/ca.desrt.dconf-editor.gschema.xml:226
+#: editor/ca.desrt.dconf-editor.gschema.xml:219
 msgid ""
 "A dictionary that maps schema IDs with path specifications. It is used to "
 "allow the user to associate a relocatable schema to certain paths. Path "
@@ -543,86 +517,86 @@ msgid ""
 "desrt/dconf-editor//), defining possibly multiple paths. The same schema ID "
 "may be associated with multiple path specifications."
 msgstr ""
-"Словник, який пов'язує ідентифікатори схеми із специфікаціями шляхів. Ним"
-" можна скористатися для того, щоб надати користувачеві змогу прив'язувати"
-" придатну до пересування схему до певних шляхів. Специфікації шляхів можуть"
-" містити символи-замінники у формі порожніх сегментів (наприклад,"
-" /ca/desrt/dconf-editor//) для визначення можливості декількох шляхів. Один"
-" ідентифікатор схеми може бути пов'язано із декількома специфікаціями шляхів."
+"Словник, який пов'язує ідентифікатори схеми із специфікаціями шляхів. Ним "
+"можна скористатися для того, щоб надати користувачеві змогу прив'язувати "
+"придатну до пересування схему до певних шляхів. Специфікації шляхів можуть "
+"містити символи-замінники у формі порожніх сегментів (наприклад, /ca/desrt/"
+"dconf-editor//) для визначення можливості декількох шляхів. Один "
+"ідентифікатор схеми може бути пов'язано із декількома специфікаціями шляхів."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/use-shortpaths'
-#: editor/ca.desrt.dconf-editor.gschema.xml:231
+#: editor/ca.desrt.dconf-editor.gschema.xml:224
 msgid "A flag for skipping unnecessary subfolders"
 msgstr "Прапорець для пропускання непотрібних підтек"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/use-shortpaths'
-#: editor/ca.desrt.dconf-editor.gschema.xml:233
+#: editor/ca.desrt.dconf-editor.gschema.xml:226
 msgid ""
 "When a folder only contains one subfolder and no keys, Dconf Editor can jump "
 "to that subfolder directly. This flag enables that behaviour."
 msgstr ""
-"Якщо у теці міститься лише одна підтека і жодного ключа, Редактор Dconf може"
-" переходити до цієї підтеки безпосередньо. Цей прапорець вмикає таку"
-" поведінку програми."
+"Якщо у теці міститься лише одна підтека і жодного ключа, Редактор Dconf може "
+"переходити до цієї підтеки безпосередньо. Цей прапорець вмикає таку "
+"поведінку програми."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/bookmarks'
-#: editor/ca.desrt.dconf-editor.gschema.xml:240
+#: editor/ca.desrt.dconf-editor.gschema.xml:233
 msgid "A list of bookmarked paths"
 msgstr "Список шляхів, для яких створено закладки"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/bookmarks'
-#: editor/ca.desrt.dconf-editor.gschema.xml:242
+#: editor/ca.desrt.dconf-editor.gschema.xml:235
 msgid "Contains all paths bookmarked by the user as an array of strings."
 msgstr ""
 "Містить усі шляхи, для яких користувачем створено закладки, у форматі масиву "
 "рядків."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/small-bookmarks-rows'
-#: editor/ca.desrt.dconf-editor.gschema.xml:247
+#: editor/ca.desrt.dconf-editor.gschema.xml:240
 msgid "A flag to enable small rows for bookmarks list"
 msgstr "Прапорець для вмикання малих рядків у списку закладок"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/small-bookmarks-rows'
-#: editor/ca.desrt.dconf-editor.gschema.xml:249
+#: editor/ca.desrt.dconf-editor.gschema.xml:242
 msgid "If “true”, the bookmarks list use smaller rows."
 msgstr ""
 "Якщо має значення «true», у списку закладок буде використано менші рядки."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/boolean'
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/relocatable/boolean' (with default /ca/desrt/dconf-editor/relocatable-* settings)
-#: editor/ca.desrt.dconf-editor.gschema.xml:275
-#: editor/ca.desrt.dconf-editor.gschema.xml:487
+#: editor/ca.desrt.dconf-editor.gschema.xml:268
+#: editor/ca.desrt.dconf-editor.gschema.xml:480
 msgid "A boolean, type ‘b’"
 msgstr "Булеве, тип «b»"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/boolean'
-#: editor/ca.desrt.dconf-editor.gschema.xml:277
+#: editor/ca.desrt.dconf-editor.gschema.xml:270
 msgid "Booleans can only take two values, “true” or “false”."
 msgstr "Булеві змінні можуть приймати лише два значення — «true» або «false»."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/boolean-nullable'
-#: editor/ca.desrt.dconf-editor.gschema.xml:282
+#: editor/ca.desrt.dconf-editor.gschema.xml:275
 msgid "A nullable boolean, type ‘mb’"
 msgstr "Нульоване булеве значення, тип «mb»"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/boolean-nullable'
-#: editor/ca.desrt.dconf-editor.gschema.xml:284
+#: editor/ca.desrt.dconf-editor.gschema.xml:277
 msgid ""
 "GSettings allows nullable types, that are similar to other types but could "
 "take a “nothing” value. A nullable boolean can only take three values, "
 "“true”, “false” and “nothing”."
 msgstr ""
-"У GSettings передбачено можливість використання нульованих типів, які є"
-" подібними до інших типів, але можуть приймати значення «nothing». Нульована"
-" булева змінна може приймати три значення: «true», «false» і «nothing»."
+"У GSettings передбачено можливість використання нульованих типів, які є "
+"подібними до інших типів, але можуть приймати значення «nothing». Нульована "
+"булева змінна може приймати три значення: «true», «false» і «nothing»."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/byte'
-#: editor/ca.desrt.dconf-editor.gschema.xml:289
+#: editor/ca.desrt.dconf-editor.gschema.xml:282
 msgid "A byte (unsigned), type ‘y’"
 msgstr "Байт (без знаку), тип «y»"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/byte'
-#: editor/ca.desrt.dconf-editor.gschema.xml:291
+#: editor/ca.desrt.dconf-editor.gschema.xml:284
 msgid ""
 "A byte value is an integer between 0 and 255. It may be used to pass around "
 "characters."
@@ -631,147 +605,148 @@ msgstr ""
 "передавання текстових символів."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/bytestring'
-#: editor/ca.desrt.dconf-editor.gschema.xml:296
+#: editor/ca.desrt.dconf-editor.gschema.xml:289
 msgid "A bytestring, type ‘ay’"
 msgstr "Рядок байтів, тип «ay»"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/bytestring'
-#: editor/ca.desrt.dconf-editor.gschema.xml:298
+#: editor/ca.desrt.dconf-editor.gschema.xml:291
 msgid ""
 "The bytestring type is commonly used to pass around strings that may not be "
 "valid utf8. In that case, the convention is that the nul terminator "
 "character should be included as the last character in the array."
 msgstr ""
-"Тип байтового рядка широко використовується для передавання рядків, які"
-" можуть не бути коректними рядками UTF-8. За типовими правилами, останнім"
-" символом масиву має бути нульовий символ."
+"Тип байтового рядка широко використовується для передавання рядків, які "
+"можуть не бути коректними рядками UTF-8. За типовими правилами, останнім "
+"символом масиву має бути нульовий символ."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/bytestring-array'
-#: editor/ca.desrt.dconf-editor.gschema.xml:303
+#: editor/ca.desrt.dconf-editor.gschema.xml:296
 msgid "A bytestring array, type ‘aay’"
 msgstr "Масив з рядків байтів, тип «aay»"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/bytestring-array'
-#: editor/ca.desrt.dconf-editor.gschema.xml:305
+#: editor/ca.desrt.dconf-editor.gschema.xml:298
 msgid ""
 "This is the type of an array of bytestrings. The bytestring type is commonly "
 "used to pass around strings that may not be valid utf8."
 msgstr ""
-"Це тип масиву із байтових рядків. Тип байтового рядка широко використовується"
-" для передавання рядків, які можуть не бути коректними рядками UTF-8."
+"Це тип масиву із байтових рядків. Тип байтового рядка широко "
+"використовується для передавання рядків, які можуть не бути коректними "
+"рядками UTF-8."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-handle'
-#: editor/ca.desrt.dconf-editor.gschema.xml:310
+#: editor/ca.desrt.dconf-editor.gschema.xml:303
 msgid "A D-Bus handle type, type ‘h’"
 msgstr "Тип дескриптора D-Bus, тип «h»"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-handle'
-#: editor/ca.desrt.dconf-editor.gschema.xml:312
+#: editor/ca.desrt.dconf-editor.gschema.xml:305
 msgid ""
 "The handle type is a 32-bit signed integer value that is, by convention, "
 "used as an index into an array of file descriptors that are sent alongside a "
 "D-Bus message. If you are not interacting with D-Bus, then there is no "
 "reason to make use of this type."
 msgstr ""
-"Тип дескриптора є типом 32-бітового цілого значення зі знаком, тобто,"
-" формально, використовується як індекс у масиві дескрипторів файлів, які"
-" надсилаються разом із повідомленням D-Bus.  Якщо ваша програма не взаємодіє"
-" із D-Bus, сенсу у використанні цього типу немає."
+"Тип дескриптора є типом 32-бітового цілого значення зі знаком, тобто, "
+"формально, використовується як індекс у масиві дескрипторів файлів, які "
+"надсилаються разом із повідомленням D-Bus.  Якщо ваша програма не взаємодіє "
+"із D-Bus, сенсу у використанні цього типу немає."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-object-path'
-#: editor/ca.desrt.dconf-editor.gschema.xml:317
+#: editor/ca.desrt.dconf-editor.gschema.xml:310
 msgid "A D-Bus object path, type ‘o’"
 msgstr "Шлях до об'єкта D-Bus, тип «o»"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-object-path'
-#: editor/ca.desrt.dconf-editor.gschema.xml:319
+#: editor/ca.desrt.dconf-editor.gschema.xml:312
 msgid ""
 "An object path is used to identify D-Bus objects at a given destination on "
 "the bus. If you are not interacting with D-Bus, then there is no reason to "
 "make use of this type."
 msgstr ""
-"Шлях до об'єкта використовується для ідентифікації об'єктів D-Bus за вказаним"
-" призначенням у шині. Якщо ваша програма не взаємодіє із D-Bus, сенсу у"
-" використанні цього типу немає."
+"Шлях до об'єкта використовується для ідентифікації об'єктів D-Bus за "
+"вказаним призначенням у шині. Якщо ваша програма не взаємодіє із D-Bus, "
+"сенсу у використанні цього типу немає."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-object-path-array'
-#: editor/ca.desrt.dconf-editor.gschema.xml:324
+#: editor/ca.desrt.dconf-editor.gschema.xml:317
 msgid "A D-Bus object path array, type ‘ao’"
 msgstr "Масив шляхів до об'єктів D-Bus, тип «ao»"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-object-path-array'
-#: editor/ca.desrt.dconf-editor.gschema.xml:326
+#: editor/ca.desrt.dconf-editor.gschema.xml:319
 msgid ""
 "An object path array could contain any number of object paths (including "
 "none: “[]”). If you are not interacting with D-Bus, then there is no reason "
 "to make use of this type."
 msgstr ""
-"Масив шляхів до об'єктів може містити довільну кількість шляхів до об'єктів"
-" (включно із порожніми: «[]»). Якщо ваша програма не взаємодіє із D-Bus,"
-" сенсу у використанні цього типу немає."
+"Масив шляхів до об'єктів може містити довільну кількість шляхів до об'єктів "
+"(включно із порожніми: «[]»). Якщо ваша програма не взаємодіє із D-Bus, "
+"сенсу у використанні цього типу немає."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-signature'
-#: editor/ca.desrt.dconf-editor.gschema.xml:331
+#: editor/ca.desrt.dconf-editor.gschema.xml:324
 msgid "A D-Bus signature, type ‘g’"
 msgstr "Підпис D-Bus, тип «g»"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-signature'
-#: editor/ca.desrt.dconf-editor.gschema.xml:333
+#: editor/ca.desrt.dconf-editor.gschema.xml:326
 msgid ""
 "A D-Bus signature is a string used as type signature for a D-Bus method or "
 "message. If you are not interacting with D-Bus, then there is no reason to "
 "make use of this type."
 msgstr ""
-"Підпис D-Bus — рядок, який використовується як підпис типу для методу або"
-" повідомлення D-Bus. Якщо ваша програма не взаємодіє із D-Bus, сенсу у"
-" використанні цього типу немає."
+"Підпис D-Bus — рядок, який використовується як підпис типу для методу або "
+"повідомлення D-Bus. Якщо ваша програма не взаємодіє із D-Bus, сенсу у "
+"використанні цього типу немає."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dict-entry'
-#: editor/ca.desrt.dconf-editor.gschema.xml:338
+#: editor/ca.desrt.dconf-editor.gschema.xml:331
 msgid "A dictionary entry of type ‘{ss}’"
 msgstr "Запис словника типу «{ss}»"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dict-entry'
-#: editor/ca.desrt.dconf-editor.gschema.xml:340
+#: editor/ca.desrt.dconf-editor.gschema.xml:333
 msgid ""
 "A dictionary maps values of a basic type to another value (of any type). A "
 "dictionary entry is one such mapping."
 msgstr ""
-"Словник пов'язує значення базового типу із іншими значеннями (довільного"
-" типу). Запис словника — одиниця такої прив'язки."
+"Словник пов'язує значення базового типу із іншими значеннями (довільного "
+"типу). Запис словника — одиниця такої прив'язки."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dictionary'
-#: editor/ca.desrt.dconf-editor.gschema.xml:345
+#: editor/ca.desrt.dconf-editor.gschema.xml:338
 msgid "A “vardict”, type ‘a{sv}’"
 msgstr "«vardict», тип «a{sv}»"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dictionary'
-#: editor/ca.desrt.dconf-editor.gschema.xml:347
+#: editor/ca.desrt.dconf-editor.gschema.xml:340
 msgid ""
 "A dictionary maps values of a basic type to another value (of any type). One "
 "simple use case is to map strings to variants."
 msgstr ""
-"Словник пов'язує значення базового типу із іншими значеннями (довільного"
-" типу). Одним із простих випадків використання словника є прив'язка певних"
-" рядків до варіантів дій."
+"Словник пов'язує значення базового типу із іншими значеннями (довільного "
+"типу). Одним із простих випадків використання словника є прив'язка певних "
+"рядків до варіантів дій."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/double'
-#: editor/ca.desrt.dconf-editor.gschema.xml:352
+#: editor/ca.desrt.dconf-editor.gschema.xml:345
 msgid "A double, type ‘d’"
 msgstr "Значення з подвійною точністю, тип «d»"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/double'
-#: editor/ca.desrt.dconf-editor.gschema.xml:354
+#: editor/ca.desrt.dconf-editor.gschema.xml:347
 msgid "A double value could represent any real number."
 msgstr "Змінна з подвійною точністю може містити якесь дійсне число."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/enumeration'
-#: editor/ca.desrt.dconf-editor.gschema.xml:359
+#: editor/ca.desrt.dconf-editor.gschema.xml:352
 msgid "A 5-choices enumeration"
 msgstr "Перелік із 5 варіантів"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/enumeration'
-#: editor/ca.desrt.dconf-editor.gschema.xml:361
+#: editor/ca.desrt.dconf-editor.gschema.xml:354
 msgid ""
 "Enumerations could be done either with the “enum” attribute, or with a "
 "“choices” tag."
@@ -781,136 +756,139 @@ msgstr ""
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/flags'
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/relocatable/flags' (with default /ca/desrt/dconf-editor/relocatable-* settings)
-#: editor/ca.desrt.dconf-editor.gschema.xml:366
-#: editor/ca.desrt.dconf-editor.gschema.xml:501
+#: editor/ca.desrt.dconf-editor.gschema.xml:359
+#: editor/ca.desrt.dconf-editor.gschema.xml:494
 msgid "Flags: choose-colors-you-love"
 msgstr "Прапорці: виберіть-бажаний-колір"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/flags'
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/relocatable/flags' (with default /ca/desrt/dconf-editor/relocatable-* settings)
-#: editor/ca.desrt.dconf-editor.gschema.xml:368
-#: editor/ca.desrt.dconf-editor.gschema.xml:503
+#: editor/ca.desrt.dconf-editor.gschema.xml:361
+#: editor/ca.desrt.dconf-editor.gschema.xml:496
 msgid "Flags could be set by the “enum” attribute."
 msgstr "Прапорці можна визначити за допомогою атрибута «enum»."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-16-signed'
-#: editor/ca.desrt.dconf-editor.gschema.xml:373
+#: editor/ca.desrt.dconf-editor.gschema.xml:366
 msgid "A short integer, type ‘n’"
 msgstr "Коротке ціле, тип «n»"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-16-signed'
-#: editor/ca.desrt.dconf-editor.gschema.xml:375
+#: editor/ca.desrt.dconf-editor.gschema.xml:368
 msgid "A 16-bit signed integer. See also the “integer-16-unsigned” key."
-msgstr "16-бітове ціле число зі знаком. Див. також ключ «integer-16-unsigned»."
+msgstr ""
+"16-бітове ціле число зі знаком. Див. також ключ «integer-16-unsigned»."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-16-unsigned'
-#: editor/ca.desrt.dconf-editor.gschema.xml:380
+#: editor/ca.desrt.dconf-editor.gschema.xml:373
 msgid "An unsigned short integer, type ‘q’"
 msgstr "Коротке ціле без знаку, тип «q»"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-16-unsigned'
-#: editor/ca.desrt.dconf-editor.gschema.xml:382
+#: editor/ca.desrt.dconf-editor.gschema.xml:375
 msgid "A 16-bit unsigned integer. See also the “integer-16-signed” key."
 msgstr "16-бітове ціле число без знаку. Див. також ключ «integer-16-signed»."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-32-signed'
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/relocatable/integer' (with default /ca/desrt/dconf-editor/relocatable-* settings)
-#: editor/ca.desrt.dconf-editor.gschema.xml:387
-#: editor/ca.desrt.dconf-editor.gschema.xml:494
+#: editor/ca.desrt.dconf-editor.gschema.xml:380
+#: editor/ca.desrt.dconf-editor.gschema.xml:487
 msgid "An usual integer, type ‘i’"
 msgstr "Звичайне ціле число, тип «i»"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-32-signed'
-#: editor/ca.desrt.dconf-editor.gschema.xml:389
+#: editor/ca.desrt.dconf-editor.gschema.xml:382
 msgid "A 32-bit signed integer. See also the “integer-32-unsigned” key."
-msgstr "32-бітове ціле число зі знаком. Див. також ключ «integer-32-unsigned»."
+msgstr ""
+"32-бітове ціле число зі знаком. Див. також ключ «integer-32-unsigned»."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-32-unsigned'
-#: editor/ca.desrt.dconf-editor.gschema.xml:394
+#: editor/ca.desrt.dconf-editor.gschema.xml:387
 msgid "An unsigned usual integer, type ‘u’"
 msgstr "Звичайне ціле число без знаку, тип «u»"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-32-unsigned'
-#: editor/ca.desrt.dconf-editor.gschema.xml:396
+#: editor/ca.desrt.dconf-editor.gschema.xml:389
 msgid "A 32-bit unsigned integer. See also the “integer-32-signed” key."
 msgstr "32-бітове ціле число без знаку. Див. також ключ «integer-32-signed»."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-64-signed'
-#: editor/ca.desrt.dconf-editor.gschema.xml:401
+#: editor/ca.desrt.dconf-editor.gschema.xml:394
 msgid "A long integer, type ‘x’"
 msgstr "Довге ціле число, тип «x»"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-64-signed'
-#: editor/ca.desrt.dconf-editor.gschema.xml:403
+#: editor/ca.desrt.dconf-editor.gschema.xml:396
 msgid "A 64-bit signed integer. See also the “integer-64-unsigned” key."
-msgstr "64-бітове ціле число зі знаком. Див. також ключ «integer-64-unsigned»."
+msgstr ""
+"64-бітове ціле число зі знаком. Див. також ключ «integer-64-unsigned»."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-64-unsigned'
-#: editor/ca.desrt.dconf-editor.gschema.xml:408
+#: editor/ca.desrt.dconf-editor.gschema.xml:401
 msgid "An unsigned long integer, type ‘t’"
 msgstr "Довге ціле число без знаку, тип «t»"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-64-unsigned'
-#: editor/ca.desrt.dconf-editor.gschema.xml:410
+#: editor/ca.desrt.dconf-editor.gschema.xml:403
 msgid "A 64-bit unsigned integer. See also the “integer-64-signed” key."
 msgstr "64-бітове ціле число без знаку. Див. також ключ «integer-64-signed»."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/number-with-range'
-#: editor/ca.desrt.dconf-editor.gschema.xml:417
+#: editor/ca.desrt.dconf-editor.gschema.xml:410
 msgid "A number with range"
 msgstr "Число з діапазоном"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/number-with-range'
-#: editor/ca.desrt.dconf-editor.gschema.xml:419
+#: editor/ca.desrt.dconf-editor.gschema.xml:412
 msgid ""
 "Every numeral setting (integers and unsigned integers of every type, plus "
 "doubles) could be limited to a custom range of values. For example, this "
 "integer could only take a value between -2 and 10."
 msgstr ""
-"Змінну будь-якого числового типу (цілі числа та цілі числа без знаку,"
-" значення із подвійною точністю) можна обмежити певним діапазоном значень."
-" Наприклад, це ціле число може приймати значення лише у діапазоні від -2 до"
-" 10."
+"Змінну будь-якого числового типу (цілі числа та цілі числа без знаку, "
+"значення із подвійною точністю) можна обмежити певним діапазоном значень. "
+"Наприклад, це ціле число може приймати значення лише у діапазоні від -2 до "
+"10."
 
 #. Translators: do not forget the parenthesis, they are meaningful; summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/pair-of-integers'
-#: editor/ca.desrt.dconf-editor.gschema.xml:424
+#: editor/ca.desrt.dconf-editor.gschema.xml:417
 msgid "A custom type, here ‘(ii)’"
 msgstr "Нетиповий тип, тут «(ii)»"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/pair-of-integers'
-#: editor/ca.desrt.dconf-editor.gschema.xml:426
+#: editor/ca.desrt.dconf-editor.gschema.xml:419
 msgid ""
 "Dconf Editor lets you edit any settings type supported by GSettings, falling "
 "back on a string entry when it doesn’t have a better way to do. Here is a "
 "tuple of two 32-bit signed integers."
 msgstr ""
-"Редактор Dconf уможливлює редагування значення параметра будь-якого типу,"
-" підтримку якого передбачено у GSettings. Резервним типом для усіх параметрів"
-" є рядок. У нашому прикладі значенням параметра є кортеж із двох 32-бітових"
-" цілих чисел зі знаком."
+"Редактор Dconf уможливлює редагування значення параметра будь-якого типу, "
+"підтримку якого передбачено у GSettings. Резервним типом для усіх параметрів "
+"є рядок. У нашому прикладі значенням параметра є кортеж із двох 32-бітових "
+"цілих чисел зі знаком."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string'
-#: editor/ca.desrt.dconf-editor.gschema.xml:431
+#: editor/ca.desrt.dconf-editor.gschema.xml:424
 msgid "A string, type ‘s’"
 msgstr "Рядок, тип «s»"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string'
-#: editor/ca.desrt.dconf-editor.gschema.xml:433
+#: editor/ca.desrt.dconf-editor.gschema.xml:426
 msgid ""
 "The string type could accept any utf8 string. Note that an empty string “''” "
 "is not the same as NULL (nothing); see also the “string-nullable” key."
 msgstr ""
-"Змінна рядкового типу може мати значення будь-якого рядка UTF-8. Зауважте, що"
-" порожній рядок «''» не є еквівалентом значення NULL («nothing»); див. також"
-" ключ «string-nullable»."
+"Змінна рядкового типу може мати значення будь-якого рядка UTF-8. Зауважте, "
+"що порожній рядок «''» не є еквівалентом значення NULL («nothing»); див. "
+"також ключ «string-nullable»."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string-array'
-#: editor/ca.desrt.dconf-editor.gschema.xml:438
+#: editor/ca.desrt.dconf-editor.gschema.xml:431
 msgid "A string array, type ‘as’"
 msgstr "Масив з рядків, тип «as»"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string-array'
-#: editor/ca.desrt.dconf-editor.gschema.xml:440
+#: editor/ca.desrt.dconf-editor.gschema.xml:433
 msgid ""
 "A string array contains any number of strings of whatever length. It may be "
 "an empty array, “[]”."
@@ -919,54 +897,61 @@ msgstr ""
 "порожнім — «[]»."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string-nullable'
-#: editor/ca.desrt.dconf-editor.gschema.xml:445
+#: editor/ca.desrt.dconf-editor.gschema.xml:438
 msgid "A nullable string, type ‘ms’"
 msgstr "Нульований рядок, тип «ms»"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string-nullable'
-#: editor/ca.desrt.dconf-editor.gschema.xml:447
+#: editor/ca.desrt.dconf-editor.gschema.xml:440
 msgid ""
 "GSettings allows nullable types, that are similar to other types but could "
 "take a “nothing” value. A nullable string can take any string as value, "
 "including the empty string “''”, or can be NULL (nothing)."
 msgstr ""
-"У GSettings передбачено можливість використання нульованих типів, які є"
-" подібними до інших типів, але можуть приймати значення «nothing»)."
-" Нульований рядок може приймати значення довільного рядка, зокрема порожнього"
-" рядка «''», або мати значення NULL («nothing»)."
+"У GSettings передбачено можливість використання нульованих типів, які є "
+"подібними до інших типів, але можуть приймати значення «nothing»). "
+"Нульований рядок може приймати значення довільного рядка, зокрема порожнього "
+"рядка «''», або мати значення NULL («nothing»)."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/variant'
-#: editor/ca.desrt.dconf-editor.gschema.xml:452
+#: editor/ca.desrt.dconf-editor.gschema.xml:445
 msgid "A variant, type ‘v’"
 msgstr "Варіант, тип «v»"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/variant'
-#: editor/ca.desrt.dconf-editor.gschema.xml:454
+#: editor/ca.desrt.dconf-editor.gschema.xml:447
+#| msgid ""
+#| "Variants could be stored inside variants, and consequently as a GSettings "
+#| "type. Their representation use the XML brackets (‘<’ and ‘>’ characters, "
+#| "in a gschema file “&#60;” and “&#62;” respectively), with a parsable "
+#| "representation of their content inside. If unclear, the type can be given "
+#| "in the value with a prefix annotation like “@x” (where “x” is the type "
+#| "string) or “int64”. See https://developer.gnome.org/glib/stable/gvariant-"
+#| "text.html for complete documentation."
 msgid ""
 "Variants could be stored inside variants, and consequently as a GSettings "
 "type. Their representation use the XML brackets (‘<’ and ‘>’ characters, in "
 "a gschema file “&#60;” and “&#62;” respectively), with a parsable "
 "representation of their content inside. If unclear, the type can be given in "
 "the value with a prefix annotation like “@x” (where “x” is the type string) "
-"or “int64”. See https://developer.gnome.org/glib/stable/gvariant-text.html "
-"for complete documentation."
+"or “int64”. See https://docs.gtk.org/glib/gvariant-text.html for complete "
+"documentation."
 msgstr ""
-"Варіанти можуть зберігатися у варіантах, а отже у межах типу GSettings. У"
-" їхньому представленні використовуються дужки XML (символи «<» і «>», у"
-" файлах gschema — «&#60;» і «&#62;», відповідно). Придатні для програмної"
-" обробки дані слід розташовувати між цими дужками. Якщо це не зрозуміло з"
-" контексту, тип можна вказати у значенні за допомогою префікс-анотації,"
-" подібної до «@x» (де «x» — рядок типу) або «int64». Із повною документацією"
-" можна ознайомитися на сторінці https://developer.gnome.org/glib/stable/gvaria"
-"nt-text.html"
+"Варіанти можуть зберігатися у варіантах, а отже у межах типу GSettings. У "
+"їхньому представленні використовуються дужки XML (символи «<» і «>», у "
+"файлах gschema — «&#60;» і «&#62;», відповідно). Придатні для програмної "
+"обробки дані слід розташовувати між цими дужками. Якщо це не зрозуміло з "
+"контексту, тип можна вказати у значенні за допомогою префікс-анотації, "
+"подібної до «@x» (де «x» — рядок типу) або «int64». Із повною документацією "
+"можна ознайомитися на сторінці https://docs.gtk.org/glib/gvariant-text.html"
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-enum'
-#: editor/ca.desrt.dconf-editor.gschema.xml:459
+#: editor/ca.desrt.dconf-editor.gschema.xml:452
 msgid "A 1-choice enumeration"
 msgstr "Перелік із одним вибраним варіантом"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-enum'
-#: editor/ca.desrt.dconf-editor.gschema.xml:461
+#: editor/ca.desrt.dconf-editor.gschema.xml:454
 msgid ""
 "An enumeration could contain only one item, but that’s probably an error. "
 "Dconf Editor warns you in that case."
@@ -975,12 +960,12 @@ msgstr ""
 "помилковими. Редактор Dconf попереджатиме вас про подібні помилки."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-range'
-#: editor/ca.desrt.dconf-editor.gschema.xml:467
+#: editor/ca.desrt.dconf-editor.gschema.xml:460
 msgid "A 1-choice integer value"
 msgstr "Ціле значення із одним варіантом вибору"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-range'
-#: editor/ca.desrt.dconf-editor.gschema.xml:469
+#: editor/ca.desrt.dconf-editor.gschema.xml:462
 msgid ""
 "A range could limit an integer key to only allow one value, but that’s "
 "probably an error. Dconf Editor warns you in that case."
@@ -990,143 +975,143 @@ msgstr ""
 "подібні помилки."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-triv'
-#: editor/ca.desrt.dconf-editor.gschema.xml:474
+#: editor/ca.desrt.dconf-editor.gschema.xml:467
 msgid "The empty tuple, type and value “()”"
 msgstr "Порожній кортеж, тип і значення «()»"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-triv'
-#: editor/ca.desrt.dconf-editor.gschema.xml:476
+#: editor/ca.desrt.dconf-editor.gschema.xml:469
 msgid ""
 "There’s an empty tuple type (called sometimes “triv”) that is a tuple with "
 "no content, and can only take “()” as value."
 msgstr ""
-"Існує тип порожніх кортежів (який іноді називають «triv»), значення якого є"
-" кортежем без вмісту. Змінні цього типу можуть приймати лише значення «()»."
+"Існує тип порожніх кортежів (який іноді називають «triv»), значення якого є "
+"кортежем без вмісту. Змінні цього типу можуть приймати лише значення «()»."
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/relocatable/boolean' (with default /ca/desrt/dconf-editor/relocatable-* settings)
-#: editor/ca.desrt.dconf-editor.gschema.xml:489
+#: editor/ca.desrt.dconf-editor.gschema.xml:482
 msgid "An usual boolean value, defined by a relocatable schema."
 msgstr ""
 "Звичайне булеве значення, яке визначено придатною до пересування схемою."
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/relocatable/integer' (with default /ca/desrt/dconf-editor/relocatable-* settings)
-#: editor/ca.desrt.dconf-editor.gschema.xml:496
+#: editor/ca.desrt.dconf-editor.gschema.xml:489
 msgid "A 32-bit signed integer, defined by a relocatable schema."
 msgstr ""
 "32-бітове ціле зі знаком, яке визначається придатною до пересування схемою."
 
 #. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 a-non-conflicting-key'
-#: editor/ca.desrt.dconf-editor.gschema.xml:510
+#: editor/ca.desrt.dconf-editor.gschema.xml:503
 msgid "A normal non-conflicting key from Conflict1"
 msgstr "Звичайний ключ без конфлікту з Conflict1"
 
 #. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 a-non-conflicting-key'
 #. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 another-non-conflicting-key'
-#: editor/ca.desrt.dconf-editor.gschema.xml:512
-#: editor/ca.desrt.dconf-editor.gschema.xml:549
+#: editor/ca.desrt.dconf-editor.gschema.xml:505
+#: editor/ca.desrt.dconf-editor.gschema.xml:542
 msgid ""
 "This key is a test for multiple schemas in the same path with conflicting "
 "keys. Non-conflicting keys should have no issues."
 msgstr ""
-"Цей ключ є тестовим для перевірки роботи декількох схем із одним шляхом і"
-" конфліктними ключами. З ключами без конфліктів не має бути проблем."
+"Цей ключ є тестовим для перевірки роботи декількох схем із одним шляхом і "
+"конфліктними ключами. З ключами без конфліктів не має бути проблем."
 
 #. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 default-value-conflict'
-#: editor/ca.desrt.dconf-editor.gschema.xml:517
+#: editor/ca.desrt.dconf-editor.gschema.xml:510
 msgid "Conflicting key defaulting to “1” that should give an error"
 msgstr ""
 "Конфліктний ключ із типовим значенням «1», яке має призводити до помилки"
 
 #. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 default-value-conflict'
 #. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 default-value-conflict'
-#: editor/ca.desrt.dconf-editor.gschema.xml:519
-#: editor/ca.desrt.dconf-editor.gschema.xml:556
+#: editor/ca.desrt.dconf-editor.gschema.xml:512
+#: editor/ca.desrt.dconf-editor.gschema.xml:549
 msgid ""
 "This key is a test for multiple schemas in the same path with conflicting "
 "keys. It shouldn’t be editable as a key mapped to the same path has a "
 "different default value."
 msgstr ""
-"Цей ключ є тестовим для перевірки на декілька схем і одним шляхом і"
-" конфліктними ключами. Ключі не можна редагувати, оскільки у різних схемах"
-" для одного шляху вказано різні типові значення."
+"Цей ключ є тестовим для перевірки на декілька схем і одним шляхом і "
+"конфліктними ключами. Ключі не можна редагувати, оскільки у різних схемах "
+"для одного шляху вказано різні типові значення."
 
 #. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 range-conflict'
-#: editor/ca.desrt.dconf-editor.gschema.xml:524
+#: editor/ca.desrt.dconf-editor.gschema.xml:517
 msgid "Conflicting key with no range that should give an error"
 msgstr "Конфліктний ключ без діапазону, має призводити до помилки"
 
 #. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 range-conflict'
 #. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 range-conflict'
-#: editor/ca.desrt.dconf-editor.gschema.xml:526
-#: editor/ca.desrt.dconf-editor.gschema.xml:564
+#: editor/ca.desrt.dconf-editor.gschema.xml:519
+#: editor/ca.desrt.dconf-editor.gschema.xml:557
 msgid ""
 "This key is a test for multiple schemas in the same path with conflicting "
 "keys. It shouldn’t be editable as a key mapped to the same path has a "
 "different range."
 msgstr ""
-"Цей ключ є тестовим для перевірки на декілька схем і одним шляхом і"
-" конфліктними ключами. Ключі не можна редагувати, оскільки у різних схемах"
-" для одного шляху вказано різні діапазони."
+"Цей ключ є тестовим для перевірки на декілька схем і одним шляхом і "
+"конфліктними ключами. Ключі не можна редагувати, оскільки у різних схемах "
+"для одного шляху вказано різні діапазони."
 
 #. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 type-conflict'
-#: editor/ca.desrt.dconf-editor.gschema.xml:531
+#: editor/ca.desrt.dconf-editor.gschema.xml:524
 msgid "A (simple) string conflicting key that should give a error"
 msgstr "Конфліктний ключ із (простим) рядком, має призвести до помилки"
 
 #. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 type-conflict'
 #. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 type-conflict'
-#: editor/ca.desrt.dconf-editor.gschema.xml:533
-#: editor/ca.desrt.dconf-editor.gschema.xml:571
+#: editor/ca.desrt.dconf-editor.gschema.xml:526
+#: editor/ca.desrt.dconf-editor.gschema.xml:564
 msgid ""
 "This key is a test for multiple schemas in the same path with conflicting "
 "keys. It shouldn’t be editable as a key mapped to the same path has a "
 "different type."
 msgstr ""
-"Цей ключ є тестовим для перевірки на декілька схем і одним шляхом і"
-" конфліктними ключами. Ключі не можна редагувати, оскільки у різних схемах"
-" для одного шляху вказано різні типи."
+"Цей ключ є тестовим для перевірки на декілька схем і одним шляхом і "
+"конфліктними ключами. Ключі не можна редагувати, оскільки у різних схемах "
+"для одного шляху вказано різні типи."
 
 #. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 warning-similar'
-#: editor/ca.desrt.dconf-editor.gschema.xml:538
+#: editor/ca.desrt.dconf-editor.gschema.xml:531
 msgid "Conflicting key from Conflict1 that should give a warning"
 msgstr "Конфліктний ключ з Conflict1, який має призвести до попередження"
 
 #. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 warning-similar'
 #. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 warning-similar'
-#: editor/ca.desrt.dconf-editor.gschema.xml:540
-#: editor/ca.desrt.dconf-editor.gschema.xml:578
+#: editor/ca.desrt.dconf-editor.gschema.xml:533
+#: editor/ca.desrt.dconf-editor.gschema.xml:571
 msgid ""
 "This key is a test for multiple schemas in the same path with conflicting "
 "keys. It can be edited, since the types are compatible, but it is still an "
 "issue."
 msgstr ""
-"Цей ключ є тестовим для перевірки роботи декількох схем із одним шляхом і"
-" конфліктними ключами. Ключі можна редагувати, оскільки їхні типи сумісні,"
-" але це все одно є вадою програм."
+"Цей ключ є тестовим для перевірки роботи декількох схем із одним шляхом і "
+"конфліктними ключами. Ключі можна редагувати, оскільки їхні типи сумісні, "
+"але це все одно є вадою програм."
 
 #. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 another-non-conflicting-key'
-#: editor/ca.desrt.dconf-editor.gschema.xml:547
+#: editor/ca.desrt.dconf-editor.gschema.xml:540
 msgid "A normal non-conflicting key from Conflict2"
 msgstr "Звичайний ключ без конфлікту з Conflict2"
 
 #. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 default-value-conflict'
-#: editor/ca.desrt.dconf-editor.gschema.xml:554
+#: editor/ca.desrt.dconf-editor.gschema.xml:547
 msgid "Conflicting key defaulting to “2” that should give an error"
 msgstr ""
 "Конфліктний ключ із типовим значенням «2», яке має призводити до помилки"
 
 #. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 range-conflict'
-#: editor/ca.desrt.dconf-editor.gschema.xml:562
+#: editor/ca.desrt.dconf-editor.gschema.xml:555
 msgid "Conflicting key with range 0~5 that should give an error"
 msgstr "Конфліктний ключ із діапазоном 0-5, має призводити до помилки"
 
 #. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 type-conflict'
-#: editor/ca.desrt.dconf-editor.gschema.xml:569
+#: editor/ca.desrt.dconf-editor.gschema.xml:562
 msgid "A nullable-string conflicting key that should give an error"
 msgstr "Конфліктний ключ із нульованим рядком — має призводити до помилки"
 
 #. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 warning-similar'
-#: editor/ca.desrt.dconf-editor.gschema.xml:576
+#: editor/ca.desrt.dconf-editor.gschema.xml:569
 msgid "Conflicting key from Conflict2 that should give a warning"
 msgstr "Конфліктний ключ з Conflict2, який має призвести до попередження"
 
@@ -1242,86 +1227,86 @@ msgid "No unknown schemas."
 msgstr "Немає невідомих схем."
 
 #. Translators: command-line error message, when the user requests a specific path while there is already a window opened
-#: editor/dconf-editor.vala:457
+#: editor/dconf-editor.vala:442
 msgid "Only one window can be opened for now.\n"
 msgstr ""
 "У поточній версії одночасно можна відкривати лише одне вікно програми.\n"
 
 #. Translators: command-line error message, try 'dconf-editor a b c d'
-#: editor/dconf-editor.vala:477
+#: editor/dconf-editor.vala:462
 msgid "Cannot understand: too many arguments.\n"
 msgstr "Не вдалося обробити: надто багато аргументів.\n"
 
 #. Translators: command-line error message, try 'dconf-editor / a'
-#: editor/dconf-editor.vala:491
+#: editor/dconf-editor.vala:476
 msgid "Cannot understand second argument in this context.\n"
 msgstr "Не вдалося обробити другий аргумент у цьому контексті.\n"
 
 #. Translators: command-line error message, try 'dconf-editor org.example /'
-#: editor/dconf-editor.vala:512
+#: editor/dconf-editor.vala:497
 msgid "Cannot understand: slash character in second argument.\n"
 msgstr "Не вдалося обробити: похила риска у другому аргументі.\n"
 
 #. Translators: command-line error message, try 'dconf-editor org.example:a'
-#: editor/dconf-editor.vala:527
+#: editor/dconf-editor.vala:512
 msgid "Schema path should start and end with a “/”.\n"
 msgstr "Шлях схеми має починатися і завершуватися символом «/».\n"
 
 #. Translators: command-line error message, try 'dconf-editor //'
-#: editor/dconf-editor.vala:543
+#: editor/dconf-editor.vala:528
 msgid "Cannot understand: given path contains “//”.\n"
 msgstr "Незрозуміло: вказаний шлях містить «//».\n"
 
 #. Translators: command-line error message, try 'dconf-editor "org example" a'
-#: editor/dconf-editor.vala:551
+#: editor/dconf-editor.vala:536
 msgid "Cannot understand: space character in argument.\n"
 msgstr "Незрозуміло: символ пробілу у аргументі.\n"
 
 #. Translators: notification header, try ctrl-c while in the keys list
-#: editor/dconf-editor.vala:579
+#: editor/dconf-editor.vala:564
 msgid "Copied to clipboard"
 msgstr "Скопійовано до буфера обміну"
 
 #. Translators: about dialog text
-#: editor/dconf-editor.vala:656
+#: editor/dconf-editor.vala:641
 msgid "A graphical viewer and editor of applications’ internal settings."
 msgstr ""
 "Програма із графічним інтерфейсом для перегляду і редагування внутрішніх "
 "параметрів програм."
 
 #. Translators: text crediting a game author, seen in the About dialog
-#: editor/dconf-editor.vala:661
+#: editor/dconf-editor.vala:646
 msgid "Robert Ancell"
 msgstr "Robert Ancell"
 
 #. Translators: text crediting a game author, seen in the About dialog
-#: editor/dconf-editor.vala:665
+#: editor/dconf-editor.vala:650
 msgid "Arnaud Bonatti"
 msgstr "Arnaud Bonatti"
 
 #. Translators: text crediting a maintainer, seen in the About dialog
-#: editor/dconf-editor.vala:669
+#: editor/dconf-editor.vala:654
 msgid "Copyright © 2010-2014 – Canonical Ltd"
 msgstr "© Canonical Ltd, 2010–2014"
 
 #. Translators: text crediting a maintainer, seen in the About dialog
-#: editor/dconf-editor.vala:673
+#: editor/dconf-editor.vala:658
 msgid "Copyright © 2017-2018 – Davi da Silva Böger"
 msgstr "© Davi da Silva Böger, 2017–2018"
 
 #. Translators: text crediting a maintainer, seen in the About dialog; the %u are replaced with the years of start and end
-#: editor/dconf-editor.vala:677
+#: editor/dconf-editor.vala:662
 #, c-format
 msgid "Copyright © %u-%u – Arnaud Bonatti"
 msgstr "© Arnaud Bonatti, %u–%u"
 
 #. Translators: about dialog text; this string should be replaced by a text crediting yourselves and your translation team, or should be left empty. Do not translate literally!
-#: editor/dconf-editor.vala:684
+#: editor/dconf-editor.vala:669
 msgid "translator-credits"
 msgstr "Daniel Korostil <ted.korostiled@gmail.com>"
 
 #. Translators: about dialog text; label of the website link
-#: editor/dconf-editor.vala:690
+#: editor/dconf-editor.vala:675
 msgid "Page on GNOME wiki"
 msgstr "Сторінка у вікі GNOME"
 
@@ -1332,47 +1317,47 @@ msgstr "Про редактор dconf"
 
 #. Translators: when a change is requested, on a small window, entry of the menu of the "delayed settings button" that appears in place of the close button
 #. Translators: when there are pending changes, label of the "apply" button in the bottom bar, on large windows
-#: editor/dconf-headerbar.vala:114 editor/modifications-revealer.ui:87
+#: editor/dconf-headerbar.vala:113 editor/modifications-revealer.ui:87
 msgid "Apply"
 msgstr "Застосувати"
 
 #. Translators: when a change is requested, on a small window, entry of the menu of the "delayed settings button" that appears in place of the close button
-#: editor/dconf-headerbar.vala:117
+#: editor/dconf-headerbar.vala:116
 msgid "Dismiss"
 msgstr "Відкинути"
 
 #. Translators: when in delayed mode, on a small window, entry of the "three-dots menu" that appears when showing the pending changes list (if there is pending changes)
-#: editor/dconf-headerbar.vala:141
+#: editor/dconf-headerbar.vala:140
 msgid "Apply all"
 msgstr "Застосувати усе"
 
 #. Translators: when in delayed mode, on a small window, entry of the "three-dots menu" that appears when showing the pending changes list (if there is pending changes)
-#: editor/dconf-headerbar.vala:144
+#: editor/dconf-headerbar.vala:143
 msgid "Dismiss all"
 msgstr "Відкинути усе"
 
 #. Translators: when in delayed mode, on a small window, entry of the "three-dots menu" that appears when showing the pending changes list (if there is no pending changes)
-#: editor/dconf-headerbar.vala:152
+#: editor/dconf-headerbar.vala:151
 msgid "Quit mode"
 msgstr "Режим виходу"
 
 #. Translators: hamburger menu entry, to enter in a special mode called "delay mode" where changes are not applied until validation
-#: editor/dconf-headerbar.vala:201
+#: editor/dconf-headerbar.vala:200
 msgid "Enter delay mode"
 msgstr "Увійти до режиму із затримкою"
 
 #. Translators: hamburger menu entry that appears when browsing a folder path, to set to their default value all currently visible keys, not including keys in subfolders
-#: editor/dconf-headerbar.vala:205
+#: editor/dconf-headerbar.vala:204
 msgid "Reset visible keys"
 msgstr "Скинути видимі ключі"
 
 #. Translators: hamburger menu entry that appears when browsing a folder path, to set to their default value all currently visible keys, and all keys in subfolders
-#: editor/dconf-headerbar.vala:208
+#: editor/dconf-headerbar.vala:207
 msgid "Reset view recursively"
 msgstr "Скинути панель перегляду рекурсивно"
 
 #. Translators: on really small windows, the bottom bar that appears in "delay mode" or when there're pending changes is replaced by an in-window view; here is the name of the view, displayed in the headerbar
-#: editor/dconf-headerbar.vala:246
+#: editor/dconf-headerbar.vala:245
 msgid "Pending"
 msgstr "Заплановано"
 
@@ -1428,8 +1413,8 @@ msgstr "Показувати це вікно наступного разу."
 #. Translators: notification text, after a user Ctrl+Q keyboard action; same way to spell the shortcut as in the Settings application
 #: editor/dconf-window.vala:305
 msgid ""
-"There are pending changes. Use Shift+Ctrl+Q to apply changes and quit, or Alt"
-"+F4 to dismiss changes and quit."
+"There are pending changes. Use Shift+Ctrl+Q to apply changes and quit, or "
+"Alt+F4 to dismiss changes and quit."
 msgstr ""
 "Деякі зміни ще не збережено. Натисніть комбінацію клавіш Shift+Ctrl+Q, щоб "
 "застосувати зміни і вийти з програми, або комбінацію клавіш Alt+F4, щоб "
@@ -1628,7 +1613,7 @@ msgctxt "shortcut window"
 msgid "Next line"
 msgstr "Наступний рядок"
 
-#. Translators: entry disabled for now; Ctrl-I action, when browsing; displays informations on selected folder
+#. Translators: entry disabled for now; Ctrl-I action, when browsing; displays information on selected folder
 #: editor/help-overlay.ui:231
 msgctxt "shortcut window"
 msgid "Toggle folder properties"
@@ -2181,10 +2166,10 @@ msgid ""
 "using this key has been uninstalled, or if this key is obsolete, you may "
 "want to erase it."
 msgstr ""
-"Немає доступної схеми. Схема описує призначення ключа. Редактору Dconf не"
-" вдалося знайти схеми, яку пов'язано із цим ключем. Якщо програму, у якій"
-" було використано цей ключ вилучено або цей ключ є застарілим, ви можете"
-" витерти ключ із бази даних."
+"Немає доступної схеми. Схема описує призначення ключа. Редактору Dconf не "
+"вдалося знайти схеми, яку пов'язано із цим ключем. Якщо програму, у якій "
+"було використано цей ключ вилучено або цей ключ є застарілим, ви можете "
+"витерти ключ із бази даних."
 
 #. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-enum'
 #: editor/registry-info.ui:172
@@ -2193,9 +2178,9 @@ msgid ""
 "application that installed this schema. If possible, please open a bug about "
 "it."
 msgstr ""
-"У цьому переліку лише один варіант. Причиною, ймовірно, є помилка у програмі,"
-" якою було встановлено цю схему. Якщо маєте змогу, створіть повідомлення про"
-" ваду у відповідній програмі."
+"У цьому переліку лише один варіант. Причиною, ймовірно, є помилка у "
+"програмі, якою було встановлено цю схему. Якщо маєте змогу, створіть "
+"повідомлення про ваду у відповідній програмі."
 
 #. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-range'
 #: editor/registry-info.ui:183
@@ -2204,9 +2189,9 @@ msgid ""
 "application that installed this schema. If possible, please open a bug about "
 "it."
 msgstr ""
-"Цей цілочисельний ключ може приймати лише одне значення. Ймовірною причиною є"
-" помилка у програмі, якою було встановлено цю схему. Якщо маєте змогу,"
-" створіть повідомлення про ваду у відповідній програмі."
+"Цей цілочисельний ключ може приймати лише одне значення. Ймовірною причиною "
+"є помилка у програмі, якою було встановлено цю схему. Якщо маєте змогу, "
+"створіть повідомлення про ваду у відповідній програмі."
 
 #. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-triv'
 #: editor/registry-info.ui:194
@@ -2215,9 +2200,9 @@ msgid ""
 "application that installed this schema. If possible, please open a bug about "
 "it."
 msgstr ""
-"Цей ключ належить до особливого типу «порожній кортеж». Ймовірною причиною є"
-" помилка у програмі, якою було встановлено цю схему. Якщо маєте змогу,"
-" створіть повідомлення про ваду у відповідній програмі."
+"Цей ключ належить до особливого типу «порожній кортеж». Ймовірною причиною є "
+"помилка у програмі, якою було встановлено цю схему. Якщо маєте змогу, "
+"створіть повідомлення про ваду у відповідній програмі."
 
 #. Translators: field description when displaying folder properties; name of the folder
 #: editor/registry-info.vala:70
@@ -2321,8 +2306,8 @@ msgid ""
 "There are conflicting definitions of this key, getting value would be either "
 "problematic or meaningless."
 msgstr ""
-"Маємо конфлікт визначень для цього ключа. Отримання його значення буде"
-" пов'язано із проблемами або взагалі не матиме сенсу."
+"Маємо конфлікт визначень для цього ключа. Отримання його значення буде "
+"пов'язано із проблемами або взагалі не матиме сенсу."
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of type "double"
 #: editor/registry-info.vala:615
@@ -2335,14 +2320,18 @@ msgstr ""
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of type "variant" (or of a type composed with a variant)
 #: editor/registry-info.vala:620
+#, fuzzy
+#| msgid ""
+#| "Variants content should be surrounded by XML brackets (‘<’ and ‘>’). See "
+#| "https://developer.gnome.org/glib/stable/gvariant-text.html for complete "
+#| "documentation."
 msgid ""
 "Variants content should be surrounded by XML brackets (‘<’ and ‘>’). See "
-"https://developer.gnome.org/glib/stable/gvariant-text.html for complete "
-"documentation."
+"https://docs.gtk.org/glib/gvariant-text.html for complete documentation."
 msgstr ""
-"Вміст варіантів має бути взято у дужки XML («<» і «>»). Із повною"
-" документацією можна ознайомитися на сторінці "
-"https://developer.gnome.org/glib/stable/gvariant-text.html"
+"Вміст варіантів має бути взято у дужки XML («<» і «>»). Із повною "
+"документацією можна ознайомитися на сторінці https://developer.gnome.org/"
+"glib/stable/gvariant-text.html"
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a "maybe type" and with a string type (or similar); neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
 #: editor/registry-info.vala:627
@@ -2351,9 +2340,9 @@ msgid ""
 "empty value. Strings, signatures and object paths should be surrounded by "
 "quotation marks."
 msgstr ""
-"Скористайтеся ключовим словом «nothing», щоб встановити для умовного типу"
-" (код якого починається з «m») порожнє значення. Рядки, підписи і шляхи до"
-" об'єктів має бути взято у лапки."
+"Скористайтеся ключовим словом «nothing», щоб встановити для умовного типу "
+"(код якого починається з «m») порожнє значення. Рядки, підписи і шляхи до "
+"об'єктів має бути взято у лапки."
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a string type (or similar)
 #: editor/registry-info.vala:630
@@ -2497,6 +2486,25 @@ msgstr "Придатна до пересування схема"
 #: editor/setting-object.vala:417
 msgid "DConf backend"
 msgstr "Модуль DConf"
+
+#~ msgid "Pause night mode"
+#~ msgstr "Призупинити нічний режим"
+
+#~ msgid "Reuse night mode"
+#~ msgstr "Повторно використати нічний режим"
+
+#~ msgid "Use night mode"
+#~ msgstr "Використати нічний режим"
+
+#~ msgid "A flag to follow system night light"
+#~ msgstr ""
+#~ "Автоматичне використання загальносистемних умов вмикання нічного "
+#~ "освітлення"
+
+#~ msgid "Use GNOME night light setting to activate night-mode."
+#~ msgstr ""
+#~ "Використовувати параметр нічного освітлення GNOME для вмикання нічного "
+#~ "режиму."
 
 #, fuzzy
 #~ msgid "dconf-editor"
