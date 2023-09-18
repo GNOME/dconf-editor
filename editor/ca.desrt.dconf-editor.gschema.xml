@@ -444,7 +444,7 @@
       <!-- Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/variant' -->
       <summary>A variant, type ‘v’</summary>
       <!-- Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/variant' -->
-      <description>Variants could be stored inside variants, and consequently as a GSettings type. Their representation use the XML brackets (‘&#60;’ and ‘&#62;’ characters, in a gschema file “&amp;#60;” and “&amp;#62;” respectively), with a parsable representation of their content inside. If unclear, the type can be given in the value with a prefix annotation like “@x” (where “x” is the type string) or “int64”. See https://developer.gnome.org/glib/stable/gvariant-text.html for complete documentation.</description>
+      <description>Variants could be stored inside variants, and consequently as a GSettings type. Their representation use the XML brackets (‘&#60;’ and ‘&#62;’ characters, in a gschema file “&amp;#60;” and “&amp;#62;” respectively), with a parsable representation of their content inside. If unclear, the type can be given in the value with a prefix annotation like “@x” (where “x” is the type string) or “int64”. See https://docs.gtk.org/glib/gvariant-text.html for complete documentation.</description>
     </key>
     <key name="weird-enum" enum="ca.desrt.dconf-editor.DemoWeirdEnum">
       <default>'only-choice'</default>
