@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2023-09-18 15:05+0000\n"
-"PO-Revision-Date: 2023-09-18 22:50+0300\n"
+"POT-Creation-Date: 2023-09-18 19:51+0000\n"
+"PO-Revision-Date: 2023-09-18 22:53+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -225,16 +225,16 @@ msgstr ""
 "Безпосереднє редагування налаштувань потребує певного досвіду. Необдумані "
 "зміни можуть призвести до помилок у роботі програм."
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:34
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:35
 msgid "Browse the keys used by installed applications"
 msgstr "Навігація ключами, які використано у встановлених програмах"
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:38
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:39
 msgid "Read keys descriptions and edit their values"
 msgstr "Читання описів ключів та редагування значень ключів"
 
 #. a translatable version of project_group
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:53
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:54
 msgid "The GNOME Project"
 msgstr "Проєкт GNOME"
 
@@ -920,14 +920,6 @@ msgstr "Варіант, тип «v»"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/variant'
 #: editor/ca.desrt.dconf-editor.gschema.xml:447
-#| msgid ""
-#| "Variants could be stored inside variants, and consequently as a GSettings "
-#| "type. Their representation use the XML brackets (‘<’ and ‘>’ characters, "
-#| "in a gschema file “&#60;” and “&#62;” respectively), with a parsable "
-#| "representation of their content inside. If unclear, the type can be given "
-#| "in the value with a prefix annotation like “@x” (where “x” is the type "
-#| "string) or “int64”. See https://developer.gnome.org/glib/stable/gvariant-"
-#| "text.html for complete documentation."
 msgid ""
 "Variants could be stored inside variants, and consequently as a GSettings "
 "type. Their representation use the XML brackets (‘<’ and ‘>’ characters, in "
@@ -2320,7 +2312,6 @@ msgstr ""
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of type "variant" (or of a type composed with a variant)
 #: editor/registry-info.vala:620
-#, fuzzy
 #| msgid ""
 #| "Variants content should be surrounded by XML brackets (‘<’ and ‘>’). See "
 #| "https://developer.gnome.org/glib/stable/gvariant-text.html for complete "
@@ -2330,8 +2321,8 @@ msgid ""
 "https://docs.gtk.org/glib/gvariant-text.html for complete documentation."
 msgstr ""
 "Вміст варіантів має бути взято у дужки XML («<» і «>»). Із повною "
-"документацією можна ознайомитися на сторінці https://developer.gnome.org/"
-"glib/stable/gvariant-text.html"
+"документацією можна ознайомитися на сторінці"
+" https://docs.gtk.org/glib/gvariant-text.html "
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a "maybe type" and with a string type (or similar); neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
 #: editor/registry-info.vala:627
