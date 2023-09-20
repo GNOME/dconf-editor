@@ -21,6 +21,7 @@
 
   <releases>
     <!-- should be kept in versioning inverted order -->
+    <release version="45.0.1" date="2023-09-20" type="stable" urgency="low"/>
     <release version="45.0" date="2023-09-18" type="stable" urgency="high"/>
     <release version="43.0" date="2022-09-17" type="stable" urgency="medium"/>
     <release version="43~beta" date="2022-07-27" type="development" urgency="low"/>
