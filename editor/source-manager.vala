@@ -124,7 +124,7 @@ private class SourceManager : Object
         string? var_schema_dir = GLib.Environment.get_variable ("GSETTINGS_SCHEMA_DIR");
         if (var_schema_dir != null) {
             string[] extra_schema_dirs = ((!) var_schema_dir).split (Path.SEARCHPATH_SEPARATOR_S);
-            for (int i = system_data_dirs.length - 1; i >= 0; i--)
+            for (int i = extra_schema_dirs.length - 1; i >= 0; i--)
                 source = try_prepend_dir (source, extra_schema_dirs[i]);
         }
         return source;
