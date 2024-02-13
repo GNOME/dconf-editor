@@ -1,16 +1,16 @@
 # Swedish translation for dconf-editor.
-# Copyright © 2012-2022 Free Software Foundation, Inc.
+# Copyright © 2012-2023 Free Software Foundation, Inc.
 # This file is distributed under the same license as the dconf-editor package.
 # Daniel Nylander <po@danielnylander.se>, 2012.
-# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2022.
+# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2022, 2023.
 # Sebastian Rasmussen <sebras@gmail.com>, 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf-editor\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2022-07-27 15:55+0000\n"
-"PO-Revision-Date: 2022-12-20 21:57+0100\n"
+"POT-Creation-Date: 2023-09-18 15:05+0000\n"
+"PO-Revision-Date: 2023-09-18 17:58+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.3.2\n"
 
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the second is "Credits"
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the name of the view, displayed in the headerbar
@@ -218,16 +218,16 @@ msgstr ""
 "Att redigera din konfiguration direkt är en avancerad funktion som kan "
 "förorsaka att program inte fungerar korrekt."
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:32
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:34
 msgid "Browse the keys used by installed applications"
 msgstr "Bläddra bland nycklarna som används av installerade program"
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:36
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:38
 msgid "Read keys descriptions and edit their values"
 msgstr "Läs nyckelbeskrivningar och redigera deras värden"
 
 #. a translatable version of project_group
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:51
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:53
 msgid "The GNOME Project"
 msgstr "GNOME-projektet"
 
@@ -503,7 +503,7 @@ msgid ""
 msgstr ""
 "En ordbok som mappar schema-ID:n med sökvägsspecifikationer. Den används för "
 "att låta användaren associera ett flyttbart schema till vissa sökvägar. "
-"Sökvägsspecifikationer kan innehålla jokertecken så som tomma segment (t."
+"Sökvägsspecifikationer kan innehålla jokertecken i form av tomma segment (t."
 "ex. /ca/desrt/dconf-editor//), vilket möjligen definierar flera sökvägar. "
 "Samma schema-ID kan associeras med flera sökvägsspecifikationer."
 
@@ -909,16 +909,15 @@ msgid ""
 "a gschema file “&#60;” and “&#62;” respectively), with a parsable "
 "representation of their content inside. If unclear, the type can be given in "
 "the value with a prefix annotation like “@x” (where “x” is the type string) "
-"or “int64”. See https://developer.gnome.org/glib/stable/gvariant-text.html "
-"for complete documentation."
+"or “int64”. See https://docs.gtk.org/glib/gvariant-text.html for complete "
+"documentation."
 msgstr ""
 "Varianter kan lagras i varianter, och därmed som en GSettings-typ. Deras "
 "representation använder XML-klammer (tecknen ”<” och ”>”, i en gschema-fil "
 "”&#60;” respektive ”&#62;”), med en tolkningsbar representation av dess "
 "innehåll inuti. Om det är oklart kan typen anges i värdet med en "
 "prefixnotering som ”@x” (där ”x” är typen string) eller ”int64”. Se https://"
-"developer.gnome.org/glib/stable/gvariant-text.html för fullständig "
-"dokumentation."
+"docs.gtk.org/glib/gvariant-text.html för fullständig dokumentation."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-enum'
 #: editor/ca.desrt.dconf-editor.gschema.xml:452
@@ -1104,173 +1103,173 @@ msgid "Do not show initial warning"
 msgstr "Visa inte första varning"
 
 #. Translators: command-line text, description of the application in 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
-#: editor/dconf-editor.vala:202
+#: editor/dconf-editor.vala:203
 msgid "Graphical interface for editing other applications settings."
 msgstr "Grafiskt gränssnitt för redigering av andra programs inställningar."
 
 #. Translators: command-line text, describes how the application proceeds for editing other applications settings, in 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
-#: editor/dconf-editor.vala:205
+#: editor/dconf-editor.vala:206
 msgid "Uses the gsettings API of the glib library, among others."
 msgstr "Använder bland annat glib-bibliotekets gsettings-API."
 
 #. Translators: command-line header description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:208
+#: editor/dconf-editor.vala:209
 msgid "Arguments description:"
 msgstr "Argumentbeskrivning:"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:212
+#: editor/dconf-editor.vala:213
 msgid "a folder path or a key path"
 msgstr "en sökväg till en mapp eller en nyckel"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:214
+#: editor/dconf-editor.vala:215
 msgid "example: “/org/gnome/” or “/ca/desrt/dconf-editor/Demo/boolean”"
 msgstr "exempel: ”/org/gnome/” eller ”/ca/desrt/dconf-editor/Demo/boolean”"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:218
+#: editor/dconf-editor.vala:219
 msgid "the name of a schema with fixed path"
 msgstr "namnet på ett schema med fast sökväg"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:220
+#: editor/dconf-editor.vala:221
 msgid "example: “ca.desrt.dconf-editor.Settings”"
 msgstr "exempel: ”ca.desrt.dconf-editor.Settings”"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'; no need to put your translation of "relocatable" between quotation marks, that's done in English to highlight why the option is called "RELOC_SCHEMA"
-#: editor/dconf-editor.vala:224
+#: editor/dconf-editor.vala:225
 msgid "the name of a “relocatable” schema, without fixed path"
 msgstr "namnet på ett flyttbart schema, utan fast sökväg"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:226
+#: editor/dconf-editor.vala:227
 msgid "see list with the “--list-relocatable-schemas” option"
 msgstr "se en lista med flaggan ”--list-relocatable-schemas”"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:230
+#: editor/dconf-editor.vala:231
 msgid "the path where to map the relocatable schema"
 msgstr "sökvägen som det flyttbara schemat ska mappas till"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:232
+#: editor/dconf-editor.vala:233
 msgid "example: “ca.desrt.dconf-editor.Bookmarks:/ca/desrt/dconf-editor/”"
 msgstr "exempel: ”ca.desrt.dconf-editor.Bookmarks:/ca/desrt/dconf-editor/”"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:236
+#: editor/dconf-editor.vala:237
 msgid "the name of a key from the schema"
 msgstr "namnet på en nyckel från schemat"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:238
+#: editor/dconf-editor.vala:239
 msgid "example: “bookmarks”"
 msgstr "exempel: “bookmarks”"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
-#: editor/dconf-editor.vala:294
+#: editor/dconf-editor.vala:295
 msgid "Known schemas installed:"
 msgstr "Kända installerade scheman:"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given
-#: editor/dconf-editor.vala:300
+#: editor/dconf-editor.vala:301
 msgid "No known schemas installed."
 msgstr "Inga kända scheman installerade."
 
 #. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
-#: editor/dconf-editor.vala:305
+#: editor/dconf-editor.vala:306
 msgid "Known schemas skipped:"
 msgstr "Kända överhoppade scheman:"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given
-#: editor/dconf-editor.vala:311
+#: editor/dconf-editor.vala:312
 msgid "No known schemas skipped."
 msgstr "Inga kända scheman överhoppade."
 
 #. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
-#: editor/dconf-editor.vala:316
+#: editor/dconf-editor.vala:317
 msgid "Unknown schemas:"
 msgstr "Okända scheman:"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given
-#: editor/dconf-editor.vala:322
+#: editor/dconf-editor.vala:323
 msgid "No unknown schemas."
 msgstr "Inga okända scheman."
 
 #. Translators: command-line error message, when the user requests a specific path while there is already a window opened
-#: editor/dconf-editor.vala:441
+#: editor/dconf-editor.vala:442
 msgid "Only one window can be opened for now.\n"
 msgstr "Endast ett fönster kan öppnas för tillfället.\n"
 
 #. Translators: command-line error message, try 'dconf-editor a b c d'
-#: editor/dconf-editor.vala:461
+#: editor/dconf-editor.vala:462
 msgid "Cannot understand: too many arguments.\n"
 msgstr "Kan inte förstå: för många argument.\n"
 
 #. Translators: command-line error message, try 'dconf-editor / a'
-#: editor/dconf-editor.vala:475
+#: editor/dconf-editor.vala:476
 msgid "Cannot understand second argument in this context.\n"
 msgstr "Kan inte förstå det andra argumentet i denna kontext.\n"
 
 #. Translators: command-line error message, try 'dconf-editor org.example /'
-#: editor/dconf-editor.vala:496
+#: editor/dconf-editor.vala:497
 msgid "Cannot understand: slash character in second argument.\n"
 msgstr "Kan inte förstå: snedstreck i det andra argumentet.\n"
 
 #. Translators: command-line error message, try 'dconf-editor org.example:a'
-#: editor/dconf-editor.vala:511
+#: editor/dconf-editor.vala:512
 msgid "Schema path should start and end with a “/”.\n"
 msgstr "Schemasökväg ska börja och sluta med ”/”.\n"
 
 #. Translators: command-line error message, try 'dconf-editor //'
-#: editor/dconf-editor.vala:527
+#: editor/dconf-editor.vala:528
 msgid "Cannot understand: given path contains “//”.\n"
 msgstr "Kan inte förstå: angiven sökväg innehåller ”//”.\n"
 
 #. Translators: command-line error message, try 'dconf-editor "org example" a'
-#: editor/dconf-editor.vala:535
+#: editor/dconf-editor.vala:536
 msgid "Cannot understand: space character in argument.\n"
 msgstr "Kan inte förstå: blanksteg i ett argument.\n"
 
 #. Translators: notification header, try ctrl-c while in the keys list
-#: editor/dconf-editor.vala:563
+#: editor/dconf-editor.vala:564
 msgid "Copied to clipboard"
 msgstr "Kopierat till urklipp"
 
 #. Translators: about dialog text
-#: editor/dconf-editor.vala:640
+#: editor/dconf-editor.vala:641
 msgid "A graphical viewer and editor of applications’ internal settings."
 msgstr "En grafisk visare samt redigerare av interna programinställningar."
 
 #. Translators: text crediting a game author, seen in the About dialog
-#: editor/dconf-editor.vala:645
+#: editor/dconf-editor.vala:646
 msgid "Robert Ancell"
 msgstr "Robert Ancell"
 
 #. Translators: text crediting a game author, seen in the About dialog
-#: editor/dconf-editor.vala:649
+#: editor/dconf-editor.vala:650
 msgid "Arnaud Bonatti"
 msgstr "Arnaud Bonatti"
 
 #. Translators: text crediting a maintainer, seen in the About dialog
-#: editor/dconf-editor.vala:653
+#: editor/dconf-editor.vala:654
 msgid "Copyright © 2010-2014 – Canonical Ltd"
 msgstr "Copyright © 2010-2014 – Canonical Ltd"
 
 #. Translators: text crediting a maintainer, seen in the About dialog
-#: editor/dconf-editor.vala:657
+#: editor/dconf-editor.vala:658
 msgid "Copyright © 2017-2018 – Davi da Silva Böger"
 msgstr "Copyright © 2017-2018 – Davi da Silva Böger"
 
 #. Translators: text crediting a maintainer, seen in the About dialog; the %u are replaced with the years of start and end
-#: editor/dconf-editor.vala:661
+#: editor/dconf-editor.vala:662
 #, c-format
 msgid "Copyright © %u-%u – Arnaud Bonatti"
 msgstr "Copyright © %u-%u – Arnaud Bonatti"
 
 #. Translators: about dialog text; this string should be replaced by a text crediting yourselves and your translation team, or should be left empty. Do not translate literally!
-#: editor/dconf-editor.vala:668
+#: editor/dconf-editor.vala:669
 msgid "translator-credits"
 msgstr ""
 "Daniel Nylander <po@danielnylander.se>\n"
@@ -1280,7 +1279,7 @@ msgstr ""
 "<tp-sv@listor.tp-sv.se>."
 
 #. Translators: about dialog text; label of the website link
-#: editor/dconf-editor.vala:674
+#: editor/dconf-editor.vala:675
 msgid "Page on GNOME wiki"
 msgstr "Sida på GNOME-wikin"
 
@@ -2288,12 +2287,10 @@ msgstr ""
 #: editor/registry-info.vala:620
 msgid ""
 "Variants content should be surrounded by XML brackets (‘<’ and ‘>’). See "
-"https://developer.gnome.org/glib/stable/gvariant-text.html for complete "
-"documentation."
+"https://docs.gtk.org/glib/gvariant-text.html for complete documentation."
 msgstr ""
-"Varianter ska omges av XML-klammer (tecknen ”<” och ”>”). Se https://"
-"developer.gnome.org/glib/stable/gvariant-text.html för fullständig "
-"dokumentation."
+"Varianter ska omges av XML-klammer (tecknen ”<” och ”>”). Se https://docs."
+"gtk.org/glib/gvariant-text.html för fullständig dokumentation."
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a "maybe type" and with a string type (or similar); neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
 #: editor/registry-info.vala:627
@@ -2448,118 +2445,3 @@ msgstr "Flyttbart schema"
 #: editor/setting-object.vala:417
 msgid "DConf backend"
 msgstr "DConf-gränssnitt"
-
-#~ msgid "Pause night mode"
-#~ msgstr "Pausa nattläge"
-
-#~ msgid "Reuse night mode"
-#~ msgstr "Använd nattläge igen"
-
-#~ msgid "Use night mode"
-#~ msgstr "Använd nattläge"
-
-#~ msgid "A flag to follow system night light"
-#~ msgstr "En flagga för att följa systemets nattbelysning"
-
-#~ msgid "Use GNOME night light setting to activate night-mode."
-#~ msgstr "Använd GNOME:s nattbelysningsinställning för att aktivera nattläge."
-
-#~ msgid "Remove"
-#~ msgstr "Ta bort"
-
-#~ msgid "Remove this bookmark"
-#~ msgstr "Ta bort detta bokmärke"
-
-#~ msgid "_About"
-#~ msgstr "_Om"
-
-#~ msgid "_Quit"
-#~ msgstr "A_vsluta"
-
-#~ msgid "[PATH|FIXED_SCHEMA [KEY]|RELOCATABLE_SCHEMA:PATH [KEY]]"
-#~ msgstr "[SÖKVÄG|FAST_SCHEMA [NYCKEL]|FLYTTBART_SCHEMA:SÖKVÄG [NYCKEL]]"
-
-#~ msgid "Copy descriptor"
-#~ msgstr "Kopiera deskriptor"
-
-#~ msgid "Delayed setting changes will be shown here"
-#~ msgstr "Fördröjda inställningsändringar kommer att visas här"
-
-#~ msgid "Current folder"
-#~ msgstr "Aktuell mapp"
-
-#~ msgid "Keys"
-#~ msgstr "Nycklar"
-
-#~ msgctxt "shortcut window"
-#~ msgid "Current row menu"
-#~ msgstr "Aktuell radmeny"
-
-#~ msgid "Double [%s..%s]"
-#~ msgstr "Flyttal [%s..%s]"
-
-#~ msgid "Oops! Cannot find something at this path."
-#~ msgstr "Kan inte hitta något i denna sökväg."
-
-#~ msgctxt "shortcut window"
-#~ msgid "Expand"
-#~ msgstr "Expandera"
-
-#~ msgctxt "shortcut window"
-#~ msgid "Expand all subtrees"
-#~ msgstr "Expandera alla underträd"
-
-#~ msgctxt "shortcut window"
-#~ msgid "Collapse"
-#~ msgstr "Fäll ihop"
-
-#~ msgctxt "shortcut window"
-#~ msgid "Collapse all subtrees"
-#~ msgstr "Fäll ihop alla underträd"
-
-#~ msgid "Key Editor"
-#~ msgstr "Nyckelredigerare"
-
-#~ msgid "Cancel"
-#~ msgstr "Avbryt"
-
-#~ msgid "_Find…"
-#~ msgstr "_Sök…"
-
-#~ msgid "Not found"
-#~ msgstr "Hittades inte"
-
-#~ msgid ""
-#~ "This program is free software; you can redistribute it and/or modify it "
-#~ "under the terms of the GNU General Public License as published by the "
-#~ "Free Software Foundation; either version 2 of the License, or (at your "
-#~ "option) any later version.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be useful, but "
-#~ "WITHOUT ANY WARRANTY; without even the implied warranty of "
-#~ "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General "
-#~ "Public License for more details.\n"
-#~ "\n"
-#~ "You should have received a copy of the GNU General Public License along "
-#~ "with this program; if not, write to the Free Software Foundation, Inc., "
-#~ "51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
-#~ msgstr ""
-#~ "Detta program är fri programvara. Du kan distribuera det och/eller "
-#~ "modifiera det under villkoren i GNU General Public License, publicerad av "
-#~ "Free Software Foundation, antingen version 2 eller (om du så vill) någon "
-#~ "senare version.\n"
-#~ "\n"
-#~ "Detta program distribueras i hopp om att det ska vara användbart, men "
-#~ "UTAN NÅGON SOM HELST GARANTI, även utan underförstådd garanti om "
-#~ "SÄLJBARHET eller LÄMPLIGHET FÖR NÅGOT SPECIELLT ÄNDAMÅL. Se GNU General "
-#~ "Public License för ytterligare information.\n"
-#~ "\n"
-#~ "Du bör ha fått en kopia av GNU General Public License tillsammans med "
-#~ "detta program. Om inte, skriv till Free Software Foundation, Inc., 51 "
-#~ "Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA"
-
-#~ msgid "Error setting value: %s"
-#~ msgstr "Fel vid inställning av värde: %s"
-
-#~ msgid "Value"
-#~ msgstr "Värde"
