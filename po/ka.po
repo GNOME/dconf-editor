@@ -6,9 +6,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: for dconf-editor\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2024-01-22 12:19+0000\n"
-"PO-Revision-Date: 2024-02-12 15:04+0100\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues/\n"
+"POT-Creation-Date: 2024-02-12 14:05+0000\n"
+"PO-Revision-Date: 2024-02-16 14:43+0100\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -326,6 +326,8 @@ msgid ""
 "If “true”, Dconf Editor opens a popup when launched reminding the user to be "
 "careful."
 msgstr ""
+"თუ \"ჭეშმარიტია\", Dconf_ის რედაქტორი, როცა გაუშვებთ, გახსნის მხტუნარას, "
+"რომელიც მომხმარებელს გააფრთხილებს, ფრთხილად იყოს."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/small-keys-list-rows'
 #: editor/ca.desrt.dconf-editor.gschema.xml:159
@@ -431,7 +433,7 @@ msgstr ""
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/relocatable-schemas-enabled-mappings'
 #: editor/ca.desrt.dconf-editor.gschema.xml:210
 msgid "Enabled relocatable schema mapping facilities"
-msgstr ""
+msgstr "გადატანადი სქემის ასახვის ფუნქციები ჩართულია"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/relocatable-schemas-enabled-mappings'
 #: editor/ca.desrt.dconf-editor.gschema.xml:212
@@ -446,7 +448,7 @@ msgstr ""
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/relocatable-schemas-user-paths'
 #: editor/ca.desrt.dconf-editor.gschema.xml:217
 msgid "Mapping of paths to manually associated schemas"
-msgstr ""
+msgstr "ბილიკების ასახვა ხელით ასოცირებულ სქემებთან"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/relocatable-schemas-user-paths'
 #: editor/ca.desrt.dconf-editor.gschema.xml:219
@@ -479,6 +481,8 @@ msgstr "ჩანიშნული ბილიკების სია"
 #: editor/ca.desrt.dconf-editor.gschema.xml:235
 msgid "Contains all paths bookmarked by the user as an array of strings."
 msgstr ""
+"შეიცავს სანიშნეებში მომხმარებლის მიერ შენახულ ყველა ბილიკს, სტრიქონების "
+"მასივის სახით."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/small-bookmarks-rows'
 #: editor/ca.desrt.dconf-editor.gschema.xml:240
@@ -528,6 +532,8 @@ msgid ""
 "A byte value is an integer between 0 and 255. It may be used to pass around "
 "characters."
 msgstr ""
+"ბაიტის მნიშვნელობა მთელი რიცხვია 0-255 შუალედიდან. ის შეგიძლიათ, სიმბოლოების "
+"მაგიერ გამოიყენოთ."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/bytestring'
 #: editor/ca.desrt.dconf-editor.gschema.xml:289
@@ -884,6 +890,8 @@ msgstr ""
 #: editor/ca.desrt.dconf-editor.gschema.xml:510
 msgid "Conflicting key defaulting to “1” that should give an error"
 msgstr ""
+"გამომრიცხავი გასაღები, რომლის ნაგულისხმევი მნიშვნელობაა \"1\", რომელმაც "
+"შეცდომა უნდა გამოაგდოს"
 
 #. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 default-value-conflict'
 #. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 default-value-conflict'
@@ -898,7 +906,7 @@ msgstr ""
 #. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 range-conflict'
 #: editor/ca.desrt.dconf-editor.gschema.xml:517
 msgid "Conflicting key with no range that should give an error"
-msgstr ""
+msgstr "გამომრიცხავი გასაღები შუალედის გარეშე, რომელმაც შეცდომა უნდა გამოაგდოს"
 
 #. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 range-conflict'
 #. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 range-conflict'
@@ -914,6 +922,8 @@ msgstr ""
 #: editor/ca.desrt.dconf-editor.gschema.xml:524
 msgid "A (simple) string conflicting key that should give a error"
 msgstr ""
+"(მარტივი) სტრიქონის ტიპის გამომრიცხავი გასაღები, რომელმაც შეცდომა უნდა "
+"გამოაგდოს"
 
 #. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 type-conflict'
 #. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 type-conflict'
@@ -928,7 +938,7 @@ msgstr ""
 #. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 warning-similar'
 #: editor/ca.desrt.dconf-editor.gschema.xml:531
 msgid "Conflicting key from Conflict1 that should give a warning"
-msgstr ""
+msgstr "გამომრიცხავი გასაღები Conflict1-დან, რომელმაც შეცდომა უნდა გამოაგდოს"
 
 #. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 warning-similar'
 #. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 warning-similar'
@@ -949,21 +959,25 @@ msgstr "ნორმალური არაკონფლიქტური �
 #: editor/ca.desrt.dconf-editor.gschema.xml:547
 msgid "Conflicting key defaulting to “2” that should give an error"
 msgstr ""
+"გამომრიცხავი გასაღები, რომლის ნაგულისხმევი მნიშვნელობაა \"2\", რომელმაც "
+"შეცდომა უნდა გამოაგდოს"
 
 #. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 range-conflict'
 #: editor/ca.desrt.dconf-editor.gschema.xml:555
 msgid "Conflicting key with range 0~5 that should give an error"
-msgstr ""
+msgstr "გამომრიცხავი გასაღები შუალედიდან 0~5, რომელმაც შეცდომა უნდა გამოაგდოს"
 
 #. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 type-conflict'
 #: editor/ca.desrt.dconf-editor.gschema.xml:562
 msgid "A nullable-string conflicting key that should give an error"
 msgstr ""
+"განულებადი სტრიქონის ტიპის გამომრიცხავი გასაღები, რომელმაც შეცდომა უნდა "
+"გამოაგდოს"
 
 #. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 warning-similar'
 #: editor/ca.desrt.dconf-editor.gschema.xml:569
 msgid "Conflicting key from Conflict2 that should give a warning"
-msgstr ""
+msgstr "გამომრიცხავი გასაღები Conflict2-დან, რომელმაც შეცდომა უნდა გამოაგდოს"
 
 #. Translators: command-line option description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:159
@@ -983,12 +997,12 @@ msgstr "საწყისი გაფრთხილება ნაჩვე�
 #. Translators: command-line text, description of the application in 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
 #: editor/dconf-editor.vala:203
 msgid "Graphical interface for editing other applications settings."
-msgstr ""
+msgstr "გრაფიკული ინტერფეისი სხვა აპლიკაციის პარამეტრების ჩასასწორებლად."
 
 #. Translators: command-line text, describes how the application proceeds for editing other applications settings, in 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
 #: editor/dconf-editor.vala:206
 msgid "Uses the gsettings API of the glib library, among others."
-msgstr ""
+msgstr "იყენებს gsettings API-ს ბიბლიოთეკიდან glib, სხვებთან ერთად."
 
 #. Translators: command-line header description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:209
@@ -1119,6 +1133,7 @@ msgstr "დაკოპირდა გაცვლის ბაფერში"
 #: editor/dconf-editor.vala:641
 msgid "A graphical viewer and editor of applications’ internal settings."
 msgstr ""
+"გრაფიკული დამთვალიერებელი და რედაქტორი აპლიკაციების შიდა პარამეტრებისთვის."
 
 #. Translators: text crediting a game author, seen in the About dialog
 #: editor/dconf-editor.vala:646
@@ -1133,18 +1148,18 @@ msgstr "Arnaud Bonatti"
 #. Translators: text crediting a maintainer, seen in the About dialog
 #: editor/dconf-editor.vala:654
 msgid "Copyright © 2010-2014 – Canonical Ltd"
-msgstr ""
+msgstr "საავტორო უფლებები © 2010-2014 – Canonical Ltd"
 
 #. Translators: text crediting a maintainer, seen in the About dialog
 #: editor/dconf-editor.vala:658
 msgid "Copyright © 2017-2018 – Davi da Silva Böger"
-msgstr ""
+msgstr "საავტორო უფლებები © 2017-2018 – Davi da Silva Böger"
 
 #. Translators: text crediting a maintainer, seen in the About dialog; the %u are replaced with the years of start and end
 #: editor/dconf-editor.vala:662
 #, c-format
 msgid "Copyright © %u-%u – Arnaud Bonatti"
-msgstr ""
+msgstr "საავტორო უფლებები © %u-%u – Arnaud Bonatti"
 
 #. Translators: about dialog text; this string should be replaced by a text crediting yourselves and your translation team, or should be left empty. Do not translate literally!
 #: editor/dconf-editor.vala:669
@@ -1238,6 +1253,7 @@ msgstr "უცნობი სქემა “%s”."
 #: editor/dconf-window.vala:274
 msgid "Thanks for using Dconf Editor for editing your settings!"
 msgstr ""
+"მადლობა, რომ იყენებთ Dconf რედაქტორს თქვენი პარამეტრების ჩასასწორებლად!"
 
 #. Translators: initial "use at your own risk" dialog, the warning text
 #: editor/dconf-window.vala:277
@@ -2023,7 +2039,7 @@ msgstr "სახელი"
 #. Translators: field description when displaying key properties; the key can be defined by a schema or by the dconf engine
 #: editor/registry-info.vala:73
 msgid "Defined by"
-msgstr ""
+msgstr "აღმწერია"
 
 #. Translators: field description when displaying key properties; the schema id (if the key is defined by a schema)
 #: editor/registry-info.vala:76
