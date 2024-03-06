@@ -53,7 +53,6 @@
   <!--GNOME Projects usually have no per-app donation page-->
   <url type="donation">https://www.gnome.org/donate/</url>
   <update_contact>arnaud.bonatti_at_gmail.com</update_contact>
-  <project_group>GNOME</project_group>
   <developer id="org.gnome">
     <name>The GNOME Project</name>
   </developer>
