@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: for dconf-editor\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues/\n"
-"POT-Creation-Date: 2024-02-12 14:05+0000\n"
-"PO-Revision-Date: 2024-02-16 14:43+0100\n"
+"POT-Creation-Date: 2024-02-16 13:44+0000\n"
+"PO-Revision-Date: 2024-03-08 10:01+0100\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -204,12 +204,17 @@ msgid ""
 "database. This is useful when developing applications that use these "
 "settings."
 msgstr ""
+"Dconf Editor ხელსაწყოა, რომელიც dconf კონფიგურაციის მონაცემთა ბაზის პირდაპირ "
+"ჩასწორების საშუალებას გაძლევთ. გამოადგებათ, როცა წერთ აპლიკაციებს, რომლებიც "
+"ამ პარამეტრებს იყენებს."
 
 #: editor/ca.desrt.dconf-editor.appdata.xml.in:17
 msgid ""
 "Editing your configuration directly is an advanced feature and may cause "
 "applications to not work correctly."
 msgstr ""
+"თქვენი კონფიგურაციის პირდაპირ ჩასწორება დამატებითი ფუნქციაა და შეიძლება, "
+"აპლიკაციებს ნორმალურად მუშაობაში ხელი შეუშალოს."
 
 #: editor/ca.desrt.dconf-editor.appdata.xml.in:35
 msgid "Browse the keys used by installed applications"
@@ -289,6 +294,8 @@ msgid ""
 "If “true”, Dconf Editor tries at launch to navigate to the path described in "
 "the “saved-view” key."
 msgstr ""
+"თუ \"ჭეშმარიტია\", Dconf Editor ცდის, გაშვებისას გადავიდეს ბილიკზე, რომელიც "
+"\"saved-view\" პარამეტრშია აღწერილი."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/saved-pathbar-path'
 #: editor/ca.desrt.dconf-editor.gschema.xml:138
@@ -302,6 +309,9 @@ msgid ""
 "startup is a parent path of this one, Dconf Editor tries to restore the "
 "pathbar state at this path."
 msgstr ""
+"თუ პარამეტრი \"restore-view\" დაყენებულია ჭეშმარიტზე და თუ ბილიკი, რომელიც "
+"გაშვებისასაა მითითებული, ამ საქაღალდის მშობელია, Dconf Editor ცდის, ბილიკის "
+"ზოლი ამ ბილიკზე აღადგინოს."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/saved-view'
 #: editor/ca.desrt.dconf-editor.gschema.xml:145
@@ -314,6 +324,8 @@ msgid ""
 "If the “restore-view” key is set to “true”, Dconf Editor tries at launch to "
 "navigate to this path."
 msgstr ""
+"თუ პარამეტრი \"restore-view\" დაყენებულია \"ჭეშმარიტზე\", Dconf Editor ცდის, "
+"გაშვებისას ამ ბილიკზე გადავიდეს."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/show-warning'
 #: editor/ca.desrt.dconf-editor.gschema.xml:152
@@ -369,6 +381,10 @@ msgid ""
 "installation paths of schemas can. If “true”, the keys list is sorted case-"
 "sensitively, with in usual order upper-case folders first."
 msgstr ""
+"GSettings-ს არ აქვს საშუალება, პარამეტრებს მაღალი რეგისტრის სიმბოლოების "
+"მქონე სახელები მიანიჭოს, მაგრამ სქემის დაყენების ბილიკებს შეუძლიათ. თუ "
+"\"ჭეშმარიტია\", პარამეტრის სია დალაგდება რეგისტრის დამოკიდებულებით და მაღალი "
+"რეგისტრის სიმბოლოები დასაწყისში იქნება."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-use-extra-buttons'
 #: editor/ca.desrt.dconf-editor.gschema.xml:180
@@ -382,6 +398,9 @@ msgid ""
 "will determine if any action is taken inside of a browser window when either "
 "is pressed."
 msgstr ""
+"მომხმარებლებისთვის, რომლის თაგუნებსაც აქვთ \"წინ\" და უკან\" ღილაკები, ეს "
+"პარამეტრი განსაზღვრავს, რა მოხდება ბრაუზერის ფანჯრის შიგნით, თუ რომელიმე "
+"მათგანს დააწვებით."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-back-buttons'
 #: editor/ca.desrt.dconf-editor.gschema.xml:188
@@ -471,6 +490,9 @@ msgid ""
 "When a folder only contains one subfolder and no keys, Dconf Editor can jump "
 "to that subfolder directly. This flag enables that behaviour."
 msgstr ""
+"როცა საქაღალდე მხოლოდ ერთ ქვესაქაღალდეს შეიცავს, პარამეტრებს კი არა, Dconf "
+"Editor-ს შეუძლია, პირდაპირ ქვესაქაღალდეში გადავიდეს. ეს ალამი ჩართავს ამ "
+"ქცევას."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/bookmarks'
 #: editor/ca.desrt.dconf-editor.gschema.xml:233
@@ -520,6 +542,10 @@ msgid ""
 "take a “nothing” value. A nullable boolean can only take three values, "
 "“true”, “false” and “nothing”."
 msgstr ""
+"GSetting-ს აქვს განულებადი ტიპების მხარდაჭერა, რომლებიც ჰგვანან სხვა ტიპებს, "
+"მაგრამ, შეუძლიათ, \"არაფერი\" მიიღონ მნიშვნელობად. განულებად ლოგიკურ ცვლადს "
+"3 მნიშვნელობა შეიძლება ჰქონდეს: \"true\" (ჭეშმარიტი), \"false\" (ცრუ) და "
+"\"nothing\" (არაფერი)."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/byte'
 #: editor/ca.desrt.dconf-editor.gschema.xml:282
@@ -547,6 +573,9 @@ msgid ""
 "valid utf8. In that case, the convention is that the nul terminator "
 "character should be included as the last character in the array."
 msgstr ""
+"ტიპი bytestring ჩვეულებრივ გამოიყენება, რომ გადასცეთ სტრიქონები, რომლებიც "
+"შეიძლება, სწორი utf8 არ იყოს. ამ შემთხვევაში არსებობს პირობა, რომ მასივის "
+"ბოლო სიმბოლო ნულოვანი დასრულების სიმბოლო უნდა იყოს."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/bytestring-array'
 #: editor/ca.desrt.dconf-editor.gschema.xml:296
@@ -559,6 +588,8 @@ msgid ""
 "This is the type of an array of bytestrings. The bytestring type is commonly "
 "used to pass around strings that may not be valid utf8."
 msgstr ""
+"ეს bytestring-ების მასივის ტიპია. ტიპი bytestring ჩვეულებრივ გამოიყენება, "
+"რომ გადასცეთ სტრიქონები, რომლებიც შეიძლება, სწორი utf8 არ იყოს."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-handle'
 #: editor/ca.desrt.dconf-editor.gschema.xml:303
@@ -586,6 +617,9 @@ msgid ""
 "the bus. If you are not interacting with D-Bus, then there is no reason to "
 "make use of this type."
 msgstr ""
+"ობიექტის ბილიკი მატარებელზე მითითებულ სამიზნეზე არსებული D-Bus-ის ობიექტების "
+"იდენტიფიკაციისთვის გამოიყენება. თუ თქვენ არ ურთიერთობთ D-Bus-თან, ამ ტიპის "
+"გამოყენებას აზრი არ აქვს."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-object-path-array'
 #: editor/ca.desrt.dconf-editor.gschema.xml:317
@@ -612,6 +646,9 @@ msgid ""
 "message. If you are not interacting with D-Bus, then there is no reason to "
 "make use of this type."
 msgstr ""
+"D-Bus-ის ხელმოწერა სტრიქონია, რომელიც D-Bus-ის მეთოდის ან შეტყობინების ტიპის "
+"ხელმოწერად შეგიძლიათ, გამოიყენოთ. თუ D-Bus-თან ურთიერთობას არ აპირებთ, ამ "
+"ცვლადის გამოყენებას აზრი არ აქვს."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dict-entry'
 #: editor/ca.desrt.dconf-editor.gschema.xml:331
@@ -624,6 +661,8 @@ msgid ""
 "A dictionary maps values of a basic type to another value (of any type). A "
 "dictionary entry is one such mapping."
 msgstr ""
+"ლექსიკონი ასახავს საბაზისო ტიპს სხვა მნიშვნელობაში (ნებისმიერი ტიპის). "
+"ლექსიკონის ჩანაწერი ერთ-ერთი ასეთი ასახვაა."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dictionary'
 #: editor/ca.desrt.dconf-editor.gschema.xml:338
@@ -636,6 +675,8 @@ msgid ""
 "A dictionary maps values of a basic type to another value (of any type). One "
 "simple use case is to map strings to variants."
 msgstr ""
+"ლექსიკონი ასახავს საბაზისო ტიპს სხვა მნიშვნელობაში (ნებისმიერი ტიპის). ერთ-"
+"ერთი მარტივი შემთხვევაა სტრიქონების ასახვა ვარიანტებში."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/double'
 #: editor/ca.desrt.dconf-editor.gschema.xml:345
@@ -782,6 +823,9 @@ msgid ""
 "The string type could accept any utf8 string. Note that an empty string “''” "
 "is not the same as NULL (nothing); see also the “string-nullable” key."
 msgstr ""
+"სტრიქონის ტიპი ნებისმიერ utf8 სტრიქონს იღებს. დაიმახსოვრეთ, რომ ცარიელი "
+"სტრიქონი “''” და NULL (არაფერი) ერთი და იგივე არაა. ასევე იხილეთ ტიპი "
+"\"string-nullable\"."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string-array'
 #: editor/ca.desrt.dconf-editor.gschema.xml:431
@@ -794,6 +838,8 @@ msgid ""
 "A string array contains any number of strings of whatever length. It may be "
 "an empty array, “[]”."
 msgstr ""
+"სტრიქონების მასივი შეიცავს ნებისმიერი სიგრძისა და რაოდენობის სტრიქონებს. "
+"ასევე, შეიძლება, ცარიელიც იყოს \"[]\"."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string-nullable'
 #: editor/ca.desrt.dconf-editor.gschema.xml:438
@@ -836,6 +882,8 @@ msgid ""
 "An enumeration could contain only one item, but that’s probably an error. "
 "Dconf Editor warns you in that case."
 msgstr ""
+"ჩამონათვალი შეიძლება, მხოლოდ, ერთ ელემენტს შეიცავდეს, მაგრამ ეს არასწორია. "
+"Dconf Editor გაგაფრთხილებთ, თუ ამას დააპირებთ."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-range'
 #: editor/ca.desrt.dconf-editor.gschema.xml:460
@@ -848,6 +896,8 @@ msgid ""
 "A range could limit an integer key to only allow one value, but that’s "
 "probably an error. Dconf Editor warns you in that case."
 msgstr ""
+"შუალედს შეუძლია შეზღუდოს მთელი რიცხვის პარამეტრი, რომ მან მხოლოდ ერთი "
+"მნიშვნელობა მიიღოს. Dconf Editor გაგაფრთხილებთ, თუ ამას დააპირებთ."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-triv'
 #: editor/ca.desrt.dconf-editor.gschema.xml:467
@@ -860,6 +910,9 @@ msgid ""
 "There’s an empty tuple type (called sometimes “triv”) that is a tuple with "
 "no content, and can only take “()” as value."
 msgstr ""
+"არსებობს ცარიელი კორტეჟის ტიპი (რომელსაც, ხანდახან, \"triv\" ჰქვია ხოლმე), "
+"რომელიც კორტეჟია, შემცველობის გარეშე და მნიშვნელობად, მხოლოდ \"()\" შეუძლია, "
+"მიიღოს."
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/relocatable/boolean' (with default /ca/desrt/dconf-editor/relocatable-* settings)
 #: editor/ca.desrt.dconf-editor.gschema.xml:482
@@ -885,6 +938,9 @@ msgid ""
 "This key is a test for multiple schemas in the same path with conflicting "
 "keys. Non-conflicting keys should have no issues."
 msgstr ""
+"ეს პარამეტრი ტესტია ერთზე მეტი სქემისთვის იგივე ბილიკით, რაც "
+"ურთიერთგამომრიცხავ პარამეტრებს ჰქონდათ. არაურთიერთგამომრიცხავ პარამეტრებს "
+"პრობლემა არ უნდა ჰქონდეთ."
 
 #. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 default-value-conflict'
 #: editor/ca.desrt.dconf-editor.gschema.xml:510
@@ -902,6 +958,9 @@ msgid ""
 "keys. It shouldn’t be editable as a key mapped to the same path has a "
 "different default value."
 msgstr ""
+"ეს პარამეტრი ტესტია ერთზე მეტი სქემისთვის იგივე ბილიკით, რაც "
+"ურთიერთგამომრიცხავ პარამეტრებს ჰქონდათ. ის ჩასწორებადი არ უნდა იყს, რადგან "
+"პარამეტრს, რომელიც ასახულია იგივე ბილიკზე, სხვა მნიშვნელობა გააჩნია."
 
 #. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 range-conflict'
 #: editor/ca.desrt.dconf-editor.gschema.xml:517
@@ -917,6 +976,9 @@ msgid ""
 "keys. It shouldn’t be editable as a key mapped to the same path has a "
 "different range."
 msgstr ""
+"ეს პარამეტრი ტესტია ერთზე მეტი სქემისთვის იგივე ბილიკით, რაც "
+"ურთიერთგამომრიცხავ პარამეტრებს ჰქონდათ. ის ჩასწორებადი არ უნდა იყს, რადგან "
+"პარამეტრს, რომელიც ასახულია იგივე ბილიკზე, სხვა შუალედი გააჩნია."
 
 #. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 type-conflict'
 #: editor/ca.desrt.dconf-editor.gschema.xml:524
@@ -934,6 +996,9 @@ msgid ""
 "keys. It shouldn’t be editable as a key mapped to the same path has a "
 "different type."
 msgstr ""
+"ეს პარამეტრი ტესტია ერთზე მეტი სქემისთვის იგივე ბილიკით, რაც "
+"ურთიერთგამომრიცხავ პარამეტრებს ჰქონდათ. ის ჩასწორებადი არ უნდა იყს, რადგან "
+"პარამეტრს, რომელიც ასახულია იგივე ბილიკზე, სხვა ტიპი აქვს."
 
 #. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 warning-similar'
 #: editor/ca.desrt.dconf-editor.gschema.xml:531
@@ -949,6 +1014,9 @@ msgid ""
 "keys. It can be edited, since the types are compatible, but it is still an "
 "issue."
 msgstr ""
+"ეს პარამეტრი ტესტია ერთზე მეტი სქემისთვის იგივე ბილიკით, რაც "
+"ურთიერთგამომრიცხავ პარამეტრებს ჰქონდათ. ის ჩასწორებადია, რადგან ტიპები "
+"თავსებადია, მაგრამ ეს ჯერ კიდევ პრობლემაა."
 
 #. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 another-non-conflicting-key'
 #: editor/ca.desrt.dconf-editor.gschema.xml:540
@@ -1259,6 +1327,8 @@ msgstr ""
 #: editor/dconf-window.vala:277
 msgid "Don’t forget that some options may break applications, so be careful."
 msgstr ""
+"ნუ დაივიწყებთ, რომ ზოგიერთ პარამეტრს აპლიკაციებისთვის პრობლემის შექმნა "
+"შეუძლია. ფრთხილად იყავით."
 
 #. Translators: initial "use at your own risk" dialog, the button label
 #: editor/dconf-window.vala:280
@@ -1276,6 +1346,8 @@ msgid ""
 "There are pending changes. Use Shift+Ctrl+Q to apply changes and quit, or "
 "Alt+F4 to dismiss changes and quit."
 msgstr ""
+"არსებობს გადაუტარებელი ცვლილებები. გამოიყენეთ Shift+Ctrl+Q, რომ გამოიყენოთ "
+"ცვლილებები და გახვიდეთ, ან Alt+F4, რომ მოაცილოთ ცვლილებები და გახვიდეთ."
 
 #. Translators: notification text, when the requested folder has been removed; the %s is the folder path
 #: editor/dconf-window.vala:777
@@ -1914,7 +1986,7 @@ msgstr "ეს ცვლილება წაიშლება, თუ ამ 
 #. Translators: displayed in the bottom bar in normal sized windows, when the user edits a key (with default "always confirm implicit" behaviour notably)
 #: editor/modifications-revealer.vala:313
 msgid "The change will be applied on such request or if you quit this view."
-msgstr ""
+msgstr "ეს ცვლილება გადატარდება მოთხოვნისას, ან თუ ამ ხედიდან გახვალთ."
 
 #. Translators: Text displayed in the bottom bar; displayed if there are no pending changes, to document what is the "delay mode".
 #: editor/modifications-revealer.vala:337
@@ -1990,6 +2062,8 @@ msgid ""
 "This key is defined and used by more than one schema. This could lead to "
 "problems. Edit value at your own risk."
 msgstr ""
+"ეს პარამეტრ აღწერილია და გამოიყენება ერთზე მეტი სქემის მიერ. ამან პრობლემები "
+"შეიძლება, გამოიწვიოს. ჩასწორების შემთხვევაში პასუხს თქვენ აგებთ."
 
 #. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/Conflict/type-conflict'
 #: editor/registry-info.ui:87
@@ -2140,6 +2214,8 @@ msgid ""
 "Use a dot as decimal mark and no thousands separator. You can use the X.Ye+Z "
 "notation."
 msgstr ""
+"გამოიყენეთ წერტილი წილადის ნიშნისთვის და არა ათასების გასაცალკევებლად. "
+"შეგიძლიათ გამოიყენოთ X.Ye+Z ნოტაცია."
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of type "variant" (or of a type composed with a variant)
 #: editor/registry-info.vala:620
