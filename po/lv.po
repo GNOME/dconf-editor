@@ -6,9 +6,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2023-09-18 15:05+0000\n"
-"PO-Revision-Date: 2024-02-24 17:06+0200\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues/\n"
+"POT-Creation-Date: 2024-02-24 21:52+0000\n"
+"PO-Revision-Date: 2024-03-08 21:07+0200\n"
 "Last-Translator: Rūdolfs Mazurs <rudolfs.mazurs@gmail.com>\n"
 "Language-Team: Latvian <lata-l10n@googlegroups.com>\n"
 "Language: lv\n"
@@ -218,16 +218,16 @@ msgstr ""
 "Tieša konfigurācijas rediģēšana ir paredzēta lietpratējiem un lietotne var "
 "sākt strādāt nepareizi."
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:34
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:35
 msgid "Browse the keys used by installed applications"
 msgstr "Pārlūkot atslēgas, ko izmanto instalētās lietotnes"
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:38
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:39
 msgid "Read keys descriptions and edit their values"
 msgstr "Lasīt atslēgu aprakstus un rediģēt to vērtības"
 
 #. a translatable version of project_group
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:53
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:58
 msgid "The GNOME Project"
 msgstr "GNOME projekts"
 
@@ -498,7 +498,7 @@ msgid ""
 "desrt/dconf-editor//), defining possibly multiple paths. The same schema ID "
 "may be associated with multiple path specifications."
 msgstr ""
-"Direktorija, kas kartē shēmas ID ar ceļa specifikācijām. To izmanto, lai "
+"Direktorijs, kas kartē shēmas ID ar ceļa specifikācijām. To izmanto, lai "
 "ļautu lietotājam asociēt pārvietojamo shēmu ar noteiktiem ceļiem. Ceļa "
 "specifikācija var saturēt aizstājējzīmes tukšu segmentu formā (piemēram, /ca/"
 "desrt/dconf-editor//), definējot, iespējams, vairākus ceļus. To pašu shēmas "
@@ -889,14 +889,6 @@ msgstr "Variants, tips “v”"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/variant'
 #: editor/ca.desrt.dconf-editor.gschema.xml:447
-#| msgid ""
-#| "Variants could be stored inside variants, and consequently as a GSettings "
-#| "type. Their representation use the XML brackets (‘<’ and ‘>’ characters, "
-#| "in a gschema file “&#60;” and “&#62;” respectively), with a parsable "
-#| "representation of their content inside. If unclear, the type can be given "
-#| "in the value with a prefix annotation like “@x” (where “x” is the type "
-#| "string) or “int64”. See https://developer.gnome.org/glib/stable/gvariant-"
-#| "text.html for complete documentation."
 msgid ""
 "Variants could be stored inside variants, and consequently as a GSettings "
 "type. Their representation use the XML brackets (‘<’ and ‘>’ characters, in "
@@ -910,8 +902,8 @@ msgstr ""
 "izmanto XML iekavas (“<” un “>” rakstzīmes un gschema datnēs atbilstoši "
 "“&#60;” un “&#62;”),kas ir parsējama to satura reprezentācija. Ja nav "
 "viennozīmīgi skaidrs, tipu var norādīt vērtībā ar prefiksu “@x”, kur “x” ir "
-"tipa virkne, vai “int64”. Pilna dokumentācija ir pieejama"
-" https://docs.gtk.org/glib/gvariant-text.html lapā."
+"tipa virkne, vai “int64”. Pilna dokumentācija ir pieejama https://docs.gtk."
+"org/glib/gvariant-text.html lapā."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-enum'
 #: editor/ca.desrt.dconf-editor.gschema.xml:452
@@ -2275,10 +2267,6 @@ msgstr ""
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of type "variant" (or of a type composed with a variant)
 #: editor/registry-info.vala:620
-#| msgid ""
-#| "Variants content should be surrounded by XML brackets (‘<’ and ‘>’). See "
-#| "https://developer.gnome.org/glib/stable/gvariant-text.html for complete "
-#| "documentation."
 msgid ""
 "Variants content should be surrounded by XML brackets (‘<’ and ‘>’). See "
 "https://docs.gtk.org/glib/gvariant-text.html for complete documentation."
