@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: for dconf-editor\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues/\n"
-"POT-Creation-Date: 2024-02-16 13:44+0000\n"
-"PO-Revision-Date: 2024-03-08 10:01+0100\n"
+"POT-Creation-Date: 2024-03-08 09:02+0000\n"
+"PO-Revision-Date: 2024-03-17 03:55+0100\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -368,6 +368,17 @@ msgid ""
 "change path whereas the second dismiss it. The “always-delay” value adds "
 "each change in delay mode, allowing to apply multiple keys at once."
 msgstr ""
+"მნიშვნელობა \"unsafe\" რეკომენდებული არაა: გასაღებებისთვის, რომლებსაც "
+"სპეციალური რეგისტრის ტიპი არ გააჩნია, ის განაახლებს პარამეტრის მნიშვნელობას "
+"ყოველ ჯერზე, რამდენჯერაც ჩანაწერში რამე შეიცვლება, შუალედური მდგომარეობების "
+"ჩათვლით. მნიშვნელობა \"უსაფრთხო\" ამ შემთხვევაში დადასტურებას ითხოვს, მაგრამ "
+"უფლებას გაძლევთ, ლოგიკური და განულებადი ლოგიკური მნიშვნელობები, "
+"ჩამონათვალები და ალმები მყისიერად შეცვალოთ. მნიშვნელობები \"always-confirm-"
+"implicit\" და \"always-confirm-explicit\" ყოველთვის გთხოვთ დადასტურებას, "
+"მაგრამ პირველი გადაატარებს ცვლილებას, თუ ბილიკი შეცვალეთ, როცა მეორე "
+"მოაცილებს მას. მნიშვნელობა \"always-delay\" თითოეულ ცვლილებას დაყოვნების "
+"რეჟიმში ამატებს, რითიც ერთდროულად მრავალი პარამეტრის შეცვლის საშუალებას "
+"იძლევა."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/sort-case-sensitive'
 #: editor/ca.desrt.dconf-editor.gschema.xml:173
@@ -448,6 +459,11 @@ msgid ""
 "be disabled by setting this flag to “false”. Note that this option will be "
 "removed when a better way to do things is found."
 msgstr ""
+"Dconf Editor-ს შეუძლია მონიტორინგი, ემატება და იშლება თუ არა სქემები მრავალი "
+"შესაძლო მდებარეობიდან. ეს სქემების სიის ცვლილების ყოველ სამ წამში შემოწმებით "
+"ხდება. რადგან ეს გზა ოპტიმალური არაა, ამ ფუნქციის გათიშვა ამ ალმის \"ცრუზე\" "
+"დაყენებით შეგიძლიათ. დაიმახსოვრეთ, რომ ამ პარამეტრს მოვაცილებთ, როცა იგივეს "
+"გასაკეთებლად უკეთეს გზას ვიპოვით."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/relocatable-schemas-enabled-mappings'
 #: editor/ca.desrt.dconf-editor.gschema.xml:210
@@ -463,6 +479,11 @@ msgid ""
 "reserved for Dconf Editor own mappings; “Startup” is for mapping a "
 "relocatable schema from the command-line."
 msgstr ""
+"ალმები გადაადგილებადი სქემის ასახვის ფუნქციებისთვის \"მომხმარებელი\" ჩართავს "
+"ასახვებს, რომელიც აღწერილია \"relocatable-schemas-user-paths\" პარამეტრით. "
+"\"Built-in\" ჩართავს ცნობილ ასახვებს, რომლებიც Dconf Editor-ის კოდშია "
+"გაწერილი. \"Internal\" დაცულია Dconf Editor\"-ის საკუთარი ასახვებისთვის. "
+"\"Startup\" განკუთვნილია გადატანადი სქემის ასახვისთვის ბრძანების სტრიქონიდან."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/relocatable-schemas-user-paths'
 #: editor/ca.desrt.dconf-editor.gschema.xml:217
@@ -478,6 +499,12 @@ msgid ""
 "desrt/dconf-editor//), defining possibly multiple paths. The same schema ID "
 "may be associated with multiple path specifications."
 msgstr ""
+"ლექსიკონი, რომელიც სქემის ID-ებს ბილიკის სპეციფიკაციებით ასახავს. "
+"გამოიყენება, რომ მომხმარებელს მივცეთ საშუალება, გადატანადი სქემები გარკვეულ "
+"ბილიკებზე ასახოს. ბილიკის სპეციფიკაციები, შეიძლება, ვაილდკარდებსაც "
+"შეიცავდეს, ცარიელი სეგმენტების სახით (მაგ: /ca/desrt/dconf-editor//), რითიც "
+"შესაძლოა, მრავალ ბილიკს აღწერდეს. იგივე სქემის ID მრავალ ბილიკის "
+"სპეციფიკაციასთან შეიძლება, ასოცირებული იყოს."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/use-shortpaths'
 #: editor/ca.desrt.dconf-editor.gschema.xml:224
@@ -604,6 +631,10 @@ msgid ""
 "D-Bus message. If you are not interacting with D-Bus, then there is no "
 "reason to make use of this type."
 msgstr ""
+"დამუშავებლის ტიპია 32-ბიტიანი ნიშნიანი მთელი რიცხვი, რომელიც როგორც "
+"მიღებულია, გამოიყენება როგორც იმ ფაილის დესკრიპტორების მასივის ინდექსად, "
+"რომელიც D-Bus-ის შეტყობინებასთან ერთად იგზავნება. თუ D-Bus-თან ურთიერთობას "
+"არ აპირებთ, ამ ტიპის გამოყენებას აზრი არ აქვს."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-object-path'
 #: editor/ca.desrt.dconf-editor.gschema.xml:310
@@ -633,6 +664,9 @@ msgid ""
 "none: “[]”). If you are not interacting with D-Bus, then there is no reason "
 "to make use of this type."
 msgstr ""
+"ობიექტის ბილიკის მასვი, შეიძლება, შეიცავდეს ნებისმიერი რაოდენობის ობიექტების "
+"ბილიკებს (ცარიელის, \"[]\", ჩათვლით). თუ D-Bus-თან ურთიერთობას არ აპირებთ, "
+"ამ ტიპის გამოყენებას აზრი არ აქვს."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-signature'
 #: editor/ca.desrt.dconf-editor.gschema.xml:324
@@ -798,6 +832,10 @@ msgid ""
 "doubles) could be limited to a custom range of values. For example, this "
 "integer could only take a value between -2 and 10."
 msgstr ""
+"ყოველი რიცხვითი პარამეტრი (ყველა ტიპის მთელი რიცხვი და უნიშნო მთელი რიცხვი, "
+"ორმაგების ჩათვლით) მომხმარებლის მიერ აღწერილი შუალედით უნდა იყოს შეზღუდული. "
+"მაგალითად, ამ მთელი რიცხვს, მხოლოდ, -2 - 10 შუალედიდან შეუძლია, მნიშვნელობა "
+"ჰქონდეს."
 
 #. Translators: do not forget the parenthesis, they are meaningful; summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/pair-of-integers'
 #: editor/ca.desrt.dconf-editor.gschema.xml:417
@@ -811,6 +849,9 @@ msgid ""
 "back on a string entry when it doesn’t have a better way to do. Here is a "
 "tuple of two 32-bit signed integers."
 msgstr ""
+"Dconf Editor საშუალებას გაძლევთ, ჩაასწოროთ ნებისმიერი პარამეტრის ტიპი, რომლი "
+"მხარდაჭერაც GSettings-ს გააჩნია. ის გადაერთვება სტრიქონი ჩანაწერზე, როცა "
+"უკეთესი გზა არ აქვს. ეს ორი 32-ბიტიანი ნიშნიანი მთელი რიცხვის კორტეჟია."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string'
 #: editor/ca.desrt.dconf-editor.gschema.xml:424
@@ -853,6 +894,10 @@ msgid ""
 "take a “nothing” value. A nullable string can take any string as value, "
 "including the empty string “''”, or can be NULL (nothing)."
 msgstr ""
+"GSettings უშვებს განულებად ტიპებს, რომელიც სხვა ტიპების მსგავსია, მაგრამ "
+"შეუძლიათ, მნიშვნელობად \"არაფერი\" მიიღონ. განულებად სტრიქონს მნიშვნელობად "
+"ნებისმიერი სტრიქონის მიღება შეუძლია, ცარიელი სტრიქონის \"''\" ჩათვლით, ან "
+"შეიძლება, NULL (არაფერი) იყოს."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/variant'
 #: editor/ca.desrt.dconf-editor.gschema.xml:445
@@ -870,6 +915,13 @@ msgid ""
 "or “int64”. See https://docs.gtk.org/glib/gvariant-text.html for complete "
 "documentation."
 msgstr ""
+"ვარიანტები შეიძლება, ვარიანტების შიგნით იყოს დამახსოვრებული და საბოლოოდ, "
+"GSettings-ის ტიპით. წარმოდგენისათვის გამოიყენება XML ფრჩხილები ('<' და '>' "
+"სიმბოლოები. gschema ფაილში შესაბამისად \"&#60;\" და \"&#62;\"), მათი შიდა "
+"შემცველობის დამუშავებადი წარმოდგენით. თუ გაურკვეველია, ტიპი შეგძლიათ "
+"პრეფიქსის ანოტაციის მნიშვნელობაში შეგიძლიათ, გადასცეთ. მაგ: \"@x\" (სადაც x "
+"ტიპის სტრიქონია) ან \"int64\". სრული დოკუმენტაციისთვის იხილეთ ბმული https://"
+"docs.gtk.org/glib/gvariant-text.html ."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-enum'
 #: editor/ca.desrt.dconf-editor.gschema.xml:452
@@ -2071,6 +2123,8 @@ msgid ""
 "This key is incompatibly defined and used by more than one schema. It is "
 "impossible to work with its value in a meaningful way."
 msgstr ""
+"ეს გასაღები შეუთავსებლობაა, რომელიც აღწერილია და გამოიყენება ერთზე მეტი "
+"სქემის მიერ. მის მნიშვნელობასთან მუშაობას აზრი არ აქვს."
 
 #. Translators: warning text of an infobar, when a key is not defined by a schema
 #: editor/registry-info.ui:125
@@ -2080,6 +2134,10 @@ msgid ""
 "using this key has been uninstalled, or if this key is obsolete, you may "
 "want to erase it."
 msgstr ""
+"სქემები ხელმისაწვდომი არაა. სქემა ისაა, რაც გასაღების გამოყენებას "
+"განსაზღრავს და Dconf Editor-მა ამ გასაღებთან ასოცირებული სქემა ვერ იპოვა. თუ "
+"აპლიკაცია, რომელიც ამ გასაღებს გამოიყენებდა, წაშალეთ, ან გასაღები "
+"მოძველებულია, ის უნდა წაშალოთ."
 
 #. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-enum'
 #: editor/registry-info.ui:172
@@ -2088,6 +2146,9 @@ msgid ""
 "application that installed this schema. If possible, please open a bug about "
 "it."
 msgstr ""
+"ეს ჩამონათვალი, მხოლოდ, ერთ არჩევანს გაძლევთ. ეს ალბათ იმ აპლიკაციის "
+"შეცდომაა, რომელმაც ეს სქემა დააყენა. თუ შესაძლებელია, მოგვწერეთ ანგარიში "
+"ამის შესახებ."
 
 #. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-range'
 #: editor/registry-info.ui:183
@@ -2096,6 +2157,9 @@ msgid ""
 "application that installed this schema. If possible, please open a bug about "
 "it."
 msgstr ""
+"ამ მთელი რიცხვის პარამეტრს, მხოლოდ, ერთი მნიშვნელობის მიღება შეუძლია. ეს "
+"ალბათ შეცდომაა აპლიკაციაში, რომელმაც ეს სქემა დააყენა. თუ შესაძლებელია, "
+"მოგვწერეთ ამ შეცდომის შესახებ."
 
 #. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-triv'
 #: editor/registry-info.ui:194
@@ -2104,6 +2168,9 @@ msgid ""
 "application that installed this schema. If possible, please open a bug about "
 "it."
 msgstr ""
+"ამ გასაღებს სპეციალური \"ცარიელი კორტეჟის\" ტიპი გააჩნია. ეს ალბათ შეცდომაა "
+"აპლიკაციაში, რომელმაც ეს სქემა დააყენა. თუ შესაძლებელია, მოგვწერეთ ანგარიში "
+"ამ შეცდომის შესახებ."
 
 #. Translators: field description when displaying folder properties; name of the folder
 #: editor/registry-info.vala:70
@@ -2207,6 +2274,8 @@ msgid ""
 "There are conflicting definitions of this key, getting value would be either "
 "problematic or meaningless."
 msgstr ""
+"არსებობს ამ გასაღების ურთიერთგამომრიცხავი აღწერები. მნიშვნელობის მიღება "
+"პრობლემური ან უაზრო იქნება."
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of type "double"
 #: editor/registry-info.vala:615
@@ -2223,6 +2292,8 @@ msgid ""
 "Variants content should be surrounded by XML brackets (‘<’ and ‘>’). See "
 "https://docs.gtk.org/glib/gvariant-text.html for complete documentation."
 msgstr ""
+"ვარიანტების შემცველობა XML ფრჩხილებში ('<' და '>') უნდა ჩაგესვათ. სრული "
+"დოკუმენტაციისთვის იხილეთ ბმული https://docs.gtk.org/glib/gvariant-text.html ."
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a "maybe type" and with a string type (or similar); neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
 #: editor/registry-info.vala:627
@@ -2231,12 +2302,17 @@ msgid ""
 "empty value. Strings, signatures and object paths should be surrounded by "
 "quotation marks."
 msgstr ""
+"გამოიყენეთ საკვანძო სიტყვა \"nothing\", რომ დააყენოთ ტიპი "
+"\"შეიძლება\" (იწყება სიმბოლოთი \"m\") მის ცარიელ მნიშვნელობაზე. სტრიქონები, "
+"ხელმოწერები და ობიექტის ბილიკები ციტატის ნიშნებით უნდა იყოს შემოსაზღვრული."
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a string type (or similar)
 #: editor/registry-info.vala:630
 msgid ""
 "Strings, signatures and object paths should be surrounded by quotation marks."
 msgstr ""
+"სტრიქონები, ხელმოწერები და ობიექტის ბილიკები ციტატის ნიშნებით უნდა იყოს "
+"შემოსაზღვრული."
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a "maybe type"; neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
 #: editor/registry-info.vala:635
@@ -2244,6 +2320,8 @@ msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value."
 msgstr ""
+"გამოიყენეთ საკვანძო სიტყვა \"nothing\", რომ დააყენოთ ტიპი \"maybe\" (იწყება "
+"სიმბოლოთი \"m\") მის ცარიელ მნიშვნელობაზე."
 
 #. Translators: field content when displaying key properties; the field description is "Current value", this text displayed if the key, not defined by a schema, has been erased (and so has no value anymore)
 #: editor/registry-info.vala:674
