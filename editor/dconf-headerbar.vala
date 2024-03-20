@@ -47,7 +47,7 @@ private class DConfHeaderBar : BookmarksHeaderBar, AdaptativeWidget
         register_modifications_mode ();
     }
 
-    internal static DConfHeaderBar ()
+    internal DConfHeaderBar ()
     {
         /* Translators: usual menu entry of the hamburger menu */
         Object (about_action_label:     _("About Dconf Editor"),
