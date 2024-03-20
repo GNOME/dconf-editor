@@ -7,9 +7,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: unnamed project\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2023-09-18 15:05+0000\n"
-"PO-Revision-Date: 2024-03-11 15:22+0100\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues/\n"
+"POT-Creation-Date: 2024-03-11 14:52+0000\n"
+"PO-Revision-Date: 2024-03-20 13:33+0100\n"
 "Last-Translator: ButterflyOfFire <ButterflyOfFire@protonmail.com>\n"
 "Language-Team: Kabyle <>\n"
 "Language: kab\n"
@@ -212,16 +212,16 @@ msgid ""
 "applications to not work correctly."
 msgstr ""
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:34
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:35
 msgid "Browse the keys used by installed applications"
 msgstr ""
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:38
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:39
 msgid "Read keys descriptions and edit their values"
 msgstr ""
 
 #. a translatable version of project_group
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:53
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:58
 msgid "The GNOME Project"
 msgstr "Asenfar n GNOME"
 
@@ -1105,12 +1105,12 @@ msgstr ""
 #. Translators: text crediting a game author, seen in the About dialog
 #: editor/dconf-editor.vala:646
 msgid "Robert Ancell"
-msgstr ""
+msgstr "Robert Ancell"
 
 #. Translators: text crediting a game author, seen in the About dialog
 #: editor/dconf-editor.vala:650
 msgid "Arnaud Bonatti"
-msgstr ""
+msgstr "Arnaud Bonatti"
 
 #. Translators: text crediting a maintainer, seen in the About dialog
 #: editor/dconf-editor.vala:654
@@ -1396,7 +1396,7 @@ msgstr ""
 #: editor/help-overlay.ui:168
 msgctxt "shortcut window"
 msgid "Edit path"
-msgstr ""
+msgstr "Ẓreg abrid"
 
 #. Translators: Ctrl-Shift-L action when browsing; opens search on parent path
 #: editor/help-overlay.ui:176
@@ -1571,7 +1571,7 @@ msgstr ""
 #: editor/key-list-box-row.vala:118
 #, c-format
 msgid "Go to “%s”"
-msgstr ""
+msgstr "Ddu ɣer usebtar “%s”"
 
 #. Translators: first item of the keys list displayed during browsing, the %s is the current folder name
 #: editor/key-list-box-row.vala:149
@@ -1607,7 +1607,7 @@ msgstr ""
 #. Translators: "open key-editor page" action in the right-click menu on the list of keys, when key is hard-conflicting
 #: editor/key-list-box-row.vala:460
 msgid "Show details…"
-msgstr ""
+msgstr "Sken talqayt…"
 
 #. Translators: "dismiss change" action in the right-click menu on a key with pending changes
 #: editor/key-list-box-row.vala:463
@@ -1625,7 +1625,7 @@ msgstr ""
 #. Translators: "go to" action in the right-click menu on a "go back" line during search
 #: editor/key-list-box-row.vala:469
 msgid "Go to this path"
-msgstr ""
+msgstr "Ddu ɣer webdrid-a"
 
 #. Translators: "open folder" action in the right-click menu on a folder
 #: editor/key-list-box-row.vala:472
@@ -1796,7 +1796,7 @@ msgstr "Uslig"
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:424
 msgid "double"
-msgstr "double"
+msgstr ""
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense); this handle type is an index; you may maintain the word "handle"
 #. private const string _H_ = C_("capitalized", "D-Bus handle type");
@@ -1822,7 +1822,7 @@ msgstr "Ummid"
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:454
 msgid "integer"
-msgstr "Entier"
+msgstr ""
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:457
@@ -1860,7 +1860,7 @@ msgstr ""
 #. Translators: label of one of the two buttons of the list of pending modifications, to switch between applying changes to the whole list and selecting some items for more advanced things (not displayed currently, but this change is wanted); the first is "Rule all"
 #: editor/modifications-list.vala:34
 msgid "Select"
-msgstr "Sélectionner"
+msgstr "Fren"
 
 #. Translators: displayed in the bottom bar in normal sized windows, when the user tries to reset keys from/for a folder that has nothing to reset
 #: editor/modifications-revealer.vala:136
@@ -2026,7 +2026,7 @@ msgstr "Asnummel"
 #. Translators: field description when displaying key properties; the datatype of the key (integer, boolean, string, etc.)
 #: editor/registry-info.vala:85
 msgid "Type"
-msgstr "Type "
+msgstr "Anaw"
 
 #. Translators: field description when displaying key properties; specific name of the datatype of the key ("Signed 32-bit integer" for example)
 #: editor/registry-info.vala:89
@@ -2046,22 +2046,22 @@ msgstr ""
 #. Translators: field description when displaying key properties; the minimum value a numeral key can take
 #: editor/registry-info.vala:99
 msgid "Minimum"
-msgstr "Minimum"
+msgstr ""
 
 #. Translators: field description when displaying key properties; the maximum value a numeral key can take
 #: editor/registry-info.vala:102
 msgid "Maximum"
-msgstr "Maximum"
+msgstr ""
 
 #. Translators: field description when displaying key properties; the default value of the key (defined if it has a schema)
 #: editor/registry-info.vala:105
 msgid "Default"
-msgstr "Prédéfini(e)"
+msgstr "Amezwer"
 
 #. Translators: field description when displaying key properties; the current value of the key
 #: editor/registry-info.vala:108
 msgid "Current value"
-msgstr "Valeur actuelle"
+msgstr ""
 
 #. Translators: field description when displaying key properties; the field content is a switch widget that allows using or not the default value of the key, as provided by its schema
 #: editor/registry-info.vala:111
