@@ -6,9 +6,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: for dconf-editor\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2024-01-22 12:18+0000\n"
-"PO-Revision-Date: 2024-03-19 08:45+0100\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues/\n"
+"POT-Creation-Date: 2024-03-19 07:46+0000\n"
+"PO-Revision-Date: 2024-03-25 05:57+0100\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -915,6 +915,13 @@ msgid ""
 "or “int64”. See https://developer.gnome.org/glib/stable/gvariant-text.html "
 "for complete documentation."
 msgstr ""
+"ვარიანტები შეიძლება, ვარიანტების შიგნით იყოს დამახსოვრებული და საბოლოოდ, "
+"GSettings-ის ტიპით. წარმოდგენისათვის გამოიყენება XML ფრჩხილები ('<' და '>' "
+"სიმბოლოები. gschema ფაილში შესაბამისად \"&#60;\" და \"&#62;\"), მათი შიდა "
+"შემცველობის დამუშავებადი წარმოდგენით. თუ გაურკვეველია, ტიპი შეგძლიათ "
+"პრეფიქსის ანოტაციის მნიშვნელობაში შეგიძლიათ, გადასცეთ. მაგ: \"@x\" (სადაც x "
+"ტიპის სტრიქონია) ან \"int64\". სრული დოკუმენტაციისთვის იხილეთ ბმული https://"
+"developer.gnome.org/glib/stable/gvariant-text.html."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-enum'
 #: editor/ca.desrt.dconf-editor.gschema.xml:452
@@ -2286,6 +2293,9 @@ msgid ""
 "https://developer.gnome.org/glib/stable/gvariant-text.html for complete "
 "documentation."
 msgstr ""
+"ვარიანტების შემცველობა XML ფრჩხილებში ('<' და '>') უნდა ჩაგესვათ. სრული "
+"დოკუმენტაციისთვის იხილეთ ბმული https://developer.gnome.org/glib/stable/"
+"gvariant-text.html."
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a "maybe type" and with a string type (or similar); neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
 #: editor/registry-info.vala:627
@@ -2312,6 +2322,8 @@ msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value."
 msgstr ""
+"გამოიყენეთ საკვანძო სიტყვა \"nothing\", რომ დააყენოთ ტიპი "
+"\"შეიძლება\" (იწყება სიმბოლოთი \"m\") მის ცარიელ მნიშვნელობაზე."
 
 #. Translators: field content when displaying key properties; the field description is "Current value", this text displayed if the key, not defined by a schema, has been erased (and so has no value anymore)
 #: editor/registry-info.vala:674
