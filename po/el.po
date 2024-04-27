@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2024-01-22 12:04+0000\n"
-"PO-Revision-Date: 2024-01-22 14:17+0200\n"
-"Last-Translator: Efstathios Iosifidis <ioeifidis@opensuse.org>\n"
+"POT-Creation-Date: 2024-01-22 12:19+0000\n"
+"PO-Revision-Date: 2024-04-28 00:36+0300\n"
+"Last-Translator: Efstathios Iosifidis <eiosifidis@gnome.org>\n"
 "Language-Team: Greek, Modern (1453-) <opensuse-translation-el@opensuse.org>\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
@@ -234,17 +234,17 @@ msgstr ""
 "Επεξεργάζοντας απευθείας τις ρυθμίσεις είναι ένα χαρακτηριστικό για "
 "προχωρημένους και μπορεί να προκαλέσει προβλήματα λειτουργίας στις εφαρμογές."
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:36
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:35
 msgid "Browse the keys used by installed applications"
 msgstr ""
 "Εξερευνήστε τα κλειδιά που χρησιμοποιούνται από εγκατεστημένες εφαρμογές"
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:40
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:39
 msgid "Read keys descriptions and edit their values"
 msgstr "Ανάγνωση περιγραφών των πλήκτρων και επεξεργασία των τιμών τους"
 
 #. a translatable version of project_group
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:55
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:58
 msgid "The GNOME Project"
 msgstr "Το έργο GNOME"
 
@@ -945,8 +945,8 @@ msgid ""
 "a gschema file “&#60;” and “&#62;” respectively), with a parsable "
 "representation of their content inside. If unclear, the type can be given in "
 "the value with a prefix annotation like “@x” (where “x” is the type string) "
-"or “int64”. See https://developer.gnome.org/glib/stable/gvariant-text.html "
-"for complete documentation."
+"or “int64”. See https://docs.gtk.org/glib/gvariant-text.html for complete "
+"documentation."
 msgstr ""
 "Οι παραλλαγές μπορούν να αποθηκεύονται μέσα σε παραλλαγές και κατά συνέπεια "
 "ως τύπος GSettings. Η αναπαράστασή τους χρησιμοποιεί τις αγκύλες XML "
@@ -954,8 +954,7 @@ msgstr ""
 "αντίστοιχα), με μια αναγνώσιμη αναπαράσταση του περιεχομένου τους μέσα. Αν "
 "δεν είναι σαφές, ο τύπος μπορεί να δοθεί στην τιμή με ένα πρόθεμα σχολιασμού "
 "όπως το «@x» (όπου το «x» είναι η συμβολοσειρά του τύπου) ή «int64». Δείτε "
-"το https://developer.gnome.org/glib/stable/gvariant-text.html για πλήρη "
-"τεκμηρίωση."
+"το https://docs.gtk.org/glib/gvariant-text.html για πλήρη τεκμηρίωση."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-enum'
 #: editor/ca.desrt.dconf-editor.gschema.xml:452
@@ -2339,12 +2338,11 @@ msgstr ""
 #: editor/registry-info.vala:620
 msgid ""
 "Variants content should be surrounded by XML brackets (‘<’ and ‘>’). See "
-"https://developer.gnome.org/glib/stable/gvariant-text.html for complete "
-"documentation."
+"https://docs.gtk.org/glib/gvariant-text.html for complete documentation."
 msgstr ""
-"Τα περιεχόμενα των variants πρέπει να περικλείονται σε XML αγκύλες («<» και "
-"«>»). Δείτε στην διεύθυνση https://developer.gnome.org/glib/stable/gvariant-"
-"text.html για πλήρη τεκμηρίωση."
+"Τα περιεχόμενα των παραλλαγών πρέπει να περικλείονται σε XML αγκύλες ('<' "
+"και '>'). Δείτε στην διεύθυνση https://docs.gtk.org/glib/gvariant-text.html "
+"για πλήρη τεκμηρίωση."
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a "maybe type" and with a string type (or similar); neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
 #: editor/registry-info.vala:627
