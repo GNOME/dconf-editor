@@ -8,16 +8,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: unnamed project\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues/\n"
-"POT-Creation-Date: 2024-03-11 14:52+0000\n"
-"PO-Revision-Date: 2024-03-20 13:33+0100\n"
-"Last-Translator: ButterflyOfFire <ButterflyOfFire@protonmail.com>\n"
+"POT-Creation-Date: 2024-03-28 14:57+0000\n"
+"PO-Revision-Date: 2024-04-30 21:59+0200\n"
+"Last-Translator: sa\n"
 "Language-Team: Kabyle <>\n"
 "Language: kab\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n>1\n"
-"X-Generator: Gtranslator 41.0\n"
+"Plural-Forms: nplurals=2; plural=n>1;\n"
+"X-Generator: Poedit 3.4.2\n"
 "X-DL-Team: kab\n"
 "X-DL-Module: dconf-editor\n"
 "X-DL-Branch: master\n"
@@ -40,7 +40,7 @@ msgstr "Asenmer"
 msgid ""
 "GNU General Public License\n"
 "version 3 or later"
-msgstr ""
+msgstr "Turagt tazayazt tamatut GNU, lqem wis 3 neɣ tamaynut ugar"
 
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the header of the programmers names
 #: editor/about-list.vala:154
@@ -167,7 +167,7 @@ msgstr ""
 #. Translators: accessible name of the "refresh" button that is linked with the search entry on large windows
 #: editor/browser-view.vala:84 editor/pathentry.ui:90
 msgid "Refresh"
-msgstr ""
+msgstr "Smiren"
 
 #. Translators: text of an infobar to reload the keys list because of a new key (for example)
 #: editor/browser-view.vala:87
@@ -228,7 +228,7 @@ msgstr "Asenfar n GNOME"
 #. Translators: application name, as used in the window manager, the window title, the about dialog...
 #: editor/ca.desrt.dconf-editor.desktop.in:3 editor/dconf-editor.vala:21
 msgid "dconf Editor"
-msgstr "Amaẓrag n dconf"
+msgstr "amaẓrag n dconf"
 
 #. Translators: a GenericName that gives the application goal, as defined in the desktop file spec
 #: editor/ca.desrt.dconf-editor.desktop.in:5
@@ -262,7 +262,7 @@ msgstr ""
 #. Translators: summary of a settings key, see 'dconf-editor /org/gnome/iagno/window-height'
 #: editor/ca.desrt.dconf-editor.gschema.xml:100
 msgid "The height of the window"
-msgstr ""
+msgstr "Teɣzi n usfaylu"
 
 #. Translators: description of a settings key, see 'dconf-editor /org/gnome/iagno/window-height'
 #: editor/ca.desrt.dconf-editor.gschema.xml:102
@@ -1131,11 +1131,7 @@ msgstr "Copyright © %u-%u – Arnaud Bonatti"
 #. Translators: about dialog text; this string should be replaced by a text crediting yourselves and your translation team, or should be left empty. Do not translate literally!
 #: editor/dconf-editor.vala:669
 msgid "translator-credits"
-msgstr ""
-"Launchpad Contributions:\n"
-"  Yacine Bouklif https://launchpad.net/~yacine-bouklif\n"
-"  tasutlelli17 https://launchpad.net/~tafziri13\n"
-"  ButterflyOfFire"
+msgstr "amsuqqel-isemdan"
 
 #. Translators: about dialog text; label of the website link
 #: editor/dconf-editor.vala:675
@@ -1166,12 +1162,12 @@ msgstr "Snes meṛṛa"
 #. Translators: when in delayed mode, on a small window, entry of the "three-dots menu" that appears when showing the pending changes list (if there is pending changes)
 #: editor/dconf-headerbar.vala:143
 msgid "Dismiss all"
-msgstr ""
+msgstr "Sefsexkullec"
 
 #. Translators: when in delayed mode, on a small window, entry of the "three-dots menu" that appears when showing the pending changes list (if there is no pending changes)
 #: editor/dconf-headerbar.vala:151
 msgid "Quit mode"
-msgstr ""
+msgstr "Ffeɣ seg uskar"
 
 #. Translators: hamburger menu entry, to enter in a special mode called "delay mode" where changes are not applied until validation
 #: editor/dconf-headerbar.vala:200
@@ -1181,7 +1177,7 @@ msgstr ""
 #. Translators: hamburger menu entry that appears when browsing a folder path, to set to their default value all currently visible keys, not including keys in subfolders
 #: editor/dconf-headerbar.vala:204
 msgid "Reset visible keys"
-msgstr ""
+msgstr "Wennez tisura ibanen"
 
 #. Translators: hamburger menu entry that appears when browsing a folder path, to set to their default value all currently visible keys, and all keys in subfolders
 #: editor/dconf-headerbar.vala:207
@@ -1233,12 +1229,12 @@ msgstr ""
 #. Translators: initial "use at your own risk" dialog, the button label
 #: editor/dconf-window.vala:280
 msgid "I’ll be careful."
-msgstr ""
+msgstr "Ad ḥadreɣ."
 
 #. Translators: initial "use at your own risk" dialog, the checkbox label
 #: editor/dconf-window.vala:284
 msgid "Show this dialog next time."
-msgstr ""
+msgstr "Sken adiwenni-a tikkelt i d-iteddun."
 
 #. Translators: notification text, after a user Ctrl+Q keyboard action; same way to spell the shortcut as in the Settings application
 #: editor/dconf-window.vala:305
@@ -1251,19 +1247,19 @@ msgstr ""
 #: editor/dconf-window.vala:777
 #, c-format
 msgid "Folder “%s” is now empty."
-msgstr ""
+msgstr "Akaram \"%s\" tura d ilem."
 
 #. Translators: notification text, when the requested key has been removed; the %s is the key path
 #: editor/dconf-window.vala:788
 #, c-format
 msgid "Key “%s” has been deleted."
-msgstr ""
+msgstr "Tasarut \"%s\" tettwakkes."
 
 #. Translators: notification text at startup, use 'dconf-editor /org/example/test'; the %s is the key path
 #: editor/dconf-window.vala:794
 #, c-format
 msgid "Cannot find key “%s”."
-msgstr ""
+msgstr "Yegguma ad d-yaf tasarut \"%s\"."
 
 #. Translators: notification text at startup, use 'dconf-editor /org/example/empty/'; the %s is the folder path
 #: editor/dconf-window.vala:800
@@ -1282,7 +1278,7 @@ msgstr ""
 #: editor/delayed-setting-view.vala:151 editor/key-list-box-row.vala:649
 #: editor/registry-info.vala:469
 msgid "Default value"
-msgstr ""
+msgstr "Azal amezwer"
 
 #. Translators: header in the shortcut window, for usual headerbar menus actions
 #: editor/help-overlay.ui:29
@@ -1294,37 +1290,37 @@ msgstr "Tigawin"
 #: editor/help-overlay.ui:34
 msgctxt "shortcut window"
 msgid "Bookmarks menu"
-msgstr ""
+msgstr "Umuɣ n tecraḍ n yisebtar"
 
 #. Translators: Ctrl-D action
 #: editor/help-overlay.ui:42
 msgctxt "shortcut window"
 msgid "Bookmark this path"
-msgstr ""
+msgstr "Creḍ abrid-a"
 
 #. Translators: Ctrl-Shift-D action
 #: editor/help-overlay.ui:50
 msgctxt "shortcut window"
 msgid "Unbookmark this path"
-msgstr ""
+msgstr "Kkes acraḍ i ubrid-a"
 
 #. Translators: F10 key action
 #: editor/help-overlay.ui:58
 msgctxt "shortcut window"
 msgid "Actions menu"
-msgstr ""
+msgstr "Amuɣ n tigawin"
 
 #. Translators: Shift-F10 action
 #: editor/help-overlay.ui:66
 msgctxt "shortcut window"
 msgid "Path bar menu"
-msgstr ""
+msgstr "Umuɣ n ufeggag n yiberdan"
 
 #. Translators: header in the shortcut window, for moving to paths known by the headerbar
 #: editor/help-overlay.ui:76
 msgctxt "shortcut window"
 msgid "Path bar navigation"
-msgstr ""
+msgstr "Tunigin deg ufeggag n yiberdan"
 
 #. Translators: Alt-Shift-Up action; browse to the '/' folder
 #: editor/help-overlay.ui:81
@@ -1336,19 +1332,19 @@ msgstr "Ldi akaram n wazar"
 #: editor/help-overlay.ui:89
 msgctxt "shortcut window"
 msgid "Open parent folder"
-msgstr ""
+msgstr "Ldi akaram amaraw"
 
 #. Translators: Alt-Down action; browse to the child of the current path displayed in the headerbar, if any
 #: editor/help-overlay.ui:97
 msgctxt "shortcut window"
 msgid "Open active direct child"
-msgstr ""
+msgstr "Ldi agrud usrid urmid"
 
 #. Translators: Alt-Shift-Down action; browse to the complete path of the headerbar
 #: editor/help-overlay.ui:105
 msgctxt "shortcut window"
 msgid "Open active last child"
-msgstr ""
+msgstr "Ldi agrud urmid aneggaru"
 
 #. Translators: header in the shortcut window, for the various ways of opening search
 #: editor/help-overlay.ui:115
@@ -1360,7 +1356,7 @@ msgstr "Tinefrunin n unadi"
 #: editor/help-overlay.ui:120
 msgctxt "shortcut window"
 msgid "Toggle search"
-msgstr ""
+msgstr "Ldi/Ffer anadi"
 
 #. Translators: Ctrl-Alt-F action; does the same thing as "Toggle search", but loads the search entry with the last searched text
 #: editor/help-overlay.ui:128
@@ -1372,19 +1368,19 @@ msgstr "Nadi tikkelt-nniḍen"
 #: editor/help-overlay.ui:136
 msgctxt "shortcut window"
 msgid "Toggle local search"
-msgstr ""
+msgstr "Ldi/Ffer anadi n wadig"
 
 #. Translators: Ctrl-Shift-Alt-F action; does the same thing as "Toggle local search", but loads the search entry with the last searched text
 #: editor/help-overlay.ui:144
 msgctxt "shortcut window"
 msgid "Search again, locally"
-msgstr ""
+msgstr "Nadi tikkelt niḍen, adigan"
 
 #. Translators: Ctrl-V action; open search with clipboard content
 #: editor/help-overlay.ui:152
 msgctxt "shortcut window"
 msgid "Paste as search"
-msgstr ""
+msgstr "Sneteḍ am unadi"
 
 #. Translators: Ctrl-Shift-V action; does the same thing as "Paste as search", but works even if an entry or textview is selected; entry hidden for now
 #: editor/help-overlay.ui:160
@@ -1402,55 +1398,55 @@ msgstr "Ẓreg abrid"
 #: editor/help-overlay.ui:176
 msgctxt "shortcut window"
 msgid "Edit parent path"
-msgstr ""
+msgstr "Ẓreg abrid amaraw"
 
 #. Translators: '/' key action when browsing; opens search on root path
 #: editor/help-overlay.ui:184
 msgctxt "shortcut window"
 msgid "Edit root path"
-msgstr ""
+msgstr "Ẓreg abrid aẓar"
 
 #. Translators: Escape key action, when searching; cancels search
 #: editor/help-overlay.ui:192
 msgctxt "shortcut window"
 msgid "Browse keys tree"
-msgstr ""
+msgstr "Inig deg useklu n tsura"
 
 #. Translators: header in the shortcut window, for when browsing
 #: editor/help-overlay.ui:202
 msgctxt "shortcut window"
 msgid "Keys list actions"
-msgstr ""
+msgstr "Tigawin n tebdart n tsura"
 
 #. Translators: Menu key action, when browsing
 #: editor/help-overlay.ui:207
 msgctxt "shortcut window"
 msgid "Contextual menu"
-msgstr ""
+msgstr "Umuɣ asatlan"
 
 #. Translators: Ctrl-Shift-G action, when browsing
 #: editor/help-overlay.ui:215
 msgctxt "shortcut window"
 msgid "Previous line"
-msgstr ""
+msgstr "Izirig udfir"
 
 #. Translators: Ctrl-G action, when browsing
 #: editor/help-overlay.ui:223
 msgctxt "shortcut window"
 msgid "Next line"
-msgstr ""
+msgstr "Izirig uḍfir"
 
 #. Translators: entry disabled for now; Ctrl-I action, when browsing; displays information on selected folder
 #: editor/help-overlay.ui:231
 msgctxt "shortcut window"
 msgid "Toggle folder properties"
-msgstr ""
+msgstr "Sken/Ffer iraten n ukaram"
 
 #. Translators: Ctrl-Delete action, when browsing; sets the selected key to its default value
 #: editor/help-overlay.ui:239
 msgctxt "shortcut window"
 msgid "Set to default"
-msgstr ""
+msgstr "Sbadu ɣer umezwer"
 
 #. Translators: Ctrl-Return action, when browsing; does nothing if the selection is not a boolean key
 #: editor/help-overlay.ui:247
@@ -1486,7 +1482,7 @@ msgstr ""
 #: editor/help-overlay.ui:288
 msgctxt "shortcut window"
 msgid "Generic"
-msgstr ""
+msgstr "Amatu"
 
 #. Translators: Ctrl-F1 action; opens the Keyboard shortcuts dialog
 #: editor/help-overlay.ui:293
@@ -1510,7 +1506,7 @@ msgstr "Ɣef afus"
 #: editor/help-overlay.ui:316
 msgctxt "shortcut window"
 msgid "Copy descriptor"
-msgstr ""
+msgstr "Nɣel anaglam"
 
 #. Translators: Ctrl-Shift-C action; copies to clipboard the path of the currently browsed key or folder
 #: editor/help-overlay.ui:324
@@ -1587,7 +1583,7 @@ msgstr ""
 #. Translators: last item of the keys list displayed during a local search
 #: editor/key-list-box-row.vala:157
 msgid "Search everywhere"
-msgstr ""
+msgstr "Nadi deg yal adeg"
 
 #. Translators: "copy to clipboard" action in the right-click menu on the list of keys
 #: editor/key-list-box-row.vala:449
@@ -1602,7 +1598,7 @@ msgstr "Sagen…"
 #. Translators: "reset key value" action in the right-click menu on the list of keys
 #: editor/key-list-box-row.vala:455
 msgid "Set to default"
-msgstr ""
+msgstr "Sbadu ɣer umezwer"
 
 #. Translators: "open key-editor page" action in the right-click menu on the list of keys, when key is hard-conflicting
 #: editor/key-list-box-row.vala:460
@@ -1643,7 +1639,7 @@ msgstr "Anadi"
 #. Translators: "open parent folder" action in the right-click menu on a folder in a search result
 #: editor/key-list-box-row.vala:481
 msgid "Open parent folder"
-msgstr ""
+msgstr "Ldi akaram amaraw"
 
 #. Translators: "reset recursively" action in the right-click menu on a folder
 #: editor/key-list-box-row.vala:484
@@ -1786,7 +1782,7 @@ msgstr "Anayen"
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:418
 msgid "flags"
-msgstr ""
+msgstr "anayen"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:421
@@ -1796,7 +1792,7 @@ msgstr "Uslig"
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:424
 msgid "double"
-msgstr ""
+msgstr "uslig"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense); this handle type is an index; you may maintain the word "handle"
 #. private const string _H_ = C_("capitalized", "D-Bus handle type");
@@ -1822,7 +1818,7 @@ msgstr "Ummid"
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:454
 msgid "integer"
-msgstr ""
+msgstr "ummid"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:457
@@ -2046,12 +2042,12 @@ msgstr ""
 #. Translators: field description when displaying key properties; the minimum value a numeral key can take
 #: editor/registry-info.vala:99
 msgid "Minimum"
-msgstr ""
+msgstr "Adday"
 
 #. Translators: field description when displaying key properties; the maximum value a numeral key can take
 #: editor/registry-info.vala:102
 msgid "Maximum"
-msgstr ""
+msgstr "Afellay"
 
 #. Translators: field description when displaying key properties; the default value of the key (defined if it has a schema)
 #: editor/registry-info.vala:105
@@ -2061,7 +2057,7 @@ msgstr "Amezwer"
 #. Translators: field description when displaying key properties; the current value of the key
 #: editor/registry-info.vala:108
 msgid "Current value"
-msgstr ""
+msgstr "Azal amiran"
 
 #. Translators: field description when displaying key properties; the field content is a switch widget that allows using or not the default value of the key, as provided by its schema
 #: editor/registry-info.vala:111
