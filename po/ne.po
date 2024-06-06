@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gnome Nepali Translation Project\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
 "POT-Creation-Date: 2023-09-18 15:05+0000\n"
-"PO-Revision-Date: 2024-06-03 15:25+0545\n"
+"PO-Revision-Date: 2024-06-06 10:31+0545\n"
 "Last-Translator: Pawan Chitrakar <chautari@gmail.com>\n"
 "Language-Team: Nepali Translation Team <chautari@gmail.com>\n"
 "Language: ne\n"
@@ -195,16 +195,14 @@ msgstr "dconf डेटाबेस सम्पादनको लागि ग
 
 #: editor/ca.desrt.dconf-editor.appdata.xml.in:13
 msgid ""
-"Dconf Editor is a tool to allow direct editing of the dconf configuration database. This is "
-"useful when developing applications that use these settings."
+"Dconf Editor is a tool to allow direct editing of the dconf configuration database. This is useful when developing "
+"applications that use these settings."
 msgstr ""
-"डिकन्फ सम्पादक एक डिकन्फ कन्फिगरेसन डाटाबेस को सीधा सम्पादन को लागी एक उपकरण हो। यी सेटिङ्गहरू प्रयोग गर्ने "
-"अनुप्रयोगहरू विकास गर्दा यो उपयोगी छ।"
+"डिकन्फ सम्पादक एक डिकन्फ कन्फिगरेसन डाटाबेस को सीधा सम्पादन को लागी एक उपकरण हो। यी सेटिङ्गहरू प्रयोग गर्ने अनुप्रयोगहरू विकास गर्दा यो "
+"उपयोगी छ।"
 
 #: editor/ca.desrt.dconf-editor.appdata.xml.in:17
-msgid ""
-"Editing your configuration directly is an advanced feature and may cause applications to not work "
-"correctly."
+msgid "Editing your configuration directly is an advanced feature and may cause applications to not work correctly."
 msgstr "तपाईंको कन्फिगरेसन सम्पादन गर्दा सिधै एक उन्नत सुविधा हो र अनुप्रयोगहरूले सही काम गर्न सकेन।"
 
 #: editor/ca.desrt.dconf-editor.appdata.xml.in:34
@@ -281,10 +279,8 @@ msgstr "अन्तिम दृश्य पुनर्स्थापना 
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/restore-view'
 #: editor/ca.desrt.dconf-editor.gschema.xml:133
-msgid ""
-"If “true”, Dconf Editor tries at launch to navigate to the path described in the “saved-view” key."
-msgstr ""
-"यदि \"साँचो\", डिकन्फ सम्पादकले \"सुरक्षित-दृश्य\" कुञ्जीमा वर्णन गरिएको मार्गमा नेभिगेट गर्न सुरु गर्न प्रयास गर्दछ।"
+msgid "If “true”, Dconf Editor tries at launch to navigate to the path described in the “saved-view” key."
+msgstr "यदि \"साँचो\", डिकन्फ सम्पादकले \"सुरक्षित-दृश्य\" कुञ्जीमा वर्णन गरिएको मार्गमा नेभिगेट गर्न सुरु गर्न प्रयास गर्दछ।"
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/saved-pathbar-path'
 #: editor/ca.desrt.dconf-editor.gschema.xml:138
@@ -294,11 +290,11 @@ msgstr "पथपट्टी स्थिति पुनर्स्थाप�
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/saved-pathbar-path'
 #: editor/ca.desrt.dconf-editor.gschema.xml:140
 msgid ""
-"If the “restore-view” key is set to “true”, and if the path requested at startup is a parent path "
-"of this one, Dconf Editor tries to restore the pathbar state at this path."
+"If the “restore-view” key is set to “true”, and if the path requested at startup is a parent path of this one, Dconf "
+"Editor tries to restore the pathbar state at this path."
 msgstr ""
-"यदि \"पुनर्स्थापना-दृश्य\" कुञ्जी \"सत्य\" मा सेट गरिएको छ, र यदि सुरुआतमा अनुरोध गरिएको मार्ग यसको मूल मार्ग हो "
-"भने, डीकन्फ सम्पादकले यो मार्गमा पथपट्टी स्थिति पुनर्स्थापना गर्न प्रयास गर्दछ ।"
+"यदि \"पुनर्स्थापना-दृश्य\" कुञ्जी \"सत्य\" मा सेट गरिएको छ, र यदि सुरुआतमा अनुरोध गरिएको मार्ग यसको मूल मार्ग हो भने, डीकन्फ सम्पादकले यो "
+"मार्गमा पथपट्टी स्थिति पुनर्स्थापना गर्न प्रयास गर्दछ ।"
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/saved-view'
 #: editor/ca.desrt.dconf-editor.gschema.xml:145
@@ -307,11 +303,8 @@ msgstr "अन्तिम दृश्य पुनर्स्थापना 
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/saved-view'
 #: editor/ca.desrt.dconf-editor.gschema.xml:147
-msgid ""
-"If the “restore-view” key is set to “true”, Dconf Editor tries at launch to navigate to this path."
-msgstr ""
-"यदि \"पुनर्स्थापना-दृश्य\" की कुञ्जी \"साँचो\" मा सेट गरिएको छ भने, डिकन्फ सम्पादकले यो बाटोमा नेभिगेट गर्न सुरू "
-"गर्न प्रयास गर्दछ।"
+msgid "If the “restore-view” key is set to “true”, Dconf Editor tries at launch to navigate to this path."
+msgstr "यदि \"पुनर्स्थापना-दृश्य\" की कुञ्जी \"साँचो\" मा सेट गरिएको छ भने, डिकन्फ सम्पादकले यो बाटोमा नेभिगेट गर्न सुरू गर्न प्रयास गर्दछ।"
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/show-warning'
 #: editor/ca.desrt.dconf-editor.gschema.xml:152
@@ -341,19 +334,16 @@ msgstr "कुञ्जी मान परिवर्तन व्यवहा
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/behaviour'
 #: editor/ca.desrt.dconf-editor.gschema.xml:168
 msgid ""
-"The “unsafe” value is discouraged: for keys that have a non-special-cased type, it updates the "
-"key value each time something changes in the entry, so including intermediate states. The “safe” "
-"value asks for confirmation in these cases, but allows instant changes for booleans and nullable "
-"booleans, enums and flags. The “always-confirm-implicit” and “always-confirm-explicit” values "
-"always asks for confirmation, but the first applies the change if you change path whereas the "
-"second dismiss it. The “always-delay” value adds each change in delay mode, allowing to apply "
-"multiple keys at once."
+"The “unsafe” value is discouraged: for keys that have a non-special-cased type, it updates the key value each time "
+"something changes in the entry, so including intermediate states. The “safe” value asks for confirmation in these cases, "
+"but allows instant changes for booleans and nullable booleans, enums and flags. The “always-confirm-implicit” and “always-"
+"confirm-explicit” values always asks for confirmation, but the first applies the change if you change path whereas the "
+"second dismiss it. The “always-delay” value adds each change in delay mode, allowing to apply multiple keys at once."
 msgstr ""
-"\"असुरक्षित\" मान निरुत्साहित गरिएको छ: गैर-विशेष-केस गरिएको प्रकार भएका कुञ्जीहरूका लागि, यसले प्रत्येक पटक "
-"प्रविष्टिमा केही परिवर्तन हुँदा कुञ्जी मान अद्यावधिक गर्दछ, त्यसैले मध्यवर्ती अवस्थाहरू सहित। \"सुरक्षित\" मानले यी "
-"केसहरूमा पुष्टिको लागि सोध्छ, तर बुलियनहरू र अशक्त बुलियनहरू, गणकहरू र झण्डाहरूको लागि तत्काल परिवर्तनहरू अनुमति "
-"दिन्छ। \"सँधै-पुष्टि-अन्तर्निहित\" र \"सँधै-पुष्टि-स्पष्ट\" मानहरू सँधै पुष्टिको लागि सोध्छन्, तर पहिलोले परिवर्तन लागू "
-"गर्दछ यदि तपाईं मार्ग परिवर्तन गर्नुहुन्छ भने दोस्रोले यसलाई खारेज गर्दछ। \"सँधै-विलम्ब\" मानले विलम्ब मोडमा प्रत्येक "
+"\"असुरक्षित\" मान निरुत्साहित गरिएको छ: गैर-विशेष-केस गरिएको प्रकार भएका कुञ्जीहरूका लागि, यसले प्रत्येक पटक प्रविष्टिमा केही परिवर्तन हुँदा "
+"कुञ्जी मान अद्यावधिक गर्दछ, त्यसैले मध्यवर्ती अवस्थाहरू सहित। \"सुरक्षित\" मानले यी केसहरूमा पुष्टिको लागि सोध्छ, तर बुलियनहरू र अशक्त बुलियनहरू, "
+"गणकहरू र झण्डाहरूको लागि तत्काल परिवर्तनहरू अनुमति दिन्छ। \"सँधै-पुष्टि-अन्तर्निहित\" र \"सँधै-पुष्टि-स्पष्ट\" मानहरू सँधै पुष्टिको लागि सोध्छन्, तर "
+"पहिलोले परिवर्तन लागू गर्दछ यदि तपाईं मार्ग परिवर्तन गर्नुहुन्छ भने दोस्रोले यसलाई खारेज गर्दछ। \"सँधै-विलम्ब\" मानले विलम्ब मोडमा प्रत्येक "
 "परिवर्तन थप्दछ, जसले एकै पटकमा धेरै कुञ्जीहरू लागू गर्न अनुमति दिन्छ।"
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/sort-case-sensitive'
@@ -364,13 +354,11 @@ msgstr "कुञ्जी सूचीलाई क्रमशः क्रम
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/sort-case-sensitive'
 #: editor/ca.desrt.dconf-editor.gschema.xml:175
 msgid ""
-"GSettings doesn’t allow keys to use upper-case in their names, but installation paths of schemas "
-"can. If “true”, the keys list is sorted case-sensitively, with in usual order upper-case folders "
-"first."
+"GSettings doesn’t allow keys to use upper-case in their names, but installation paths of schemas can. If “true”, the keys "
+"list is sorted case-sensitively, with in usual order upper-case folders first."
 msgstr ""
-"जीसेटिङले कुञ्जीहरूलाई तिनीहरूको नाममा माथिल्लो-केस प्रयोग गर्न अनुमति दिँदैन, तर स्किमाहरूको स्थापना मार्गहरूले गर्न "
-"सक्छ। यदि \"सत्य\" भएमा, कुञ्जीसूची केस-संवेदनशील रूपमा क्रमबद्ध गरिन्छ, सामान्य क्रममा माथिल्लो-केस फोल्डरहरूसँग "
-"पहिले।"
+"जीसेटिङले कुञ्जीहरूलाई तिनीहरूको नाममा माथिल्लो-केस प्रयोग गर्न अनुमति दिँदैन, तर स्किमाहरूको स्थापना मार्गहरूले गर्न सक्छ। यदि \"सत्य\" भएमा, "
+"कुञ्जीसूची केस-संवेदनशील रूपमा क्रमबद्ध गरिन्छ, सामान्य क्रममा माथिल्लो-केस फोल्डरहरूसँग पहिले।"
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-use-extra-buttons'
 #: editor/ca.desrt.dconf-editor.gschema.xml:180
@@ -380,11 +368,11 @@ msgstr "\"पछाडि\" र \"अग्रेषित\" माउस बट
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-use-extra-buttons'
 #: editor/ca.desrt.dconf-editor.gschema.xml:182
 msgid ""
-"For users with mice that have buttons for “Forward” and “Back”, this key will determine if any "
-"action is taken inside of a browser window when either is pressed."
+"For users with mice that have buttons for “Forward” and “Back”, this key will determine if any action is taken inside of a "
+"browser window when either is pressed."
 msgstr ""
-"\"फरवार्ड\" र \"पछाडि\" का लागि बटन भएका मउसभएका प्रयोगकर्ताहरूका लागि, यो कुञ्जीले ब्राउजर सञ्झ्यालभित्र कुनै "
-"पनि कार्य थिच्दा कुनै पनि कार्य गरिएको छ कि छैन भनेर निर्धारण गर्नेछ।"
+"\"फरवार्ड\" र \"पछाडि\" का लागि बटन भएका मउसभएका प्रयोगकर्ताहरूका लागि, यो कुञ्जीले ब्राउजर सञ्झ्यालभित्र कुनै पनि कार्य थिच्दा कुनै पनि "
+"कार्य गरिएको छ कि छैन भनेर निर्धारण गर्नेछ।"
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-back-buttons'
 #: editor/ca.desrt.dconf-editor.gschema.xml:188
@@ -394,11 +382,11 @@ msgstr "ब्राउजर सञ्झ्यालमा \"पछाडि\"
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-back-buttons'
 #: editor/ca.desrt.dconf-editor.gschema.xml:190
 msgid ""
-"For users with mice that have buttons for “Forward” and “Back”, this key will set which button "
-"activates the “Back” command in a browser window. Possible values range between 6 and 14."
+"For users with mice that have buttons for “Forward” and “Back”, this key will set which button activates the “Back” "
+"command in a browser window. Possible values range between 6 and 14."
 msgstr ""
-"\"अग्रेषित\" र \"पछाडि\" का लागि बटन हरू भएका माउसहरूसँग प्रयोगकर्ताहरूको लागि, यो कुञ्जीले ब्राउजर सञ्झ्यालमा "
-"कुन बटनले \"पछाडि\" आदेश सक्रिय गर्दछ सेट गर्नेछ। सम्भावित मानहरू 6 र 14 को बीचमा हुन्छन्।"
+"\"अग्रेषित\" र \"पछाडि\" का लागि बटन हरू भएका माउसहरूसँग प्रयोगकर्ताहरूको लागि, यो कुञ्जीले ब्राउजर सञ्झ्यालमा कुन बटनले \"पछाडि\" आदेश "
+"सक्रिय गर्दछ सेट गर्नेछ। सम्भावित मानहरू 6 र 14 को बीचमा हुन्छन्।"
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-forward-buttons'
 #: editor/ca.desrt.dconf-editor.gschema.xml:196
@@ -408,11 +396,11 @@ msgstr "ब्राउजर सञ्झ्यालमा \"अग्रे�
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-forward-buttons'
 #: editor/ca.desrt.dconf-editor.gschema.xml:198
 msgid ""
-"For users with mice that have buttons for “Forward” and “Back”, this key will set which button "
-"activates the “Forward” command in a browser window. Possible values range between 6 and 14."
+"For users with mice that have buttons for “Forward” and “Back”, this key will set which button activates the “Forward” "
+"command in a browser window. Possible values range between 6 and 14."
 msgstr ""
-"माउस भएका प्रयोगकर्ताहरूका लागि जसमा \"फरवार्ड\" र \"पछाडि\" बटनहरू छन्, यो कुञ्जीले ब्राउजर सञ्झ्यालमा "
-"\"फरवार्ड\" आदेश सक्रिय पार्ने बटन सेट गर्नेछ । संभावित मानहरू ६ र १४ बीचको दायरा ।"
+"माउस भएका प्रयोगकर्ताहरूका लागि जसमा \"फरवार्ड\" र \"पछाडि\" बटनहरू छन्, यो कुञ्जीले ब्राउजर सञ्झ्यालमा \"फरवार्ड\" आदेश सक्रिय पार्ने बटन "
+"सेट गर्नेछ । संभावित मानहरू ६ र १४ बीचको दायरा ।"
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/refresh-settings-schema-source'
 #: editor/ca.desrt.dconf-editor.gschema.xml:203
@@ -422,15 +410,13 @@ msgstr "थपिएका वा हटाइएका स्किमाहर
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/refresh-settings-schema-source'
 #: editor/ca.desrt.dconf-editor.gschema.xml:205
 msgid ""
-"Dconf Editor can monitor if schemas are added or removed from the multiple possible locations. "
-"That’s done by checking every three seconds if the schemas list has changed. As this way to do is "
-"suboptimal, this function can be disabled by setting this flag to “false”. Note that this option "
-"will be removed when a better way to do things is found."
+"Dconf Editor can monitor if schemas are added or removed from the multiple possible locations. That’s done by checking "
+"every three seconds if the schemas list has changed. As this way to do is suboptimal, this function can be disabled by "
+"setting this flag to “false”. Note that this option will be removed when a better way to do things is found."
 msgstr ""
-"डिकन्फ सम्पादकले धेरै सम्भावित स्थानहरूबाट स्किमाहरू थपिएको वा हटाइएका छन् कि छैनन् भनेर निगरानी गर्न सक्दछ। यदि "
-"स्किमा सूची परिवर्तन भएको छ भने प्रत्येक तीन सेकेन्डमा जाँच गरेर यो गरिन्छ। यो गर्ने तरिका उप-अप्टिमल भएकोले, यो "
-"झण्डालाई \"गलत\" मा सेट गरेर यो प्रकार्य अक्षम गर्न सकिन्छ। ध्यान दिनुहोस् कि यो विकल्प हटाइनेछ जब चीजहरू गर्ने "
-"राम्रो तरिका फेला पर्दछ।"
+"डिकन्फ सम्पादकले धेरै सम्भावित स्थानहरूबाट स्किमाहरू थपिएको वा हटाइएका छन् कि छैनन् भनेर निगरानी गर्न सक्दछ। यदि स्किमा सूची परिवर्तन भएको छ "
+"भने प्रत्येक तीन सेकेन्डमा जाँच गरेर यो गरिन्छ। यो गर्ने तरिका उप-अप्टिमल भएकोले, यो झण्डालाई \"गलत\" मा सेट गरेर यो प्रकार्य अक्षम गर्न सकिन्छ। "
+"ध्यान दिनुहोस् कि यो विकल्प हटाइनेछ जब चीजहरू गर्ने राम्रो तरिका फेला पर्दछ।"
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/relocatable-schemas-enabled-mappings'
 #: editor/ca.desrt.dconf-editor.gschema.xml:210
@@ -440,15 +426,13 @@ msgstr "स्थानान्तरण योग्य स्किमा म
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/relocatable-schemas-enabled-mappings'
 #: editor/ca.desrt.dconf-editor.gschema.xml:212
 msgid ""
-"Flags for the relocatable schemas mapping facilities. “User” enables mappings defined by the "
-"“relocatable-schemas-user-paths” key; “Built-in” enables well-known mappings hardcoded into Dconf "
-"Editor; “Internal” is reserved for Dconf Editor own mappings; “Startup” is for mapping a "
-"relocatable schema from the command-line."
+"Flags for the relocatable schemas mapping facilities. “User” enables mappings defined by the “relocatable-schemas-user-"
+"paths” key; “Built-in” enables well-known mappings hardcoded into Dconf Editor; “Internal” is reserved for Dconf Editor "
+"own mappings; “Startup” is for mapping a relocatable schema from the command-line."
 msgstr ""
-"स्थानान्तरण योग्य स्किमाहरू मानचित्रण सुविधाहरूका लागि झण्डाहरू। \"प्रयोगकर्ता\" ले \"स्थानान्तरण योग्य-स्किमा-"
-"प्रयोगकर्ता-मार्गहरू\" कुञ्जीद्वारा परिभाषित मानचित्रणहरू सक्षम गर्दछ; \"बिल्ट-इन\" ले प्रसिद्ध मानचित्रणहरूलाई "
-"डकन्फ सम्पादकमा हार्डकोड गर्न सक्षम गर्दछ; \"आन्तरिक\" डीकन्फ सम्पादकको आफ्नै मानचित्रणको लागि आरक्षित छ; "
-"\"सुरुआत\" आदेश-रेखाबाट स्थानान्तरण योग्य स्किमा म्याप गर्नको लागि हो।"
+"स्थानान्तरण योग्य स्किमाहरू मानचित्रण सुविधाहरूका लागि झण्डाहरू। \"प्रयोगकर्ता\" ले \"स्थानान्तरण योग्य-स्किमा-प्रयोगकर्ता-मार्गहरू\" कुञ्जीद्वारा "
+"परिभाषित मानचित्रणहरू सक्षम गर्दछ; \"बिल्ट-इन\" ले प्रसिद्ध मानचित्रणहरूलाई डकन्फ सम्पादकमा हार्डकोड गर्न सक्षम गर्दछ; \"आन्तरिक\" डीकन्फ "
+"सम्पादकको आफ्नै मानचित्रणको लागि आरक्षित छ; \"सुरुआत\" आदेश-रेखाबाट स्थानान्तरण योग्य स्किमा म्याप गर्नको लागि हो।"
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/relocatable-schemas-user-paths'
 #: editor/ca.desrt.dconf-editor.gschema.xml:217
@@ -458,15 +442,13 @@ msgstr "म्यानुअल रूपमा सम्बन्धित स
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/relocatable-schemas-user-paths'
 #: editor/ca.desrt.dconf-editor.gschema.xml:219
 msgid ""
-"A dictionary that maps schema IDs with path specifications. It is used to allow the user to "
-"associate a relocatable schema to certain paths. Path specifications may contain wildcards in the "
-"form of empty segments (e.g. /ca/desrt/dconf-editor//), defining possibly multiple paths. The "
-"same schema ID may be associated with multiple path specifications."
+"A dictionary that maps schema IDs with path specifications. It is used to allow the user to associate a relocatable schema "
+"to certain paths. Path specifications may contain wildcards in the form of empty segments (e.g. /ca/desrt/dconf-editor//), "
+"defining possibly multiple paths. The same schema ID may be associated with multiple path specifications."
 msgstr ""
-"एक शब्दकोश जसले पथ निर्दिष्टीकरणहरूको साथ स्किमा आईडीहरू मानचित्र गर्दछ। यो प्रयोगकर्तालाई निश्चित मार्गहरूमा "
-"स्थानान्तरण योग्य स्किमा सम्बद्ध गर्न अनुमति दिन प्रयोग गरिन्छ। पाथ स्पेसिफिकेसनले खाली खण्डहरूको रूपमा "
-"वाइल्डकार्डहरू समावेश गर्न सक्दछ (उदाहरणका लागि / सीए / डेसर्ट / डीकन्फ-एडिटर / / ), सम्भवतः धेरै मार्गहरू "
-"परिभाषित गर्दछ। उही स्किमा आईडी बहुविध मार्ग निर्दिष्टीकरणहरूसँग सम्बन्धित हुन सक्छ ।"
+"एक शब्दकोश जसले पथ निर्दिष्टीकरणहरूको साथ स्किमा आईडीहरू मानचित्र गर्दछ। यो प्रयोगकर्तालाई निश्चित मार्गहरूमा स्थानान्तरण योग्य स्किमा सम्बद्ध "
+"गर्न अनुमति दिन प्रयोग गरिन्छ। पाथ स्पेसिफिकेसनले खाली खण्डहरूको रूपमा वाइल्डकार्डहरू समावेश गर्न सक्दछ (उदाहरणका लागि / सीए / डेसर्ट / डीकन्फ-"
+"एडिटर / / ), सम्भवतः धेरै मार्गहरू परिभाषित गर्दछ। उही स्किमा आईडी बहुविध मार्ग निर्दिष्टीकरणहरूसँग सम्बन्धित हुन सक्छ ।"
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/use-shortpaths'
 #: editor/ca.desrt.dconf-editor.gschema.xml:224
@@ -476,11 +458,11 @@ msgstr "अनावश्यक सबफोल्डर हरू छोड्
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/use-shortpaths'
 #: editor/ca.desrt.dconf-editor.gschema.xml:226
 msgid ""
-"When a folder only contains one subfolder and no keys, Dconf Editor can jump to that subfolder "
-"directly. This flag enables that behaviour."
+"When a folder only contains one subfolder and no keys, Dconf Editor can jump to that subfolder directly. This flag enables "
+"that behaviour."
 msgstr ""
-"जब फोल्डरले एउटा मात्र सबफोल्डर र कुनै कुञ्जी समावेश गर्दैन, डिकन्फ सम्पादकले सीधै त्यो सबफोल्डरमा जम्प गर्न सक्दछ । "
-"यो झण्डाले त्यो व्यवहारलाई सक्षम बनाउँछ।"
+"जब फोल्डरले एउटा मात्र सबफोल्डर र कुनै कुञ्जी समावेश गर्दैन, डिकन्फ सम्पादकले सीधै त्यो सबफोल्डरमा जम्प गर्न सक्दछ । यो झण्डाले त्यो व्यवहारलाई "
+"सक्षम बनाउँछ।"
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/bookmarks'
 #: editor/ca.desrt.dconf-editor.gschema.xml:233
@@ -521,11 +503,11 @@ msgstr "खाली बुलिएन , 'mb' प्रकार"
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/boolean-nullable'
 #: editor/ca.desrt.dconf-editor.gschema.xml:277
 msgid ""
-"GSettings allows nullable types, that are similar to other types but could take a “nothing” "
-"value. A nullable boolean can only take three values, “true”, “false” and “nothing”."
+"GSettings allows nullable types, that are similar to other types but could take a “nothing” value. A nullable boolean can "
+"only take three values, “true”, “false” and “nothing”."
 msgstr ""
-"जीसेटिंग्सले शून्य प्रकारहरूलाई अनुमति दिन्छ, जुन अन्य प्रकारहरूसँग मिल्दोजुल्दो छन् तर \"केही पनि छैन\" मान लिन "
-"सक्दछन्। एक अशक्त बुलियनले केवल तीन मानहरू लिन सक्छ, \"सत्य\", \"गलत\" र \"केही पनि छैन\"।"
+"जीसेटिंग्सले शून्य प्रकारहरूलाई अनुमति दिन्छ, जुन अन्य प्रकारहरूसँग मिल्दोजुल्दो छन् तर \"केही पनि छैन\" मान लिन सक्दछन्। एक अशक्त बुलियनले केवल तीन "
+"मानहरू लिन सक्छ, \"सत्य\", \"गलत\" र \"केही पनि छैन\"।"
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/byte'
 #: editor/ca.desrt.dconf-editor.gschema.xml:282
@@ -545,12 +527,11 @@ msgstr "बाइट स्ट्रिंग , 'ay’ प्रकार"
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/bytestring'
 #: editor/ca.desrt.dconf-editor.gschema.xml:291
 msgid ""
-"The bytestring type is commonly used to pass around strings that may not be valid utf8. In that "
-"case, the convention is that the nul terminator character should be included as the last "
-"character in the array."
+"The bytestring type is commonly used to pass around strings that may not be valid utf8. In that case, the convention is "
+"that the nul terminator character should be included as the last character in the array."
 msgstr ""
-"बाइटेस्ट्रिङ प्रकार सामान्यतया स्ट्रिङहरूको वरिपरि पास गर्न प्रयोग गरिन्छ जुन वैध यूटीएफ 8 नहुन सक्छ। त्यस "
-"अवस्थामा, कन्भेन्सन यो हो कि नुल टर्मिनेटर क्यारेक्टरलाई एरेमा अन्तिम क्यारेक्टरको रूपमा समावेश गर्नु पर्दछ।"
+"बाइटेस्ट्रिङ प्रकार सामान्यतया स्ट्रिङहरूको वरिपरि पास गर्न प्रयोग गरिन्छ जुन वैध यूटीएफ 8 नहुन सक्छ। त्यस अवस्थामा, कन्भेन्सन यो हो कि नुल "
+"टर्मिनेटर क्यारेक्टरलाई एरेमा अन्तिम क्यारेक्टरको रूपमा समावेश गर्नु पर्दछ।"
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/bytestring-array'
 #: editor/ca.desrt.dconf-editor.gschema.xml:296
@@ -560,11 +541,9 @@ msgstr "बाइटेस्ट्रिङ एरे, टाइप गर्�
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/bytestring-array'
 #: editor/ca.desrt.dconf-editor.gschema.xml:298
 msgid ""
-"This is the type of an array of bytestrings. The bytestring type is commonly used to pass around "
-"strings that may not be valid utf8."
-msgstr ""
-"यसले बाइटस्ट्रिङको एक प्रकारको एरे हो। बाइटस्ट्रिङ प्रकारले अक्सर अमान्य utf8 छैन भनेर स्ट्रिङहरूलाई पास गर्नका "
-"लागि प्रयोग गरिन्छ।"
+"This is the type of an array of bytestrings. The bytestring type is commonly used to pass around strings that may not be "
+"valid utf8."
+msgstr "यसले बाइटस्ट्रिङको एक प्रकारको एरे हो। बाइटस्ट्रिङ प्रकारले अक्सर अमान्य utf8 छैन भनेर स्ट्रिङहरूलाई पास गर्नका लागि प्रयोग गरिन्छ।"
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-handle'
 #: editor/ca.desrt.dconf-editor.gschema.xml:303
@@ -574,13 +553,12 @@ msgstr "एक डी-बस ह्यान्डल प्रकार, टा
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-handle'
 #: editor/ca.desrt.dconf-editor.gschema.xml:305
 msgid ""
-"The handle type is a 32-bit signed integer value that is, by convention, used as an index into an "
-"array of file descriptors that are sent alongside a D-Bus message. If you are not interacting "
-"with D-Bus, then there is no reason to make use of this type."
+"The handle type is a 32-bit signed integer value that is, by convention, used as an index into an array of file "
+"descriptors that are sent alongside a D-Bus message. If you are not interacting with D-Bus, then there is no reason to "
+"make use of this type."
 msgstr ""
-"ह्यान्डल प्रकार एक ३२-बिटको संकेतित अख्तियारी अंक हो, जो सामान्यतः एक D-Bus सन्देशसँग साथै पठाइएको फाइल "
-"डिस्क्रिप्टरहरूको एक सरणीमा इन्डेक्सको रूपमा प्रयोग गरिन्छ। यदि तपाईं D-Bus संग अन्तर्क्रिया गर्दैनुहुन्छ भने, तपाईंले "
-"यस प्रकारको प्रयोग गर्नको कुनै कारण छैन।"
+"ह्यान्डल प्रकार एक ३२-बिटको संकेतित अख्तियारी अंक हो, जो सामान्यतः एक D-Bus सन्देशसँग साथै पठाइएको फाइल डिस्क्रिप्टरहरूको एक सरणीमा "
+"इन्डेक्सको रूपमा प्रयोग गरिन्छ। यदि तपाईं D-Bus संग अन्तर्क्रिया गर्दैनुहुन्छ भने, तपाईंले यस प्रकारको प्रयोग गर्नको कुनै कारण छैन।"
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-object-path'
 #: editor/ca.desrt.dconf-editor.gschema.xml:310
@@ -590,11 +568,11 @@ msgstr "एउटा डी-बस वस्तु मार्ग, 'ओ' टा
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-object-path'
 #: editor/ca.desrt.dconf-editor.gschema.xml:312
 msgid ""
-"An object path is used to identify D-Bus objects at a given destination on the bus. If you are "
-"not interacting with D-Bus, then there is no reason to make use of this type."
+"An object path is used to identify D-Bus objects at a given destination on the bus. If you are not interacting with D-Bus, "
+"then there is no reason to make use of this type."
 msgstr ""
-"एक वस्तु पथले बसमा दिएको गन्तव्यमा डी-बस वस्तुहरूलाई पहिचान गर्दछ। यदि तपाईं डी-बससँग संवाद गर्दैनुहुन्छ भने, यस "
-"प्रकारको प्रयोग गर्नको कुनै कारण छैन।"
+"एक वस्तु पथले बसमा दिएको गन्तव्यमा डी-बस वस्तुहरूलाई पहिचान गर्दछ। यदि तपाईं डी-बससँग संवाद गर्दैनुहुन्छ भने, यस प्रकारको प्रयोग गर्नको कुनै कारण "
+"छैन।"
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-object-path-array'
 #: editor/ca.desrt.dconf-editor.gschema.xml:317
@@ -604,11 +582,11 @@ msgstr "एउटा डी-बस वस्तु मार्ग सरणी,
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-object-path-array'
 #: editor/ca.desrt.dconf-editor.gschema.xml:319
 msgid ""
-"An object path array could contain any number of object paths (including none: “[]”). If you are "
-"not interacting with D-Bus, then there is no reason to make use of this type."
+"An object path array could contain any number of object paths (including none: “[]”). If you are not interacting with D-"
+"Bus, then there is no reason to make use of this type."
 msgstr ""
-"एउटा वस्तु पथ सरणीले कुनै पनि सङ्ख्याका वस्तु मार्गहरू समावेश गर्न सक्छ (कुनै पनि समावेश छैन: \"[]\")। यदि तपाईं डी-"
-"बससँग अन्तरक्रिया गरिरहनुभएको छैन भने, यस प्रकारको प्रयोग गर्ने कुनै कारण छैन।"
+"एउटा वस्तु पथ सरणीले कुनै पनि सङ्ख्याका वस्तु मार्गहरू समावेश गर्न सक्छ (कुनै पनि समावेश छैन: \"[]\")। यदि तपाईं डी-बससँग अन्तरक्रिया गरिरहनुभएको "
+"छैन भने, यस प्रकारको प्रयोग गर्ने कुनै कारण छैन।"
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-signature'
 #: editor/ca.desrt.dconf-editor.gschema.xml:324
@@ -618,11 +596,11 @@ msgstr "एउटा डी-बस हस्ताक्षर, 'जी' टा�
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-signature'
 #: editor/ca.desrt.dconf-editor.gschema.xml:326
 msgid ""
-"A D-Bus signature is a string used as type signature for a D-Bus method or message. If you are "
-"not interacting with D-Bus, then there is no reason to make use of this type."
+"A D-Bus signature is a string used as type signature for a D-Bus method or message. If you are not interacting with D-Bus, "
+"then there is no reason to make use of this type."
 msgstr ""
-"डी-बस हस्ताक्षर डी-बस विधि वा सन्देशका लागि प्रकार हस्ताक्षरको रूपमा प्रयोग गरिने स्ट्रिङ हो। यदि तपाईं डी-"
-"बससँग अन्तरक्रिया गरिरहनुभएको छैन भने, यस प्रकारको प्रयोग गर्ने कुनै कारण छैन।"
+"डी-बस हस्ताक्षर डी-बस विधि वा सन्देशका लागि प्रकार हस्ताक्षरको रूपमा प्रयोग गरिने स्ट्रिङ हो। यदि तपाईं डी-बससँग अन्तरक्रिया गरिरहनुभएको छैन "
+"भने, यस प्रकारको प्रयोग गर्ने कुनै कारण छैन।"
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dict-entry'
 #: editor/ca.desrt.dconf-editor.gschema.xml:331
@@ -631,12 +609,8 @@ msgstr "'{ss}' प्रकारको शब्दकोश प्रविष
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dict-entry'
 #: editor/ca.desrt.dconf-editor.gschema.xml:333
-msgid ""
-"A dictionary maps values of a basic type to another value (of any type). A dictionary entry is "
-"one such mapping."
-msgstr ""
-"एउटा शब्दकोशले आधारभूत प्रकारका मानहरूलाई अर्को मान (कुनै पनि प्रकारको) मा म्याप गर्दछ। शब्दकोश प्रविष्टि यस्तै "
-"एक मानचित्र हो।"
+msgid "A dictionary maps values of a basic type to another value (of any type). A dictionary entry is one such mapping."
+msgstr "एउटा शब्दकोशले आधारभूत प्रकारका मानहरूलाई अर्को मान (कुनै पनि प्रकारको) मा म्याप गर्दछ। शब्दकोश प्रविष्टि यस्तै एक मानचित्र हो।"
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dictionary'
 #: editor/ca.desrt.dconf-editor.gschema.xml:338
@@ -646,11 +620,10 @@ msgstr "एउटा \"वार्डिक्ट\", टाइप 'a{sv}'"
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dictionary'
 #: editor/ca.desrt.dconf-editor.gschema.xml:340
 msgid ""
-"A dictionary maps values of a basic type to another value (of any type). One simple use case is "
-"to map strings to variants."
+"A dictionary maps values of a basic type to another value (of any type). One simple use case is to map strings to variants."
 msgstr ""
-"एउटा शब्दकोशले आधारभूत प्रकारका मानहरूलाई अर्को मान (कुनै पनि प्रकारको) मा म्याप गर्दछ। एक साधारण प्रयोग "
-"मामला प्रकारहरूमा स्ट्रिंगहरू नक्शा गर्न हो।"
+"एउटा शब्दकोशले आधारभूत प्रकारका मानहरूलाई अर्को मान (कुनै पनि प्रकारको) मा म्याप गर्दछ। एक साधारण प्रयोग मामला प्रकारहरूमा स्ट्रिंगहरू नक्शा "
+"गर्न हो।"
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/double'
 #: editor/ca.desrt.dconf-editor.gschema.xml:345
@@ -753,12 +726,11 @@ msgstr "दायरा सँग एउटा नम्बर"
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/number-with-range'
 #: editor/ca.desrt.dconf-editor.gschema.xml:412
 msgid ""
-"Every numeral setting (integers and unsigned integers of every type, plus doubles) could be "
-"limited to a custom range of values. For example, this integer could only take a value between -2 "
-"and 10."
+"Every numeral setting (integers and unsigned integers of every type, plus doubles) could be limited to a custom range of "
+"values. For example, this integer could only take a value between -2 and 10."
 msgstr ""
-"प्रत्येक अङ्कले सेटिङ्ग (प्रत्येक प्रकारको पूर्णाङ्क र अज्ञात इन्टर्गरहरू, साथै युगलहरू) मानहरूको अनुकूल दायरामा सीमित हुन "
-"सक्छ। उदाहरणका लागि, यो पूर्णांक केवल -२ र १० को बीच एक मान लिन सक्दछ।"
+"प्रत्येक अङ्कले सेटिङ्ग (प्रत्येक प्रकारको पूर्णाङ्क र अज्ञात इन्टर्गरहरू, साथै युगलहरू) मानहरूको अनुकूल दायरामा सीमित हुन सक्छ। उदाहरणका लागि, यो "
+"पूर्णांक केवल -२ र १० को बीच एक मान लिन सक्दछ।"
 
 #. Translators: do not forget the parenthesis, they are meaningful; summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/pair-of-integers'
 #: editor/ca.desrt.dconf-editor.gschema.xml:417
@@ -768,11 +740,11 @@ msgstr "एक अनुकूल प्रकार, यहाँ '(ii)'"
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/pair-of-integers'
 #: editor/ca.desrt.dconf-editor.gschema.xml:419
 msgid ""
-"Dconf Editor lets you edit any settings type supported by GSettings, falling back on a string "
-"entry when it doesn’t have a better way to do. Here is a tuple of two 32-bit signed integers."
+"Dconf Editor lets you edit any settings type supported by GSettings, falling back on a string entry when it doesn’t have a "
+"better way to do. Here is a tuple of two 32-bit signed integers."
 msgstr ""
-"डीकन्फ एडिटरले तपाईँलाई जीसेटिंग्सद्वारा समर्थित कुनै पनि सेटिङ प्रकार सम्पादन गर्न अनुमति दिन्छ, स्ट्रिङ प्रविष्टिमा "
-"पछाडि झर्छ जब यो गर्न को लागी राम्रो तरिका छैन। यहाँ दुई 32-बिट हस्ताक्षरित पूर्णांकहरूको एक टुपल छ।"
+"डीकन्फ एडिटरले तपाईँलाई जीसेटिंग्सद्वारा समर्थित कुनै पनि सेटिङ प्रकार सम्पादन गर्न अनुमति दिन्छ, स्ट्रिङ प्रविष्टिमा पछाडि झर्छ जब यो गर्न को "
+"लागी राम्रो तरिका छैन। यहाँ दुई 32-बिट हस्ताक्षरित पूर्णांकहरूको एक टुपल छ।"
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string'
 #: editor/ca.desrt.dconf-editor.gschema.xml:424
@@ -782,11 +754,11 @@ msgstr "स्ट्रिङ्ग 's' प्रकार"
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string'
 #: editor/ca.desrt.dconf-editor.gschema.xml:426
 msgid ""
-"The string type could accept any utf8 string. Note that an empty string “''” is not the same as "
-"NULL (nothing); see also the “string-nullable” key."
+"The string type could accept any utf8 string. Note that an empty string “''” is not the same as NULL (nothing); see also "
+"the “string-nullable” key."
 msgstr ""
-"स्ट्रिङ प्रकारले कुनै utf8 स्ट्रिंग स्वीकार गर्न सक्छ। ध्यान दिनुहोस् कि खाली स्ट्रिङ \"''\" NULL को रूपमा होइन "
-"(केहि पनि छैन); \"string-nullable\" कुञ्जी पनि हेर्नुहोस्।"
+"स्ट्रिङ प्रकारले कुनै utf8 स्ट्रिंग स्वीकार गर्न सक्छ। ध्यान दिनुहोस् कि खाली स्ट्रिङ \"''\" NULL को रूपमा होइन (केहि पनि छैन); \"string-"
+"nullable\" कुञ्जी पनि हेर्नुहोस्।"
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string-array'
 #: editor/ca.desrt.dconf-editor.gschema.xml:431
@@ -795,8 +767,7 @@ msgstr "स्ट्रिङ्ग सरणी प्रकार 'as'"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string-array'
 #: editor/ca.desrt.dconf-editor.gschema.xml:433
-msgid ""
-"A string array contains any number of strings of whatever length. It may be an empty array, “[]”."
+msgid "A string array contains any number of strings of whatever length. It may be an empty array, “[]”."
 msgstr "स्ट्रिङ्ग सरणीमा कुनै पनि लामो स्ट्रिङ्ग सङ्ख्या समावेश गर्दछ। यो खाली सरण पनि हुन सक्छ, \"[]\"।"
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string-nullable'
@@ -807,12 +778,11 @@ msgstr "शून्य स्ट्रिङ, 'एमएस' टाइप ग�
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string-nullable'
 #: editor/ca.desrt.dconf-editor.gschema.xml:440
 msgid ""
-"GSettings allows nullable types, that are similar to other types but could take a “nothing” "
-"value. A nullable string can take any string as value, including the empty string “''”, or can be "
-"NULL (nothing)."
+"GSettings allows nullable types, that are similar to other types but could take a “nothing” value. A nullable string can "
+"take any string as value, including the empty string “''”, or can be NULL (nothing)."
 msgstr ""
-"जिसेटिङ्ग ले निस्क्रिय प्रकारको अनुमति दिन्छ, जुन अन्य प्रकारका जस्तै छन् तर \"केही\" मान लिन सक्दछ। एउटा शुन्य "
-"स्ट्रिङ्गले कुनै पनि स्ट्रिङ्गलाई मानको रूपमा मान्न सक्छ, खाली स्ट्रिङ सहित \"'', वा NULL (केही पनि) हुन सक्छ।"
+"जिसेटिङ्ग ले निस्क्रिय प्रकारको अनुमति दिन्छ, जुन अन्य प्रकारका जस्तै छन् तर \"केही\" मान लिन सक्दछ। एउटा शुन्य स्ट्रिङ्गले कुनै पनि स्ट्रिङ्गलाई "
+"मानको रूपमा मान्न सक्छ, खाली स्ट्रिङ सहित \"'', वा NULL (केही पनि) हुन सक्छ।"
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/variant'
 #: editor/ca.desrt.dconf-editor.gschema.xml:445
@@ -822,17 +792,15 @@ msgstr "एक प्रकार, प्रकार ' V'"
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/variant'
 #: editor/ca.desrt.dconf-editor.gschema.xml:447
 msgid ""
-"Variants could be stored inside variants, and consequently as a GSettings type. Their "
-"representation use the XML brackets (‘<’ and ‘>’ characters, in a gschema file “&#60;” and "
-"“&#62;” respectively), with a parsable representation of their content inside. If unclear, the "
-"type can be given in the value with a prefix annotation like “@x” (where “x” is the type string) "
-"or “int64”. See https://docs.gtk.org/glib/gvariant-text.html for complete documentation."
+"Variants could be stored inside variants, and consequently as a GSettings type. Their representation use the XML brackets "
+"(‘<’ and ‘>’ characters, in a gschema file “&#60;” and “&#62;” respectively), with a parsable representation of their "
+"content inside. If unclear, the type can be given in the value with a prefix annotation like “@x” (where “x” is the type "
+"string) or “int64”. See https://docs.gtk.org/glib/gvariant-text.html for complete documentation."
 msgstr ""
-"भेरियन्टहरू भेरियन्टहरू भित्र भण्डारण गर्न सकिन्छ, र फलस्वरूप जीसेटिङ्स प्रकारको रूपमा। तिनीहरूको प्रतिनिधित्वले "
-"एक्सएमएल कोष्ठकहरू ('&#60;' र '&#62;' क्यारेक्टरहरू प्रयोग गर्दछ, क्रमशः गस्चेमा फाइल \"&#60;\" र \"&#62;\" "
-"मा), भित्र उनीहरूको सामग्रीको एक विशाल प्रतिनिधित्वको साथ। यदि अस्पष्ट भएमा, प्रकारलाई \"@x\" (जहाँ "
-"\"एक्स\" प्रकार स्ट्रिङ हो) वा \"इन्ट 64\" जस्ता उपसर्ग एनोटेशनको साथ मानमा दिन सकिन्छ। पूर्ण कागजातको लागि "
-"https://docs.gtk.org/glib/gvariant-text.html हेर्नुहोस्।"
+"भेरियन्टहरू भेरियन्टहरू भित्र भण्डारण गर्न सकिन्छ, र फलस्वरूप जीसेटिङ्स प्रकारको रूपमा। तिनीहरूको प्रतिनिधित्वले एक्सएमएल कोष्ठकहरू ('&#60;' र "
+"'&#62;' क्यारेक्टरहरू प्रयोग गर्दछ, क्रमशः गस्चेमा फाइल \"&#60;\" र \"&#62;\" मा), भित्र उनीहरूको सामग्रीको एक विशाल प्रतिनिधित्वको साथ। "
+"यदि अस्पष्ट भएमा, प्रकारलाई \"@x\" (जहाँ \"एक्स\" प्रकार स्ट्रिङ हो) वा \"इन्ट 64\" जस्ता उपसर्ग एनोटेशनको साथ मानमा दिन सकिन्छ। पूर्ण "
+"कागजातको लागि https://docs.gtk.org/glib/gvariant-text.html हेर्नुहोस्।"
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-enum'
 #: editor/ca.desrt.dconf-editor.gschema.xml:452
@@ -841,12 +809,8 @@ msgstr "एक 1-विकल्प गणना"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-enum'
 #: editor/ca.desrt.dconf-editor.gschema.xml:454
-msgid ""
-"An enumeration could contain only one item, but that’s probably an error. Dconf Editor warns you "
-"in that case."
-msgstr ""
-"एक अङ्कले मात्र एक वस्तु समावेश गर्न सक्छ, तर यो शायद त्रुटि हो। डिकन्फ सम्पादकले तपाईंलाई यो अवस्थामा चेतावनी "
-"दिन्छ।."
+msgid "An enumeration could contain only one item, but that’s probably an error. Dconf Editor warns you in that case."
+msgstr "एक अङ्कले मात्र एक वस्तु समावेश गर्न सक्छ, तर यो शायद त्रुटि हो। डिकन्फ सम्पादकले तपाईंलाई यो अवस्थामा चेतावनी दिन्छ।."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-range'
 #: editor/ca.desrt.dconf-editor.gschema.xml:460
@@ -856,11 +820,10 @@ msgstr "एक-विकल्प पूर्णांङ्क मान"
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-range'
 #: editor/ca.desrt.dconf-editor.gschema.xml:462
 msgid ""
-"A range could limit an integer key to only allow one value, but that’s probably an error. Dconf "
-"Editor warns you in that case."
+"A range could limit an integer key to only allow one value, but that’s probably an error. Dconf Editor warns you in that "
+"case."
 msgstr ""
-"दायराले एक मान मात्र अनुमति दिन पूर्णाङ्क कुञ्जी सीमित गर्न सक्छ, तर यो शायद त्रुटि हो। डिकन्फ सम्पादकले तपाईंलाई "
-"यो अवस्थामा चेतावनी दिन्छ।"
+"दायराले एक मान मात्र अनुमति दिन पूर्णाङ्क कुञ्जी सीमित गर्न सक्छ, तर यो शायद त्रुटि हो। डिकन्फ सम्पादकले तपाईंलाई यो अवस्थामा चेतावनी दिन्छ।"
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-triv'
 #: editor/ca.desrt.dconf-editor.gschema.xml:467
@@ -870,111 +833,116 @@ msgstr "खाली टुपल, प्रकार र मान \"()\""
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-triv'
 #: editor/ca.desrt.dconf-editor.gschema.xml:469
 msgid ""
-"There’s an empty tuple type (called sometimes “triv”) that is a tuple with no content, and can "
-"only take “()” as value."
+"There’s an empty tuple type (called sometimes “triv”) that is a tuple with no content, and can only take “()” as value."
 msgstr ""
-"त्यहाँ एक खाली टुपल प्रकार छ (जसलाई कहिलेकाँही \"ट्रिभ\" भनिन्छ) जुन कुनै सामग्री बिना एक टुपल हो, र मानको "
-"रूपमा केवल \"()\" लिन सक्छ।"
+"त्यहाँ एक खाली टुपल प्रकार छ (जसलाई कहिलेकाँही \"ट्रिभ\" भनिन्छ) जुन कुनै सामग्री बिना एक टुपल हो, र मानको रूपमा केवल \"()\" लिन सक्छ।"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/relocatable/boolean' (with default /ca/desrt/dconf-editor/relocatable-* settings)
 #: editor/ca.desrt.dconf-editor.gschema.xml:482
 msgid "An usual boolean value, defined by a relocatable schema."
-msgstr ""
+msgstr "एक सामान्य बुलियन मान, पुन: स्थानान्तरण योग्य स्कीमा द्वारा परिभाषित।"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/relocatable/integer' (with default /ca/desrt/dconf-editor/relocatable-* settings)
 #: editor/ca.desrt.dconf-editor.gschema.xml:489
 msgid "A 32-bit signed integer, defined by a relocatable schema."
-msgstr ""
+msgstr "एक 32-बिट हस्ताक्षर गरिएको पूर्णांक, एक पुन: स्थानान्तरण योग्य स्कीमा द्वारा परिभाषित।"
 
 #. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 a-non-conflicting-key'
 #: editor/ca.desrt.dconf-editor.gschema.xml:503
 msgid "A normal non-conflicting key from Conflict1"
-msgstr ""
+msgstr "Conflict1 बाट सामान्य गैर-विरोधात्मक कुञ्जी"
 
 #. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 a-non-conflicting-key'
 #. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 another-non-conflicting-key'
 #: editor/ca.desrt.dconf-editor.gschema.xml:505 editor/ca.desrt.dconf-editor.gschema.xml:542
 msgid ""
-"This key is a test for multiple schemas in the same path with conflicting keys. Non-conflicting "
-"keys should have no issues."
-msgstr ""
+"This key is a test for multiple schemas in the same path with conflicting keys. Non-conflicting keys should have no issues."
+msgstr "यो कुञ्जी विवादास्पद कुञ्जीहरूसँग एउटै मार्गमा बहु योजनाहरूको लागि परीक्षण हो। गैर-विरोधी कुञ्जीहरूमा कुनै समस्या हुनु हुँदैन।"
 
 #. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 default-value-conflict'
 #: editor/ca.desrt.dconf-editor.gschema.xml:510
 msgid "Conflicting key defaulting to “1” that should give an error"
-msgstr ""
+msgstr "विवादास्पद कुञ्जी \"१\" मा पूर्वनिर्धारित जसले त्रुटि दिनुपर्दछ"
 
 #. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 default-value-conflict'
 #. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 default-value-conflict'
 #: editor/ca.desrt.dconf-editor.gschema.xml:512 editor/ca.desrt.dconf-editor.gschema.xml:549
 msgid ""
-"This key is a test for multiple schemas in the same path with conflicting keys. It shouldn’t be "
-"editable as a key mapped to the same path has a different default value."
+"This key is a test for multiple schemas in the same path with conflicting keys. It shouldn’t be editable as a key mapped "
+"to the same path has a different default value."
 msgstr ""
+"यो कुञ्जी विवादास्पद कुञ्जीहरूसँग एउटै मार्गमा बहु योजनाहरूको लागि परीक्षण हो। एउटै मार्गमा म्याप गरिएको कुञ्जीको फरक पूर्वनिर्धारित मान भएकोले "
+"यो सम्पादन योग्य हुनु हुँदैन।"
 
 #. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 range-conflict'
 #: editor/ca.desrt.dconf-editor.gschema.xml:517
 msgid "Conflicting key with no range that should give an error"
-msgstr ""
+msgstr "कुनै दायरा बिना विवादित कुञ्जी जसले त्रुटि दिनुपर्दछ"
 
 #. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 range-conflict'
 #. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 range-conflict'
 #: editor/ca.desrt.dconf-editor.gschema.xml:519 editor/ca.desrt.dconf-editor.gschema.xml:557
 msgid ""
-"This key is a test for multiple schemas in the same path with conflicting keys. It shouldn’t be "
-"editable as a key mapped to the same path has a different range."
+"This key is a test for multiple schemas in the same path with conflicting keys. It shouldn’t be editable as a key mapped "
+"to the same path has a different range."
 msgstr ""
+"यो कुञ्जी परस्पर विरोधी कुञ्जीहरूसँग एउटै मार्गमा बहुविध स्किमाहरूका लागि परीक्षण हो । यो सम्पादन योग्य हुनु हुँदैन किनकि एउटै मार्गमा म्याप "
+"गरिएको कुञ्जीको फरक दायरा छ।"
 
 #. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 type-conflict'
 #: editor/ca.desrt.dconf-editor.gschema.xml:524
 msgid "A (simple) string conflicting key that should give a error"
-msgstr ""
+msgstr "एउटा (साधारण) स्ट्रिङ परस्पर विरोधी कुञ्जी जसले त्रुटि दिनुपर्दछ"
 
 #. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 type-conflict'
 #. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 type-conflict'
 #: editor/ca.desrt.dconf-editor.gschema.xml:526 editor/ca.desrt.dconf-editor.gschema.xml:564
 msgid ""
-"This key is a test for multiple schemas in the same path with conflicting keys. It shouldn’t be "
-"editable as a key mapped to the same path has a different type."
+"This key is a test for multiple schemas in the same path with conflicting keys. It shouldn’t be editable as a key mapped "
+"to the same path has a different type."
 msgstr ""
+"यो कुञ्जी परस्पर विरोधी कुञ्जीहरूसँग एउटै मार्गमा बहुविध स्किमाहरूका लागि परीक्षण हो । यो सम्पादन योग्य हुनु हुँदैन किनकि एउटै मार्गमा म्याप "
+"गरिएको कुञ्जीको फरक प्रकार छ।"
 
 #. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 warning-similar'
 #: editor/ca.desrt.dconf-editor.gschema.xml:531
 msgid "Conflicting key from Conflict1 that should give a warning"
-msgstr ""
+msgstr "चेतावनी दिनुपर्ने द्वन्द्व १ बाट परस्पर विरोधी कुञ्जी"
 
 #. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 warning-similar'
 #. Translators: description of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 warning-similar'
 #: editor/ca.desrt.dconf-editor.gschema.xml:533 editor/ca.desrt.dconf-editor.gschema.xml:571
 msgid ""
-"This key is a test for multiple schemas in the same path with conflicting keys. It can be edited, "
-"since the types are compatible, but it is still an issue."
+"This key is a test for multiple schemas in the same path with conflicting keys. It can be edited, since the types are "
+"compatible, but it is still an issue."
 msgstr ""
+"यो कुञ्जी परस्पर विरोधी कुञ्जीहरूसँग एउटै मार्गमा बहुविध स्किमाहरूका लागि परीक्षण हो । यसलाई सम्पादन गर्न सकिन्छ, किनकि प्रकारहरू संगत छन्, तर "
+"यो अझै पनि एक मुद्दा हो।"
 
 #. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 another-non-conflicting-key'
 #: editor/ca.desrt.dconf-editor.gschema.xml:540
 msgid "A normal non-conflicting key from Conflict2"
-msgstr ""
+msgstr "A normal non-conflicting key from Conflict2"
 
 #. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 default-value-conflict'
 #: editor/ca.desrt.dconf-editor.gschema.xml:547
 msgid "Conflicting key defaulting to “2” that should give an error"
-msgstr ""
+msgstr "त्रुटि दिनु पर्ने \"२\" मा पूर्वनिर्धारित परस्पर विरोधी कुञ्जी"
 
 #. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 range-conflict'
 #: editor/ca.desrt.dconf-editor.gschema.xml:555
 msgid "Conflicting key with range 0~5 that should give an error"
-msgstr ""
+msgstr "त्रुटि दिनु पर्ने दायरा ०~५ सँग परस्पर विरोधी कुञ्जी"
 
 #. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 type-conflict'
 #: editor/ca.desrt.dconf-editor.gschema.xml:562
 msgid "A nullable-string conflicting key that should give an error"
-msgstr ""
+msgstr "त्रुटि दिनु पर्ने शून्य-स्ट्रिङ परस्पर विरोधी कुञ्जी"
 
 #. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict2 warning-similar'
 #: editor/ca.desrt.dconf-editor.gschema.xml:569
 msgid "Conflicting key from Conflict2 that should give a warning"
-msgstr ""
+msgstr "चेतावनी दिनु पर्ने द्वन्द्व २ बाट परस्पर विरोधी कुञ्जी"
 
 #. Translators: command-line option description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:159
@@ -983,9 +951,8 @@ msgstr "मुद्रण संस्करण विवरण अनि ब�
 
 #. Translators: command-line option description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:162
-#| msgid "Print release version and exit"
 msgid "Print relocatable schemas and exit"
-msgstr ""
+msgstr "स्थानान्तरण योग्य स्किमा मुद्रण गर्नुहोस् र बाहिर निस्कनुहोस्"
 
 #. Translators: command-line option description, see 'dconf-editor --help'; the option removes the initial "use at your own risks" dialog
 #: editor/dconf-editor.vala:165
@@ -994,30 +961,28 @@ msgstr "सुरुको चेतावनी नदेखाउनुहो�
 
 #. Translators: command-line text, description of the application in 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
 #: editor/dconf-editor.vala:203
-#| msgid "A graphical tool for editing the dconf database"
 msgid "Graphical interface for editing other applications settings."
-msgstr ""
+msgstr "अन्य अनुप्रयोग सेटिङ सम्पादनका लागि ग्राफिकल इन्टरफेस ।"
 
 #. Translators: command-line text, describes how the application proceeds for editing other applications settings, in 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
 #: editor/dconf-editor.vala:206
 msgid "Uses the gsettings API of the glib library, among others."
-msgstr ""
+msgstr "ग्लिब लाइब्रेरीको जीसेटिंग्स एपीआई प्रयोग गर्दछ, अरूको बीचमा।"
 
 #. Translators: command-line header description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:209
-#| msgid "Description"
 msgid "Arguments description:"
-msgstr ""
+msgstr "तर्क वर्णन:"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:213
 msgid "a folder path or a key path"
-msgstr ""
+msgstr "फोल्डर बाटो वा कुञ्जी मार्ग"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:215
 msgid "example: “/org/gnome/” or “/ca/desrt/dconf-editor/Demo/boolean”"
-msgstr ""
+msgstr "उदाहरण: \"/org/जिनोम/\" वा \"/सीए/डेसर्ट/डिकन्फ-एडिटर/डेमो/बूलियन\""
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:219
@@ -1027,27 +992,27 @@ msgstr "निश्चित मार्ग भएको स्किमाक
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:221
 msgid "example: “ca.desrt.dconf-editor.Settings”"
-msgstr ""
+msgstr "उदाहरण: \"सीए.डेसर्ट.डीकन्फ-एडिटर.सेटिंग्स\""
 
 #. Translators: command-line argument description, see 'dconf-editor --help'; no need to put your translation of "relocatable" between quotation marks, that's done in English to highlight why the option is called "RELOC_SCHEMA"
 #: editor/dconf-editor.vala:225
 msgid "the name of a “relocatable” schema, without fixed path"
-msgstr ""
+msgstr "\"स्थानान्तरण योग्य\" स्किमाको नाम, निश्चित मार्ग बिना"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:227
 msgid "see list with the “--list-relocatable-schemas” option"
-msgstr ""
+msgstr "“--list-relocatable-schemas” विकल्पको साथ सूची हेर्नुहोस्"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:231
 msgid "the path where to map the relocatable schema"
-msgstr ""
+msgstr "स्थानान्तरण योग्य स्किमा मानचित्र गर्ने बाटो"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:233
 msgid "example: “ca.desrt.dconf-editor.Bookmarks:/ca/desrt/dconf-editor/”"
-msgstr ""
+msgstr "उदाहरण: \"ca.desrt.dconf-editor.Bookmarks:/ca/desrt/dconf-editor/\""
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:237
@@ -1097,27 +1062,35 @@ msgstr "अहिलेका लागि एउटा मात्र वि�
 #. Translators: command-line error message, try 'dconf-editor a b c d'
 #: editor/dconf-editor.vala:462
 msgid "Cannot understand: too many arguments.\n"
-msgstr ""
+msgstr "बुझ्न सकिदैन: धेरै तर्कहरू।\n"
 
 #. Translators: command-line error message, try 'dconf-editor / a'
 #: editor/dconf-editor.vala:476
 msgid "Cannot understand second argument in this context.\n"
 msgstr ""
+"यस सन्दर्भमा दोस्रो तर्क बुझ्न सकिदैन ।\n"
+"\n"
 
 #. Translators: command-line error message, try 'dconf-editor org.example /'
 #: editor/dconf-editor.vala:497
 msgid "Cannot understand: slash character in second argument.\n"
 msgstr ""
+"बुझ्न सकिदैन: दोस्रो तर्कमा क्यारेक्टर स्लेश गर्नुहोस् ।\n"
+"\n"
 
 #. Translators: command-line error message, try 'dconf-editor org.example:a'
 #: editor/dconf-editor.vala:512
 msgid "Schema path should start and end with a “/”.\n"
 msgstr ""
+"स्किमा मार्ग \"/\" सँग सुरु र अन्त्य हुनुपर्दछ ।\n"
+"\n"
 
 #. Translators: command-line error message, try 'dconf-editor //'
 #: editor/dconf-editor.vala:528
 msgid "Cannot understand: given path contains “//”.\n"
 msgstr ""
+"बुझ्न सकिदैन: दिइएको मार्गले \"//\" समावेश गर्दछ ।\n"
+"\n"
 
 #. Translators: command-line error message, try 'dconf-editor "org example" a'
 #: editor/dconf-editor.vala:536
@@ -1132,7 +1105,7 @@ msgstr "क्लिपबोर्डमा प्रतिलिपि"
 #. Translators: about dialog text
 #: editor/dconf-editor.vala:641
 msgid "A graphical viewer and editor of applications’ internal settings."
-msgstr ""
+msgstr "ग्राफिकल दर्शक र अनुप्रयोगहरूको आन्तरिक सेटिङको सम्पादक।"
 
 #. Translators: text crediting a game author, seen in the About dialog
 #: editor/dconf-editor.vala:646
@@ -1165,8 +1138,8 @@ msgstr "प्रतिलिपि अधिकार © %u-%u – अमाउ
 msgid "translator-credits"
 msgstr ""
 "pawan chitrakar <chautari@gmail.com>\n"
-"Laxmi Pd Khatiwada <laxmi@mpp.org.np>, Ganesh Bahadur Ghimire <gghimire@gmail.com>, Narayan Kumar "
-"Magar <narayan@mpp.org.np>\n"
+"Laxmi Pd Khatiwada <laxmi@mpp.org.np>, Ganesh Bahadur Ghimire <gghimire@gmail.com>, Narayan Kumar Magar <narayan@mpp.org."
+"np>\n"
 "\n"
 "Launchpad Contributions:\n"
 "  Ganesh Ghimire https://launchpad.net/~gghimire\n"
@@ -1222,9 +1195,8 @@ msgstr "देखिने कुञ्जीहरू पुनःसेट ग
 
 #. Translators: hamburger menu entry that appears when browsing a folder path, to set to their default value all currently visible keys, and all keys in subfolders
 #: editor/dconf-headerbar.vala:207
-#| msgid "Reset recursively"
 msgid "Reset view recursively"
-msgstr ""
+msgstr "दृश्य पुनरावर्ती रूपमा रिसेट गर्नुहोस्"
 
 #. Translators: on really small windows, the bottom bar that appears in "delay mode" or when there're pending changes is replaced by an in-window view; here is the name of the view, displayed in the headerbar
 #: editor/dconf-headerbar.vala:245
@@ -1280,10 +1252,8 @@ msgstr "यो संवाद अर्को पटक देखाउनु�
 
 #. Translators: notification text, after a user Ctrl+Q keyboard action; same way to spell the shortcut as in the Settings application
 #: editor/dconf-window.vala:305
-msgid ""
-"There are pending changes. Use Shift+Ctrl+Q to apply changes and quit, or Alt+F4 to dismiss "
-"changes and quit."
-msgstr ""
+msgid "There are pending changes. Use Shift+Ctrl+Q to apply changes and quit, or Alt+F4 to dismiss changes and quit."
+msgstr "There are pending changes. Use Shift+Ctrl+Q to apply changes and quit, or Alt+F4 to dismiss changes and quit."
 
 #. Translators: notification text, when the requested folder has been removed; the %s is the folder path
 #: editor/dconf-window.vala:777
@@ -1300,9 +1270,8 @@ msgstr "कुञ्जि “%s” मेटियो।."
 #. Translators: notification text at startup, use 'dconf-editor /org/example/test'; the %s is the key path
 #: editor/dconf-window.vala:794
 #, c-format
-#| msgid "Cannot find key “%s” here."
 msgid "Cannot find key “%s”."
-msgstr ""
+msgstr "कुञ्जी \"%s\" फेला पार्न सकिँदैन ।"
 
 #. Translators: notification text at startup, use 'dconf-editor /org/example/empty/'; the %s is the folder path
 #: editor/dconf-window.vala:800
@@ -1318,8 +1287,7 @@ msgstr "कुञ्जी मेटियो"
 #. Translators: displayed in the list of pending changes (could be an in-window panel, or in the popover of the bottom bar); for gsettings keys
 #. Translators: "reset key value" option of a multi-choice list (checks or radios) in the right-click menu on the list of keys
 #. Translators: field content when displaying key properties; the field description is "Current value", and as the default value of the key is written near, there's just this text displayed if the key uses its default value
-#: editor/delayed-setting-view.vala:151 editor/key-list-box-row.vala:649
-#: editor/registry-info.vala:469
+#: editor/delayed-setting-view.vala:151 editor/key-list-box-row.vala:649 editor/registry-info.vala:469
 msgid "Default value"
 msgstr "पूर्वनिर्धारित मान"
 
@@ -1381,7 +1349,7 @@ msgstr "प्रमूल फोल्डर खोल्नुहोस्"
 #: editor/help-overlay.ui:97
 msgctxt "shortcut window"
 msgid "Open active direct child"
-msgstr "अन्तिम सक्रिय प्रत्यक्ष शाखा खोल्नुहोस् "
+msgstr "सक्रिय प्रत्यक्ष शाखा खोल्नुहोस् "
 
 #. Translators: Alt-Shift-Down action; browse to the complete path of the headerbar
 #: editor/help-overlay.ui:105
@@ -1705,10 +1673,9 @@ msgstr "डी-बस ह्यान्डल प्रकार"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:305
-#, fuzzy
 msgctxt "capitalized"
 msgid "D-Bus object path"
-msgstr "पद वर्णन गरिएको मान \"%s\" वैध D-Bus वस्तु मार्ग होइन"
+msgstr "डी-बस वस्तु मार्ग "
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:309
@@ -1718,7 +1685,6 @@ msgstr "डी-बस वस्तु मार्ग सरणी"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:313
-#, fuzzy
 msgctxt "capitalized"
 msgid "D-Bus signature"
 msgstr "भेरिएन्टका लागि पद वर्णन गरिएको मान \"%s\" वैध D-Bus हस्ताक्षर होइन"
@@ -1731,10 +1697,9 @@ msgstr "डी-बस ह्यान्डल प्रकार"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:346
-#, fuzzy
 msgctxt "non-capitalized"
 msgid "D-Bus object path"
-msgstr "पद वर्णन गरिएको मान \"%s\" वैध D-Bus वस्तु मार्ग होइन"
+msgstr "डी-बस वस्तु मार्ग "
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:350
@@ -1744,10 +1709,9 @@ msgstr "डी-बस वस्तु मार्ग सरणी"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:354
-#, fuzzy
 msgctxt "non-capitalized"
 msgid "D-Bus signature"
-msgstr "भेरिएन्टका लागि पद वर्णन गरिएको मान \"%s\" वैध D-Bus हस्ताक्षर होइन"
+msgstr "डी-बस हस्ताक्षर"
 
 #. Translators: that's a name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:373
@@ -1996,48 +1960,53 @@ msgstr "कुञ्जिहरू खोज"
 
 #. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/Conflict/warning-similar'
 #: editor/registry-info.ui:49
-msgid ""
-"This key is defined and used by more than one schema. This could lead to problems. Edit value at "
-"your own risk."
+msgid "This key is defined and used by more than one schema. This could lead to problems. Edit value at your own risk."
 msgstr ""
-"यो कुञ्जी एक भन्दा बढी स्किमाद्वारा परिभाषित र प्रयोग गरिन्छ । यसले समस्या निम्त्याउन सक्छ । तपाईंको आफ्नै "
-"जोखिममा मान सम्पादन गर्नुहोस् ।"
+"यो कुञ्जी एक भन्दा बढी स्किमाद्वारा परिभाषित र प्रयोग गरिन्छ । यसले समस्या निम्त्याउन सक्छ । तपाईंको आफ्नै जोखिममा मान सम्पादन गर्नुहोस् ।"
 
 #. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/Conflict/type-conflict'
 #: editor/registry-info.ui:87
 msgid ""
-"This key is incompatibly defined and used by more than one schema. It is impossible to work with "
-"its value in a meaningful way."
+"This key is incompatibly defined and used by more than one schema. It is impossible to work with its value in a meaningful "
+"way."
 msgstr ""
+"यो कुञ्जी असंगत रूपमा परिभाषित गरिएको छ र एक भन्दा बढी स्किमाद्वारा प्रयोग गरिएको छ । यसको मूल्यसँग अर्थपूर्ण तरिकाले काम गर्न असम्भव छ।"
 
 #. Translators: warning text of an infobar, when a key is not defined by a schema
 #: editor/registry-info.ui:125
 msgid ""
-"No schema available. A schema is what describes the use of a key, and Dconf Editor can’t find one "
-"associated with this key. If the application that was using this key has been uninstalled, or if "
-"this key is obsolete, you may want to erase it."
+"No schema available. A schema is what describes the use of a key, and Dconf Editor can’t find one associated with this "
+"key. If the application that was using this key has been uninstalled, or if this key is obsolete, you may want to erase it."
 msgstr ""
+"स्किमा उपलब्ध छैन । स्किमा भनेको कुञ्जीको प्रयोग वर्णन गर्ने कुरा हो, र डिकन्फ सम्पादकले यो कुञ्जीसँग सम्बन्धित एउटा फेला पार्न सक्दैन । यदि यो "
+"कुञ्जी प्रयोग गरिरहेको अनुप्रयोग स्थापना रद्द गरिएको छ, वा यदि यो कुञ्जी अप्रचलित छ भने, तपाईँले यसलाई मेट्न चाहनुहुन्छ ।"
 
 #. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-enum'
 #: editor/registry-info.ui:172
 msgid ""
-"This enumeration offers only one choice. That’s probably an error of the application that "
-"installed this schema. If possible, please open a bug about it."
+"This enumeration offers only one choice. That’s probably an error of the application that installed this schema. If "
+"possible, please open a bug about it."
 msgstr ""
+"यो गणनाले केवल एक विकल्प प्रदान गर्दछ। यो सम्भवतः यो स्किमा स्थापना गर्ने अनुप्रयोगको त्रुटि हो। यदि सम्भव छ भने, कृपया यसको बारेमा बग "
+"खोल्नुहोस्।"
 
 #. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-range'
 #: editor/registry-info.ui:183
 msgid ""
-"This integer key can only take one value. That’s probably an error of the application that "
-"installed this schema. If possible, please open a bug about it."
+"This integer key can only take one value. That’s probably an error of the application that installed this schema. If "
+"possible, please open a bug about it."
 msgstr ""
+"यो पूर्णाङ्क कुञ्जीले एउटा मान मात्र लिन सक्छ । यो सम्भवतः यो स्किमा स्थापना गर्ने अनुप्रयोगको त्रुटि हो। यदि सम्भव छ भने, कृपया यसको बारेमा बग "
+"खोल्नुहोस्।"
 
 #. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-triv'
 #: editor/registry-info.ui:194
 msgid ""
-"This key has a special “empty tuple” type. That’s probably an error of the application that "
-"installed this schema. If possible, please open a bug about it."
+"This key has a special “empty tuple” type. That’s probably an error of the application that installed this schema. If "
+"possible, please open a bug about it."
 msgstr ""
+"यो कुञ्जीमा विशेष \"खाली टुपल\" प्रकार छ । यो सम्भवतः यो स्किमा स्थापना गर्ने अनुप्रयोगको त्रुटि हो। यदि सम्भव छ भने, कृपया यसको बारेमा बग "
+"खोल्नुहोस्।"
 
 #. Translators: field description when displaying folder properties; name of the folder
 #: editor/registry-info.vala:70
@@ -2082,7 +2051,7 @@ msgstr "सङ्केतन प्रकार"
 #. Translators: field description when displaying key properties; if the numeral key has a minimum or a maximum set
 #: editor/registry-info.vala:96
 msgid "Forced range"
-msgstr ""
+msgstr "जबर्जस्ती दायरा"
 
 #. Translators: field description when displaying key properties; the minimum value a numeral key can take
 #: editor/registry-info.vala:99
@@ -2137,39 +2106,41 @@ msgstr "छैन"
 
 #. Translators: field content when displaying key properties; displayed instead of the value, in case of conflicting keys
 #: editor/registry-info.vala:280
-msgid ""
-"There are conflicting definitions of this key, getting value would be either problematic or "
-"meaningless."
-msgstr ""
+msgid "There are conflicting definitions of this key, getting value would be either problematic or meaningless."
+msgstr "यो कुञ्जीको परस्पर विरोधी परिभाषाहरू छन्, मान प्राप्त गर्नु समस्याग्रस्त वा अर्थहीन हुनेछ।"
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of type "double"
 #: editor/registry-info.vala:615
 msgid "Use a dot as decimal mark and no thousands separator. You can use the X.Ye+Z notation."
-msgstr ""
+msgstr "दशमलव चिनोको रूपमा बिन्दु प्रयोग गर्नुहोस् र हजारौं विभाजक छैन। तपाईँले एक्स.ये+जेड नोटेसन प्रयोग गर्न सक्नुहुन्छ ।"
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of type "variant" (or of a type composed with a variant)
 #: editor/registry-info.vala:620
 msgid ""
-"Variants content should be surrounded by XML brackets (‘<’ and ‘>’). See https://docs.gtk.org/"
-"glib/gvariant-text.html for complete documentation."
+"Variants content should be surrounded by XML brackets (‘<’ and ‘>’). See https://docs.gtk.org/glib/gvariant-text.html for "
+"complete documentation."
 msgstr ""
+"भेरियन्ट सामग्री एक्सएमएल कोष्ठक ('<' र '>') ले घेरिएको हुनुपर्छ। पूर्ण कागजातको लागि https://docs.gtk.org/glib/gvariant-text.html "
+"हेर्नुहोस्।"
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a "maybe type" and with a string type (or similar); neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
 #: editor/registry-info.vala:627
 msgid ""
-"Use the keyword “nothing” to set a maybe type (beginning with “m”) to its empty value. Strings, "
-"signatures and object paths should be surrounded by quotation marks."
+"Use the keyword “nothing” to set a maybe type (beginning with “m”) to its empty value. Strings, signatures and object "
+"paths should be surrounded by quotation marks."
 msgstr ""
+"यसको खाली मानमा शायद प्रकार (\"एम\" बाट सुरु) सेट गर्न कुञ्जीशब्द \"केही पनि छैन\" प्रयोग गर्नुहोस्। स्ट्रिङहरू, हस्ताक्षरहरू र वस्तु मार्गहरू "
+"उद्धरण चिन्हहरूले घेरिएको हुनुपर्दछ।"
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a string type (or similar)
 #: editor/registry-info.vala:630
 msgid "Strings, signatures and object paths should be surrounded by quotation marks."
-msgstr ""
+msgstr "स्ट्रिङहरू, हस्ताक्षरहरू र वस्तु मार्गहरू उद्धरण चिन्हहरूले घेरिएको हुनुपर्दछ।"
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a "maybe type"; neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
 #: editor/registry-info.vala:635
 msgid "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its empty value."
-msgstr ""
+msgstr "यसको खाली मानमा शायद प्रकार (\"एम\" बाट सुरु) सेट गर्न कुञ्जीशब्द \"केही पनि छैन\" प्रयोग गर्नुहोस्।"
 
 #. Translators: field content when displaying key properties; the field description is "Current value", this text displayed if the key, not defined by a schema, has been erased (and so has no value anymore)
 #: editor/registry-info.vala:674
@@ -2297,7 +2268,7 @@ msgstr "स्थानान्तरण योग्य स्किमा"
 #. Translators: field content when displaying key properties; the field description is "Defined by", this text is displayed if the key is not defined by a schema (the value is given by dconf but cannot be used by the GSettings functions)
 #: editor/setting-object.vala:417
 msgid "DConf backend"
-msgstr ""
+msgstr "डी कन्फ ब्याकइन्ड"
 
 #, fuzzy
 #~ msgid "Pause night mode"
