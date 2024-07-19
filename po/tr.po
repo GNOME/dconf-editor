@@ -10,10 +10,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2024-01-22 12:19+0000\n"
-"PO-Revision-Date: 2024-02-14 03:48+0300\n"
-"Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues/\n"
+"POT-Creation-Date: 2024-03-28 14:57+0000\n"
+"PO-Revision-Date: 2024-05-07 11:50+0300\n"
+"Last-Translator: Sabri Ünal <yakushabb@gmail.com>\n"
 "Language-Team: Türkçe <takim@gnome.org.tr>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
@@ -250,10 +250,11 @@ msgstr "Dconf için yapılandırma düzenleyicisi"
 msgid "Directly edit your entire configuration database"
 msgstr "Yapılandırma veri tabanınızın tamamını doğrudan düzenleyin"
 
+# https://gitlab.gnome.org/GNOME/glib/-/issues/443 hatası sebebiyle uygulama adı dahil ingilizce hallerini de koruyalım.
 #. Translators: some search Keywords to find this application, as defined in the desktop file spec. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: editor/ca.desrt.dconf-editor.desktop.in:9
 msgid "settings;configuration;"
-msgstr "ayarlar;yapılandırma;"
+msgstr "dconf;settings;configuration;ayarlar;yapılandırma;"
 
 #. see AdaptativeWindow.width-request at data/ui/adaptative-window.ui:22
 #. range min="350"/ FIXME
