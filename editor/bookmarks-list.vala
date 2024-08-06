@@ -97,7 +97,8 @@ private class BookmarksList : OverlayedList
     {
         main_list_box.grab_focus ();
 
-        main_list_box.@foreach ((widget) => { ((Bookmark) widget).set_actionable (false); });
+        // FIXME: Ugggh how
+        // main_list_box.@foreach ((widget) => { ((Bookmark) widget).set_actionable (false); });
         main_list_box.set_activate_on_single_click (false);
         main_list_box.set_selection_mode (SelectionMode.MULTIPLE);
         view_mode = false;
@@ -113,7 +114,7 @@ private class BookmarksList : OverlayedList
             row = selected_rows.nth_data (0);
         }
 
-        main_list_box.@foreach ((widget) => { ((Bookmark) widget).set_actionable (true); });
+        // main_list_box.@foreach ((widget) => { ((Bookmark) widget).set_actionable (true); });
         main_list_box.set_activate_on_single_click (true);
         main_list_box.set_selection_mode (SelectionMode.SINGLE);
         view_mode = true;

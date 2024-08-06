@@ -18,7 +18,7 @@
 using Gtk;
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/overlayed-list.ui")]
-private abstract class OverlayedList : Overlay, AdaptativeWidget
+private abstract class OverlayedList : Overlay
 {
     [GtkChild] protected unowned ListBox        main_list_box;
                private   StyleContext   main_list_box_context;
@@ -45,8 +45,8 @@ private abstract class OverlayedList : Overlay, AdaptativeWidget
     }
 
 
-    [GtkChild] private unowned ModelButton enter_edit_mode_button;
-    [GtkChild] private unowned ModelButton leave_edit_mode_button;
+    [GtkChild] private unowned Button enter_edit_mode_button;
+    [GtkChild] private unowned Button leave_edit_mode_button;
     [CCode (notify = false)] public string edit_mode_action_prefix
     {
         construct
@@ -86,13 +86,13 @@ private abstract class OverlayedList : Overlay, AdaptativeWidget
     \*/
 
     private StyleContext main_context;
-    internal void set_window_size (AdaptativeWidget.WindowSize new_size)
-    {
-        if (!AdaptativeWidget.WindowSize.is_extra_thin (new_size) && AdaptativeWidget.WindowSize.is_extra_flat (new_size))
-            set_horizontal (ref main_context, edit_mode_box);
-        else
-            set_vertical (ref main_context, edit_mode_box);
-    }
+    // internal void set_window_size (AdaptativeWidget.WindowSize new_size)
+    // {
+    //     if (!AdaptativeWidget.WindowSize.is_extra_thin (new_size) && AdaptativeWidget.WindowSize.is_extra_flat (new_size))
+    //         set_horizontal (ref main_context, edit_mode_box);
+    //     else
+    //         set_vertical (ref main_context, edit_mode_box);
+    // }
     private static inline void set_horizontal (ref StyleContext main_context, Box edit_mode_box)
     {
         main_context.remove_class ("vertical");

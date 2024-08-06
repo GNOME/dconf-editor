@@ -328,8 +328,9 @@ private class LargePathbarItem : Button
 
     construct
     {
-        enter_notify_event.connect (() => { hover = true;  set_new_cursor_type (cursor_type); });
-        leave_notify_event.connect (() => { hover = false; set_new_cursor_type (CursorType.DEFAULT); });
+        // FIXME WHY
+        // enter_notify_event.connect (() => { hover = true;  set_new_cursor_type (cursor_type); });
+        // leave_notify_event.connect (() => { hover = false; set_new_cursor_type (CursorType.DEFAULT); });
     }
 
     internal void set_cursor_type (CursorType cursor_type)
@@ -341,19 +342,19 @@ private class LargePathbarItem : Button
 
     private void set_new_cursor_type (CursorType new_cursor_type)
     {
-        Gdk.Window? gdk_window = get_window ();
-        Gdk.Display? display = Gdk.Display.get_default ();
-        if (gdk_window == null || display == null)
-            return;
+        // Gdk.Window? gdk_window = get_window ();
+        // Gdk.Display? display = Gdk.Display.get_default ();
+        // if (gdk_window == null || display == null)
+        //     return;
 
-        Gdk.Cursor? cursor = null;
-        switch (new_cursor_type)
-        {
-            case CursorType.DEFAULT: cursor = null; break;
-            case CursorType.POINTER: cursor = new Gdk.Cursor.from_name ((!) display, "pointer"); break;
-            case CursorType.CONTEXT: cursor = new Gdk.Cursor.from_name ((!) display, "context-menu"); break;
-        }
-        ((!) gdk_window).set_cursor (cursor);
+        // Gdk.Cursor? cursor = null;
+        // switch (new_cursor_type)
+        // {
+        //     case CursorType.DEFAULT: cursor = null; break;
+        //     case CursorType.POINTER: cursor = new Gdk.Cursor.from_name ((!) display, "pointer"); break;
+        //     case CursorType.CONTEXT: cursor = new Gdk.Cursor.from_name ((!) display, "context-menu"); break;
+        // }
+        // ((!) gdk_window).set_cursor (cursor);
     }
 
     [GtkCallback]

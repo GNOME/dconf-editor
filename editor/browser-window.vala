@@ -94,7 +94,7 @@ private abstract class BrowserWindow : BaseWindow
         headerbar = (BrowserHeaderBar) nta_headerbar;
         main_view = (BrowserView) base_view;
 
-        this.button_press_event.connect (on_button_press_event);
+        // this.button_press_event.connect (on_button_press_event);
 
         install_browser_action_entries ();
         install_key_action_entries ();
@@ -410,7 +410,7 @@ private abstract class BrowserWindow : BaseWindow
 
     private bool search_entry_has_focus ()
     {
-        return get_focus () is BrowserEntry;
+        return get_focus () is SearchEntry;
     }
 
     public static bool is_path_invalid (string path)
@@ -800,76 +800,76 @@ private abstract class BrowserWindow : BaseWindow
     * * keyboard callback
     \*/
 
-    protected override bool on_key_press_event (Widget widget, Gdk.EventKey event)
-    {
-        if (base.on_key_press_event (widget, event))
-            return true;
+//     protected override bool on_key_press_event (Widget widget, Gdk.EventKey event)
+//     {
+//         if (base.on_key_press_event (widget, event))
+//             return true;
 
-        uint keyval = event.keyval;
-        string name = (!) (Gdk.keyval_name (keyval) ?? "");
+//         uint keyval = event.keyval;
+//         string name = (!) (Gdk.keyval_name (keyval) ?? "");
 
-        /* never override that */
-        if (keyval == Gdk.Key.Tab || keyval == Gdk.Key.KP_Tab)
-            return false;
+//         /* never override that */
+//         if (keyval == Gdk.Key.Tab || keyval == Gdk.Key.KP_Tab)
+//             return false;
 
-        /* for changing row during search; cannot use set_accels_for_action() else popovers are not handled anymore */
-        if (name == "Down" && (event.state & Gdk.ModifierType.MOD1_MASK) == 0)  // see also <ctrl>g
-            return _next_match ();
-        if (name == "Up"   && (event.state & Gdk.ModifierType.MOD1_MASK) == 0)  // see also <ctrl>G
-            return _previous_match ();
+//         /* for changing row during search; cannot use set_accels_for_action() else popovers are not handled anymore */
+//         if (name == "Down" && (event.state & Gdk.ModifierType.MOD1_MASK) == 0)  // see also <ctrl>g
+//             return _next_match ();
+//         if (name == "Up"   && (event.state & Gdk.ModifierType.MOD1_MASK) == 0)  // see also <ctrl>G
+//             return _previous_match ();
 
-        if (is_in_in_window_mode ())
-            return false;
+//         if (is_in_in_window_mode ())
+//             return false;
 
-        /* don't use "else if", or some widgets will not be hidden on <ctrl>F10 or such things */
-        if (name == "F10" && (event.state & Gdk.ModifierType.SHIFT_MASK) != 0)
-        {
-            Widget? focus = get_focus ();
-            if (focus != null && (((!) focus is Entry) || ((!) focus is TextView))) // && main_view.current_view != ViewType.SEARCH
-                return false;
+//         /* don't use "else if", or some widgets will not be hidden on <ctrl>F10 or such things */
+//         if (name == "F10" && (event.state & Gdk.ModifierType.SHIFT_MASK) != 0)
+//         {
+//             Widget? focus = get_focus ();
+//             if (focus != null && (((!) focus is Entry) || ((!) focus is TextView))) // && main_view.current_view != ViewType.SEARCH
+//                 return false;
 
-            headerbar.toggle_pathbar_menu ();
-            return true;
-        }
+//             headerbar.toggle_pathbar_menu ();
+//             return true;
+//         }
 
-        if (name == "Return" || name == "KP_Enter")
-        {
-            if (main_view.current_view == ViewType.SEARCH
-             && search_entry_has_focus ()
-             && main_view.return_pressed ())
-                return true;
-            return false;
-        }
+//         if (name == "Return" || name == "KP_Enter")
+//         {
+//             if (main_view.current_view == ViewType.SEARCH
+//              && search_entry_has_focus ()
+//              && main_view.return_pressed ())
+//                 return true;
+//             return false;
+//         }
 
-        if (headerbar.has_popover ())
-            return false;
+//         if (headerbar.has_popover ())
+//             return false;
 
-        if (!headerbar.search_mode_enabled &&
+//         if (!headerbar.search_mode_enabled &&
             // see gtk_search_entry_is_keynav() in gtk+/gtk/gtksearchentry.c:388
-            (keyval == Gdk.Key.Up           || keyval == Gdk.Key.KP_Up          ||
-             keyval == Gdk.Key.Down         || keyval == Gdk.Key.KP_Down        ||
-             keyval == Gdk.Key.Left         || keyval == Gdk.Key.KP_Left        ||
-             keyval == Gdk.Key.Right        || keyval == Gdk.Key.KP_Right       ||
+//             (keyval == Gdk.Key.Up           || keyval == Gdk.Key.KP_Up          ||
+//              keyval == Gdk.Key.Down         || keyval == Gdk.Key.KP_Down        ||
+//              keyval == Gdk.Key.Left         || keyval == Gdk.Key.KP_Left        ||
+//              keyval == Gdk.Key.Right        || keyval == Gdk.Key.KP_Right       ||
           // keyval == Gdk.Key.Tab          || keyval == Gdk.Key.KP_Tab         ||   // already done
-             keyval == Gdk.Key.Home         || keyval == Gdk.Key.KP_Home        ||
-             keyval == Gdk.Key.End          || keyval == Gdk.Key.KP_End         ||
-             keyval == Gdk.Key.Page_Up      || keyval == Gdk.Key.KP_Page_Up     ||
-             keyval == Gdk.Key.Page_Down    || keyval == Gdk.Key.KP_Page_Down   ||
-             ((event.state & (Gdk.ModifierType.CONTROL_MASK | Gdk.ModifierType.MOD1_MASK)) != 0) ||
-             name == "space" || name == "KP_Space"))
-            return false;
+//              keyval == Gdk.Key.Home         || keyval == Gdk.Key.KP_Home        ||
+//              keyval == Gdk.Key.End          || keyval == Gdk.Key.KP_End         ||
+//              keyval == Gdk.Key.Page_Up      || keyval == Gdk.Key.KP_Page_Up     ||
+//              keyval == Gdk.Key.Page_Down    || keyval == Gdk.Key.KP_Page_Down   ||
+//              ((event.state & (Gdk.ModifierType.CONTROL_MASK | Gdk.ModifierType.MOD1_MASK)) != 0) ||
+//              name == "space" || name == "KP_Space"))
+//             return false;
 
-        Widget? focus = get_focus ();
-        bool focus_is_text_widget = focus != null && (((!) focus is Entry) || ((!) focus is TextView));
-        if ((!focus_is_text_widget)
-         && (event.is_modifier == 0)
-         && (event.length != 0)
+//         Widget? focus = get_focus ();
+//         bool focus_is_text_widget = focus != null && (((!) focus is Entry) || ((!) focus is TextView));
+//         if ((!focus_is_text_widget)
+//          && (event.is_modifier == 0)
+//          && (event.length != 0)
 //       && (name != "F10")     // else <Shift>F10 toggles the search_entry popup; see if a976aa9740 fixes that in Gtk+ 4
-         && (headerbar.handle_event (event)))
-            return true;
+//          && (headerbar.handle_event (event)))
+//             return true;
 
-        return false;
-    }
+//         return false;
+//     }
 
     /*\
     * * mouse callback
@@ -891,30 +891,30 @@ private abstract class BrowserWindow : BaseWindow
                        "mouse-forward-button",    SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
     }
 
-    private static bool on_button_press_event (Widget widget, Gdk.EventButton event)
-    {
-        BrowserWindow _this = (BrowserWindow) widget;
+    // private static bool on_button_press_event (Widget widget, Gdk.EventButton event)
+    // {
+    //     BrowserWindow _this = (BrowserWindow) widget;
 
-        if (!_this.mouse_use_extra_buttons)
-            return false;
+    //     if (!_this.mouse_use_extra_buttons)
+    //         return false;
 
-        if (event.button == _this.mouse_back_button)
-        {
-            if (_this.mouse_back_button == _this.mouse_forward_button)
-            {
-                /* Translators: command-line message, when the user uses the backward/forward buttons of the mouse */
-                warning (_("The same mouse button is set for going backward and forward. Doing nothing."));
-                return false;
-            }
+    //     if (event.button == _this.mouse_back_button)
+    //     {
+    //         if (_this.mouse_back_button == _this.mouse_forward_button)
+    //         {
+    //             /* Translators: command-line message, when the user uses the backward/forward buttons of the mouse */
+    //             warning (_("The same mouse button is set for going backward and forward. Doing nothing."));
+    //             return false;
+    //         }
 
-            _this.go_backward ((event.state & Gdk.ModifierType.SHIFT_MASK) != 0);
-            return true;
-        }
-        if (event.button == _this.mouse_forward_button)
-        {
-            _this.go_forward ((event.state & Gdk.ModifierType.SHIFT_MASK) != 0);
-            return true;
-        }
-        return false;
-    }
+    //         _this.go_backward ((event.state & Gdk.ModifierType.SHIFT_MASK) != 0);
+    //         return true;
+    //     }
+    //     if (event.button == _this.mouse_forward_button)
+    //     {
+    //         _this.go_forward ((event.state & Gdk.ModifierType.SHIFT_MASK) != 0);
+    //         return true;
+    //     }
+    //     return false;
+    // }
 }

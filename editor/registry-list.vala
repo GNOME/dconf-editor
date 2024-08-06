@@ -18,7 +18,7 @@
 using Gtk;
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/registry-list.ui")]
-private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
+private abstract class RegistryList : Grid, BrowsableView
 {
     [GtkChild] protected unowned ListBox key_list_box;
     [GtkChild] private unowned ScrolledWindow scrolled;
@@ -42,7 +42,7 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
         placeholder.label = placeholder_label;
         register_size_allocate ();
 
-        adjustment = key_list_box.get_adjustment ();
+        adjustment = (!) key_list_box.get_adjustment ();
     }
 
     private bool _small_keys_list_rows = false;
@@ -51,24 +51,25 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
         set
         {
             _small_keys_list_rows = value;
-            key_list_box.foreach ((row) => {
-                    Widget? row_child = ((ListBoxRow) row).get_child ();
-                    if (row_child != null && (!) row_child is KeyListBoxRow)
-                        ((KeyListBoxRow) (!) row_child).small_keys_list_rows = value;
-                });
+            // FIXME: ?
+            // key_list_box.foreach ((row) => {
+            //         Widget? row_child = ((ListBoxRow) row).get_child ();
+            //         if (row_child != null && (!) row_child is KeyListBoxRow)
+            //             ((KeyListBoxRow) (!) row_child).small_keys_list_rows = value;
+            //     });
         }
     }
 
-    private AdaptativeWidget.WindowSize window_size = AdaptativeWidget.WindowSize.START_SIZE;
-    private void set_window_size (AdaptativeWidget.WindowSize new_size)
-    {
-        window_size = new_size;
-        key_list_box.@foreach ((row) => {
-                Widget? row_child = ((ListBoxRow) row).get_child ();
-                if (row_child != null && (!) row_child is KeyListBoxRow)
-                    ((KeyListBoxRow) (!) row_child).set_window_size (new_size);
-            });
-    }
+    // private AdaptativeWidget.WindowSize window_size = AdaptativeWidget.WindowSize.START_SIZE;
+    // private void set_window_size (AdaptativeWidget.WindowSize new_size)
+    // {
+    //     window_size = new_size;
+    //     key_list_box.@foreach ((row) => {
+    //             Widget? row_child = ((ListBoxRow) row).get_child ();
+    //             if (row_child != null && (!) row_child is KeyListBoxRow)
+    //                 ((KeyListBoxRow) (!) row_child).set_window_size (new_size);
+    //         });
+    // }
 
     private void select_row_and_if_true_grab_focus (ListBoxRow row, bool grab_focus)
     {
@@ -149,13 +150,13 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
     }
     private static void _hide_or_show_toggles (ListBox key_list_box, bool show)
     {
-        key_list_box.@foreach ((row_wrapper) => {
-                ClickableListBoxRow? row = (ClickableListBoxRow) ((ListBoxRowWrapper) row_wrapper).get_child ();
-                if (row == null)
-                    assert_not_reached ();
-                if ((!) row is KeyListBoxRow && ((KeyListBoxRow) (!) row).type_string == "b")
-                    ((KeyListBoxRow) row).delay_mode = !show;
-            });
+        // key_list_box.@foreach ((row_wrapper) => {
+        //         ClickableListBoxRow? row = (ClickableListBoxRow) ((ListBoxRowWrapper) row_wrapper).get_child ();
+        //         if (row == null)
+        //             assert_not_reached ();
+        //         if ((!) row is KeyListBoxRow && ((KeyListBoxRow) (!) row).type_string == "b")
+        //             ((KeyListBoxRow) row).delay_mode = !show;
+        //     });
     }
 
     internal string get_selected_row_name ()
@@ -174,7 +175,7 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
 
     internal void select_row_named (string selected, uint16 context_id, bool grab_focus)
     {
-        check_resize ();
+        // check_resize ();
         ListBoxRow? row = key_list_box.get_row_at_index (get_row_position (list_model, selected, context_id));
         if (row != null)
         {
@@ -236,7 +237,7 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
 
     private inline void register_size_allocate ()
     {
-        size_allocate.connect (on_size_allocate);
+        // size_allocate.connect (on_size_allocate);
     }
 
     private void on_size_allocate (Allocation allocation)
@@ -390,7 +391,7 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
                 scroll_to_row ((!) row, is_next ? ScrollToRowBehaviour.SCROLL_DOWN : ScrollToRowBehaviour.SCROLL_UP);
                 if (search_mode)
                 {
-                    Container list_box = (Container) ((!) selected_row).get_parent ();
+                    ListBox list_box = (ListBox) ((!) selected_row).get_parent ();
                     select_row_and_if_true_grab_focus ((!) row, list_box.get_focus_child () != null);
                 }
                 else
@@ -448,7 +449,7 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
 
             KeyListBoxRow key_row = create_key_list_box_row (full_name, context_id, properties, modifications_handler.get_current_delay_mode (), search_mode_non_local_result);
             key_row.small_keys_list_rows = _small_keys_list_rows;
-            key_row.set_window_size (window_size);
+            // key_row.set_window_size (window_size);
 
             ulong delayed_modifications_changed_handler = modifications_handler.delayed_changes_changed.connect ((_modifications_handler) => set_delayed_icon (_modifications_handler, key_row));
             set_delayed_icon (modifications_handler, key_row);
@@ -457,8 +458,8 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
             row = (ClickableListBoxRow) key_row;
         }
 
-        ulong button_press_event_handler = row.button_press_event.connect (on_button_pressed);
-        row.destroy.connect (() => row.disconnect (button_press_event_handler));
+        // ulong button_press_event_handler = row.button_press_event.connect (on_button_pressed);
+        // row.destroy.connect (() => row.disconnect (button_press_event_handler));
 
         return put_row_in_wrapper (row);
     }
@@ -549,7 +550,7 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
         ListBoxRowWrapper wrapper = new ListBoxRowWrapper ();
 
         wrapper.set_halign (Align.CENTER);
-        wrapper.add (row);
+        wrapper.set_child (row);
         if (row is FilterListBoxRow)
         {
             wrapper.get_style_context ().add_class ("f-or-s-row");
@@ -683,35 +684,35 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
         }
     }
 
-    private bool on_button_pressed (Widget widget, Gdk.EventButton event)
-    {
-        ListBoxRow list_box_row = (ListBoxRow) widget.get_parent ();    // is a ListBoxRowWrapper
+    // private bool on_button_pressed (Widget widget, Gdk.EventButton event)
+    // {
+    //     ListBoxRow list_box_row = (ListBoxRow) widget.get_parent ();    // is a ListBoxRowWrapper
         // ListBox list_box = (ListBox) list_box_row.get_parent ();     // instead of key_list_box
 
-        select_row_and_if_true_grab_focus (list_box_row, !search_mode);
+    //     select_row_and_if_true_grab_focus (list_box_row, !search_mode);
 
-        if (event.button == Gdk.BUTTON_SECONDARY)
-        {
-            if (search_mode && key_list_box.get_focus_child () != null)
-                list_box_row.grab_focus ();
+    //     if (event.button == Gdk.BUTTON_SECONDARY)
+    //     {
+    //         if (search_mode && key_list_box.get_focus_child () != null)
+    //             list_box_row.grab_focus ();
 
-            ClickableListBoxRow row = (ClickableListBoxRow) widget;
+    //         ClickableListBoxRow row = (ClickableListBoxRow) widget;
 
-            int event_x = (int) event.x;
-            if (event.window != widget.get_window ())   // boolean value switch
-            {
-                int widget_x, unused;
-                event.window.get_position (out widget_x, out unused);
-                event_x += widget_x;
-            }
+    //         int event_x = (int) event.x;
+    //         if (event.window != widget.get_window ())   // boolean value switch
+    //         {
+    //             int widget_x, unused;
+    //             event.window.get_position (out widget_x, out unused);
+    //             event_x += widget_x;
+    //         }
 
-            show_right_click_popover (row, event_x);
-        }
-        else if (search_mode)
-            list_box_row.grab_focus ();
+    //         show_right_click_popover (row, event_x);
+    //     }
+    //     else if (search_mode)
+    //         list_box_row.grab_focus ();
 
-        return false;
-    }
+    //     return false;
+    // }
 
     internal void gkey_value_push (string full_name, uint16 context_id, Variant key_value, bool is_key_default)
     {
@@ -837,8 +838,8 @@ private abstract class RegistryList : Grid, BrowsableView, AdaptativeWidget
 
             ((!) row.nullable_popover).destroy.connect_after (() => { row.nullable_popover = null; });
 
-            ((!) row.nullable_popover).set_relative_to (row);
-            ((!) row.nullable_popover).position = PositionType.BOTTOM;     // TODO better
+            // ((!) row.nullable_popover).set_pointing_to (row);
+            // ((!) row.nullable_popover).position = PositionType.BOTTOM;     // TODO better
         }
         else if (((!) row.nullable_popover).visible)
             warning ("generate_popover_if_needed() called but popover is visible");   // TODO is called on multi-right-click

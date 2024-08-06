@@ -330,12 +330,12 @@ private class ConfigurationEditor : Gtk.Application, BaseApplication
     {
         base.startup ();
 
-        Hdy.init ();
+        // Hdy.init ();
 
         Environment.set_application_name (PROGRAM_NAME);
         Gtk.Window.set_default_icon_name ("ca.desrt.dconf-editor");
 
-        Hdy.StyleManager.get_default ().set_color_scheme (PREFER_LIGHT);
+        // Hdy.StyleManager.get_default ().set_color_scheme (PREFER_LIGHT);
 
         add_action_entries (action_entries, this);
         set_accels_for_action ("bw.toggle-bookmark",        {        "<Primary>b",
@@ -381,11 +381,11 @@ private class ConfigurationEditor : Gtk.Application, BaseApplication
                                                                      "<Primary>question",
                                                               "<Shift><Primary>question"}); // "<Primary>F1" is automatically done
 
-        Gtk.CssProvider css_provider = new Gtk.CssProvider ();
-        css_provider.load_from_resource ("/ca/desrt/dconf-editor/ui/dconf-editor.css");
-        Gdk.Screen? screen = Gdk.Screen.get_default ();
-        return_if_fail (screen != null);
-        Gtk.StyleContext.add_provider_for_screen ((!) screen, css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+        // Gtk.CssProvider css_provider = new Gtk.CssProvider ();
+        // css_provider.load_from_resource ("/ca/desrt/dconf-editor/ui/dconf-editor.css");
+        // Gdk.Screen? screen = Gdk.Screen.get_default ();
+        // return_if_fail (screen != null);
+        // Gtk.StyleContext.add_provider_for_screen ((!) screen, css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
     }
 
 /*  TODO why calling this function makes the app crashy, even with '-DG_SETTINGS_ENABLE_BACKEND=1' (and even '-DGIO_COMPILATION=1') given?
@@ -576,8 +576,8 @@ private class ConfigurationEditor : Gtk.Application, BaseApplication
         if (display == null)
             return;
 
-        Gtk.Clipboard clipboard = Gtk.Clipboard.get_default ((!) display);
-        clipboard.set_text (text, text.length);
+        Gdk.Clipboard clipboard = ((Gdk.Display!) display).get_clipboard ();
+        clipboard.set_text (text);
 
         // notification
         clean_copy_notification ();

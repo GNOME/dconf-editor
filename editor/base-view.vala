@@ -18,7 +18,7 @@
 using Gtk;
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/base-view.ui")]
-private class BaseView : Stack, AdaptativeWidget
+private class BaseView : Stack
 {
     [GtkChild] protected unowned Grid main_grid;
 
@@ -36,15 +36,15 @@ private class BaseView : Stack, AdaptativeWidget
     * * adaptative stuff
     \*/
 
-    protected AdaptativeWidget.WindowSize saved_window_size { protected get; private set; default = AdaptativeWidget.WindowSize.START_SIZE; }
-    protected virtual void set_window_size (AdaptativeWidget.WindowSize new_size)
-    {
-        saved_window_size = new_size;
-        if (about_list_created)
-            about_list.set_window_size (new_size);
-        if (notifications_revealer_created)
-            notifications_revealer.set_window_size (new_size);
-    }
+    // protected AdaptativeWidget.WindowSize saved_window_size { protected get; private set; default = AdaptativeWidget.WindowSize.START_SIZE; }
+    // protected virtual void set_window_size (AdaptativeWidget.WindowSize new_size)
+    // {
+    //     saved_window_size = new_size;
+    //     if (about_list_created)
+    //         about_list.set_window_size (new_size);
+    //     if (notifications_revealer_created)
+    //         notifications_revealer.set_window_size (new_size);
+    // }
 
     /*\
     * * in-window modes

@@ -18,62 +18,60 @@
 using Gtk;
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/pathwidget.ui")]
-private class PathWidget : Box, AdaptativeWidget
+private class PathWidget : Box
 {
-    [GtkChild] private unowned ModelButton          search_toggle;      // most window size button
-    [GtkChild] private unowned ModelButton          search_button;      // extra-small-window only
+    [GtkChild] private unowned Button          search_toggle;      // most window size button
+    [GtkChild] private unowned Button          search_button;      // extra-small-window only
     [GtkChild] private unowned Stack                pathwidget_stack;
     [GtkChild] private unowned Grid                 pathbar_grid;
     [GtkChild] private unowned AdaptativePathbar    pathbar;
     [GtkChild] private unowned PathEntry            searchentry;
 
     [GtkChild] private unowned Revealer             parent_revealer;
-    [GtkChild] private unowned ModelButton          parent_button;
+    [GtkChild] private unowned Button          parent_button;
 
-    private ThemedIcon search_icon = new ThemedIcon.from_names ({"edit-find-symbolic"});
-    private ThemedIcon parent_icon = new ThemedIcon.from_names ({"go-up-symbolic"});
     construct
     {
-        search_toggle.icon = search_icon;
-        search_button.icon = search_icon;
-        parent_button.icon = parent_icon;
+        search_toggle.icon_name = "edit-find-symbolic";
+        search_button.icon_name = "edit-find-symbolic";
+        parent_button.icon_name = "go-up-symbolic";
     }
 
     private bool quite_thin_window = false;
     private bool extra_thin_window = false;
-    private void set_window_size (AdaptativeWidget.WindowSize new_size)
-    {
-        pathbar.set_window_size (new_size);
+    // private void set_window_size (AdaptativeWidget.WindowSize new_size)
+    // {
+    //     pathbar.set_window_size (new_size);
 
-        bool _quite_thin_window = AdaptativeWidget.WindowSize.is_quite_thin (new_size);
-        bool _extra_thin_window = AdaptativeWidget.WindowSize.is_extra_thin (new_size);
-        if (quite_thin_window != _quite_thin_window
-         || extra_thin_window != _extra_thin_window)
-        {
-            quite_thin_window = _quite_thin_window;
-            extra_thin_window = _extra_thin_window;
-            if (_extra_thin_window)
-            {
-                search_toggle.hide ();
-                search_button.show ();
-                parent_revealer.set_reveal_child (true);
-            }
-            else if (_quite_thin_window)
-            {
-                search_toggle.hide ();
-                search_button.show ();
-                parent_revealer.set_reveal_child (false);
-            }
-            else
-            {
-                search_button.hide ();
-                search_toggle.show ();
-                parent_revealer.set_reveal_child (false);
-            }
-        }
+    //     bool _quite_thin_window = AdaptativeWidget.WindowSize.is_quite_thin (new_size);
+    //     bool _extra_thin_window = AdaptativeWidget.WindowSize.is_extra_thin (new_size);
+    //     if (quite_thin_window != _quite_thin_window
+    //      || extra_thin_window != _extra_thin_window)
+    //     {
+    //         quite_thin_window = _quite_thin_window;
+    //         extra_thin_window = _extra_thin_window;
+    //         if (_extra_thin_window)
+    //         {
+    //             search_toggle.hide ();
+    //             search_button.show ();
+    //             parent_revealer.set_reveal_child (true);
+    //         }
+    //         else if (_quite_thin_window)
+    //         {
+    //             search_toggle.hide ();
+    //             search_button.show ();
+    //             parent_revealer.set_reveal_child (false);
+    //         }
+    //         else
+    //         {
+    //             search_button.hide ();
+    //             search_toggle.show ();
+    //             parent_revealer.set_reveal_child (false);
+    //         }
+    //     }
 
-        searchentry.set_window_size (new_size);
-    }
+    //     searchentry.set_window_size (new_size);
+    // }
 
     /*\
     * * search mode
@@ -164,14 +162,14 @@ private class PathWidget : Box, AdaptativeWidget
     internal void entry_grab_focus ()                       { searchentry.entry_grab_focus (); }
     internal void entry_grab_focus_without_selecting ()     { searchentry.entry_grab_focus_without_selecting (); }
 
-    internal bool handle_event (Gdk.EventKey event)
-    {
-        searchentry.prepare (PathEntry.SearchMode.SEARCH);
-        if (!searchentry.handle_event (event))
-            return false;
-        enter_search_mode ();
-        return true;
-    }
+    // internal bool handle_event (Gdk.EventKey event)
+    // {
+    //     searchentry.prepare (PathEntry.SearchMode.SEARCH);
+    //     if (!searchentry.handle_event (event))
+    //         return false;
+    //     enter_search_mode ();
+    //     return true;
+    // }
 
     internal void prepare_search (PathEntry.SearchMode mode, string? search)
     {
@@ -196,9 +194,9 @@ private class PathWidget : Box, AdaptativeWidget
     * * sizing; TODO should be set by the center box of the headerbar, not by one of its children...
     \*/
 
-    internal override void get_preferred_width (out int minimum_width, out int natural_width)
-    {
-        base.get_preferred_width (out minimum_width, out natural_width);
-        natural_width = MAX_ROW_WIDTH - 46;  // see key-list-box-row.vala
-    }
+    // internal override void get_preferred_width (out int minimum_width, out int natural_width)
+    // {
+    //     base.get_preferred_width (out minimum_width, out natural_width);
+    //     natural_width = MAX_ROW_WIDTH - 46;  // see key-list-box-row.vala
+    // }
 }

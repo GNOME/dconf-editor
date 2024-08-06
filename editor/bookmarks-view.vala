@@ -17,19 +17,19 @@
 
 using Gtk;
 
-private class BookmarksView : BrowserView, AdaptativeWidget
+private class BookmarksView : BrowserView
 {
     construct
     {
         create_bookmarks_list ();
     }
 
-    protected override void set_window_size (AdaptativeWidget.WindowSize new_size)
-    {
-        base.set_window_size (new_size);
+    // protected override void set_window_size (AdaptativeWidget.WindowSize new_size)
+    // {
+    //     base.set_window_size (new_size);
 
-        bookmarks_list.set_window_size (new_size);
-    }
+    //     bookmarks_list.set_window_size (new_size);
+    // }
 
     internal override bool is_in_in_window_mode ()
     {

@@ -45,7 +45,7 @@ private class SimpleSettingObject : Object
     }
 }
 
-private class BrowserView : BaseView, AdaptativeWidget
+private class BrowserView : BaseView
 {
     [CCode (notify = false)] internal uint16 last_context_id { internal get; private set; default = ModelUtils.undefined_context_id; }
 
@@ -56,11 +56,11 @@ private class BrowserView : BaseView, AdaptativeWidget
 
     private GLib.ListStore? key_model = null;
 
-    protected override void set_window_size (AdaptativeWidget.WindowSize new_size)
-    {
-        base.set_window_size (new_size);
-        browser_content.set_window_size (new_size);
-    }
+    // protected override void set_window_size (AdaptativeWidget.WindowSize new_size)
+    // {
+    //     base.set_window_size (new_size);
+    //     browser_content.set_window_size (new_size);
+    // }
 
     protected void on_case_sensitive_changed ()
     {

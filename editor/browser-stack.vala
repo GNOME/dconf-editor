@@ -18,7 +18,7 @@
 using Gtk;
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/browser-stack.ui")]
-private class BrowserStack : Grid, AdaptativeWidget, BrowserContent
+private class BrowserStack : Grid, BrowserContent
 {
     [GtkChild] private unowned Stack stack;
     [GtkChild] private unowned RegistryView folder_view;
@@ -27,11 +27,11 @@ private class BrowserStack : Grid, AdaptativeWidget, BrowserContent
 
     [CCode (notify = false)] internal ViewType current_view { internal get; protected set; default = ViewType.FOLDER; }
 
-    private void set_window_size (AdaptativeWidget.WindowSize new_size)
-    {
-        folder_view.set_window_size (new_size);
-        search_view.set_window_size (new_size);
-    }
+    // private void set_window_size (AdaptativeWidget.WindowSize new_size)
+    // {
+    //     folder_view.set_window_size (new_size);
+    //     search_view.set_window_size (new_size);
+    // }
 
     [CCode (notify = false)] public ModificationsHandler modifications_handler
     {

@@ -65,8 +65,8 @@ install_data(
 
 sources = files(
   'about-list.vala',
-  'adaptative-pathbar.vala',
   'adaptative-window.vala',
+  'adaptative-pathbar.vala',
   'base-headerbar.vala',
   'base-view.vala',
   'base-window.vala',
@@ -160,8 +160,8 @@ deps = [
   dependency('dconf', version: '>= 0.26.1'),
   dependency('glib-2.0', version: '>= 2.56.0'),
   dependency('gmodule-2.0'),
-  dependency('gtk+-3.0', version: '>= 3.22.27'),
-  dependency('libhandy-1', version: '>= 1.6'),
+  dependency('gtk4', version: '>= 4.14.2'),
+  dependency('libadwaita-1', version: '>= 1.5.0'),
   valac.find_library('config', dirs: meson.current_source_dir()),
   valac.find_library('posix')
 ]

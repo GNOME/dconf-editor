@@ -17,7 +17,7 @@
 
 using Gtk;
 
-private class DConfHeaderBar : BookmarksHeaderBar, AdaptativeWidget
+private class DConfHeaderBar : BookmarksHeaderBar
 {
     private bool _delay_mode = false;
     [CCode (notify = false)] internal bool delay_mode
@@ -63,12 +63,12 @@ private class DConfHeaderBar : BookmarksHeaderBar, AdaptativeWidget
         base.set_path (type, path);
     }
 
-    protected override void set_window_size (AdaptativeWidget.WindowSize new_size)
-    {
-        base.set_window_size (new_size);
+    // protected override void set_window_size (AdaptativeWidget.WindowSize new_size)
+    // {
+    //     base.set_window_size (new_size);
 
-        update_modifications_button ();
-    }
+    //     update_modifications_button ();
+    // }
 
     /*\
     * * modifications buttons and actions

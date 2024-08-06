@@ -21,29 +21,29 @@ private const int MAX_ROW_WIDTH = LARGE_WINDOW_SIZE - 42;
 
 private class ListBoxRowWrapper : ListBoxRow
 {
-    internal override void get_preferred_width (out int minimum_width, out int natural_width)
-    {
-        base.get_preferred_width (out minimum_width, out natural_width);
-        natural_width = MAX_ROW_WIDTH;
-    }
+    // internal override void get_preferred_width (out int minimum_width, out int natural_width)
+    // {
+    //     base.get_preferred_width (out minimum_width, out natural_width);
+    //     natural_width = MAX_ROW_WIDTH;
+    // }
 }
 
 private class RegistryWarning : Grid
 {
-    internal override void get_preferred_width (out int minimum_width, out int natural_width)
-    {
-        base.get_preferred_width (out minimum_width, out natural_width);
-        natural_width = MAX_ROW_WIDTH;
-    }
+    // internal override void get_preferred_width (out int minimum_width, out int natural_width)
+    // {
+    //     base.get_preferred_width (out minimum_width, out natural_width);
+    //     natural_width = MAX_ROW_WIDTH;
+    // }
 }
 
-private class ListBoxRowHeader : Grid
+private class ListBoxRowHeader : Box
 {
-    internal override void get_preferred_width (out int minimum_width, out int natural_width)
-    {
-        base.get_preferred_width (out minimum_width, out natural_width);
-        natural_width = MAX_ROW_WIDTH;
-    }
+    // internal override void get_preferred_width (out int minimum_width, out int natural_width)
+    // {
+    //     base.get_preferred_width (out minimum_width, out natural_width);
+    //     natural_width = MAX_ROW_WIDTH;
+    // }
 
     internal ListBoxRowHeader (bool is_first_row, string? header_text)
     {
@@ -58,7 +58,7 @@ private class ListBoxRowHeader : Grid
             StyleContext context = label.get_style_context ();
             context.add_class ("dim-label");
             context.add_class ("header-label");
-            add (label);
+            append (label);
         }
 
         halign = Align.CENTER;
@@ -69,11 +69,11 @@ private class ListBoxRowHeader : Grid
         Separator separator = new Separator (Orientation.HORIZONTAL);
         separator.visible = true;
         separator.hexpand = true;
-        add (separator);
+        append (separator);
     }
 }
 
-private abstract class ClickableListBoxRow : EventBox
+private abstract class ClickableListBoxRow : Box
 {
     [CCode (notify = false)] public bool search_result_mode  { internal get; protected construct; default = false; }
 
@@ -171,7 +171,7 @@ private class SearchListBoxRow : ClickableListBoxRow
 }
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/key-list-box-row.ui")]
-private class KeyListBoxRow : ClickableListBoxRow, AdaptativeWidget
+private class KeyListBoxRow : ClickableListBoxRow
 {
     [GtkChild] private unowned Grid key_name_and_value_grid;
     [GtkChild] private unowned Label key_name_label;
@@ -217,29 +217,29 @@ private class KeyListBoxRow : ClickableListBoxRow, AdaptativeWidget
     }
 
     private bool thin_window = false;
-    internal void set_window_size (AdaptativeWidget.WindowSize new_size)
-    {
-        bool _thin_window = AdaptativeWidget.WindowSize.is_extra_thin (new_size);
-        if (thin_window == _thin_window)
-            return;
-        thin_window = _thin_window;
+    // internal void set_window_size (AdaptativeWidget.WindowSize new_size)
+    // {
+    //     bool _thin_window = AdaptativeWidget.WindowSize.is_extra_thin (new_size);
+    //     if (thin_window == _thin_window)
+    //         return;
+    //     thin_window = _thin_window;
 
-        if (_thin_window)
-        {
-            if (boolean_switch != null)
-                ((!) boolean_switch).hide ();
-            key_value_label.hide ();
-            key_type_label.show ();
-        }
-        else
-        {
-            key_type_label.hide ();
-            if (_use_switch && !delay_mode)
-                ((!) boolean_switch).show ();
-            else
-                key_value_label.show ();
-        }
-    }
+    //     if (_thin_window)
+    //     {
+    //         if (boolean_switch != null)
+    //             ((!) boolean_switch).hide ();
+    //         key_value_label.hide ();
+    //         key_type_label.show ();
+    //     }
+    //     else
+    //     {
+    //         key_type_label.hide ();
+    //         if (_use_switch && !delay_mode)
+    //             ((!) boolean_switch).show ();
+    //         else
+    //             key_value_label.show ();
+    //     }
+    // }
 
     construct
     {
@@ -303,15 +303,15 @@ private class KeyListBoxRow : ClickableListBoxRow, AdaptativeWidget
 
     internal void change_dismissed ()
     {
-        ModelButton actionable = new ModelButton ();
+        Button actionable = new Button ();
         actionable.visible = false;
         Variant variant = new Variant.string (full_name);
         actionable.set_detailed_action_name ("ui.dismiss-change(" + variant.print (false) + ")");
-        Container child = (Container) get_child ();
-        child.add (actionable);
-        actionable.clicked ();
-        child.remove (actionable);
-        actionable.destroy ();
+        // FIXME What even
+        // key_name_and_value_grid.add (actionable);
+        // actionable.clicked ();
+        // key_name_and_value_grid.remove (actionable);
+        // actionable.destroy ();
     }
 
     internal void on_delete_call ()
@@ -321,7 +321,7 @@ private class KeyListBoxRow : ClickableListBoxRow, AdaptativeWidget
 
     internal void set_key_value (Variant? new_value)
     {
-        ModelButton actionable = new ModelButton ();
+        Button actionable = new Button ();
         actionable.visible = false;
         Variant variant;
         if (new_value == null)
@@ -342,11 +342,12 @@ private class KeyListBoxRow : ClickableListBoxRow, AdaptativeWidget
             variant = new Variant ("(sqv)", full_name, context_id, (!) new_value);
             actionable.set_detailed_action_name ("view.set-key-value(" + variant.print (true) + ")");
         }
-        Container child = (Container) get_child ();
-        child.add (actionable);
-        actionable.clicked ();
-        child.remove (actionable);
-        actionable.destroy ();
+        // Container child = (Container) get_child ();
+        // FIXME
+        // key_name_and_value_grid.add (actionable);
+        // actionable.clicked ();
+        // key_name_and_value_grid.remove (actionable);
+        // actionable.destroy ();
     }
 
     /*\
@@ -433,7 +434,8 @@ private class ContextPopover : Popover
 
         insert_action_group ("popmenu", (SimpleActionGroup) current_group);
 
-        bind_model (menu, null);
+        // FIXME: Make this a PopoverMenu?
+        // set_menu_model (menu, null);
     }
 
     /*\

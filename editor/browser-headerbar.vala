@@ -17,7 +17,7 @@
 
 using Gtk;
 
-private abstract class BrowserHeaderBar : BaseHeaderBar, AdaptativeWidget
+private abstract class BrowserHeaderBar : BaseHeaderBar
 {
     private PathWidget path_widget;
 
@@ -43,18 +43,18 @@ private abstract class BrowserHeaderBar : BaseHeaderBar, AdaptativeWidget
     }
 
     private bool is_extra_thin = false;
-    protected override void set_window_size (AdaptativeWidget.WindowSize new_size)
-    {
-        if (is_extra_thin != AdaptativeWidget.WindowSize.is_extra_thin (new_size))
-        {
-            is_extra_thin = !is_extra_thin;
-            update_properties_view ();
-        }
+    // protected override void set_window_size (AdaptativeWidget.WindowSize new_size)
+    // {
+    //     if (is_extra_thin != AdaptativeWidget.WindowSize.is_extra_thin (new_size))
+    //     {
+    //         is_extra_thin = !is_extra_thin;
+    //         update_properties_view ();
+    //     }
 
-        base.set_window_size (new_size);
+    //     base.set_window_size (new_size);
 
-        path_widget.set_window_size (new_size);
-    }
+    //     path_widget.set_window_size (new_size);
+    // }
 
     /*\
     * * path_widget creation
@@ -114,10 +114,10 @@ private abstract class BrowserHeaderBar : BaseHeaderBar, AdaptativeWidget
             path_widget.entry_grab_focus_without_selecting ();
     }
 
-    internal bool handle_event (Gdk.EventKey event)
-    {
-        return path_widget.handle_event (event);
-    }
+    // internal bool handle_event (Gdk.EventKey event)
+    // {
+    //     return path_widget.handle_event (event);
+    // }
 
     /*\
     * * properties mode

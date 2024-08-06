@@ -48,7 +48,7 @@ private class RegistryInfo : Grid, BrowsableView
         erase_button.set_action_target ("s", "");
         disconnect_handler (modifications_handler, ref revealer_reload_1_handler);
         disconnect_handler (modifications_handler, ref revealer_reload_2_handler);
-        properties_list_box.@foreach ((widget) => widget.destroy ());
+        // properties_list_box.@foreach ((widget) => widget.destroy ());
     }
 
     private static void disconnect_handler (Object object, ref ulong handler)
@@ -122,7 +122,7 @@ private class RegistryInfo : Grid, BrowsableView
 
         RegistryVariantDict properties = new RegistryVariantDict.from_aqv (current_key_info);
 
-        properties_list_box.@foreach ((widget) => widget.destroy ());
+        // properties_list_box.@foreach ((widget) => widget.destroy ());
 
         if (context_id == ModelUtils.folder_context_id)
         {
@@ -570,7 +570,7 @@ private class RegistryInfo : Grid, BrowsableView
 
     private void add_row_from_label (string property_name, string property_value, bool use_italic = false)
     {
-        properties_list_box.add (new PropertyRow.from_label (property_name, property_value, use_italic));
+        properties_list_box.append (new PropertyRow.from_label (property_name, property_value, use_italic));
     }
 
     private void add_switch_row (string property_name, Switch custom_value_switch)
@@ -578,14 +578,14 @@ private class RegistryInfo : Grid, BrowsableView
         PropertyRow row = new PropertyRow.from_widgets (property_name, custom_value_switch, null);
         ulong default_value_row_activate_handler = row.activate.connect (() => custom_value_switch.set_active (!custom_value_switch.get_active ()));
         row.destroy.connect (() => row.disconnect (default_value_row_activate_handler));
-        properties_list_box.add (row);
+        properties_list_box.append (row);
     }
 
     private void add_row_from_widget (string property_name, Widget widget, string? type = null, bool minimum_is_maximum = false)
     {
         PropertyRow row = new PropertyRow.from_widgets (property_name, widget, type != null ? add_warning ((!) type, minimum_is_maximum) : null);
         widget.bind_property ("sensitive", row, "sensitive", BindingFlags.SYNC_CREATE);
-        properties_list_box.add (row);
+        properties_list_box.append (row);
     }
 
     private void add_separator ()
@@ -598,11 +598,11 @@ private class RegistryInfo : Grid, BrowsableView
 
         ListBoxRowWrapper row = new ListBoxRowWrapper ();
         row.halign = Align.CENTER;
-        row.add (separator);
+        row.set_child (separator);
         row.set_sensitive (false);
 /* TODO could be selected by down arrow        row.focus.connect ((direction) => { row.move_focus (direction); return false; }); */
         row.show ();
-        properties_list_box.add (row);
+        properties_list_box.append (row);
     }
 
     private static Widget? add_warning (string type, bool minimum_is_maximum)
@@ -711,7 +711,7 @@ private class PropertyRow : ListBoxRowWrapper
         context.add_class ("property-value");
 
         value_label.show ();
-        overlay.add (value_label);
+        overlay.set_child (value_label);
     }
 
     internal PropertyRow.from_widgets (string property_name, Widget widget, Widget? warning)
@@ -723,7 +723,7 @@ private class PropertyRow : ListBoxRowWrapper
 
         Grid grid = new Grid ();
         grid.orientation = Orientation.VERTICAL;
-        grid.add (widget);
+        grid.attach (widget, 0, 0, 1, 1);
 
         StyleContext context = grid.get_style_context ();
         context.add_class ("property-value");
@@ -734,11 +734,11 @@ private class PropertyRow : ListBoxRowWrapper
             ((!) warning).halign = Align.CENTER;
             ((!) warning).get_style_context ().add_class ("property-warning");
             ((!) warning).show ();
-            grid.add ((!) warning);
+            grid.attach ((!) warning, 1, 0, 1, 1);
         }
 
         grid.show ();
-        overlay.add (grid);
+        overlay.set_child (grid);
         grid.valign = Align.CENTER;
     }
 

@@ -59,14 +59,16 @@ private class BookmarksController : Grid
 
     internal void update_rows_size_button_icon (bool small_bookmarks_rows)
     {
+        // FIXME: This is dumb
         if (small_bookmarks_rows)
-            rows_size_button.set_image (big_rows_icon);
+            rows_size_button.set_icon_name (big_rows_icon.icon_name);
         else
-            rows_size_button.set_image (small_rows_icon);
+            rows_size_button.set_icon_name (small_rows_icon.icon_name);
     }
 
     internal bool get_small_rows_state ()
     {
-        return rows_size_button.get_image () == small_rows_icon;
+        return false;
+        // return rows_size_button.get_image () == small_rows_icon;
     }
 }

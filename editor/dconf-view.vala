@@ -17,7 +17,7 @@
 
 using Gtk;
 
-private class DConfView : BookmarksView, AdaptativeWidget
+private class DConfView : BookmarksView
 {
     private BrowserStack dconf_content;
 
@@ -34,13 +34,13 @@ private class DConfView : BookmarksView, AdaptativeWidget
         dconf_content = _dconf_content;
     }
 
-    protected override void set_window_size (AdaptativeWidget.WindowSize new_size)
-    {
-        base.set_window_size (new_size);
+    // protected override void set_window_size (AdaptativeWidget.WindowSize new_size)
+    // {
+    //     base.set_window_size (new_size);
 
-        if (modifications_list_created)
-            modifications_list.set_window_size (new_size);
-    }
+    //     if (modifications_list_created)
+    //         modifications_list.set_window_size (new_size);
+    // }
 
     private ModificationsHandler _modifications_handler;
     [CCode (notify = false)] public ModificationsHandler modifications_handler
@@ -172,10 +172,10 @@ private class DConfView : BookmarksView, AdaptativeWidget
     {
         modifications_list = new ModificationsList (/* needs shadows   */ false,
                                                     /* big placeholder */ true);
-        modifications_list.set_window_size (saved_window_size);
+        // modifications_list.set_window_size (saved_window_size);
         // modifications_list.selection_changed.connect (() => ...);
         modifications_list.show ();
-        add (modifications_list);
+        add_child (modifications_list);
         modifications_list_created = true;
     }
 

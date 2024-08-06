@@ -18,61 +18,16 @@
 using Gtk;
 
 private interface AdaptativeWidget : Object
-{ /*
-       ╎ extra ╎
-       ╎ thin  ╎
-  ╶╶╶╶ ┏━━━━━━━┳━━━━━━━┳━━━━━──╴
- extra ┃ PHONE ┃ PHONE ┃ EXTRA
- flat  ┃ _BOTH ┃ _HZTL ┃ _FLAT
-  ╶╶╶╶ ┣━━━━━━━╋━━━━━━━╋━━━━╾──╴
-       ┃ PHONE ┃       ┃
-       ┃ _VERT ┃       ┃
-       ┣━━━━━━━┫       ┃
-       ┃ EXTRA ┃ QUITE ╿ USUAL
-       ╿ _THIN │ _THIN │ _SIZE
-       ╵       ╵       ╵
-       ╎   quite thin  ╎
-                              */
-
-    internal enum WindowSize {
-        START_SIZE,
-        USUAL_SIZE,
-        QUITE_THIN,
-        PHONE_VERT,
-        PHONE_HZTL,
-        PHONE_BOTH,
-        EXTRA_THIN,
-        EXTRA_FLAT;
-
-        internal static inline bool is_phone_size (WindowSize window_size)
-        {
-            return (window_size == PHONE_BOTH) || (window_size == PHONE_VERT) || (window_size == PHONE_HZTL);
-        }
-
-        internal static inline bool is_extra_thin (WindowSize window_size)
-        {
-            return (window_size == PHONE_BOTH) || (window_size == PHONE_VERT) || (window_size == EXTRA_THIN);
-        }
-
-        internal static inline bool is_extra_flat (WindowSize window_size)
-        {
-            return (window_size == PHONE_BOTH) || (window_size == PHONE_HZTL) || (window_size == EXTRA_FLAT);
-        }
-
-        internal static inline bool is_quite_thin (WindowSize window_size)
-        {
-            return is_extra_thin (window_size) || (window_size == PHONE_HZTL) || (window_size == QUITE_THIN);
-        }
-    }
-
-    internal abstract void set_window_size (WindowSize new_size);
+{
 }
 
 private const int LARGE_WINDOW_SIZE = 1042;
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/adaptative-window.ui")]
-private abstract class AdaptativeWindow : ApplicationWindow
+private abstract class AdaptativeWindow : Adw.ApplicationWindow
 {
+    [GtkChild] protected unowned Adw.ToolbarView toolbar_view;
+
     private BaseHeaderBar headerbar;
     [CCode (notify = false)] public BaseHeaderBar nta_headerbar
     {
@@ -84,8 +39,7 @@ private abstract class AdaptativeWindow : ApplicationWindow
                 assert_not_reached ();
 
             headerbar = value;
-            value.show ();
-            set_titlebar (value);
+            toolbar_view.add_top_bar (value);
         }
     }
 
@@ -132,41 +86,41 @@ private abstract class AdaptativeWindow : ApplicationWindow
     * * callbacks
     \*/
 
-    [GtkCallback]
-    private bool on_window_state_event (Widget widget, Gdk.EventWindowState event)
-    {
-        if ((event.changed_mask & Gdk.WindowState.MAXIMIZED) != 0)
-            window_is_maximized = (event.new_window_state & Gdk.WindowState.MAXIMIZED) != 0;
+    // [GtkCallback]
+    // private bool on_window_state_event (Widget widget, Gdk.EventWindowState event)
+    // {
+    //     if ((event.changed_mask & Gdk.WindowState.MAXIMIZED) != 0)
+    //         window_is_maximized = (event.new_window_state & Gdk.WindowState.MAXIMIZED) != 0;
 
-        /* We don’t save this state, but track it for saving size allocation */
-        Gdk.WindowState tiled_state = Gdk.WindowState.TILED
-                                    | Gdk.WindowState.TOP_TILED
-                                    | Gdk.WindowState.BOTTOM_TILED
-                                    | Gdk.WindowState.LEFT_TILED
-                                    | Gdk.WindowState.RIGHT_TILED;
-        if ((event.changed_mask & tiled_state) != 0)
-            window_is_tiled = (event.new_window_state & tiled_state) != 0;
+    //     /* We don’t save this state, but track it for saving size allocation */
+    //     Gdk.WindowState tiled_state = Gdk.WindowState.TILED
+    //                                 | Gdk.WindowState.TOP_TILED
+    //                                 | Gdk.WindowState.BOTTOM_TILED
+    //                                 | Gdk.WindowState.LEFT_TILED
+    //                                 | Gdk.WindowState.RIGHT_TILED;
+    //     if ((event.changed_mask & tiled_state) != 0)
+    //         window_is_tiled = (event.new_window_state & tiled_state) != 0;
 
-        return false;
-    }
+    //     return false;
+    // }
 
-    [GtkCallback]
-    private void on_size_allocate (Allocation allocation)
-    {
-        int height = allocation.height;
-        int width = allocation.width;
+    // [GtkCallback]
+    // private void on_size_allocate (Allocation allocation)
+    // {
+    //     int height = allocation.height;
+    //     int width = allocation.width;
 
-        update_adaptative_children (ref width, ref height);
-        update_window_state ();
-    }
+    //     update_adaptative_children (ref width, ref height);
+    //     update_window_state ();
+    // }
 
-    [GtkCallback]
-    private void on_destroy ()
-    {
-        before_destroy ();
-        save_window_state ();
-        base.destroy ();
-    }
+    // [GtkCallback]
+    // private void on_destroy ()
+    // {
+    //     before_destroy ();
+    //     save_window_state ();
+    //     base.destroy ();
+    // }
 
     protected virtual void before_destroy () {}
 
@@ -174,102 +128,13 @@ private abstract class AdaptativeWindow : ApplicationWindow
     * * adaptative stuff
     \*/
 
-    private AdaptativeWidget.WindowSize window_size = AdaptativeWidget.WindowSize.START_SIZE;
+    // private AdaptativeWidget.WindowSize window_size = AdaptativeWidget.WindowSize.START_SIZE;
 
     private List<AdaptativeWidget> adaptative_children = new List<AdaptativeWidget> ();
     protected void add_adaptative_child (AdaptativeWidget child)
     {
         adaptative_children.append (child);
     }
-
-    private void update_adaptative_children (ref int width, ref int height)
-    {
-        bool extra_flat = height < 400;
-        bool flat       = height < 500;
-
-        if (width < 590)
-        {
-            if (extra_flat)         change_window_size (AdaptativeWidget.WindowSize.PHONE_BOTH);
-            else if (height < 787)  change_window_size (AdaptativeWidget.WindowSize.PHONE_VERT);
-            else                    change_window_size (AdaptativeWidget.WindowSize.EXTRA_THIN);
-
-            set_style_classes (/* extra thin */ true, /* thin */ true, /* large */ false,
-                               /* extra flat */ extra_flat, /* flat */ flat);
-        }
-        else if (width < 787)
-        {
-            if (extra_flat)         change_window_size (AdaptativeWidget.WindowSize.PHONE_HZTL);
-            else                    change_window_size (AdaptativeWidget.WindowSize.QUITE_THIN);
-
-            set_style_classes (/* extra thin */ false, /* thin */ true, /* large */ false,
-                               /* extra flat */ extra_flat, /* flat */ flat);
-        }
-        else
-        {
-            if (extra_flat)         change_window_size (AdaptativeWidget.WindowSize.EXTRA_FLAT);
-            else                    change_window_size (AdaptativeWidget.WindowSize.USUAL_SIZE);
-
-            set_style_classes (/* extra thin */ false, /* thin */ false, /* large */ (width > LARGE_WINDOW_SIZE),
-                               /* extra flat */ extra_flat, /* flat */ flat);
-        }
-    }
-
-    private void change_window_size (AdaptativeWidget.WindowSize new_window_size)
-    {
-        if (window_size == new_window_size)
-            return;
-        window_size = new_window_size;
-        adaptative_children.@foreach ((adaptative_child) => adaptative_child.set_window_size (new_window_size));
-    }
-
-    /*\
-    * * manage style classes
-    \*/
-
-    private bool has_extra_thin_window_class = false;
-    private bool has_thin_window_class = false;
-    private bool has_large_window_class = false;
-    private bool has_extra_flat_window_class = false;
-    private bool has_flat_window_class = false;
-
-    private void set_style_classes (bool extra_thin_window, bool thin_window, bool large_window,
-                                    bool extra_flat_window, bool flat_window)
-    {
-        // for width
-        if (has_extra_thin_window_class && !extra_thin_window)
-            set_style_class ("extra-thin-window", false, ref has_extra_thin_window_class);
-        if (has_thin_window_class && !thin_window)
-            set_style_class ("thin-window", false, ref has_thin_window_class);
-
-        if (large_window != has_large_window_class)
-            set_style_class ("large-window", large_window, ref has_large_window_class);
-        if (thin_window != has_thin_window_class)
-            set_style_class ("thin-window", thin_window, ref has_thin_window_class);
-        if (extra_thin_window != has_extra_thin_window_class)
-            set_style_class ("extra-thin-window", extra_thin_window, ref has_extra_thin_window_class);
-
-        // for height
-        if (has_extra_flat_window_class && !extra_flat_window)
-            set_style_class ("extra-flat-window", false, ref has_extra_flat_window_class);
-
-        if (flat_window != has_flat_window_class)
-            set_style_class ("flat-window", flat_window, ref has_flat_window_class);
-        if (extra_flat_window != has_extra_flat_window_class)
-            set_style_class ("extra-flat-window", extra_flat_window, ref has_extra_flat_window_class);
-    }
-
-    private inline void set_style_class (string class_name, bool new_state, ref bool old_state)
-    {
-        old_state = new_state;
-        if (new_state)
-            window_style_context.add_class (class_name);
-        else
-            window_style_context.remove_class (class_name);
-    }
-
-    /*\
-    * * manage window state
-    \*/
 
     [CCode (notify = false)] public string schema_path
     {

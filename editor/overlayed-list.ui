@@ -51,7 +51,7 @@
           <class name="linked-circular"/>
         </style>
         <child>
-          <object class="GtkModelButton" id="leave_edit_mode_button">
+          <object class="GtkButton" id="leave_edit_mode_button">
             <property name="visible">True</property>
             <property name="hexpand">True</property>
             <property name="centered">True</property>
@@ -63,7 +63,7 @@
           </object>
         </child>
         <child>
-          <object class="GtkModelButton" id="enter_edit_mode_button">
+          <object class="GtkButton" id="enter_edit_mode_button">
             <property name="visible">True</property>
             <property name="hexpand">True</property>
             <property name="centered">True</property>

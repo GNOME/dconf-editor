@@ -121,7 +121,8 @@ private class RegistrySearch : RegistryList
         }
 
         key_list_box.select_row ((!) row);
-        key_list_box.get_adjustment ().set_value (0);
+        // TODO: Do we still need this?
+        // key_list_box.get_adjustment ().set_value (0);
     }
     private static ListBoxRow _get_first_row (ref unowned ListBox key_list_box)
     {

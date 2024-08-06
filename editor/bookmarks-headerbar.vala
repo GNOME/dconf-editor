@@ -17,7 +17,7 @@
 
 using Gtk;
 
-private abstract class BookmarksHeaderBar : BrowserHeaderBar, AdaptativeWidget
+private abstract class BookmarksHeaderBar : BrowserHeaderBar
 {
     construct
     {
@@ -40,15 +40,15 @@ private abstract class BookmarksHeaderBar : BrowserHeaderBar, AdaptativeWidget
         base.set_path (type, path);
     }
 
-    protected override void set_window_size (AdaptativeWidget.WindowSize new_size)
-    {
-        bool _disable_popovers = disable_popovers;
+    // protected override void set_window_size (AdaptativeWidget.WindowSize new_size)
+    // {
+    //     bool _disable_popovers = disable_popovers;
 
-        base.set_window_size (new_size);
+    //     base.set_window_size (new_size);
 
-        if (disable_popovers != _disable_popovers)
-            update_bookmarks_button_visibility (/* run transitions */ true);
-    }
+    //     if (disable_popovers != _disable_popovers)
+    //         update_bookmarks_button_visibility (/* run transitions */ true);
+    // }
 
     /*\
     * * bookmarks widget
@@ -297,7 +297,7 @@ private abstract class BookmarksHeaderBar : BrowserHeaderBar, AdaptativeWidget
     {
         hide_hamburger_menu ();
         if (bookmarks_button.sensitive)
-            bookmarks_button.clicked ();
+            bookmarks_button.activate ();
     }
 
     internal void bookmark_current_path ()

@@ -18,7 +18,7 @@
 using Gtk;
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/base-headerbar.ui")]
-private class BaseHeaderBar : HeaderBar, AdaptativeWidget
+private class BaseHeaderBar : HeaderBar
 {
     [GtkChild] protected unowned Box center_box;
 
@@ -36,33 +36,33 @@ private class BaseHeaderBar : HeaderBar, AdaptativeWidget
     private bool has_a_phone_size = false;
     protected bool disable_popovers = false;
     protected bool disable_action_bar = false;
-    protected virtual void set_window_size (AdaptativeWidget.WindowSize new_size)
-    {
-        has_a_phone_size = AdaptativeWidget.WindowSize.is_phone_size (new_size);
-        disable_popovers = has_a_phone_size
-                        || AdaptativeWidget.WindowSize.is_extra_thin (new_size);
+    // protected virtual void set_window_size (AdaptativeWidget.WindowSize new_size)
+    // {
+    //     has_a_phone_size = AdaptativeWidget.WindowSize.is_phone_size (new_size);
+    //     disable_popovers = has_a_phone_size
+    //                     || AdaptativeWidget.WindowSize.is_extra_thin (new_size);
 
-        bool _disable_action_bar = disable_popovers
-                                || AdaptativeWidget.WindowSize.is_extra_flat (new_size);
-        if (disable_action_bar != _disable_action_bar)
-        {
-            disable_action_bar = _disable_action_bar;
-            if (disable_action_bar)
-            {
-                set_show_close_button (false);
-                quit_button_stack.show ();
-                ltr_right_separator.visible = current_mode_id == default_mode_id;
-            }
-            else
-            {
-                ltr_right_separator.hide ();
-                quit_button_stack.hide ();
-                set_show_close_button (true);
-            }
-        }
+    //     bool _disable_action_bar = disable_popovers
+    //                             || AdaptativeWidget.WindowSize.is_extra_flat (new_size);
+    //     if (disable_action_bar != _disable_action_bar)
+    //     {
+    //         disable_action_bar = _disable_action_bar;
+    //         if (disable_action_bar)
+    //         {
+    //             set_show_close_button (false);
+    //             quit_button_stack.show ();
+    //             ltr_right_separator.visible = current_mode_id == default_mode_id;
+    //         }
+    //         else
+    //         {
+    //             ltr_right_separator.hide ();
+    //             quit_button_stack.hide ();
+    //             set_show_close_button (true);
+    //         }
+    //     }
 
-        update_hamburger_menu ();
-    }
+    //     update_hamburger_menu ();
+    // }
 
     /*\
     * * hamburger menu

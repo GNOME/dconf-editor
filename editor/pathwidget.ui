@@ -16,7 +16,7 @@
   along with Dconf Editor.  If not, see <https://www.gnu.org/licenses/>.
 -->
 <interface>
-  <requires lib="gtk+" version="3.12"/>
+  <requires lib="gtk" version="4.14"/>
   <template class="PathWidget" parent="GtkBox">
     <property name="valign">fill</property>
     <property name="spacing">6</property>
@@ -50,7 +50,7 @@
                   <class name="headerbar-revealer"/>
                 </style>
                 <child>
-                  <object class="GtkModelButton" id="parent_button">
+                  <object class="GtkButton" id="parent_button">
                     <property name="visible">True</property>
                     <property name="valign">center</property>
                     <property name="iconic">True</property>
@@ -65,7 +65,7 @@
               </object>
             </child>
             <child>
-              <object class="GtkModelButton" id="search_button">
+              <object class="GtkButton" id="search_button">
                 <property name="visible">False</property>
                 <property name="halign">end</property>
                 <property name="hexpand">False</property>
@@ -92,7 +92,7 @@
       </object>
     </child>
     <child>
-      <object class="GtkModelButton" id="search_toggle">
+      <object class="GtkButton" id="search_toggle">
         <property name="visible">True</property>
         <property name="valign">center</property>
         <property name="focus-on-click">False</property>

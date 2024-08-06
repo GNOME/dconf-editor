@@ -16,7 +16,7 @@
   along with Dconf Editor.  If not, see <https://www.gnu.org/licenses/>.
 -->
 <interface domain="dconf-editor">
-  <requires lib="gtk+" version="3.12"/>
+  <requires lib="gtk" version="4.14"/>
   <object class="GtkImage" id="big_rows_icon">
     <property name="visible">True</property>
     <property name="icon-name">ca.desrt.dconf-editor.big-rows-symbolic</property>

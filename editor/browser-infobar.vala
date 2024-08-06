@@ -18,9 +18,17 @@
 using Gtk;
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/browser-infobar.ui")]
-private class BrowserInfoBar : Revealer
+private class BrowserInfoBar : Box
 {
+    [GtkChild] private unowned Revealer revealer;
     [GtkChild] private unowned Stack content;
+
+    public bool reveal_child {get; set; default = false; }
+
+    construct
+    {
+        bind_property ("reveal-child", revealer, "reveal-child", BindingFlags.SYNC_CREATE);
+    }
 
     internal void add_label (string name, string text_label, string? button_label = null, string button_action = "")
     {
@@ -41,17 +49,27 @@ private class BrowserInfoBar : Revealer
             button.set_detailed_action_name (button_action);
 
             label.set_xalign ((float) 0.0);
-            grid.add (label);
-            grid.add (button);
+            grid.attach (label, 0, 0, 1, 1);
+            grid.attach (button, 1, 0, 1, 1);
         }
         else
         {
             label.set_xalign ((float) 0.5);
-            grid.add (label);
+            grid.attach (label, 0, 0, 1, 1);
         }
 
-        grid.show_all ();
+        // grid.show ();
         content.add_named (grid, name);
+    }
+
+    public void set_reveal_child (bool _value)
+    {
+        reveal_child = _value;
+    }
+
+    public bool get_reveal_child ()
+    {
+        return reveal_child;
     }
 
     internal void hide_warning ()
@@ -61,16 +79,16 @@ private class BrowserInfoBar : Revealer
 
     internal bool is_shown (string name)
     {
-        return get_child_revealed () && (content.get_visible_child_name () == name);
+        return revealer.get_child_revealed () && (content.get_visible_child_name () == name);
     }
 
     internal void show_warning (string name)
     {
-        if (!get_child_revealed ())
+        if (!revealer.get_child_revealed ())
         {
             content.set_transition_type (StackTransitionType.NONE);
             content.set_visible_child_name (name);
-            set_reveal_child (true);
+            revealer.set_reveal_child (true);
         }
         else if (content.get_visible_child_name () != name)
         {

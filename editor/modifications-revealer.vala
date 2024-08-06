@@ -18,7 +18,7 @@
 using Gtk;
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/modifications-revealer.ui")]
-private class ModificationsRevealer : Revealer, AdaptativeWidget
+private class ModificationsRevealer : Box
 {
     private ModificationsHandler _modifications_handler;
     [CCode (notify = false)] internal ModificationsHandler modifications_handler
@@ -34,48 +34,52 @@ private class ModificationsRevealer : Revealer, AdaptativeWidget
     StyleContext apply_button_context;
     private bool disable_action_bar = false;
     private bool short_size_button = false;
-    private void set_window_size (AdaptativeWidget.WindowSize new_size)
-    {
-        bool _disable_action_bar = AdaptativeWidget.WindowSize.is_extra_thin (new_size)
-                                || AdaptativeWidget.WindowSize.is_extra_flat (new_size);
-        if (disable_action_bar != _disable_action_bar)
-        {
-            disable_action_bar = _disable_action_bar;
-            update ();
-        }
+    // private void set_window_size (AdaptativeWidget.WindowSize new_size)
+    // {
+    //     bool _disable_action_bar = AdaptativeWidget.WindowSize.is_extra_thin (new_size)
+    //                             || AdaptativeWidget.WindowSize.is_extra_flat (new_size);
+    //     if (disable_action_bar != _disable_action_bar)
+    //     {
+    //         disable_action_bar = _disable_action_bar;
+    //         update ();
+    //     }
 
-        bool _short_size_button = AdaptativeWidget.WindowSize.is_quite_thin (new_size);
-        if (short_size_button != _short_size_button)
-        {
-            short_size_button = _short_size_button;
-            if (_short_size_button)
-            {
-                apply_button_context.remove_class ("text-button");
-                apply_button.icon = apply_button_icon;
-                apply_button_context.add_class ("image-button");
-            }
-            else
-            {
-                apply_button_context.remove_class ("image-button");
-                apply_button.icon = null;
-                apply_button_context.add_class ("text-button");
-            }
-        }
-    }
+    //     bool _short_size_button = AdaptativeWidget.WindowSize.is_quite_thin (new_size);
+    //     if (short_size_button != _short_size_button)
+    //     {
+    //         short_size_button = _short_size_button;
+    //         if (_short_size_button)
+    //         {
+    //             apply_button_context.remove_class ("text-button");
+    //             apply_button.icon = apply_button_icon;
+    //             apply_button_context.add_class ("image-button");
+    //         }
+    //         else
+    //         {
+    //             apply_button_context.remove_class ("image-button");
+    //             apply_button.icon = null;
+    //             apply_button_context.add_class ("text-button");
+    //         }
+    //     }
+    // }
 
+    [GtkChild] private unowned Revealer revealer;
     [GtkChild] private unowned Label label;
-    [GtkChild] private unowned ModelButton apply_button;
+    [GtkChild] private unowned Button apply_button;
     [GtkChild] private unowned MenuButton delayed_list_button;
     [GtkChild] private unowned Popover delayed_settings_list_popover;
     [GtkChild] private unowned ModificationsList modifications_list;
+
+    public bool reveal_child { get; set; default = false; }
 
     private ThemedIcon apply_button_icon = new ThemedIcon.from_names ({"object-select-symbolic"});
 
     construct
     {
         apply_button_context = apply_button.get_style_context ();
-        apply_button.icon = null;
+        // apply_button.icon = null;
         apply_button.get_style_context ().add_class ("text-button");
+        bind_property ("reveal-child", revealer, "reveal-child", BindingFlags.SYNC_CREATE);
     }
 
     /*\
@@ -127,6 +131,14 @@ private class ModificationsRevealer : Revealer, AdaptativeWidget
                     modifications_handler.add_delayed_setting (full_name, null, context_id);
             }
         }
+    }
+
+    public void set_reveal_child (bool _value) {
+        reveal_child = _value;
+    }
+
+    public bool get_reveal_child () {
+        return reveal_child;
     }
 
     private void warn_if_no_planned_changes ()

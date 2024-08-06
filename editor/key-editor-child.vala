@@ -52,14 +52,17 @@ private interface KeyEditorChild : Widget
     }
 }
 
-private class KeyEditorChildSingle : Label, KeyEditorChild
+private class KeyEditorChildSingle : Box, KeyEditorChild
 {
+    private Label label;
     private Variant variant;
 
     internal KeyEditorChildSingle (Variant key_value, string text)
     {
+        label = new Label (text);
+        append (label);
+
         variant = key_value;
-        set_label (text);
         show ();
     }
 
@@ -71,26 +74,30 @@ private class KeyEditorChildSingle : Label, KeyEditorChild
     internal void reload (Variant gvariant) {}
 }
 
-private class KeyEditorChildEnum : MenuButton, KeyEditorChild
+private class KeyEditorChildEnum : Box, KeyEditorChild
 {
+    private MenuButton button;
     private Variant variant;
     private GLib.Action action;
 
     internal KeyEditorChildEnum (Variant initial_value, bool delay_mode, bool has_planned_change, Variant range_content)
     {
+        button = new MenuButton();
+        append(button);
+
         this.visible = true;
         this.hexpand = true;
         this.halign = Align.START;
-        this.use_popover = true;
+        // this.use_popover = true;
         this.width_request = 100;
 
         ContextPopover popover = new ContextPopover ();
         action = popover.create_buttons_list (false, delay_mode, has_planned_change, "<enum>", range_content, initial_value);
-        popover.set_relative_to (this);
+        // popover.set_relative_to (this);
 
         popover.value_changed.connect (on_popover_value_changed);
         reload (initial_value);
-        this.set_popover ((Popover) popover);
+        button.set_popover ((Popover) popover);
     }
     private void on_popover_value_changed (ContextPopover _popover, Variant? gvariant)
         requires (gvariant != null)
@@ -110,7 +117,7 @@ private class KeyEditorChildEnum : MenuButton, KeyEditorChild
     {
         variant = gvariant;
         VariantType type = gvariant.get_type ();
-        label = type == VariantType.STRING ? gvariant.get_string () : gvariant.print (false);
+        button.label = type == VariantType.STRING ? gvariant.get_string () : gvariant.print (false);
         action.change_state (new Variant.maybe (null, new Variant.maybe (type, gvariant)));
     }
 }
@@ -133,18 +140,18 @@ private class KeyEditorChildFlags : Grid, KeyEditorChild
 
         MenuButton button = new MenuButton ();  // TODO change icon when popover will go up
         button.visible = true;
-        button.use_popover = true;
+        // button.use_popover = true;
         button.halign = Align.START;
         button.get_style_context ().add_class ("image-button");
-        this.add (button);
+        this.attach (button, 0, 0, 1, 1);
 
         label.visible = true;
         label.halign = Align.START;
         label.hexpand = true;
-        this.add (label);
+        this.attach (label, 0, 1, 1, 1);
 
         popover.create_flags_list (initial_value.get_strv (), all_flags);
-        popover.set_relative_to (button);
+        // popover.set_relative_to (button);
         popover.value_changed.connect (on_popover_value_changed);
         reload (initial_value);
         button.set_popover ((Popover) popover);
@@ -174,18 +181,22 @@ private class KeyEditorChildFlags : Grid, KeyEditorChild
     }
 }
 
-private class KeyEditorChildNullableBool : MenuButton, KeyEditorChild
+private class KeyEditorChildNullableBool : Box, KeyEditorChild
 {
+    private MenuButton button;
     private Variant variant;
     private Variant? maybe_variant;
     private GLib.Action action;
 
     internal KeyEditorChildNullableBool (Variant initial_value, bool delay_mode, bool has_planned_change, bool has_schema)
     {
+        button = new MenuButton();
+        append(button);
+
         this.visible = true;
         this.hexpand = true;
         this.halign = Align.START;
-        this.use_popover = true;
+        // this.use_popover = true;
         this.width_request = 100;
 
         Variant? meaningless_variant_or_null = null;  // only used for adding or not "set to default"
@@ -194,11 +205,11 @@ private class KeyEditorChildNullableBool : MenuButton, KeyEditorChild
 
         ContextPopover popover = new ContextPopover ();
         action = popover.create_buttons_list (false, delay_mode, has_planned_change, "mb", meaningless_variant_or_null, initial_value);
-        popover.set_relative_to (this);
+        // popover.set_relative_to (this);
 
         popover.value_changed.connect (on_popover_value_changed);
         reload (initial_value);
-        this.set_popover ((Popover) popover);
+        button.set_popover ((Popover) popover);
     }
     private void on_popover_value_changed (Popover _popover, Variant? gvariant)
         requires (gvariant != null)
@@ -220,9 +231,9 @@ private class KeyEditorChildNullableBool : MenuButton, KeyEditorChild
         maybe_variant = variant.get_maybe ();
 
         if (maybe_variant == null)
-            label = Key.cool_boolean_text_value (null);
+            button.label = Key.cool_boolean_text_value (null);
         else
-            label = Key.cool_boolean_text_value (((!) maybe_variant).get_boolean ());
+            button.label = Key.cool_boolean_text_value (((!) maybe_variant).get_boolean ());
 
         action.change_state (new Variant.maybe (null, new Variant.maybe (new VariantType ("mb"), gvariant)));
     }
@@ -245,12 +256,12 @@ private class KeyEditorChildBool : Box, KeyEditorChild // might be managed by ac
         ToggleButton button_false = new ToggleButton ();
         button_false.visible = true;
         button_false.label = Key.cool_boolean_text_value (false);
-        this.add (button_false);
+        this.append (button_false);
 
         button_true = new ToggleButton ();
         button_true.visible = true;
         button_true.label = Key.cool_boolean_text_value (true);
-        this.add (button_true);
+        this.append (button_true);
 
         button_true.active = initial_value;
         button_true.bind_property ("active", button_false, "active", BindingFlags.INVERT_BOOLEAN|BindingFlags.SYNC_CREATE|BindingFlags.BIDIRECTIONAL);
@@ -549,8 +560,9 @@ private class KeyEditorChildNumberUint64 : KeyEditorChildNumberCustom
     }
 }
 
-private class KeyEditorChildNumberInt : SpinButton, KeyEditorChild
+private class KeyEditorChildNumberInt : Box, KeyEditorChild
 {
+    private SpinButton button;
     private Variant variant;
 
     private string key_type;
@@ -591,23 +603,28 @@ private class KeyEditorChildNumberInt : SpinButton, KeyEditorChild
         }
 
         Adjustment adjustment = new Adjustment (get_variant_as_double (initial_value), min_double, max_double, 1.0, 5.0, 0.0);
-        this.configure (adjustment, 1.0, 0);
 
-        this.update_policy = SpinButtonUpdatePolicy.IF_VALID;
-        this.snap_to_ticks = true;
-        this.numeric = true;
-        this.input_purpose = InputPurpose.NUMBER;   // TODO could be DIGITS for UnsignedInt
-        this.max_width_chars = 30;
+        button = new SpinButton (adjustment, 1.0, 0);
+        append(button);
 
-        EntryBuffer ref_buffer = buffer;    // an EntryBuffer doesn't emit a "destroy" signal
-        deleted_text_handler = ref_buffer.deleted_text.connect (() => value_has_changed (test_value ()));
-        inserted_text_handler = ref_buffer.inserted_text.connect (() => value_has_changed (test_value ()));
-        ulong entry_activated_handler = activate.connect (() => { if (test_value ()) child_activated (); update (); });
-        ulong entry_sensitive_handler = notify ["sensitive"].connect (set_error_class);
+        button.update_policy = SpinButtonUpdatePolicy.IF_VALID;
+        button.snap_to_ticks = true;
+        button.numeric = true;
+        // this.input_purpose = InputPurpose.NUMBER;   // TODO could be DIGITS for UnsignedInt
+        button.max_width_chars = 30;
+
+        // EntryBuffer ref_buffer = buffer;    // an EntryBuffer doesn't emit a "destroy" signal
+        // deleted_text_handler = ref_buffer.deleted_text.connect (() => value_has_changed (test_value ()));
+        // inserted_text_handler = ref_buffer.inserted_text.connect (() => value_has_changed (test_value ()));
+        ulong entry_activated_handler = button.activate.connect (() => {
+                if (test_value ()) child_activated ();
+                button.update ();
+            });
+        ulong entry_sensitive_handler = button.notify ["sensitive"].connect (set_error_class);
 
         destroy.connect (() => {
-                ref_buffer.disconnect (deleted_text_handler);
-                ref_buffer.disconnect (inserted_text_handler);
+                // ref_buffer.disconnect (deleted_text_handler);
+                // ref_buffer.disconnect (inserted_text_handler);
                 disconnect (entry_activated_handler);
                 disconnect (entry_sensitive_handler);
             });
@@ -674,9 +691,9 @@ private class KeyEditorChildNumberInt : SpinButton, KeyEditorChild
 
     internal void reload (Variant gvariant)       // TODO "key_editor_child_number_int_real_reload: assertion 'gvariant != NULL' failed" two times when ghosting a key
     {
-        KeyEditorChild.set_lock_on (buffer, deleted_text_handler, inserted_text_handler);
-        this.set_value (get_variant_as_double (gvariant));
-        KeyEditorChild.set_lock_off (buffer, deleted_text_handler, inserted_text_handler);
+        // KeyEditorChild.set_lock_on (value, deleted_text_handler, inserted_text_handler);
+        button.set_value (get_variant_as_double (gvariant));
+        // KeyEditorChild.set_lock_off (value, deleted_text_handler, inserted_text_handler);
     }
 
     private bool value_has_error = false;
@@ -700,7 +717,7 @@ private class KeyEditorChildNumberInt : SpinButton, KeyEditorChild
     private bool test_value ()
     {
         Variant? tmp_variant;
-        string tmp_text = this.text; // don't put in the try{} for correct C code
+        string tmp_text = button.text; // don't put in the try{} for correct C code
         try
         {
             tmp_variant = Variant.parse (VariantType.INT64, tmp_text);
@@ -770,33 +787,33 @@ private class KeyEditorChildArray : Grid, KeyEditorChild
         this.key_type = type_string;
         this.variant = initial_value;
 
-        ScrolledWindow scrolled_window = new ScrolledWindow (null, null);
+        ScrolledWindow scrolled_window = new ScrolledWindow ();
         scrolled_window.visible = true;
 
         text_view = new TextView ();
         text_view.visible = true;
-        text_view.expand = true;
+        // text_view.expand = true;
         text_view.wrap_mode = WrapMode.WORD;
         text_view.monospace = true;
-        text_view.key_press_event.connect (on_key_press_event);
+        // text_view.key_press_event.connect (on_key_press_event);
         // https://bugzilla.gnome.org/show_bug.cgi?id=789676
-        text_view.button_press_event.connect_after (event_stop);
-        text_view.button_release_event.connect_after (event_stop);
+        // text_view.button_press_event.connect_after (event_stop);
+        // text_view.button_release_event.connect_after (event_stop);
 
-        scrolled_window.add (text_view);
-        add (scrolled_window);
+        scrolled_window.set_child (text_view);
+        attach (scrolled_window, 0, 0, 1, 1);
 
         error_revealer = new Revealer ();
         error_revealer.visible = true;
         error_revealer.transition_type = RevealerTransitionType.SLIDE_UP;
         error_revealer.reveal_child = false;
-        add (error_revealer);
+        attach (error_revealer, 0, 1, 1, 1);
 
         ActionBar error_bar = new ActionBar ();
         error_bar.visible = true;
-        error_revealer.add (error_bar);
+        error_revealer.set_child (error_bar);
 
-        Image error_icon = new Image.from_icon_name ("dialog-error-symbolic", IconSize.BUTTON);
+        Image error_icon = new Image.from_icon_name ("dialog-error-symbolic");
         error_icon.visible = true;
         error_bar.pack_start (error_icon);
 
@@ -815,18 +832,18 @@ private class KeyEditorChildArray : Grid, KeyEditorChild
                 ref_buffer.disconnect (inserted_text_handler);
             });
     }
-    private bool on_key_press_event (Gdk.EventKey event)
-    {
-        string keyval_name = (!) (Gdk.keyval_name (event.keyval) ?? "");
-        if ((keyval_name == "Return" || keyval_name == "KP_Enter")
-        && ((event.state & Gdk.ModifierType.MODIFIER_MASK) == 0)
-        && (test_value ()))
-        {
-            child_activated ();
-            return Gdk.EVENT_STOP;
-        }
-        return base.key_press_event (event);
-    }
+    // private bool on_key_press_event (Gdk.EventKey event)
+    // {
+    //     string keyval_name = (!) (Gdk.keyval_name (event.keyval) ?? "");
+    //     if ((keyval_name == "Return" || keyval_name == "KP_Enter")
+    //     && ((event.state & Gdk.ModifierType.MODIFIER_MASK) == 0)
+    //     && (test_value ()))
+    //     {
+    //         child_activated ();
+    //         return Gdk.EVENT_STOP;
+    //     }
+    //     return base.key_press_event (event);
+    // }
     private static bool event_stop ()
     {
         return Gdk.EVENT_STOP;
@@ -865,11 +882,11 @@ private class KeyEditorChildArray : Grid, KeyEditorChild
 
     internal void reload (Variant gvariant)
     {
-        KeyEditorChild.set_lock_on (text_view.buffer, deleted_text_handler, inserted_text_handler);
+        // KeyEditorChild.set_lock_on (text_view.buffer, deleted_text_handler, inserted_text_handler);
         text_view.buffer.text = gvariant.print (false);
         if (!test_value ())
             assert_not_reached ();
-        KeyEditorChild.set_lock_off (text_view.buffer, deleted_text_handler, inserted_text_handler);
+        // KeyEditorChild.set_lock_off (text_view.buffer, deleted_text_handler, inserted_text_handler);
     }
 }
 
@@ -951,10 +968,10 @@ private class KeyEditorChildDefault : Entry, KeyEditorChild
 
     internal void reload (Variant gvariant)
     {
-        KeyEditorChild.set_lock_on (buffer, deleted_text_handler, inserted_text_handler);
+        // KeyEditorChild.set_lock_on (buffer, deleted_text_handler, inserted_text_handler);
         this.text = is_string ? gvariant.get_string () : gvariant.print (false);
         if (!test_value ())
             assert_not_reached ();
-        KeyEditorChild.set_lock_off (buffer, deleted_text_handler, inserted_text_handler);
+        // KeyEditorChild.set_lock_off (buffer, deleted_text_handler, inserted_text_handler);
     }
 }

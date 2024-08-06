@@ -17,7 +17,7 @@
 
 using Gtk;
 
-private interface BrowserContent : Widget, AdaptativeWidget
+private interface BrowserContent : Widget
 {
     [CCode (notify = false)] internal abstract ViewType current_view { internal get; protected set; }
 

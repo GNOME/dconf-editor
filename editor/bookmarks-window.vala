@@ -17,7 +17,7 @@
 
 using Gtk;
 
-private abstract class BookmarksWindow : BrowserWindow, AdaptativeWidget
+private abstract class BookmarksWindow : BrowserWindow
 {
     private BookmarksHeaderBar  headerbar;
     private BookmarksView       main_view;
@@ -164,19 +164,19 @@ private abstract class BookmarksWindow : BrowserWindow, AdaptativeWidget
     \*/
 
     private bool disable_popovers = false;
-    protected override void set_window_size (AdaptativeWidget.WindowSize new_size)
-    {
-        base.set_window_size (new_size);
+    // protected override void set_window_size (AdaptativeWidget.WindowSize new_size)
+    // {
+    //     base.set_window_size (new_size);
 
-        bool _disable_popovers = AdaptativeWidget.WindowSize.is_phone_size (new_size)
-                              || AdaptativeWidget.WindowSize.is_extra_thin (new_size);
-        if (disable_popovers != _disable_popovers)
-        {
-            disable_popovers = _disable_popovers;
-            if (main_view.in_window_bookmarks)
-                show_default_view ();
-        }
-    }
+    //     bool _disable_popovers = AdaptativeWidget.WindowSize.is_phone_size (new_size)
+    //                           || AdaptativeWidget.WindowSize.is_extra_thin (new_size);
+    //     if (disable_popovers != _disable_popovers)
+    //     {
+    //         disable_popovers = _disable_popovers;
+    //         if (main_view.in_window_bookmarks)
+    //             show_default_view ();
+    //     }
+    // }
 
     /*\
     * * keyboard

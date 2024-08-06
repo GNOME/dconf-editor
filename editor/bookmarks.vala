@@ -30,8 +30,9 @@ internal enum BookmarkIcon {
 }
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/bookmarks.ui")]
-private class Bookmarks : MenuButton
+private class Bookmarks : Box
 {
+    [GtkChild] private unowned MenuButton           button;
     [GtkChild] private unowned Image                bookmarks_icon;
     [GtkChild] private unowned Popover              bookmarks_popover;
     [GtkChild] private unowned Stack                edit_mode_stack;
@@ -88,7 +89,7 @@ private class Bookmarks : MenuButton
 
         install_action_entries ();
 
-        clicked.connect (() => { if (active) bookmarked_switch.grab_focus (); });
+        activate.connect (() => { if (active) bookmarked_switch.grab_focus (); });
     }
 
     internal Bookmarks (string _schema_path)
@@ -99,7 +100,8 @@ private class Bookmarks : MenuButton
     [GtkCallback]
     private void on_bookmarks_changed (Variant bookmarks_variant, bool writable)
     {
-        set_detailed_action_name ("bw.update-bookmarks-icons(" + bookmarks_variant.print (true) + ")");  // TODO disable action on popover closed
+        // FIXME
+        // set_detailed_action_name ("bw.update-bookmarks-icons(" + bookmarks_variant.print (true) + ")");  // TODO disable action on popover closed
 
         if (bookmarks_variant.get_strv ().length == 0)
         {
@@ -137,39 +139,39 @@ private class Bookmarks : MenuButton
     * * Callbacks
     \*/
 
-    [GtkCallback]
-    private bool on_key_press_event (Widget widget, Gdk.EventKey event)
-    {
-        uint keyval = event.keyval;
-        string name = (!) (Gdk.keyval_name (keyval) ?? "");
+    // [GtkCallback]
+    // private bool on_key_press_event (Widget widget, Gdk.EventKey event)
+    // {
+    //     uint keyval = event.keyval;
+    //     string name = (!) (Gdk.keyval_name (keyval) ?? "");
 
-        string? visible_child_name = edit_mode_stack.get_visible_child_name ();
-        bool edit_mode_on = visible_child_name != null && (!) visible_child_name == "edit-mode-on";
+    //     string? visible_child_name = edit_mode_stack.get_visible_child_name ();
+    //     bool edit_mode_on = visible_child_name != null && (!) visible_child_name == "edit-mode-on";
 
-        if ((event.state & Gdk.ModifierType.CONTROL_MASK) != 0)
-        {
-            if (edit_mode_on)
-            {
-                if (name == "a")
-                {
-                    bookmarks_list.select_all ();
-                    return true;
-                }
-                if (name == "A")
-                {
-                    bookmarks_list.unselect_all ();
-                    return true;
-                }
-            }
-        }
+    //     if ((event.state & Gdk.ModifierType.CONTROL_MASK) != 0)
+    //     {
+    //         if (edit_mode_on)
+    //         {
+    //             if (name == "a")
+    //             {
+    //                 bookmarks_list.select_all ();
+    //                 return true;
+    //             }
+    //             if (name == "A")
+    //             {
+    //                 bookmarks_list.unselect_all ();
+    //                 return true;
+    //             }
+    //         }
+    //     }
 
-        if (keyval == Gdk.Key.Escape && edit_mode_on)
-        {
-            leave_edit_mode ();
-            return true;
-        }
-        return false;
-    }
+    //     if (keyval == Gdk.Key.Escape && edit_mode_on)
+    //     {
+    //         leave_edit_mode ();
+    //         return true;
+    //     }
+    //     return false;
+    // }
 
     [GtkCallback]
     private void on_selection_changed ()

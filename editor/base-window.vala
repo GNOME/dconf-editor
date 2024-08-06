@@ -284,31 +284,31 @@ private class BaseWindow : AdaptativeWindow, AdaptativeWidget
 
     [CCode (notify = false)] public string help_string_or_empty { private get; protected construct; default = ""; }
 
-    [GtkCallback]
-    protected virtual bool on_key_press_event (Widget widget, Gdk.EventKey event)
-    {
-        return _on_key_press_event (widget, event, help_string_or_empty);
-    }
-    private static bool _on_key_press_event (Widget widget, Gdk.EventKey event, string help_string_or_empty)
-    {
-        string name = (!) (Gdk.keyval_name (event.keyval) ?? "");
+    // [GtkCallback]
+    // protected virtual bool on_key_press_event (Widget widget, Gdk.EventKey event)
+    // {
+    //     return _on_key_press_event (widget, event, help_string_or_empty);
+    // }
+    // private static bool _on_key_press_event (Widget widget, Gdk.EventKey event, string help_string_or_empty)
+    // {
+    //     string name = (!) (Gdk.keyval_name (event.keyval) ?? "");
 
-        if (name == "F1") // TODO fix dance done with the F1 & <Primary>F1 shortcuts that show help overlay
-        {
-            BaseWindow _this = (BaseWindow) widget;
+    //     if (name == "F1") // TODO fix dance done with the F1 & <Primary>F1 shortcuts that show help overlay
+    //     {
+    //         BaseWindow _this = (BaseWindow) widget;
 
-            _this.headerbar.close_popovers ();
-            _this.main_view.close_popovers ();
-            if ((event.state & Gdk.ModifierType.CONTROL_MASK) != 0)
-                return false;                           // help overlay
-            if ((event.state & Gdk.ModifierType.SHIFT_MASK) == 0)
-                return show_application_help (_this, help_string_or_empty);   // fallback on help overlay (TODO test)
-            _this.about ();
-            return true;
-        }
+    //         _this.headerbar.close_popovers ();
+    //         _this.main_view.close_popovers ();
+    //         if ((event.state & Gdk.ModifierType.CONTROL_MASK) != 0)
+    //             return false;                           // help overlay
+    //         if ((event.state & Gdk.ModifierType.SHIFT_MASK) == 0)
+    //             return show_application_help (_this, help_string_or_empty);   // fallback on help overlay (TODO test)
+    //         _this.about ();
+    //         return true;
+    //     }
 
-        return false;
-    }
+    //     return false;
+    // }
 
     private void help (/* SimpleAction action, Variant? variant */)
     {
@@ -339,17 +339,17 @@ private class BaseWindow : AdaptativeWindow, AdaptativeWidget
     \*/
 
     private bool disable_popovers = false;
-    protected virtual void set_window_size (AdaptativeWidget.WindowSize new_size)
-    {
-        bool _disable_popovers = AdaptativeWidget.WindowSize.is_phone_size (new_size)
-                              || AdaptativeWidget.WindowSize.is_extra_thin (new_size);
-        if (disable_popovers != _disable_popovers)
-        {
-            disable_popovers = _disable_popovers;
-            if (in_window_about)
-                show_default_view ();
-        }
-    }
+    // protected virtual void set_window_size (AdaptativeWidget.WindowSize new_size)
+    // {
+    //     bool _disable_popovers = AdaptativeWidget.WindowSize.is_phone_size (new_size)
+    //                           || AdaptativeWidget.WindowSize.is_extra_thin (new_size);
+    //     if (disable_popovers != _disable_popovers)
+    //     {
+    //         disable_popovers = _disable_popovers;
+    //         if (in_window_about)
+    //             show_default_view ();
+    //     }
+    // }
 
     /*\
     * * in-window panels
@@ -406,16 +406,16 @@ private class BaseWindow : AdaptativeWindow, AdaptativeWidget
         }
         about_dialog.run ();
     }
-    private static bool about_dialog_key_press_event (Widget _about_dialog_widget, Gdk.EventKey event)
-    {
-        if (((!) (Gdk.keyval_name (event.keyval) ?? "") == "F1")
-         && ((event.state & Gdk.ModifierType.SHIFT_MASK) != 0))
-        {
-            ((Dialog) _about_dialog_widget).response (ResponseType.CANCEL);
-            return true;
-        }
-        return false;
-    }
+    // private static bool about_dialog_key_press_event (Widget _about_dialog_widget, Gdk.EventKey event)
+    // {
+    //     if (((!) (Gdk.keyval_name (event.keyval) ?? "") == "F1")
+    //      && ((event.state & Gdk.ModifierType.SHIFT_MASK) != 0))
+    //     {
+    //         ((Dialog) _about_dialog_widget).response (ResponseType.CANCEL);
+    //         return true;
+    //     }
+    //     return false;
+    // }
 
     private bool should_init_about_dialog = true;
     private void create_about_dialog ()
@@ -506,3 +506,4 @@ private class BaseWindow : AdaptativeWindow, AdaptativeWidget
         main_view.hide_notification ();
     }
 }
+

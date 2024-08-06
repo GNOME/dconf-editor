@@ -26,7 +26,7 @@ internal enum RelocatableSchemasEnabledMappings
     STARTUP
 }
 
-private class DConfWindow : BookmarksWindow, AdaptativeWidget
+private class DConfWindow : BookmarksWindow
 {
     private SettingsModel model;
     private ModificationsHandler modifications_handler;
@@ -261,7 +261,7 @@ private class DConfWindow : BookmarksWindow, AdaptativeWidget
         revealer = new ModificationsRevealer ();
         revealer.visible = true;
         add_to_main_grid (revealer);
-        add_adaptative_child (revealer);
+        // add_adaptative_child (revealer);
     }
 
     /*\
@@ -285,12 +285,12 @@ private class DConfWindow : BookmarksWindow, AdaptativeWidget
         checkbutton.visible = true;
         checkbutton.active = true;
         checkbutton.margin_top = 5;
-        box.add (checkbutton);  // TODO don't show box if the user explicitly said she wanted to see the dialog next time?
+        box.append (checkbutton);  // TODO don't show box if the user explicitly said she wanted to see the dialog next time?
 
-        ulong dialog_response_handler = dialog.response.connect (() => { if (!checkbutton.active) settings.set_boolean ("show-warning", false); });
-        dialog.run ();
-        dialog.disconnect (dialog_response_handler);
-        dialog.destroy ();
+        // ulong dialog_response_handler = dialog.response.connect (() => { if (!checkbutton.active) settings.set_boolean ("show-warning", false); });
+        // dialog.run ();
+        // dialog.disconnect (dialog_response_handler);
+        // dialog.destroy ();
     }
 
     /*\
@@ -315,31 +315,31 @@ private class DConfWindow : BookmarksWindow, AdaptativeWidget
         destroy ();
     }
 
-    protected override void before_destroy ()
-    {
-        base.before_destroy ();
+    // protected override void before_destroy ()
+    // {
+    //     base.before_destroy ();
 
-        ((ConfigurationEditor) get_application ()).clean_copy_notification ();
+    //     ((ConfigurationEditor) get_application ()).clean_copy_notification ();
 
-        modifications_handler.disconnect (delayed_changes_changed_handler);
+    //     modifications_handler.disconnect (delayed_changes_changed_handler);
 
-        settings.disconnect (settings_user_paths_changed_handler);
-        settings.disconnect (settings_enabled_mappings_changed_handler);
+    //     settings.disconnect (settings_user_paths_changed_handler);
+    //     settings.disconnect (settings_enabled_mappings_changed_handler);
 
-        model.disconnect (paths_changed_handler);
-        model.disconnect (gkey_value_push_handler);
-        model.disconnect (dkey_value_push_handler);
+    //     model.disconnect (paths_changed_handler);
+    //     model.disconnect (gkey_value_push_handler);
+    //     model.disconnect (dkey_value_push_handler);
 
-        settings.disconnect (behaviour_changed_handler);
-        settings.disconnect (use_shortpaths_changed_handler);
+    //     settings.disconnect (behaviour_changed_handler);
+    //     settings.disconnect (use_shortpaths_changed_handler);
 
-        settings.delay ();
-        settings.set_string ("saved-view", saved_view);
-        string complete_path;
-        headerbar.get_complete_path (out complete_path);
-        settings.set_string ("saved-pathbar-path", complete_path);
-        settings.apply ();
-    }
+    //     settings.delay ();
+    //     settings.set_string ("saved-view", saved_view);
+    //     string complete_path;
+    //     headerbar.get_complete_path (out complete_path);
+    //     settings.set_string ("saved-pathbar-path", complete_path);
+    //     settings.apply ();
+    // }
 
     /*\
     * * Main UI action entries
@@ -504,19 +504,19 @@ private class DConfWindow : BookmarksWindow, AdaptativeWidget
     \*/
 
     private bool disable_action_bar = false;
-    protected override void set_window_size (AdaptativeWidget.WindowSize new_size)
-    {
-        base.set_window_size (new_size);
+    // protected override void set_window_size (AdaptativeWidget.WindowSize new_size)
+    // {
+    //     base.set_window_size (new_size);
 
-        bool _disable_action_bar = AdaptativeWidget.WindowSize.is_extra_thin (new_size)
-                                || AdaptativeWidget.WindowSize.is_extra_flat (new_size);
-        if (disable_action_bar != _disable_action_bar)
-        {
-            disable_action_bar = _disable_action_bar;
-            if (main_view.in_window_modifications)
-                show_default_view ();
-        }
-    }
+    //     bool _disable_action_bar = AdaptativeWidget.WindowSize.is_extra_thin (new_size)
+    //                             || AdaptativeWidget.WindowSize.is_extra_flat (new_size);
+    //     if (disable_action_bar != _disable_action_bar)
+    //     {
+    //         disable_action_bar = _disable_action_bar;
+    //         if (main_view.in_window_modifications)
+    //             show_default_view ();
+    //     }
+    // }
 
     /*\
     * * Keyboard action entries

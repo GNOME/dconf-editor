@@ -17,7 +17,7 @@
 
 using Gtk;
 
-private class AdaptativePathbar : Stack, Pathbar, AdaptativeWidget
+private class AdaptativePathbar : Stack, Pathbar
 {
     construct
     {
@@ -44,7 +44,7 @@ private class AdaptativePathbar : Stack, Pathbar, AdaptativeWidget
         large_pathbar.valign = Align.FILL;
         large_pathbar.vexpand = true;
         large_pathbar.show ();
-        add (large_pathbar);
+        add_child (large_pathbar);
         large_pathbar_created = true;
     }
 
@@ -53,7 +53,7 @@ private class AdaptativePathbar : Stack, Pathbar, AdaptativeWidget
         short_pathbar = new ShortPathbar (complete_path, current_type, current_path);
         short_pathbar.valign = Align.CENTER;
         short_pathbar.show ();
-        add (short_pathbar);
+        add_child (short_pathbar);
         short_pathbar_created = true;
     }
 
@@ -76,39 +76,39 @@ private class AdaptativePathbar : Stack, Pathbar, AdaptativeWidget
     \*/
 
     private bool thin_window = false;
-    private void set_window_size (AdaptativeWidget.WindowSize new_size)
-    {
-        if (window_size_not_given)
-        {
-            thin_window = AdaptativeWidget.WindowSize.is_extra_thin (new_size);
-            window_size_not_given = false;
-            if (start_infos_not_given)
-                return;
-            create_initial_pathbar ();
-            return;
-        }
+    // private void set_window_size (AdaptativeWidget.WindowSize new_size)
+    // {
+    //     if (window_size_not_given)
+    //     {
+    //         thin_window = AdaptativeWidget.WindowSize.is_extra_thin (new_size);
+    //         window_size_not_given = false;
+    //         if (start_infos_not_given)
+    //             return;
+    //         create_initial_pathbar ();
+    //         return;
+    //     }
 
-        bool _thin_window = AdaptativeWidget.WindowSize.is_extra_thin (new_size);
-        if (thin_window == _thin_window)
-            return;
-        thin_window = _thin_window;
+    //     bool _thin_window = AdaptativeWidget.WindowSize.is_extra_thin (new_size);
+    //     if (thin_window == _thin_window)
+    //         return;
+    //     thin_window = _thin_window;
 
-        if (start_infos_not_given)
-            return;
+    //     if (start_infos_not_given)
+    //         return;
 
-        if (_thin_window)
-        {
-            if (!short_pathbar_created)
-                create_short_pathbar ();
-            set_visible_child (short_pathbar);
-        }
-        else
-        {
-            if (!large_pathbar_created)
-                create_large_pathbar ();
-            set_visible_child (large_pathbar);
-        }
-    }
+    //     if (_thin_window)
+    //     {
+    //         if (!short_pathbar_created)
+    //             create_short_pathbar ();
+    //         set_visible_child (short_pathbar);
+    //     }
+    //     else
+    //     {
+    //         if (!large_pathbar_created)
+    //             create_large_pathbar ();
+    //         set_visible_child (large_pathbar);
+    //     }
+    // }
 
     /*\
     * * current path state

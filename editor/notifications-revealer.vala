@@ -18,7 +18,7 @@
 using Gtk;
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/notifications-revealer.ui")]
-private class NotificationsRevealer : Revealer, AdaptativeWidget
+private class NotificationsRevealer : Revealer
 {
     [GtkChild] private unowned Label notification_label;
 
@@ -38,24 +38,24 @@ private class NotificationsRevealer : Revealer, AdaptativeWidget
     }
 
     private bool is_thin = false;
-    private void set_window_size (AdaptativeWidget.WindowSize new_size)
-    {
-        bool _is_thin = AdaptativeWidget.WindowSize.is_quite_thin (new_size);
-        if (is_thin == _is_thin)
-            return;
-        is_thin = _is_thin;
+    // private void set_window_size (AdaptativeWidget.WindowSize new_size)
+    // {
+    //     bool _is_thin = AdaptativeWidget.WindowSize.is_quite_thin (new_size);
+    //     if (is_thin == _is_thin)
+    //         return;
+    //     is_thin = _is_thin;
 
-        if (_is_thin)
-        {
-            hexpand = true;
-            halign = Align.FILL;
-        }
-        else
-        {
-            hexpand = false;
-            halign = Align.CENTER;
-        }
-    }
+    //     if (_is_thin)
+    //     {
+    //         hexpand = true;
+    //         halign = Align.FILL;
+    //     }
+    //     else
+    //     {
+    //         hexpand = false;
+    //         halign = Align.CENTER;
+    //     }
+    // }
 
     /*\
     * * action entries
