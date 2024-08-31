@@ -7,9 +7,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2023-09-18 15:05+0000\n"
-"PO-Revision-Date: 2024-02-09 23:31+0700\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues/\n"
+"POT-Creation-Date: 2024-08-06 18:31+0000\n"
+"PO-Revision-Date: 2024-08-31 17:14+0700\n"
 "Last-Translator: Akom Chotiphantawanon <knight2000@gmail.com>\n"
 "Language-Team: Thai <thai-l10n@googlegroups.com>\n"
 "Language: th\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.5\n"
 
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the second is "Credits"
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the name of the view, displayed in the headerbar
@@ -208,16 +208,16 @@ msgid ""
 "work correctly."
 msgstr ""
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:34
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:35
 msgid "Browse the keys used by installed applications"
 msgstr ""
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:38
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:39
 msgid "Read keys descriptions and edit their values"
 msgstr ""
 
 #. a translatable version of project_group
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:53
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:58
 msgid "The GNOME Project"
 msgstr "The GNOME Project"
 
@@ -1074,109 +1074,107 @@ msgstr ""
 #. Translators: notification header, try ctrl-c while in the keys list
 #: editor/dconf-editor.vala:564
 msgid "Copied to clipboard"
-msgstr ""
+msgstr "คัดลอกลงในคลิปบอร์ดแล้ว"
 
 #. Translators: about dialog text
 #: editor/dconf-editor.vala:641
 msgid "A graphical viewer and editor of applications’ internal settings."
-msgstr ""
+msgstr "โปรแกรมดูและแก้ไขค่าตั้งภายในของแอปพลิเคชันแบบกราฟิก"
 
 #. Translators: text crediting a game author, seen in the About dialog
 #: editor/dconf-editor.vala:646
 msgid "Robert Ancell"
-msgstr ""
+msgstr "Robert Ancell"
 
 #. Translators: text crediting a game author, seen in the About dialog
 #: editor/dconf-editor.vala:650
 msgid "Arnaud Bonatti"
-msgstr ""
+msgstr "Arnaud Bonatti"
 
 #. Translators: text crediting a maintainer, seen in the About dialog
 #: editor/dconf-editor.vala:654
-#, fuzzy
-#| msgid "Copyright © Canonical Ltd"
 msgid "Copyright © 2010-2014 – Canonical Ltd"
-msgstr "Copyright © Canonical Ltd"
+msgstr "Copyright © 2010-2014 – Canonical Ltd"
 
 #. Translators: text crediting a maintainer, seen in the About dialog
 #: editor/dconf-editor.vala:658
 msgid "Copyright © 2017-2018 – Davi da Silva Böger"
-msgstr ""
+msgstr "Copyright © 2017-2018 – Davi da Silva Böger"
 
 #. Translators: text crediting a maintainer, seen in the About dialog; the %u are replaced with the years of start and end
 #: editor/dconf-editor.vala:662
 #, c-format
 msgid "Copyright © %u-%u – Arnaud Bonatti"
-msgstr ""
+msgstr "Copyright © %u-%u – Arnaud Bonatti"
 
 #. Translators: about dialog text; this string should be replaced by a text crediting yourselves and your translation team, or should be left empty. Do not translate literally!
 #: editor/dconf-editor.vala:669
 msgid "translator-credits"
-msgstr "Akom Chotiphantawanon <knight2000@gmail.com>"
+msgstr ""
+"Akom Chotiphantawanon <knight2000@gmail.com>\n"
+"Aefgh Threenine <aefgh39622@gmail.com>"
 
 #. Translators: about dialog text; label of the website link
 #: editor/dconf-editor.vala:675
 msgid "Page on GNOME wiki"
-msgstr ""
+msgstr "หน้าใน GNOME wiki"
 
 #. Translators: usual menu entry of the hamburger menu
 #: editor/dconf-headerbar.vala:53
-#, fuzzy
 msgid "About Dconf Editor"
-msgstr "เครื่องมือแก้ไข dconf"
+msgstr "เกี่ยวกับเครื่องมือแก้ไข dconf"
 
 #. Translators: when a change is requested, on a small window, entry of the menu of the "delayed settings button" that appears in place of the close button
 #. Translators: when there are pending changes, label of the "apply" button in the bottom bar, on large windows
 #: editor/dconf-headerbar.vala:113 editor/modifications-revealer.ui:87
 msgid "Apply"
-msgstr ""
+msgstr "เริ่มใช้"
 
 #. Translators: when a change is requested, on a small window, entry of the menu of the "delayed settings button" that appears in place of the close button
 #: editor/dconf-headerbar.vala:116
 msgid "Dismiss"
-msgstr ""
+msgstr "ปิด"
 
 #. Translators: when in delayed mode, on a small window, entry of the "three-dots menu" that appears when showing the pending changes list (if there is pending changes)
 #: editor/dconf-headerbar.vala:140
 msgid "Apply all"
-msgstr ""
+msgstr "เริ่มใช้ทั้งหมด"
 
 #. Translators: when in delayed mode, on a small window, entry of the "three-dots menu" that appears when showing the pending changes list (if there is pending changes)
 #: editor/dconf-headerbar.vala:143
 msgid "Dismiss all"
-msgstr ""
+msgstr "ปิดทั้งหมด"
 
 #. Translators: when in delayed mode, on a small window, entry of the "three-dots menu" that appears when showing the pending changes list (if there is no pending changes)
 #: editor/dconf-headerbar.vala:151
-#, fuzzy
 msgid "Quit mode"
-msgstr "_ออก"
+msgstr "ออกจากโหมด"
 
 #. Translators: hamburger menu entry, to enter in a special mode called "delay mode" where changes are not applied until validation
 #: editor/dconf-headerbar.vala:200
 msgid "Enter delay mode"
-msgstr ""
+msgstr "เข้าโหมดหน่วงเวลา"
 
 #. Translators: hamburger menu entry that appears when browsing a folder path, to set to their default value all currently visible keys, not including keys in subfolders
 #: editor/dconf-headerbar.vala:204
 msgid "Reset visible keys"
-msgstr ""
+msgstr "ตั้งค่าปุ่มที่แสดงใหม่"
 
 #. Translators: hamburger menu entry that appears when browsing a folder path, to set to their default value all currently visible keys, and all keys in subfolders
 #: editor/dconf-headerbar.vala:207
 msgid "Reset view recursively"
-msgstr ""
+msgstr "ตั้งค่ามุมมองใหม่แบบวนซ้ำ"
 
 #. Translators: on really small windows, the bottom bar that appears in "delay mode" or when there're pending changes is replaced by an in-window view; here is the name of the view, displayed in the headerbar
 #: editor/dconf-headerbar.vala:245
 msgid "Pending"
-msgstr ""
+msgstr "รออยู่"
 
 #. Translators: text copied when the users request a copy while an erased key is selected; the %s is the key path
 #: editor/dconf-model.vala:945
 #, c-format
 msgid "%s (key erased)"
-msgstr ""
+msgstr "%s (ลบคีย์ออกแล้ว)"
 
 #. Translators: command-line startup warning, try 'dconf-editor ca.desrt.dconf-editor.Demo.Relocatable'
 #: editor/dconf-window.vala:124
@@ -1202,22 +1200,22 @@ msgstr ""
 #. Translators: initial "use at your own risk" dialog, the welcoming text
 #: editor/dconf-window.vala:274
 msgid "Thanks for using Dconf Editor for editing your settings!"
-msgstr ""
+msgstr "ขอบคุณที่ใช้เครื่องมือแก้ไข dconf ในการแก้ไขการตั้งค่าของคุณ!"
 
 #. Translators: initial "use at your own risk" dialog, the warning text
 #: editor/dconf-window.vala:277
 msgid "Don’t forget that some options may break applications, so be careful."
-msgstr ""
+msgstr "โปรดอย่าลืมว่าตัวเลือกบางอย่างอาจส่งผลให้แอปพลิเคชันทำงานไม่ได้ ดังนั้นจึงต้องระมัดระวังด้วย"
 
 #. Translators: initial "use at your own risk" dialog, the button label
 #: editor/dconf-window.vala:280
 msgid "I’ll be careful."
-msgstr ""
+msgstr "ฉันจะระมัดระวัง"
 
 #. Translators: initial "use at your own risk" dialog, the checkbox label
 #: editor/dconf-window.vala:284
 msgid "Show this dialog next time."
-msgstr ""
+msgstr "แสดงกล่องโต้ตอบนี้ในครั้งถัดไป"
 
 #. Translators: notification text, after a user Ctrl+Q keyboard action; same way to spell the shortcut as in the Settings application
 #: editor/dconf-window.vala:305
@@ -1225,92 +1223,93 @@ msgid ""
 "There are pending changes. Use Shift+Ctrl+Q to apply changes and quit, or Alt+F4 to dismiss "
 "changes and quit."
 msgstr ""
+"มีการเปลี่ยนแปลงที่ยังไม่ได้บันทึก ให้กดปุ่ม Shift+Ctrl+Q เพื่อใช้การเปลี่ยนแปลงและออก หรือกด Alt+F4 "
+"เพื่อยกเลิกการเปลี่ยนแปลงและออก"
 
 #. Translators: notification text, when the requested folder has been removed; the %s is the folder path
 #: editor/dconf-window.vala:777
 #, c-format
 msgid "Folder “%s” is now empty."
-msgstr ""
+msgstr "ขณะนี้โฟลเดอร์ “%s” ว่างเปล่าแล้ว"
 
 #. Translators: notification text, when the requested key has been removed; the %s is the key path
 #: editor/dconf-window.vala:788
 #, c-format
 msgid "Key “%s” has been deleted."
-msgstr ""
+msgstr "คีย์ “%s” ถูกลบแล้ว"
 
 #. Translators: notification text at startup, use 'dconf-editor /org/example/test'; the %s is the key path
 #: editor/dconf-window.vala:794
 #, c-format
 msgid "Cannot find key “%s”."
-msgstr ""
+msgstr "ไม่พบคีย์ “%s”"
 
 #. Translators: notification text at startup, use 'dconf-editor /org/example/empty/'; the %s is the folder path
 #: editor/dconf-window.vala:800
 #, c-format
 msgid "There’s nothing in requested folder “%s”."
-msgstr ""
+msgstr "ไม่มีสิ่งใดอยู่ในโฟลเดอร์ “%s” ที่ร้องขอ"
 
 #. Translators: displayed in the list of pending changes (could be an in-window panel, or in the popover of the bottom bar); for dconf keys
 #: editor/delayed-setting-view.vala:136
 msgid "Key erased"
-msgstr ""
+msgstr "ลบคีย์ออกแล้ว"
 
 #. Translators: displayed in the list of pending changes (could be an in-window panel, or in the popover of the bottom bar); for gsettings keys
 #. Translators: "reset key value" option of a multi-choice list (checks or radios) in the right-click menu on the list of keys
 #. Translators: field content when displaying key properties; the field description is "Current value", and as the default value of the key is written near, there's just this text displayed if the key uses its default value
 #: editor/delayed-setting-view.vala:151 editor/key-list-box-row.vala:649
 #: editor/registry-info.vala:469
-#, fuzzy
 msgid "Default value"
-msgstr "ค่าปริยาย:"
+msgstr "ค่าตั้งต้น"
 
 #. Translators: header in the shortcut window, for usual headerbar menus actions
 #: editor/help-overlay.ui:29
 msgctxt "shortcut window"
 msgid "Actions"
-msgstr ""
+msgstr "การกระทำ"
 
 #. Translators: Ctrl-B action
 #: editor/help-overlay.ui:34
 msgctxt "shortcut window"
 msgid "Bookmarks menu"
-msgstr ""
+msgstr "เมนูที่คั่นหน้า"
 
 #. Translators: Ctrl-D action
 #: editor/help-overlay.ui:42
 msgctxt "shortcut window"
 msgid "Bookmark this path"
-msgstr ""
+msgstr "คั่นพาธนี้"
 
 #. Translators: Ctrl-Shift-D action
 #: editor/help-overlay.ui:50
 msgctxt "shortcut window"
 msgid "Unbookmark this path"
-msgstr ""
+msgstr "เลิกคั่นพาธนี้"
 
 #. Translators: F10 key action
 #: editor/help-overlay.ui:58
 msgctxt "shortcut window"
 msgid "Actions menu"
-msgstr ""
+msgstr "เมนูการกระทำ"
 
 #. Translators: Shift-F10 action
 #: editor/help-overlay.ui:66
 msgctxt "shortcut window"
 msgid "Path bar menu"
-msgstr ""
+msgstr "เมนูแถบพาธ"
 
 #. Translators: header in the shortcut window, for moving to paths known by the headerbar
 #: editor/help-overlay.ui:76
 msgctxt "shortcut window"
 msgid "Path bar navigation"
-msgstr ""
+msgstr "การท่องดูแถบพาธ"
 
 #. Translators: Alt-Shift-Up action; browse to the '/' folder
 #: editor/help-overlay.ui:81
 msgctxt "shortcut window"
 msgid "Open root folder"
-msgstr ""
+msgstr "เปิดโฟลเดอร์ราก"
 
 #. Translators: Alt-Up action; browse to the parent folder
 #: editor/help-overlay.ui:89
@@ -1334,198 +1333,193 @@ msgstr ""
 #: editor/help-overlay.ui:115
 msgctxt "shortcut window"
 msgid "Search options"
-msgstr ""
+msgstr "ตัวเลือกการค้นหา"
 
 #. Translators: Ctrl-F action; opens search, searching everywhere
 #: editor/help-overlay.ui:120
 msgctxt "shortcut window"
 msgid "Toggle search"
-msgstr ""
+msgstr "เปิด/ปิดการค้นหา"
 
 #. Translators: Ctrl-Alt-F action; does the same thing as "Toggle search", but loads the search entry with the last searched text
 #: editor/help-overlay.ui:128
 msgctxt "shortcut window"
 msgid "Search again"
-msgstr ""
+msgstr "ค้นหาอีกครั้ง"
 
 #. Translators: Ctrl-Shift-F action; opens search, searching only from current folder
 #: editor/help-overlay.ui:136
 msgctxt "shortcut window"
 msgid "Toggle local search"
-msgstr ""
+msgstr "เปิด/ปิดการค้นหาเฉพาะที่"
 
 #. Translators: Ctrl-Shift-Alt-F action; does the same thing as "Toggle local search", but loads the search entry with the last searched text
 #: editor/help-overlay.ui:144
 msgctxt "shortcut window"
 msgid "Search again, locally"
-msgstr ""
+msgstr "ค้นหาอีกครั้งเฉพาะที่"
 
 #. Translators: Ctrl-V action; open search with clipboard content
 #: editor/help-overlay.ui:152
 msgctxt "shortcut window"
 msgid "Paste as search"
-msgstr ""
+msgstr "วางแล้วค้นหา"
 
 #. Translators: Ctrl-Shift-V action; does the same thing as "Paste as search", but works even if an entry or textview is selected; entry hidden for now
 #: editor/help-overlay.ui:160
 msgctxt "shortcut window"
 msgid "Paste as search (force)"
-msgstr ""
+msgstr "วางแล้วค้นหา (แบบบังคับ)"
 
 #. Translators: Ctrl-L action when browsing; opens search on current path
 #: editor/help-overlay.ui:168
 msgctxt "shortcut window"
 msgid "Edit path"
-msgstr ""
+msgstr "แก้ไขพาธ"
 
 #. Translators: Ctrl-Shift-L action when browsing; opens search on parent path
 #: editor/help-overlay.ui:176
 msgctxt "shortcut window"
 msgid "Edit parent path"
-msgstr ""
+msgstr "แก้ไขพาธแม่"
 
 #. Translators: '/' key action when browsing; opens search on root path
 #: editor/help-overlay.ui:184
 msgctxt "shortcut window"
 msgid "Edit root path"
-msgstr ""
+msgstr "แก้ไขพาธราก"
 
 #. Translators: Escape key action, when searching; cancels search
 #: editor/help-overlay.ui:192
 msgctxt "shortcut window"
 msgid "Browse keys tree"
-msgstr ""
+msgstr "เรียกดูต้นไม้คีย์"
 
 #. Translators: header in the shortcut window, for when browsing
 #: editor/help-overlay.ui:202
 msgctxt "shortcut window"
 msgid "Keys list actions"
-msgstr ""
+msgstr "การกระทำรายชื่อคีย์"
 
 #. Translators: Menu key action, when browsing
 #: editor/help-overlay.ui:207
 msgctxt "shortcut window"
 msgid "Contextual menu"
-msgstr ""
+msgstr "เมนูคลิกขวา"
 
 #. Translators: Ctrl-Shift-G action, when browsing
 #: editor/help-overlay.ui:215
 msgctxt "shortcut window"
 msgid "Previous line"
-msgstr ""
+msgstr "บรรทัดก่อนหน้า"
 
 #. Translators: Ctrl-G action, when browsing
 #: editor/help-overlay.ui:223
-#, fuzzy
-#| msgid "Next"
 msgctxt "shortcut window"
 msgid "Next line"
-msgstr "ถัดไป"
+msgstr "บรรทัดถัดไป"
 
 #. Translators: entry disabled for now; Ctrl-I action, when browsing; displays information on selected folder
 #: editor/help-overlay.ui:231
 msgctxt "shortcut window"
 msgid "Toggle folder properties"
-msgstr ""
+msgstr "เปิด/ปิดคุณสมบัติของโฟลเดอร์"
 
 #. Translators: Ctrl-Delete action, when browsing; sets the selected key to its default value
 #: editor/help-overlay.ui:239
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Set to default"
-msgstr "ใช้ค่าปริยาย"
+msgstr "ตั้งเป็นค่าเริ่มต้น"
 
 #. Translators: Ctrl-Return action, when browsing; does nothing if the selection is not a boolean key
 #: editor/help-overlay.ui:247
 msgctxt "shortcut window"
 msgid "Toggle boolean value"
-msgstr ""
+msgstr "สลับค่าบูลีน"
 
 #. Translators: header in the shortcut window, for when there are pending changes
 #: editor/help-overlay.ui:257
 msgctxt "shortcut window"
 msgid "Modifications list actions"
-msgstr ""
+msgstr "การกระทำรายชื่อการแก้ไข"
 
 #. Translators: Alt-I action if there are pending changes; the modifications list is either a popover, or an in-window panel
 #: editor/help-overlay.ui:262
 msgctxt "shortcut window"
 msgid "Toggle modifications list"
-msgstr ""
+msgstr "เปิด/ปิดรายชื่อการแก้ไข"
 
 #. Translators: Return/Enter keys action in the list of pending modifications; go to the key with pending modification
 #: editor/help-overlay.ui:270
 msgctxt "shortcut window"
 msgid "Open selected row key"
-msgstr ""
+msgstr "เปิดคีย์ของแถวที่เลือก"
 
 #. Translators: Ctrl-Delete action in the list of pending modifications; dismisses the selected modification
 #: editor/help-overlay.ui:278
 msgctxt "shortcut window"
 msgid "Dismiss modification"
-msgstr ""
+msgstr "ยกเลิกการแก้ไข"
 
 #. Translators: header in the shortcut window, for opening the usual helpful dialogs
 #: editor/help-overlay.ui:288
 msgctxt "shortcut window"
 msgid "Generic"
-msgstr ""
+msgstr "ทั่วไป"
 
 #. Translators: Ctrl-F1 action; opens the Keyboard shortcuts dialog
 #: editor/help-overlay.ui:293
 msgctxt "shortcut window"
 msgid "Show this help"
-msgstr ""
+msgstr "แสดงวิธีใช้นี้"
 
 #. Translators: Shift-F1 action; opens the About dialog
 #: editor/help-overlay.ui:301
-#, fuzzy
 msgctxt "shortcut window"
 msgid "About"
-msgstr "เ_กี่ยวกับ"
+msgstr "เกี่ยวกับ"
 
 #. Translators: header in the shortcut window, for the copy-to-clipboard actions
 #: editor/help-overlay.ui:311
 msgctxt "shortcut window"
 msgid "Clipboard"
-msgstr ""
+msgstr "คลิปบอร์ด"
 
 #. Translators: Ctrl-C action; copies to clipboard something that identifies the current selection (schema, name and value, for a gsettings key)
 #: editor/help-overlay.ui:316
 msgctxt "shortcut window"
 msgid "Copy descriptor"
-msgstr ""
+msgstr "คัดลอกตัวบอกลักษณะ"
 
 #. Translators: Ctrl-Shift-C action; copies to clipboard the path of the currently browsed key or folder
 #: editor/help-overlay.ui:324
 msgctxt "shortcut window"
 msgid "Copy path"
-msgstr ""
+msgstr "คัดลอกพาธ"
 
 #. Translators: header in the shortcut window, for the various ways of quitting the application
 #: editor/help-overlay.ui:334
-#, fuzzy
 msgctxt "shortcut window"
 msgid "Quit"
-msgstr "_ออก"
+msgstr "ออก"
 
 #. Translators: Ctrl-Q action; displays a notification if there are pending changes
 #: editor/help-overlay.ui:340
 msgctxt "shortcut window"
 msgid "Quit if there’s no pending changes"
-msgstr ""
+msgstr "ออกถ้าไม่มีการเปลี่ยนแปลงที่ค้างอยู่"
 
 #. Translators: Ctrl-Shift-Q action
 #: editor/help-overlay.ui:348
 msgctxt "shortcut window"
 msgid "Apply pending changes and quit"
-msgstr ""
+msgstr "ใช้การเปลี่ยนแปลงที่ค้างอยู่แล้วออก"
 
 #. Translators: Alt-F4 action
 #: editor/help-overlay.ui:356
 msgctxt "shortcut window"
 msgid "Dismiss pending changes and quit"
-msgstr ""
+msgstr "ยกเลิกการเปลี่ยนแปลงที่ค้างอยู่แล้วออก"
 
 #. Translators: tooltip text of the entry's icon when editing the value of a double or a 64-bit (signed or unsigned) key, if the key only allows a range of values and the written value is out of range
 #: editor/key-editor-child.vala:30
@@ -1556,93 +1550,92 @@ msgstr ""
 #: editor/key-list-box-row.vala:118
 #, c-format
 msgid "Go to “%s”"
-msgstr ""
+msgstr "ไปยัง “%s”"
 
 #. Translators: first item of the keys list displayed during browsing, the %s is the current folder name
 #: editor/key-list-box-row.vala:149
 #, c-format
 msgid "Search in “%s” folder"
-msgstr ""
+msgstr "ค้นหาในโฟลเดอร์ “%s”"
 
 #. Translators: first item of the keys list displayed during browsing at root path
 #: editor/key-list-box-row.vala:153
 msgid "Open path entry"
-msgstr ""
+msgstr "เปิดรายการพาธ"
 
 #. Translators: last item of the keys list displayed during a local search
 #: editor/key-list-box-row.vala:157
 msgid "Search everywhere"
-msgstr ""
+msgstr "ค้นหาทุกที่"
 
 #. Translators: "copy to clipboard" action in the right-click menu on the list of keys
 #: editor/key-list-box-row.vala:449
 msgid "Copy"
-msgstr ""
+msgstr "คัดลอก"
 
 #. Translators: "open key-editor page" action in the right-click menu on the list of keys
 #: editor/key-list-box-row.vala:452
 msgid "Customize…"
-msgstr ""
+msgstr "ปรับแต่ง…"
 
 #. Translators: "reset key value" action in the right-click menu on the list of keys
 #: editor/key-list-box-row.vala:455
-#, fuzzy
 msgid "Set to default"
-msgstr "ใช้ค่าปริยาย"
+msgstr "ตั้งเป็นค่าเริ่มต้น"
 
 #. Translators: "open key-editor page" action in the right-click menu on the list of keys, when key is hard-conflicting
 #: editor/key-list-box-row.vala:460
 msgid "Show details…"
-msgstr ""
+msgstr "แสดงรายละเอียด…"
 
 #. Translators: "dismiss change" action in the right-click menu on a key with pending changes
 #: editor/key-list-box-row.vala:463
 msgid "Dismiss change"
-msgstr ""
+msgstr "ยกเลิกการเปลี่ยนแปลง"
 
 #. Translators: "erase key" action in the right-click menu on a key without schema
 #. Translators: "erase key" option in the right-click menu on a key without schema when on delayed mode
 #. Translators: label of the action button of an infobar, when a key is not defined by a schema
 #: editor/key-list-box-row.vala:466 editor/key-list-box-row.vala:582 editor/registry-info.ui:132
 msgid "Erase key"
-msgstr ""
+msgstr "ลบคีย์"
 
 #. Translators: "go to" action in the right-click menu on a "go back" line during search
 #: editor/key-list-box-row.vala:469
 msgid "Go to this path"
-msgstr ""
+msgstr "ไปยังพาธนี้"
 
 #. Translators: "open folder" action in the right-click menu on a folder
 #: editor/key-list-box-row.vala:472
 msgid "Open"
-msgstr ""
+msgstr "เปิด"
 
 #. Translators: "open search" action in the right-click menu on a search
 #. Translators: accessible name of the enter-search button displayed in small-size windows
 #. Translators: accessible name of the search togglebutton displayed in usual-size windows
 #: editor/key-list-box-row.vala:478 editor/pathwidget.ui:83 editor/pathwidget.ui:109
 msgid "Search"
-msgstr ""
+msgstr "ค้นหา"
 
 #. Translators: "open parent folder" action in the right-click menu on a folder in a search result
 #: editor/key-list-box-row.vala:481
 msgid "Open parent folder"
-msgstr ""
+msgstr "เปิดโฟลเดอร์แม่"
 
 #. Translators: "reset recursively" action in the right-click menu on a folder
 #: editor/key-list-box-row.vala:484
 msgid "Reset recursively"
-msgstr ""
+msgstr "ตั้งค่าใหม่แบบวนซ้ำ"
 
 #. Translators: "dismiss change" action in the right-click menu on a key without schema planned to be erased
 #: editor/key-list-box-row.vala:487
 msgid "Do not erase"
-msgstr ""
+msgstr "ไม่ต้องลบ"
 
 #. Translators: "no change" option in the right-click menu on a key when on delayed mode
 #: editor/key-list-box-row.vala:576
 msgid "No change"
-msgstr ""
+msgstr "ไม่เปลี่ยน"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense); this handle type is an index; you may maintain the word "handle"
 #: editor/model-utils.vala:301
@@ -1654,19 +1647,19 @@ msgstr ""
 #: editor/model-utils.vala:305
 msgctxt "capitalized"
 msgid "D-Bus object path"
-msgstr ""
+msgstr "พาธวัตถุ D-Bus"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:309
 msgctxt "capitalized"
 msgid "D-Bus object path array"
-msgstr ""
+msgstr "อาร์เรย์พาธวัตถุ D-Bus"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:313
 msgctxt "capitalized"
 msgid "D-Bus signature"
-msgstr ""
+msgstr "ลายเซ็น D-Bus"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense); this handle type is an index; you may maintain the word "handle"
 #: editor/model-utils.vala:342
@@ -1678,49 +1671,49 @@ msgstr ""
 #: editor/model-utils.vala:346
 msgctxt "non-capitalized"
 msgid "D-Bus object path"
-msgstr ""
+msgstr "พาธวัตถุ D-Bus"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:350
 msgctxt "non-capitalized"
 msgid "D-Bus object path array"
-msgstr ""
+msgstr "อาร์เรย์พาธวัตถุ D-Bus"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:354
 msgctxt "non-capitalized"
 msgid "D-Bus signature"
-msgstr ""
+msgstr "ลายเซ็น D-Bus"
 
 #. Translators: that's a name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:373
 msgid "Signed 16-bit integer"
-msgstr ""
+msgstr "จำนวนเต็ม 16 บิตแบบมีเครื่องหมาย"
 
 #. Translators: that's a name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:376
 msgid "Unsigned 16-bit integer"
-msgstr ""
+msgstr "จำนวนเต็ม 16 บิตแบบไม่มีเครื่องหมาย"
 
 #. Translators: that's a name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:379
 msgid "Signed 32-bit integer"
-msgstr ""
+msgstr "จำนวนเต็ม 32 บิตแบบมีเครื่องหมาย"
 
 #. Translators: that's a name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:382
 msgid "Unsigned 32-bit integer"
-msgstr ""
+msgstr "จำนวนเต็ม 32 บิตแบบไม่มีเครื่องหมาย"
 
 #. Translators: that's a name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:385
 msgid "Signed 64-bit integer"
-msgstr ""
+msgstr "จำนวนเต็ม 64 บิตแบบมีเครื่องหมาย"
 
 #. Translators: that's a name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:388
 msgid "Unsigned 64-bit integer"
-msgstr ""
+msgstr "จำนวนเต็ม 32 บิตแบบไม่มีเครื่องหมาย"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:391
@@ -1729,8 +1722,6 @@ msgstr "บูลีน"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:394
-#, fuzzy
-#| msgid "Boolean"
 msgid "boolean"
 msgstr "บูลีน"
 
@@ -1741,22 +1732,18 @@ msgstr "สตริง"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:400
-#, fuzzy
-#| msgid "String"
 msgid "string"
 msgstr "สตริง"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:403
-#, fuzzy
 msgid "String array"
-msgstr "สตริง"
+msgstr "อาร์เรย์สตริง"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:406
-#, fuzzy
 msgid "string array"
-msgstr "สตริง"
+msgstr "อาร์เรย์สตริง"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:409
@@ -1765,8 +1752,6 @@ msgstr "การแจงนับ"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:412
-#, fuzzy
-#| msgid "Enumeration"
 msgid "enumeration"
 msgstr "การแจงนับ"
 
@@ -1808,15 +1793,13 @@ msgstr ""
 #. private const string _g_ = C_("non-capitalized", "D-Bus signature");
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:451
-#, fuzzy
 msgid "Integer"
-msgstr "จำนวนเต็ม [%s..%s]"
+msgstr "จำนวนเต็ม"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:454
-#, fuzzy
 msgid "integer"
-msgstr "จำนวนเต็ม [%s..%s]"
+msgstr "จำนวนเต็ม"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:457
