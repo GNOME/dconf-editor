@@ -1,15 +1,15 @@
 # Bulgarian translation of dconf-editor po-file.
 # Copyright (C) 2012, 2013, 2015 Free Software Foundation, Inc.
-# Copyright (C) 2022 Alexander Shopov <ash@kambanaria.org>.
+# Copyright (C) 2022, 2024 Alexander Shopov <ash@kambanaria.org>.
 # This file is distributed under the same license as the dconf package.
-# Alexander Shopov <ash@kambanaria.org>, 2012, 2013, 2015, 2022.
+# Alexander Shopov <ash@kambanaria.org>, 2012, 2013, 2015, 2022, 2024.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf-editor master\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2022-08-29 06:06+0000\n"
-"PO-Revision-Date: 2022-09-11 13:48+0200\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues/\n"
+"POT-Creation-Date: 2024-09-03 20:59+0000\n"
+"PO-Revision-Date: 2024-09-07 20:07+0200\n"
 "Last-Translator: Alexander Shopov <ash@kambanaria.org>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
 "Language: bg\n"
@@ -224,16 +224,16 @@ msgstr ""
 "Директното редактиране на настройки е за напреднали потребители, защото може "
 "до доведе до неправилна работа на програмите."
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:33
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:35
 msgid "Browse the keys used by installed applications"
 msgstr "Преглед на ключовете, които се ползват от инсталирани програми"
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:37
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:39
 msgid "Read keys descriptions and edit their values"
 msgstr "Извеждане на описанията на ключовете и редактиране на стойностите им"
 
 #. a translatable version of project_group
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:52
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:58
 msgid "The GNOME Project"
 msgstr "Проектът GNOME"
 
@@ -576,8 +576,8 @@ msgid ""
 msgstr ""
 "GSettings приема нулируеми видове, освен стандартни стойности, те може да са "
 "занулени към специалната стойност „nothing“ (нищо). Нулириуем булев ключ "
-"може да приема три стойности: „true“ (истина), „false“ (лъжа) и "
-"“nothing” (нищо)."
+"може да приема три стойности: „true“ (истина), „false“ (лъжа) и “nothing” "
+"(нищо)."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/byte'
 #: editor/ca.desrt.dconf-editor.gschema.xml:282
@@ -912,8 +912,8 @@ msgid ""
 "a gschema file “&#60;” and “&#62;” respectively), with a parsable "
 "representation of their content inside. If unclear, the type can be given in "
 "the value with a prefix annotation like “@x” (where “x” is the type string) "
-"or “int64”. See https://developer.gnome.org/glib/stable/gvariant-text.html "
-"for complete documentation."
+"or “int64”. See https://docs.gtk.org/glib/gvariant-text.html for complete "
+"documentation."
 msgstr ""
 "Вариантите може да са запазени в други варианти, а следователно и като "
 "видове на GSettings. Представянето им ползва счупените скоби на XML (знаците "
@@ -921,7 +921,7 @@ msgstr ""
 "съдържанието им трябва да може да се анализира. Когато се налага за яснота, "
 "видът може да се даде в стойността, анотиран с префикс като „@x“ (където „x“ "
 "е низът на името на вида) или „int64“. За повече информация вижте https://"
-"developer.gnome.org/glib/stable/gvariant-text.html."
+"docs.gtk.org/glib/gvariant-text.html."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-enum'
 #: editor/ca.desrt.dconf-editor.gschema.xml:452
@@ -1114,174 +1114,174 @@ msgid "Do not show initial warning"
 msgstr "Без първоначалното предупреждение"
 
 #. Translators: command-line text, description of the application in 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
-#: editor/dconf-editor.vala:202
+#: editor/dconf-editor.vala:203
 msgid "Graphical interface for editing other applications settings."
 msgstr "Графичен интерфейс за редактирането на настройките на програми."
 
 #. Translators: command-line text, describes how the application proceeds for editing other applications settings, in 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
-#: editor/dconf-editor.vala:205
+#: editor/dconf-editor.vala:206
 msgid "Uses the gsettings API of the glib library, among others."
 msgstr "Използва API-то за gsettings в библиотеката glib (и др.)"
 
 #. Translators: command-line header description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:208
+#: editor/dconf-editor.vala:209
 msgid "Arguments description:"
 msgstr "Описание на аргументите:"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:212
+#: editor/dconf-editor.vala:213
 msgid "a folder path or a key path"
 msgstr "път към папка или ключ"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:214
+#: editor/dconf-editor.vala:215
 msgid "example: “/org/gnome/” or “/ca/desrt/dconf-editor/Demo/boolean”"
 msgstr "напр.: „/org/gnome/“ или „/ca/desrt/dconf-editor/Demo/boolean“"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:218
+#: editor/dconf-editor.vala:219
 msgid "the name of a schema with fixed path"
 msgstr "име на схема с постоянен път"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:220
+#: editor/dconf-editor.vala:221
 msgid "example: “ca.desrt.dconf-editor.Settings”"
 msgstr "напр.: „ca.desrt.dconf-editor.Settings“"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'; no need to put your translation of "relocatable" between quotation marks, that's done in English to highlight why the option is called "RELOC_SCHEMA"
-#: editor/dconf-editor.vala:224
+#: editor/dconf-editor.vala:225
 msgid "the name of a “relocatable” schema, without fixed path"
 msgstr "името на преносима схема, без постоянен път"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:226
+#: editor/dconf-editor.vala:227
 msgid "see list with the “--list-relocatable-schemas” option"
 msgstr "може да видите списъка с опцията „--list-relocatable-schemas“"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:230
+#: editor/dconf-editor.vala:231
 msgid "the path where to map the relocatable schema"
 msgstr "път, в който да се пренасочи преносима схема"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:232
+#: editor/dconf-editor.vala:233
 msgid "example: “ca.desrt.dconf-editor.Bookmarks:/ca/desrt/dconf-editor/”"
 msgstr "напр.: „ca.desrt.dconf-editor.Bookmarks:/ca/desrt/dconf-editor/„"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:236
+#: editor/dconf-editor.vala:237
 msgid "the name of a key from the schema"
 msgstr "името на ключ от схема"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:238
+#: editor/dconf-editor.vala:239
 msgid "example: “bookmarks”"
 msgstr "напр.: „bookmarks“ (отметки)"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
-#: editor/dconf-editor.vala:294
+#: editor/dconf-editor.vala:295
 msgid "Known schemas installed:"
 msgstr "Инсталирани са следните познати схеми:"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given
-#: editor/dconf-editor.vala:300
+#: editor/dconf-editor.vala:301
 msgid "No known schemas installed."
 msgstr "Не са инсталирани познати схеми."
 
 #. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
-#: editor/dconf-editor.vala:305
+#: editor/dconf-editor.vala:306
 msgid "Known schemas skipped:"
 msgstr "Прескочени са следните познати схеми:"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given
-#: editor/dconf-editor.vala:311
+#: editor/dconf-editor.vala:312
 msgid "No known schemas skipped."
 msgstr "Не са прескачани познати схеми."
 
 #. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
-#: editor/dconf-editor.vala:316
+#: editor/dconf-editor.vala:317
 msgid "Unknown schemas:"
 msgstr "Непознати схеми:"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given
-#: editor/dconf-editor.vala:322
+#: editor/dconf-editor.vala:323
 msgid "No unknown schemas."
 msgstr "Няма непознати схеми."
 
 #. Translators: command-line error message, when the user requests a specific path while there is already a window opened
-#: editor/dconf-editor.vala:441
+#: editor/dconf-editor.vala:442
 msgid "Only one window can be opened for now.\n"
 msgstr "Засега само един прозорец може да е отворен.\n"
 
 #. Translators: command-line error message, try 'dconf-editor a b c d'
-#: editor/dconf-editor.vala:461
+#: editor/dconf-editor.vala:462
 msgid "Cannot understand: too many arguments.\n"
 msgstr "ГРЕШКА: прекалено много аргументи.\n"
 
 #. Translators: command-line error message, try 'dconf-editor / a'
-#: editor/dconf-editor.vala:475
+#: editor/dconf-editor.vala:476
 msgid "Cannot understand second argument in this context.\n"
 msgstr "ГРЕШКА: вторият аргумент е неподходящ в този контекст.\n"
 
 #. Translators: command-line error message, try 'dconf-editor org.example /'
-#: editor/dconf-editor.vala:496
+#: editor/dconf-editor.vala:497
 msgid "Cannot understand: slash character in second argument.\n"
 msgstr "ГРЕШКА: вторият аргумент не може да съдържа „/“.\n"
 
 #. Translators: command-line error message, try 'dconf-editor org.example:a'
-#: editor/dconf-editor.vala:511
+#: editor/dconf-editor.vala:512
 msgid "Schema path should start and end with a “/”.\n"
 msgstr "ГРЕШКА: Пътят на схемата трябва да започва и завършва с „/“.\n"
 
 #. Translators: command-line error message, try 'dconf-editor //'
-#: editor/dconf-editor.vala:527
+#: editor/dconf-editor.vala:528
 msgid "Cannot understand: given path contains “//”.\n"
 msgstr "ГРЕШКА: даденият път съдържа „//“.\n"
 
 #. Translators: command-line error message, try 'dconf-editor "org example" a'
-#: editor/dconf-editor.vala:535
+#: editor/dconf-editor.vala:536
 msgid "Cannot understand: space character in argument.\n"
 msgstr "ГРЕШКА: аргументът не трябва да съдържа интервал\n"
 
 #. Translators: notification header, try ctrl-c while in the keys list
-#: editor/dconf-editor.vala:563
+#: editor/dconf-editor.vala:564
 msgid "Copied to clipboard"
 msgstr "Копирано в буфера за обмен"
 
 #. Translators: about dialog text
-#: editor/dconf-editor.vala:640
+#: editor/dconf-editor.vala:641
 msgid "A graphical viewer and editor of applications’ internal settings."
 msgstr ""
 "Графичен визуализатор и редактор на вътрешните настройки на програмите."
 
 #. Translators: text crediting a game author, seen in the About dialog
-#: editor/dconf-editor.vala:645
+#: editor/dconf-editor.vala:646
 msgid "Robert Ancell"
 msgstr "Robert Ancell"
 
 #. Translators: text crediting a game author, seen in the About dialog
-#: editor/dconf-editor.vala:649
+#: editor/dconf-editor.vala:650
 msgid "Arnaud Bonatti"
 msgstr "Arnaud Bonatti"
 
 #. Translators: text crediting a maintainer, seen in the About dialog
-#: editor/dconf-editor.vala:653
+#: editor/dconf-editor.vala:654
 msgid "Copyright © 2010-2014 – Canonical Ltd"
 msgstr "Авторски права © 2010-2014 – Canonical Ltd"
 
 #. Translators: text crediting a maintainer, seen in the About dialog
-#: editor/dconf-editor.vala:657
+#: editor/dconf-editor.vala:658
 msgid "Copyright © 2017-2018 – Davi da Silva Böger"
 msgstr "Авторски права © 2017-2018 – Davi da Silva Böger"
 
 #. Translators: text crediting a maintainer, seen in the About dialog; the %u are replaced with the years of start and end
-#: editor/dconf-editor.vala:661
+#: editor/dconf-editor.vala:662
 #, c-format
 msgid "Copyright © %u-%u – Arnaud Bonatti"
 msgstr "Авторски права © %u-%u — Arnaud Bonatti"
 
 #. Translators: about dialog text; this string should be replaced by a text crediting yourselves and your translation team, or should be left empty. Do not translate literally!
-#: editor/dconf-editor.vala:668
+#: editor/dconf-editor.vala:669
 msgid "translator-credits"
 msgstr ""
 "Александър Шопов <ash@kambanaria.org>\n"
@@ -1293,7 +1293,7 @@ msgstr ""
 "newticket'>съответния раздел</a>."
 
 #. Translators: about dialog text; label of the website link
-#: editor/dconf-editor.vala:674
+#: editor/dconf-editor.vala:675
 msgid "Page on GNOME wiki"
 msgstr "Страница в уикито на GNOME"
 
@@ -1401,8 +1401,8 @@ msgstr "Показване на това прозорче следващия п�
 #. Translators: notification text, after a user Ctrl+Q keyboard action; same way to spell the shortcut as in the Settings application
 #: editor/dconf-window.vala:305
 msgid ""
-"There are pending changes. Use Shift+Ctrl+Q to apply changes and quit, or Alt"
-"+F4 to dismiss changes and quit."
+"There are pending changes. Use Shift+Ctrl+Q to apply changes and quit, or "
+"Alt+F4 to dismiss changes and quit."
 msgstr ""
 "Има още промени. Може да ги приложите и да спрете програмата с клавишната "
 "комбинация Shift+Ctrl+Q, а с Alt+F4 ги отменяте и спирате програмата."
@@ -2297,12 +2297,11 @@ msgstr ""
 #: editor/registry-info.vala:620
 msgid ""
 "Variants content should be surrounded by XML brackets (‘<’ and ‘>’). See "
-"https://developer.gnome.org/glib/stable/gvariant-text.html for complete "
-"documentation."
+"https://docs.gtk.org/glib/gvariant-text.html for complete documentation."
 msgstr ""
 "Съдържанието на вариантите трябва да е заобградено от счупените скоби на XML "
-"(„<“ и „>“). Вижте документацията на https://developer.gnome.org/glib/stable/"
-"gvariant-text.html."
+"(„<“ и „>“). Вижте документацията на https://docs.gtk.org/glib/gvariant-text."
+"html."
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a "maybe type" and with a string type (or similar); neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
 #: editor/registry-info.vala:627
