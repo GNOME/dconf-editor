@@ -4,7 +4,7 @@
 # Christian Kirbach <christian.kirbach@gmail.com>, 2013.
 # Simon Linden <xhi2018@googlemail.com>, 2015.
 # Franco Della-Monica <franco.della.monica@gmail.com>, 2016.
-# Tim Sabsch <tim@sabsch.com>, 2017-2020.
+# Tim Sabsch <tim@sabsch.com>, 2017-2020, 2024.
 # Mario Blättermann <mario.blaettermann@gmail.com>, 2012-2019.
 # Jürgen Benvenuti <gastornis@posteo.org>, 2023.
 # Philipp Kiemle <philipp.kiemle@gmail.com>, 2023.
@@ -12,17 +12,17 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2023-09-18 15:29+0000\n"
-"PO-Revision-Date: 2023-09-22 19:33+0200\n"
-"Last-Translator: Philipp Kiemle <philipp.kiemle@gmail.com>\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues/\n"
+"POT-Creation-Date: 2024-09-03 20:59+0000\n"
+"PO-Revision-Date: 2024-09-15 20:08+0200\n"
+"Last-Translator: Tim Sabsch <tim@sabsch.com>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.5\n"
 
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the second is "Credits"
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the name of the view, displayed in the headerbar
@@ -237,7 +237,7 @@ msgid "Read keys descriptions and edit their values"
 msgstr "Schlüsselbeschreibungen lesen und deren Werte bearbeiten"
 
 #. a translatable version of project_group
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:54
+#: editor/ca.desrt.dconf-editor.appdata.xml.in:58
 msgid "The GNOME Project"
 msgstr "Das GNOME-Projekt"
 
@@ -390,12 +390,12 @@ msgstr ""
 "Wert »safe« (sicher) fragt eine Bestätigung in diesen Fällen an und "
 "gestattet eine sofortige Änderung für Wahrheitswerte (boolesche) sowie "
 "»nullable« boolesche Werte, Aufzählungen und Schalter. Die Werte »always-"
-"confirm-implicit« (immer implizit bestätigen) und »always-confirm-"
-"explicit« (immer explizit bestätigen) erfragen immer eine Bestätigung. Der "
-"erste Wert wendet die Änderung an, wenn Sie den Pfad ändern, während der "
-"zweite Wert die Änderung verwirft. Der Wert »always delay« (immer verzögern) "
-"wendet jede Änderung im Verzögerungsmodus an, so dass mehrere "
-"Schlüsseländerungen zusammen bestätigt werden können."
+"confirm-implicit« (immer implizit bestätigen) und »always-confirm-explicit« "
+"(immer explizit bestätigen) erfragen immer eine Bestätigung. Der erste Wert "
+"wendet die Änderung an, wenn Sie den Pfad ändern, während der zweite Wert "
+"die Änderung verwirft. Der Wert »always delay« (immer verzögern) wendet jede "
+"Änderung im Verzögerungsmodus an, so dass mehrere Schlüsseländerungen "
+"zusammen bestätigt werden können."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/sort-case-sensitive'
 #: editor/ca.desrt.dconf-editor.gschema.xml:173
@@ -498,8 +498,8 @@ msgid ""
 "reserved for Dconf Editor own mappings; “Startup” is for mapping a "
 "relocatable schema from the command-line."
 msgstr ""
-"Schalter für Einrichtungen zur Zuordnung von verschiebbaren Schemata. "
-"»User« (Benutzer) aktiviert die Zuordnung definiert durch den Schlüssel "
+"Schalter für Einrichtungen zur Zuordnung von verschiebbaren Schemata. »User« "
+"(Benutzer) aktiviert die Zuordnung definiert durch den Schlüssel "
 "»relocatable-schemas-users-paths«; »Built-in« (Mitgeliefert) aktiviert "
 "bekannte Zuordnungen, die fest in den Dconf-Editor eingebaut sind; "
 "»Internal« (Intern) ist für Dconf-Editors eigene Zuordnungen reserviert; "
@@ -1430,7 +1430,7 @@ msgstr ""
 msgid "Don’t forget that some options may break applications, so be careful."
 msgstr ""
 "Denken Sie daran, dass Optionen unter Umständen die korrekte Ausführung von "
-"Anwendungen beeinträchtigen könne, seien Sie daher vorsichtig."
+"Anwendungen beeinträchtigen können, seien Sie daher vorsichtig."
 
 #. Translators: initial "use at your own risk" dialog, the button label
 #: editor/dconf-window.vala:280
@@ -1445,8 +1445,8 @@ msgstr "Diesen Dialog beim nächsten Mal anzeigen."
 #. Translators: notification text, after a user Ctrl+Q keyboard action; same way to spell the shortcut as in the Settings application
 #: editor/dconf-window.vala:305
 msgid ""
-"There are pending changes. Use Shift+Ctrl+Q to apply changes and quit, or Alt"
-"+F4 to dismiss changes and quit."
+"There are pending changes. Use Shift+Ctrl+Q to apply changes and quit, or "
+"Alt+F4 to dismiss changes and quit."
 msgstr ""
 "Es stehen Änderungen aus. Drücken Sie Umschalt+Strg+Q, um vor der Beendigung "
 "die Änderungen anzuwenden, oder Alt+F4, um vor der Beendigung die Änderungen "
@@ -1783,7 +1783,7 @@ msgstr "Gehe zu »%s«"
 #: editor/key-list-box-row.vala:149
 #, c-format
 msgid "Search in “%s” folder"
-msgstr "In Order »%s« suchen"
+msgstr "Im Ordner »%s« suchen"
 
 #. Translators: first item of the keys list displayed during browsing at root path
 #: editor/key-list-box-row.vala:153
