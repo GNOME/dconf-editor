@@ -73,7 +73,7 @@ private abstract class BrowserHeaderBar : BaseHeaderBar
         path_widget.hexpand = false;
 
         path_widget.visible = true;
-        center_box.add (path_widget);
+        center_box.append (path_widget);
     }
 
     private static void mode_changed_browser (BaseHeaderBar _this, uint8 mode_id)

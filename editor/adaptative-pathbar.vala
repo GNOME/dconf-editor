@@ -17,12 +17,16 @@
 
 using Gtk;
 
-private class AdaptativePathbar : Stack, Pathbar
+private class AdaptativePathbar : Adw.Bin, Pathbar
 {
+    private Stack stack;
+
     construct
     {
+        stack = new Stack ();
+        set_child (stack);
+
         hexpand = true;
-        hhomogeneous = false;
     }
 
     /*\
@@ -44,7 +48,7 @@ private class AdaptativePathbar : Stack, Pathbar
         large_pathbar.valign = Align.FILL;
         large_pathbar.vexpand = true;
         large_pathbar.show ();
-        add_child (large_pathbar);
+        stack.add_child (large_pathbar);
         large_pathbar_created = true;
     }
 
@@ -53,7 +57,7 @@ private class AdaptativePathbar : Stack, Pathbar
         short_pathbar = new ShortPathbar (complete_path, current_type, current_path);
         short_pathbar.valign = Align.CENTER;
         short_pathbar.show ();
-        add_child (short_pathbar);
+        stack.add_child (short_pathbar);
         short_pathbar_created = true;
     }
 
@@ -62,12 +66,12 @@ private class AdaptativePathbar : Stack, Pathbar
         if (thin_window)
         {
             create_short_pathbar ();
-            set_visible_child (short_pathbar);
+            stack.set_visible_child (short_pathbar);
         }
         else
         {
             create_large_pathbar ();
-            set_visible_child (large_pathbar);
+            stack.set_visible_child (large_pathbar);
         }
     }
 
@@ -100,13 +104,13 @@ private class AdaptativePathbar : Stack, Pathbar
     //     {
     //         if (!short_pathbar_created)
     //             create_short_pathbar ();
-    //         set_visible_child (short_pathbar);
+    //         stack.set_visible_child (short_pathbar);
     //     }
     //     else
     //     {
     //         if (!large_pathbar_created)
     //             create_large_pathbar ();
-    //         set_visible_child (large_pathbar);
+    //         stack.set_visible_child (large_pathbar);
     //     }
     // }
 

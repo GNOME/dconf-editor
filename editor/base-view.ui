@@ -17,16 +17,20 @@
 -->
 <interface>
   <requires lib="gtk" version="4.14"/>
-  <template class="BaseView" parent="GtkStack">
-    <property name="transition-type">over-down-up</property>
-    <property name="transition-duration">300</property>
+  <template class="BaseView" parent="GtkBox">
     <child>
-      <object class="GtkOverlay" id="notifications_overlay"> <!-- or "main-view", see packing -->
-        <property name="visible">True</property>
+      <object class="GtkStack" id="stack">
+        <property name="transition-type">over-down-up</property>
+        <property name="transition-duration">300</property>
         <child>
-          <object class="GtkGrid" id="main_grid">
+          <object class="GtkOverlay" id="notifications_overlay"> <!-- or "main-view", see packing -->
             <property name="visible">True</property>
-            <property name="orientation">vertical</property>
+            <child>
+              <object class="GtkBox" id="main_grid">
+                <property name="visible">True</property>
+                <property name="orientation">vertical</property>
+              </object>
+            </child>
           </object>
         </child>
       </object>

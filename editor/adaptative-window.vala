@@ -167,7 +167,8 @@ private abstract class AdaptativeWindow : Adw.ApplicationWindow
             return;
         int? _window_width = null;
         int? _window_height = null;
-        get_size (out _window_width, out _window_height);
+        // FIXME: Why are we even doing this?
+        get_default_size (out _window_width, out _window_height);
         if (_window_width == null || _window_height == null)
             return;
         window_width = (!) _window_width;

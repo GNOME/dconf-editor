@@ -32,7 +32,7 @@ internal enum BookmarkIcon {
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/bookmarks.ui")]
 private class Bookmarks : Box
 {
-    [GtkChild] private unowned MenuButton           button;
+    // [GtkChild] private unowned MenuButton           button;
     [GtkChild] private unowned Image                bookmarks_icon;
     [GtkChild] private unowned Popover              bookmarks_popover;
     [GtkChild] private unowned Stack                edit_mode_stack;
@@ -89,7 +89,12 @@ private class Bookmarks : Box
 
         install_action_entries ();
 
-        activate.connect (() => { if (active) bookmarked_switch.grab_focus (); });
+        connect ("activate", _on_activate);
+    }
+
+    private void _on_activate () {
+        if (sensitive)
+            bookmarked_switch.grab_focus ();
     }
 
     internal Bookmarks (string _schema_path)
@@ -203,13 +208,13 @@ private class Bookmarks : Box
     // keyboard call
 
     internal bool next_match ()
-        requires (active)
+        requires (sensitive)
     {
         return bookmarks_list.next_match ();
     }
 
     internal bool previous_match ()
-        requires (active)
+        requires (sensitive)
     {
         return bookmarks_list.previous_match ();
     }
@@ -326,7 +331,7 @@ private class Bookmarks : Box
         bookmarks_list.enter_edit_mode ();
     }
 
-    [GtkCallback]
+    // [GtkCallback]
     private void leave_edit_mode (/* used both as action and callback */)
     {
         edit_mode_state_action.set_state (false);

@@ -216,18 +216,18 @@ private class AboutListItem : OverlayedListRow
         label.can_focus = false;
         if (css_class != null)
             label.get_style_context ().add_class ((!) css_class);
-        add (label);
+        set_child (label);
     }
 
     internal AboutListItem.from_icon_name (string icon_name, string copy_text)
     {
         Object (copy_text: copy_text);
 
-        Image image = new Image.from_icon_name (icon_name, IconSize.DIALOG);
+        Image image = new Image.from_icon_name (icon_name);
         image.pixel_size = 128;
         image.visible = true;
         image.hexpand = true;
-        add (image);
+        set_child (image);
     }
 
     internal AboutListItem.from_link (string link, string text_or_empty) // TODO do not allow button focus, and activate it on row activation
@@ -250,17 +250,16 @@ private class AboutListItem : OverlayedListRow
         label.wrap = true;
         label.justify = Justification.CENTER;
 
-        add (button);
+        set_child (button);
     }
 
     internal AboutListItem.with_title (string text, string title)
     {
         Object (copy_text: text);
 
-        Grid grid = new Grid ();
-        grid.orientation = Orientation.VERTICAL;
-        grid.visible = true;
-        add (grid);
+        Box box = new Box (Orientation.VERTICAL, 0);
+        box.visible = true;
+        set_child (box);
 
         Label label = new Label (title);
         label.visible = true;
@@ -268,7 +267,7 @@ private class AboutListItem : OverlayedListRow
         label.wrap_mode = Pango.WrapMode.WORD_CHAR;
         label.wrap = true;
         label.get_style_context ().add_class ("bold-label");
-        grid.add (label);
+        box.append (label);
 
         label = new Label (text);
         label.visible = true;
@@ -278,6 +277,6 @@ private class AboutListItem : OverlayedListRow
         label.selectable = true;
         label.get_style_context ().add_class ("small-label");
         label.justify = Justification.CENTER;
-        grid.add (label);
+        box.append (label);
     }
 }

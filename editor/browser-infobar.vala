@@ -62,19 +62,19 @@ private class BrowserInfoBar : Box
         content.add_named (grid, name);
     }
 
-    public void set_reveal_child (bool _value)
-    {
-        reveal_child = _value;
-    }
+    // public void set_reveal_child (bool _value)
+    // {
+    //     reveal_child = _value;
+    // }
 
-    public bool get_reveal_child ()
-    {
-        return reveal_child;
-    }
+    // public bool get_reveal_child ()
+    // {
+    //     return reveal_child;
+    // }
 
     internal void hide_warning ()
     {
-        set_reveal_child (false);
+        reveal_child = false;
     }
 
     internal bool is_shown (string name)

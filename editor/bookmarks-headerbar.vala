@@ -71,9 +71,9 @@ private abstract class BookmarksHeaderBar : BrowserHeaderBar
         bookmarks_button.get_style_context ().add_class ("image-button");   // TODO check https://bugzilla.gnome.org/show_bug.cgi?id=756731
 
         bookmarks_button.visible = true;
-        bookmarks_revealer.add (bookmarks_button);
+        bookmarks_revealer.set_child (bookmarks_button);
         bookmarks_revealer.visible = true;
-        center_box.pack_end (bookmarks_revealer);
+        center_box.append (bookmarks_revealer);
     }
 
     private static void add_bookmarks_controller (out BookmarksController bookmarks_controller, ref unowned BookmarksHeaderBar _this)
@@ -82,7 +82,7 @@ private abstract class BookmarksHeaderBar : BrowserHeaderBar
         bookmarks_controller.hexpand = true;
 
         bookmarks_controller.visible = false;
-        _this.pack_start (bookmarks_controller);
+        _this.prepend (bookmarks_controller);
     }
 
     internal signal void update_bookmarks_icons (Variant bookmarks_variant);
@@ -105,7 +105,7 @@ private abstract class BookmarksHeaderBar : BrowserHeaderBar
             set_bookmarks_button_visibility (/* visibility */ true, ref bookmarks_revealer, ref bookmarks_button);
         else
         {
-            bookmarks_button.active = false;
+            bookmarks_button.sensitive = false;
             set_bookmarks_button_visibility (/* visibility */ false, ref bookmarks_revealer, ref bookmarks_button);
         }
     }
@@ -274,21 +274,21 @@ private abstract class BookmarksHeaderBar : BrowserHeaderBar
 
     internal virtual bool next_match ()
     {
-        if (bookmarks_button.active)
+        if (bookmarks_button.sensitive)
             return bookmarks_button.next_match ();
         return false;
     }
 
     internal virtual bool previous_match ()
     {
-        if (bookmarks_button.active)
+        if (bookmarks_button.sensitive)
             return bookmarks_button.previous_match ();
         return false;
     }
 
     internal bool handle_copy_text (out string copy_text)
     {
-        if (bookmarks_button.active)
+        if (bookmarks_button.sensitive)
             return bookmarks_button.handle_copy_text (out copy_text);
         return BaseWindow.no_copy_text (out copy_text);
     }
@@ -321,12 +321,12 @@ private abstract class BookmarksHeaderBar : BrowserHeaderBar
     internal override void close_popovers ()
     {
         base.close_popovers ();
-        if (bookmarks_button.active)
-            bookmarks_button.active = false;
+        if (bookmarks_button.sensitive)
+            bookmarks_button.sensitive = false;
     }
 
     internal override bool has_popover ()
     {
-        return bookmarks_button.active || base.has_popover ();
+        return bookmarks_button.sensitive || base.has_popover ();
     }
 }

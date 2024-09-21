@@ -30,7 +30,7 @@
   <object class="GtkPopover" id="bookmarks_popover">
     <property name="width-request">350</property>
     <property name="height-request">300</property>
-    <signal name="key-press-event" handler="on_key_press_event"/>
+    <!-- <signal name="key-press-event" handler="on_key_press_event"/> -->
     <style>
       <class name="bookmarks"/>
     </style>
@@ -121,7 +121,7 @@
   </object>
   <template class="Bookmarks" parent="GtkMenuButton">
     <property name="popover">bookmarks_popover</property>
-    <signal name="clicked" handler="leave_edit_mode"/>
+    <!-- <signal name="activate" handler="leave_edit_mode"/> -->
 <!--    <style>
       <class name="image-button"/>  TODO bug https://bugzilla.gnome.org/show_bug.cgi?id=756731
     </style> -->

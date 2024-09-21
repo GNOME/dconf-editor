@@ -48,8 +48,8 @@
         <property name="visible">True</property>
         <property name="hexpand">True</property>
         <property name="xalign">0</property>
-        <signal name="button-press-event" handler="on_button_press_event"/>
-        <signal name="clicked"            handler="on_button_clicked"/>
+        <!-- <signal name="button-press-event" handler="on_button_press_event"/> -->
+        <!-- <signal name="clicked"            handler="on_button_clicked"/> -->
         <style>
           <class name="invisible"/>
           <class name="invisible-menu-button"/>

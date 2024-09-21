@@ -24,7 +24,7 @@
     <!-- <signal name="size-allocate"        handler="on_size_allocate"/> -->
     <!-- <signal name="destroy"              handler="on_destroy"/> -->
     <child>
-      <object class="AdwToolbarView" name="toolbar_view">
+      <object class="AdwToolbarView" id="toolbar_view">
       </object>
     </child>
   </template>

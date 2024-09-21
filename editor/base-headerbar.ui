@@ -17,115 +17,119 @@
 -->
 <interface>
   <requires lib="gtk" version="4.14"/>
-  <template class="BaseHeaderBar" parent="GtkHeaderBar">
-    <property name="show-close-button">True</property>
-    <property name="has-subtitle">False</property>
+  <template class="BaseHeaderBar" parent="GtkBox">
     <child>
-      <object class="GtkButton" id="go_back_button">
-        <property name="visible">False</property>
-        <property name="valign">center</property>
-        <property name="action-name">base.show-default-view</property>
-        <style>
-          <class name="image-button"/>
-        </style>
+      <object class="GtkHeaderBar" id="headerbar">
+        <property name="show-close-button">True</property>
+        <property name="has-subtitle">False</property>
         <child>
-          <object class="GtkImage">
-            <property name="visible">True</property>
-            <property name="icon-name">go-previous-symbolic</property> <!-- TODO 3/3 dialog-information-symbolic -->
-            <property name="icon-size">1</property>
-          </object>
-        </child>
-      </object>
-    </child>
-    <child>
-      <object class="GtkSeparator" id="ltr_left_separator">
-        <property name="visible">False</property>
-      </object>
-    </child>
-    <child type="title">
-      <object class="GtkBox" id="center_box">
-        <property name="visible">True</property>
-        <property name="valign">fill</property>
-        <property name="spacing">6</property>
-        <property name="hexpand">False</property> <!-- or "hexpand-set">true... that's horrible -->
-        <style>
-          <class name="centerwidget"/>
-        </style>
-        <child>
-          <object class="GtkLabel" id="title_label">
+          <object class="GtkButton" id="go_back_button">
             <property name="visible">False</property>
-          </object>
-        </child>
-      </object>
-    </child>
-    <child>
-      <object class="GtkStack" id="quit_button_stack">
-        <property name="visible">False</property>
-        <child>
-          <object class="GtkButton">
-            <property name="visible">True</property>
             <property name="valign">center</property>
-            <property name="action-name">app.quit</property>
+            <property name="action-name">base.show-default-view</property>
             <style>
-              <class name="titlebutton"/>
-              <class name="close"/>
+              <class name="image-button"/>
             </style>
             <child>
               <object class="GtkImage">
                 <property name="visible">True</property>
-                <property name="icon-name">window-close-symbolic</property>
+                <property name="icon-name">go-previous-symbolic</property> <!-- TODO 3/3 dialog-information-symbolic -->
+                <property name="icon-size">1</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkSeparator" id="ltr_left_separator">
+            <property name="visible">False</property>
+          </object>
+        </child>
+        <child type="title">
+          <object class="GtkBox" id="center_box">
+            <property name="visible">True</property>
+            <property name="valign">fill</property>
+            <property name="spacing">6</property>
+            <property name="hexpand">False</property> <!-- or "hexpand-set">true... that's horrible -->
+            <style>
+              <class name="centerwidget"/>
+            </style>
+            <child>
+              <object class="GtkLabel" id="title_label">
+                <property name="visible">False</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkStack" id="quit_button_stack">
+            <property name="visible">False</property>
+            <child>
+              <object class="GtkButton">
+                <property name="visible">True</property>
+                <property name="valign">center</property>
+                <property name="action-name">app.quit</property>
+                <style>
+                  <class name="titlebutton"/>
+                  <class name="close"/>
+                </style>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="icon-name">window-close-symbolic</property>
+                    <property name="icon-size">1</property>
+                  </object>
+                </child>
+              </object>
+              <packing>
+                <property name="name">quit-button</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="pack-type">end</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkSeparator" id="ltr_right_separator">
+            <property name="visible">False</property>
+            <property name="orientation">vertical</property>
+            <style>
+              <class name="titlebutton"/>
+            </style>
+          </object>
+          <packing>
+            <property name="pack-type">end</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkMenuButton" id="info_button">
+            <property name="visible">True</property>
+            <property name="valign">center</property>
+            <property name="focus-on-click">False</property>
+            <style>
+              <class name="image-button"/>
+            </style>
+            <child internal-child="accessible">
+              <object class="AtkObject">
+                <!-- Translators: accessible name of the hamburger menu -->
+                <property name="AtkObject::accessible-name" translatable="yes">Actions</property>
+                <!-- Translators: accessible description of the hamburger menu -->
+                <property name="AtkObject::accessible-description" translatable="yes">Current view actions</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkImage">
+                <property name="visible">True</property>
+                <property name="icon-name">open-menu-symbolic</property>
                 <property name="icon-size">1</property>
               </object>
             </child>
           </object>
           <packing>
-            <property name="name">quit-button</property>
+            <property name="pack-type">end</property>
           </packing>
         </child>
       </object>
-      <packing>
-        <property name="pack-type">end</property>
-      </packing>
-    </child>
-    <child>
-      <object class="GtkSeparator" id="ltr_right_separator">
-        <property name="visible">False</property>
-        <property name="orientation">vertical</property>
-        <style>
-          <class name="titlebutton"/>
-        </style>
-      </object>
-      <packing>
-        <property name="pack-type">end</property>
-      </packing>
-    </child>
-    <child>
-      <object class="GtkMenuButton" id="info_button">
-        <property name="visible">True</property>
-        <property name="valign">center</property>
-        <property name="focus-on-click">False</property>
-        <style>
-          <class name="image-button"/>
-        </style>
-        <child internal-child="accessible">
-          <object class="AtkObject">
-            <!-- Translators: accessible name of the hamburger menu -->
-            <property name="AtkObject::accessible-name" translatable="yes">Actions</property>
-            <!-- Translators: accessible description of the hamburger menu -->
-            <property name="AtkObject::accessible-description" translatable="yes">Current view actions</property>
-          </object>
-        </child>
-        <child>
-          <object class="GtkImage">
-            <property name="visible">True</property>
-            <property name="icon-name">open-menu-symbolic</property>
-            <property name="icon-size">1</property>
-          </object>
-        </child>
-      </object>
-      <packing>
-        <property name="pack-type">end</property>
-      </packing>
     </child>
   </template>
 </interface>

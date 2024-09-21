@@ -97,9 +97,9 @@ private class BrowserView : BaseView
         // TODO use the same for key removing?
 
         info_bar.show ();
-        main_grid.add (info_bar);
+        main_grid.append (info_bar);
 
-        main_grid.add (browser_content);
+        main_grid.append (browser_content);
     }
 
     /*\

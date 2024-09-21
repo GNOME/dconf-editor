@@ -18,9 +18,10 @@
 using Gtk;
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/base-view.ui")]
-private class BaseView : Stack
+private class BaseView : Box
 {
-    [GtkChild] protected unowned Grid main_grid;
+    [GtkChild] protected unowned Stack stack;
+    [GtkChild] protected unowned Box main_grid;
 
     internal virtual bool handle_copy_text (out string copy_text)
     {
@@ -55,7 +56,7 @@ private class BaseView : Stack
         if (in_window_about)
         {
             in_window_about = false;
-            set_visible_child (notifications_overlay);   // or set_visible_child_name ("main-view");
+            stack.set_visible_child (notifications_overlay);   // or set_visible_child_name ("main-view");
         }
         else
             assert_not_reached ();
@@ -90,9 +91,10 @@ private class BaseView : Stack
         about_list = new AboutList (/* needs shadows   */ false,
                                     /* big placeholder */ true,
                                     ref artists, ref authors, ref comments, ref copyright, ref documenters, ref logo_icon_name, ref program_name, ref translator_credits, ref version, ref website, ref website_label);
-        about_list.set_window_size (saved_window_size);
+        // FIXME: What was this about and do we really need it?
+        // about_list.set_window_size (saved_window_size);
         about_list.show ();
-        add (about_list);
+        stack.add_child (about_list);
         about_list_created = true;
     }
 
@@ -101,7 +103,7 @@ private class BaseView : Stack
         requires (in_window_about == false)
     {
         about_list.reset ();
-        set_visible_child (about_list);
+        stack.set_visible_child (about_list);
         in_window_about = true;
     }
 
@@ -117,10 +119,11 @@ private class BaseView : Stack
     private void create_notifications_revealer ()
     {
         notifications_revealer = new NotificationsRevealer ();
-        notifications_revealer.set_window_size (saved_window_size);
+        // FIXME: Where did I put this?
+        // notifications_revealer.set_window_size (saved_window_size);
         notifications_revealer.show ();
         notifications_overlay.add_overlay (notifications_revealer);
-        notifications_overlay.set_overlay_pass_through (notifications_revealer, true);
+        notifications_revealer.set_can_target (false);
         notifications_revealer_created = true;
     }
 

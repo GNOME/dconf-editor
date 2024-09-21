@@ -17,47 +17,51 @@
 -->
 <interface>
   <requires lib="gtk" version="4.14"/>
-  <template class="NotificationsRevealer" parent="GtkRevealer">
-    <property name="halign">center</property>
-    <property name="valign">start</property>
+  <template class="NotificationsRevealer" parent="GtkBox">
     <child>
-      <object class="GtkFrame">
-        <property name="visible">True</property>
-        <style>
-          <class name="app-notification"/>
-        </style>
+      <object class="GtkRevealer" id="revealer">
+        <property name="halign">center</property>
+        <property name="valign">start</property>
         <child>
-          <object class="GtkGrid">
+          <object class="GtkFrame">
             <property name="visible">True</property>
-            <property name="column-spacing">6</property>
+            <style>
+              <class name="app-notification"/>
+            </style>
             <child>
-              <object class="GtkLabel" id="notification_label">
+              <object class="GtkGrid">
                 <property name="visible">True</property>
-                <property name="hexpand">True</property>
-                <property name="xalign">0</property>
-                <property name="wrap">True</property>
-              </object>
-            </child>
-            <child>
-              <object class="GtkSeparator">
-                <property name="visible">True</property>
-              </object>
-            </child>
-            <child>
-              <object class="GtkButton">
-                <property name="visible">True</property>
-                <property name="valign">center</property>
-                <property name="focus-on-click">False</property>
-                <property name="relief">none</property>
-                <property name="action-name">notification.hide</property>
-                <style>
-                  <class name="image-button"/>
-                </style>
+                <property name="column-spacing">6</property>
                 <child>
-                  <object class="GtkImage">
+                  <object class="GtkLabel" id="notification_label">
                     <property name="visible">True</property>
-                    <property name="icon-name">window-close-symbolic</property>
-                    <property name="icon-size">1</property>
+                    <property name="hexpand">True</property>
+                    <property name="xalign">0</property>
+                    <property name="wrap">True</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkSeparator">
+                    <property name="visible">True</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkButton">
+                    <property name="visible">True</property>
+                    <property name="valign">center</property>
+                    <property name="focus-on-click">False</property>
+                    <property name="relief">none</property>
+                    <property name="action-name">notification.hide</property>
+                    <style>
+                      <class name="image-button"/>
+                    </style>
+                    <child>
+                      <object class="GtkImage">
+                        <property name="visible">True</property>
+                        <property name="icon-name">window-close-symbolic</property>
+                        <property name="icon-size">1</property>
+                      </object>
+                    </child>
                   </object>
                 </child>
               </object>

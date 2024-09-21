@@ -51,7 +51,7 @@ private class BaseWindow : AdaptativeWindow, AdaptativeWidget
             main_view = value;
             value.vexpand = true;
             value.visible = true;
-            add_to_main_grid (value);
+            add_to_main_box (value);
         }
     }
 
@@ -63,20 +63,21 @@ private class BaseWindow : AdaptativeWindow, AdaptativeWidget
 
         install_action_entries ();
 
-        add_adaptative_child (headerbar);
-        add_adaptative_child (main_view);
-        add_adaptative_child (this);
+        // FIXME: What does this actually *do*?
+        // add_adaptative_child (headerbar);
+        // add_adaptative_child (main_view);
+        // add_adaptative_child (this);
     }
 
     /*\
     * * main grid
     \*/
 
-    [GtkChild] private unowned Grid main_grid;
+    [GtkChild] private unowned Box main_box;
 
-    protected void add_to_main_grid (Widget widget)
+    protected void add_to_main_box (Widget widget)
     {
-        main_grid.add (widget);
+        main_box.append (widget);
     }
 
     /*\
@@ -127,17 +128,20 @@ private class BaseWindow : AdaptativeWindow, AdaptativeWidget
     }
     internal static bool copy_clipboard_text (out string copy_text)
     {
-        string? nullable_selection = Clipboard.@get (Gdk.SELECTION_PRIMARY).wait_for_text ();
-        if (nullable_selection != null)
-        {
-             string selection = ((!) nullable_selection).dup ();
-             if (selection != "")
-             {
-                copy_text = selection;
-                return true;
-             }
-        }
-        return no_copy_text (out copy_text);
+        // FIXME: Another probably no longer useful clipboard thing, but if
+        //        needed, follow the porting guide.
+        return false;
+        // string? nullable_selection = Clipboard.@get (Gdk.SELECTION_PRIMARY).wait_for_text ();
+        // if (nullable_selection != null)
+        // {
+        //      string selection = ((!) nullable_selection).dup ();
+        //      if (selection != "")
+        //      {
+        //         copy_text = selection;
+        //         return true;
+        //      }
+        // }
+        // return no_copy_text (out copy_text);
     }
     internal static inline bool is_empty_text (string text)
     {
@@ -147,34 +151,36 @@ private class BaseWindow : AdaptativeWindow, AdaptativeWidget
     private void copy (/* SimpleAction action, Variant? path_variant */)
     {
         Widget? focus = get_focus ();
+        // FIXME: Do we still need this? I'm not convinced we still need this.
+        //        If we do, see <https://docs.gtk.org/gtk4/migrating-3to4.html#replace-gtkclipboard-with-gdkclipboard>.
         if (focus != null)
         {
-            if ((!) focus is Editable)  // GtkEntry, GtkSearchEntry, GtkSpinButton
-            {
-                int garbage1, garbage2;
-                if (((Editable) (!) focus).get_selection_bounds (out garbage1, out garbage2))
-                {
-                    ((Editable) (!) focus).copy_clipboard ();
-                    return;
-                }
-            }
-            else if ((!) focus is TextView)
-            {
-                if (((TextView) (!) focus).get_buffer ().get_has_selection ())
-                {
-                    ((TextView) (!) focus).copy_clipboard ();
-                    return;
-                }
-            }
-            else if ((!) focus is Label)
-            {
-                int garbage1, garbage2;
-                if (((Label) (!) focus).get_selection_bounds (out garbage1, out garbage2))
-                {
-                    ((Label) (!) focus).copy_clipboard ();
-                    return;
-                }
-            }
+            // if ((!) focus is Editable)  // GtkEntry, GtkSearchEntry, GtkSpinButton
+            // {
+            //     int garbage1, garbage2;
+            //     if (((Editable) (!) focus).get_selection_bounds (out garbage1, out garbage2))
+            //     {
+            //         ((Editable) (!) focus).copy_clipboard ();
+            //         return;
+            //     }
+            // }
+            // else if ((!) focus is TextView)
+            // {
+            //     if (((TextView) (!) focus).get_buffer ().get_has_selection ())
+            //     {
+            //         ((TextView) (!) focus).copy_clipboard ();
+            //         return;
+            //     }
+            // }
+            // else if ((!) focus is Label)
+            // {
+            //     int garbage1, garbage2;
+            //     if (((Label) (!) focus).get_selection_bounds (out garbage1, out garbage2))
+            //     {
+            //         ((Label) (!) focus).copy_clipboard ();
+            //         return;
+            //     }
+            // }
         }
 
         main_view.close_popovers ();
@@ -210,25 +216,27 @@ private class BaseWindow : AdaptativeWindow, AdaptativeWidget
 
     private void paste (/* SimpleAction action, Variant? variant */)
     {
-        if (main_view.is_in_in_window_mode ())
-            return;
+        // FIXME: Again, we probably don't need this anymore.
 
-        Widget? focus = get_focus ();
-        if (focus != null)
-        {
-            if ((!) focus is Entry)
-            {
-                ((Entry) (!) focus).paste_clipboard ();
-                return;
-            }
-            if ((!) focus is TextView)
-            {
-                ((TextView) (!) focus).paste_clipboard ();
-                return;
-            }
-        }
+        // if (main_view.is_in_in_window_mode ())
+        //     return;
 
-        paste_clipboard_content ();
+        // Widget? focus = get_focus ();
+        // if (focus != null)
+        // {
+        //     if ((!) focus is Entry)
+        //     {
+        //         ((Entry) (!) focus).paste_clipboard ();
+        //         return;
+        //     }
+        //     if ((!) focus is TextView)
+        //     {
+        //         ((TextView) (!) focus).paste_clipboard ();
+        //         return;
+        //     }
+        // }
+
+        // paste_clipboard_content ();
     }
 
     private void paste_alt (/* SimpleAction action, Variant? variant */)
@@ -251,15 +259,18 @@ private class BaseWindow : AdaptativeWindow, AdaptativeWidget
 
     private static inline bool get_clipboard_content (out string? clipboard_content)
     {
-        Gdk.Display? display = Gdk.Display.get_default ();
-        if (display == null)            // ?
-        {
-            clipboard_content = null;   // garbage
-            return false;
-        }
+        // FIXME: Aaaaaagh
+        clipboard_content = null;
+        return false;
+        // Gdk.Display? display = Gdk.Display.get_default ();
+        // if (display == null)            // ?
+        // {
+        //     clipboard_content = null;   // garbage
+        //     return false;
+        // }
 
-        clipboard_content = Clipboard.get_default ((!) display).wait_for_text ();
-        return true;
+        // clipboard_content = Clipboard.get_default ((!) display).wait_for_text ();
+        // return true;
     }
 
     /*\
@@ -323,7 +334,9 @@ private class BaseWindow : AdaptativeWindow, AdaptativeWidget
         bool success;
         try
         {
-            show_uri_on_window (_this, help_string_or_empty, get_current_event_time ());
+            UriLauncher launcher = new UriLauncher (help_string_or_empty);
+            // FIXME: launcher.launch is async. We should do this differently.
+            launcher.launch (_this, null);
             success = true;
         }
         catch (Error e)
@@ -396,18 +409,21 @@ private class BaseWindow : AdaptativeWindow, AdaptativeWidget
     private AboutDialog about_dialog;
     private void show_about_dialog ()
     {
+        // FIXME: Get rid of create_about_dialog, use Adw.AboutDialog.from_appdata.
         if (should_init_about_dialog)
         {
             create_about_dialog ();
-            about_dialog.response.connect ((_about_dialog, response) => _about_dialog.hide ());
-            about_dialog.key_press_event.connect (about_dialog_key_press_event);
+            // about_dialog.response.connect ((_about_dialog, response) => _about_dialog.hide ());
+            // about_dialog.key_press_event.connect (about_dialog_key_press_event);
             about_dialog.set_transient_for (this);
             should_init_about_dialog = false;
         }
-        about_dialog.run ();
+        about_dialog.show ();
     }
     // private static bool about_dialog_key_press_event (Widget _about_dialog_widget, Gdk.EventKey event)
     // {
+    //     FIXME: Shift+F1 toggles the About dialog?! That's weird. I think we
+    //            can just lose this, but do some git blame to be sure.
     //     if (((!) (Gdk.keyval_name (event.keyval) ?? "") == "F1")
     //      && ((event.state & Gdk.ModifierType.SHIFT_MASK) != 0))
     //     {

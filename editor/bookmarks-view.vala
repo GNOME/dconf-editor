@@ -43,7 +43,8 @@ private class BookmarksView : BrowserView
             if (in_window_bookmarks_edit_mode)
                 leave_bookmarks_edit_mode ();
             in_window_bookmarks = false;
-            set_visible_child_name ("main-view");
+            // FIXME: This was a Stack before? Oh nooo this is so much stuff.
+            // set_visible_child_name ("main-view");
         }
         else
             base.show_default_view ();
@@ -67,7 +68,7 @@ private class BookmarksView : BrowserView
         bookmarks_list.selection_changed.connect (on_bookmarks_selection_changed);
         bookmarks_list.update_bookmarks_icons.connect (on_update_bookmarks_icons);
         bookmarks_list.show ();
-        add (bookmarks_list);
+        append (bookmarks_list);
     }
 
     private string [] old_bookmarks = new string [0];
@@ -86,7 +87,8 @@ private class BookmarksView : BrowserView
 
             old_bookmarks = bookmarks;
         }
-        set_visible_child (bookmarks_list);
+        // FIXME: Ughhh Stack things :( :( :(
+        // set_visible_child (bookmarks_list);
         in_window_bookmarks = true;
     }
 

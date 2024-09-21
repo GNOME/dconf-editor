@@ -65,7 +65,8 @@ private class DConfView : BookmarksView
         if (in_window_modifications)
         {
             in_window_modifications = false;
-            set_visible_child_name ("main-view");
+            // FIXME: Stack things that I broke apparently
+            // set_visible_child_name ("main-view");
         }
         else
             base.show_default_view ();
@@ -175,7 +176,8 @@ private class DConfView : BookmarksView
         // modifications_list.set_window_size (saved_window_size);
         // modifications_list.selection_changed.connect (() => ...);
         modifications_list.show ();
-        add_child (modifications_list);
+        // FIXME: This is almost definitely doing something wrong
+        main_grid.append (modifications_list);
         modifications_list_created = true;
     }
 
@@ -187,7 +189,8 @@ private class DConfView : BookmarksView
 
         modifications_list.reset ();
 
-        set_visible_child (modifications_list);
+        // FIXME: Oh nooo what did I do to all the widgets?
+        // set_visible_child (modifications_list);
         in_window_modifications = true;
     }
 

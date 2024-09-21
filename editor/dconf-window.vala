@@ -260,7 +260,7 @@ private class DConfWindow : BookmarksWindow
     {
         revealer = new ModificationsRevealer ();
         revealer.visible = true;
-        add_to_main_grid (revealer);
+        add_to_main_box (revealer);
         // add_adaptative_child (revealer);
     }
 

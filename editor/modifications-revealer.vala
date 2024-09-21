@@ -133,13 +133,13 @@ private class ModificationsRevealer : Box
         }
     }
 
-    public void set_reveal_child (bool _value) {
-        reveal_child = _value;
-    }
+    // public void set_reveal_child (bool _value) {
+    //     reveal_child = _value;
+    // }
 
-    public bool get_reveal_child () {
-        return reveal_child;
-    }
+    // public bool get_reveal_child () {
+    //     return reveal_child;
+    // }
 
     private void warn_if_no_planned_changes ()
     {
@@ -284,7 +284,7 @@ private class ModificationsRevealer : Box
     {
         if (disable_action_bar)
         {
-            set_reveal_child (false);
+            reveal_child = false;
             return;
         }
 
@@ -296,7 +296,7 @@ private class ModificationsRevealer : Box
 
         if (modifications_handler.mode == ModificationsMode.NONE)
         {
-            set_reveal_child (false);
+            reveal_child = false;
             apply_button.sensitive = false;
             label.set_text ("");
             return;
@@ -326,7 +326,7 @@ private class ModificationsRevealer : Box
             }
             else
                 assert_not_reached ();
-            set_reveal_child (true);
+            reveal_child = true;
         }
         else // if (mode == Mode.DELAYED)
         {
@@ -336,7 +336,7 @@ private class ModificationsRevealer : Box
                 // FIXME appears twice
             apply_button.sensitive = total_changes_count > 0;
             label.set_text (get_text (modifications_handler.dconf_changes_count, modifications_handler.gsettings_changes_count));
-            set_reveal_child (true);
+            reveal_child = true;
         }
     }
 

@@ -18,8 +18,9 @@
 using Gtk;
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/overlayed-list.ui")]
-private abstract class OverlayedList : Overlay
+private abstract class OverlayedList : Box
 {
+    [GtkChild] protected unowned Overlay        overlay;
     [GtkChild] protected unowned ListBox        main_list_box;
                private   StyleContext   main_list_box_context;
                protected GLib.ListStore main_list_store = new GLib.ListStore (typeof (Widget));
@@ -58,17 +59,14 @@ private abstract class OverlayedList : Overlay
             leave_edit_mode_button.set_detailed_action_name (value + ".set-edit-mode(false)");
         }
     }
-    [CCode (notify = false)] public string first_mode_name   { protected set { leave_edit_mode_button.text = value; }}
-    [CCode (notify = false)] public string second_mode_name  { protected set { enter_edit_mode_button.text = value; }}
+    [CCode (notify = false)] public string first_mode_name   { protected set { leave_edit_mode_button.label = value; }}
+    [CCode (notify = false)] public string second_mode_name  { protected set { enter_edit_mode_button.label = value; }}
 
     [CCode (notify = false)] public bool needs_shadows
     {
         construct
         {
-            if (value)
-                scrolled.shadow_type = ShadowType.ETCHED_IN;
-            else
-                scrolled.shadow_type = ShadowType.NONE;
+            scrolled.has_frame = (bool) value;
         }
     }
 
@@ -144,27 +142,30 @@ private abstract class OverlayedList : Overlay
     }
     private static inline bool _previous_match (ListBox main_list_box)
     {
-        uint n_items = main_list_box.get_children ().length ();  // FIXME OverlayedList.n_items is unreliable
-        if (n_items == 0)
-            return false;
+        // FIXME: Re-implement this. I think the simplest approach is we get the
+        //        row at the current index, then return row.get_prev_sibling().
+        return false;
+        // uint n_items = main_list_box.get_children ().length ();  // FIXME OverlayedList.n_items is unreliable
+        // if (n_items == 0)
+        //     return false;
 
-        ListBoxRow? row = main_list_box.get_selected_row ();    // TODO multiple rows and focus-only lists
-        if (row == null)
-            row = main_list_box.get_row_at_index ((int) n_items - 1);
-        else
-        {
-            int index = ((!) row).get_index ();
-            if (index <= 0)
-                return false;
-            row = main_list_box.get_row_at_index (index - 1);
-        }
+        // ListBoxRow? row = main_list_box.get_selected_row ();    // TODO multiple rows and focus-only lists
+        // if (row == null)
+        //     row = main_list_box.get_row_at_index ((int) n_items - 1);
+        // else
+        // {
+        //     int index = ((!) row).get_index ();
+        //     if (index <= 0)
+        //         return false;
+        //     row = main_list_box.get_row_at_index (index - 1);
+        // }
 
-        if (row == null)
-            assert_not_reached ();
+        // if (row == null)
+        //     assert_not_reached ();
 
-        main_list_box.select_row ((!) row);
-        ((!) row).grab_focus ();
-        return true;
+        // main_list_box.select_row ((!) row);
+        // ((!) row).grab_focus ();
+        // return true;
     }
 
     internal void select_all ()
@@ -209,8 +210,10 @@ private abstract class OverlayedList : Overlay
     }
     private static inline void _scroll_top (ListBox main_list_box)
     {
-        Adjustment adjustment = main_list_box.get_adjustment ();
-        adjustment.set_value (adjustment.get_lower ());
+        Adjustment? adjustment = main_list_box.get_adjustment ();
+        if (adjustment == null)
+            return;
+        ((!) adjustment).set_value (((!) adjustment).get_lower ());
     }
 
     protected void scroll_bottom ()
@@ -219,8 +222,10 @@ private abstract class OverlayedList : Overlay
     }
     private static inline void _scroll_bottom (ListBox main_list_box)
     {
-        Adjustment adjustment = main_list_box.get_adjustment ();
-        adjustment.set_value (adjustment.get_upper ());
+        Adjustment? adjustment = main_list_box.get_adjustment ();
+        if (adjustment == null)
+            return;
+        ((!) adjustment).set_value (((!) adjustment).get_upper ());
     }
 
     internal bool handle_copy_text (out string copy_text)

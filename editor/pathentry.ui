@@ -25,7 +25,7 @@
       <class name="linked"/>
     </style>
     <child>
-      <object class="BrowserEntry" id="search_entry">
+      <object class="GtkSearchEntry" id="search_entry">
         <property name="visible">True</property>
         <property name="hexpand">True</property>
         <!-- "next-match" (<ctrl>g) and "previous-match" (<ctrl>G) are handled in dconf-window.vala -->

@@ -60,9 +60,9 @@ private class ShortPathbar : Grid, Pathbar  // TODO make MenuButton?
     //     return false;
     // }
 
-    [GtkCallback]
-    private void on_button_clicked (Button button)
-    {
+    // [GtkCallback]
+    // private void on_button_clicked (Button button)
+    // {
         // FIXME: We probably don't need any of this
         // MenuButton menu_button = (MenuButton) button;
         // Popover? popover = menu_button.get_popover ();
@@ -73,7 +73,7 @@ private class ShortPathbar : Grid, Pathbar  // TODO make MenuButton?
         // menu_button.get_allocated_size (out allocation, null);
         // Gdk.Rectangle rect = { x:event_x, y:allocation.height, width:0, height:0 };
         // ((!) popover).set_pointing_to (rect);
-    }
+    // }
 
     /*\
     * * keyboard

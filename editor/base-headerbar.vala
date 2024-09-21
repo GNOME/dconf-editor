@@ -18,8 +18,9 @@
 using Gtk;
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/base-headerbar.ui")]
-private class BaseHeaderBar : HeaderBar
+private class BaseHeaderBar : Box
 {
+    [GtkChild] protected unowned HeaderBar headerbar;
     [GtkChild] protected unowned Box center_box;
 
     construct

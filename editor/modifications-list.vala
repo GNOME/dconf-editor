@@ -68,9 +68,7 @@ private class ModificationsList : OverlayedList
 
         if (add_location_header)
         {
-            Grid location_header = new Grid ();
-            location_header.show ();
-            location_header.orientation = Orientation.VERTICAL;
+            Box location_header = new Box (Orientation.VERTICAL, 0);
 
             Label location_header_label = new Label (ModelUtils.get_parent_path (row_key_name));
             location_header_label.show ();
@@ -82,11 +80,11 @@ private class ModificationsList : OverlayedList
             context.add_class ("bold-label");
             context.add_class ("list-row-header");
 
-            location_header.add (location_header_label);
+            location_header.append (location_header_label);
 
             Separator separator_header = new Separator (Orientation.HORIZONTAL);
             separator_header.show ();
-            location_header.add (separator_header);
+            location_header.append (separator_header);
 
             row.set_header (location_header);
         }

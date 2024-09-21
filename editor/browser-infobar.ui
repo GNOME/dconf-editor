@@ -20,7 +20,7 @@
   <template class="BrowserInfoBar" parent="GtkBox">
     <property name="visible">True</property>
     <child>
-      <object class="GtkRevealer">
+      <object class="GtkRevealer" id="revealer">
         <property name="reveal-child">False</property>
         <child>
           <object class="GtkInfoBar">

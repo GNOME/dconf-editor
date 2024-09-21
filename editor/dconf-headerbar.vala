@@ -103,8 +103,7 @@ private class DConfHeaderBar : BookmarksHeaderBar
     private static inline void create_modification_actions_button (out MenuButton modification_actions_button)
     {
         modification_actions_button = new MenuButton ();
-        Image view_more_image = new Image.from_icon_name ("document-open-recent-symbolic", IconSize.BUTTON);
-        modification_actions_button.set_image (view_more_image);
+        modification_actions_button.icon_name = "document-open-recent-symbolic";
         modification_actions_button.valign = Align.CENTER;
         modification_actions_button.get_style_context ().add_class ("titlebutton");
 
@@ -124,13 +123,12 @@ private class DConfHeaderBar : BookmarksHeaderBar
     private static void add_modifications_actions_button (out MenuButton modifications_actions_button, ref unowned DConfHeaderBar _this)
     {
         modifications_actions_button = new MenuButton ();
-        Image view_more_image = new Image.from_icon_name ("view-more-symbolic", IconSize.BUTTON);
-        modifications_actions_button.set_image (view_more_image);
+        modifications_actions_button.icon_name = "view-more-symbolic";
         modifications_actions_button.valign = Align.CENTER;
         modifications_actions_button.get_style_context ().add_class ("image-button");
 
         modifications_actions_button.visible = false;
-        _this.pack_end (modifications_actions_button);
+        _this.append (modifications_actions_button);
     }
 
     private static void construct_changes_pending_menu (out GLib.Menu changes_pending_menu)

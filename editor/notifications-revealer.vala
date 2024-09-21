@@ -18,8 +18,9 @@
 using Gtk;
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/notifications-revealer.ui")]
-private class NotificationsRevealer : Revealer
+private class NotificationsRevealer : Box
 {
+    [GtkChild] private unowned Revealer revealer;
     [GtkChild] private unowned Label notification_label;
 
     construct
@@ -34,7 +35,7 @@ private class NotificationsRevealer : Revealer
     internal void show_notification (string notification)
     {
         notification_label.set_text (notification);
-        set_reveal_child (true);
+        revealer.set_reveal_child (true);
     }
 
     private bool is_thin = false;
@@ -75,6 +76,6 @@ private class NotificationsRevealer : Revealer
 
     internal void hide_notification (/* SimpleAction action, Variant? variant */)
     {
-        set_reveal_child (false);
+        revealer.set_reveal_child (false);
     }
 }
