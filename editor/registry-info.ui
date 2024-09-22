@@ -1,52 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  This file is part of Dconf Editor
-
-  Dconf Editor is free software: you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation, either version 3 of the License, or
-  (at your option) any later version.
-
-  Dconf Editor is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License
-  along with Dconf Editor.  If not, see <https://www.gnu.org/licenses/>.
--->
 <interface domain="dconf-editor">
-  <requires lib="gtk+" version="3.12"/>
-  <template class="RegistryInfo" parent="GtkGrid">
+  <requires lib="gtk" version="4.0"/>
+  <template class="RegistryInfo" parent="GtkBox">
     <property name="orientation">vertical</property>
     <child>
       <object class="GtkRevealer" id="conflicting_key_warning_revealer">
-        <property name="visible">True</property>
-        <property name="reveal-child">False</property>
         <child>
           <object class="GtkInfoBar">
-            <property name="visible">True</property>
             <property name="message-type">warning</property>
-            <child internal-child="action_area">
+            <!-- <child internal-child="action_area"> -->
+            <!--   <object class="GtkBox"> -->
+            <!--     <property name="visible">0</property> -->
+            <!--   </object> -->
+            <!-- </child> -->
+            <child>
               <object class="GtkBox">
-                <property name="visible">False</property>
-              </object>
-            </child>
-            <child internal-child="content_area">
-              <object class="GtkBox">
+                <property name="visible">0</property>
                 <child>
                   <object class="RegistryWarning">
                     <property name="visible">True</property>
                     <property name="halign">center</property>
                     <child>
                       <object class="GtkLabel">
-                        <property name="visible">True</property>
-                        <property name="hexpand">True</property>
-                        <property name="xalign">0.5</property>
+                        <property name="hexpand">1</property>
                         <property name="max-width-chars">40</property>
-                        <property name="wrap">True</property>
-                        <!-- Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/Conflict/warning-similar' -->
-                        <property name="label" translatable="yes">This key is defined and used by more than one schema. This could lead to problems. Edit value at your own risk.</property>
+                        <property name="wrap">1</property>
+                        <property name="label" translatable="1">This key is defined and used by more than one schema. This could lead to problems. Edit value at your own risk.</property>
                       </object>
                     </child>
                   </object>
@@ -59,32 +38,27 @@
     </child>
     <child>
       <object class="GtkRevealer" id="hard_conflicting_key_error_revealer">
-        <property name="visible">True</property>
-        <property name="reveal-child">False</property>
         <child>
           <object class="GtkInfoBar">
-            <property name="visible">True</property>
             <property name="message-type">warning</property>
-            <child internal-child="action_area">
+            <!-- <child internal-child="action_area"> -->
+            <!--   <object class="GtkBox"> -->
+            <!--     <property name="visible">0</property> -->
+            <!--   </object> -->
+            <!-- </child> -->
+            <child>
               <object class="GtkBox">
-                <property name="visible">False</property>
-              </object>
-            </child>
-            <child internal-child="content_area">
-              <object class="GtkBox">
+                <property name="visible">0</property>
                 <child>
                   <object class="RegistryWarning">
                     <property name="visible">True</property>
                     <property name="halign">center</property>
                     <child>
                       <object class="GtkLabel">
-                        <property name="visible">True</property>
-                        <property name="hexpand">True</property>
-                        <property name="xalign">0.5</property>
+                        <property name="hexpand">1</property>
                         <property name="max-width-chars">40</property>
-                        <property name="wrap">True</property>
-                        <!-- Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/Conflict/type-conflict' -->
-                        <property name="label" translatable="yes">This key is incompatibly defined and used by more than one schema. It is impossible to work with its value in a meaningful way.</property>
+                        <property name="wrap">1</property>
+                        <property name="label" translatable="1">This key is incompatibly defined and used by more than one schema. It is impossible to work with its value in a meaningful way.</property>
                       </object>
                     </child>
                   </object>
@@ -96,42 +70,35 @@
       </object>
     </child>
     <child>
-      <object class="GtkRevealer" id="no_schema_warning"> <!-- TODO report bug: hiding and showing infobar fails to draw it the 2nd time -->
-        <property name="visible">True</property>
-        <property name="reveal-child">False</property>
+      <object class="GtkRevealer" id="no_schema_warning">
         <child>
           <object class="GtkInfoBar">
-            <property name="visible">True</property>
-            <property name="message-type">info</property>
-            <child internal-child="action_area">
+            <!-- <child internal-child="action_area"> -->
+            <!--   <object class="GtkBox"> -->
+            <!--     <property name="visible">0</property> -->
+            <!--   </object> -->
+            <!-- </child> -->
+            <child>
               <object class="GtkBox">
-                <property name="visible">False</property>
-              </object>
-            </child>
-            <child internal-child="content_area">
-              <object class="GtkBox">
+                <property name="visible">0</property>
                 <child>
                   <object class="RegistryWarning">
                     <property name="visible">True</property>
                     <property name="halign">center</property>
                     <child>
                       <object class="GtkLabel">
-                        <property name="visible">True</property>
-                        <property name="hexpand">True</property>
+                        <property name="hexpand">1</property>
                         <property name="xalign">0</property>
                         <property name="max-width-chars">40</property>
-                        <property name="wrap">True</property>
-                        <!-- Translators: warning text of an infobar, when a key is not defined by a schema -->
-                        <property name="label" translatable="yes">No schema available. A schema is what describes the use of a key, and Dconf Editor can’t find one associated with this key. If the application that was using this key has been uninstalled, or if this key is obsolete, you may want to erase it.</property>
+                        <property name="wrap">1</property>
+                        <property name="label" translatable="1">No schema available. A schema is what describes the use of a key, and Dconf Editor can’t find one associated with this key. If the application that was using this key has been uninstalled, or if this key is obsolete, you may want to erase it.</property>
                       </object>
                     </child>
                     <child>
                       <object class="GtkButton" id="erase_button">
-                        <property name="visible">True</property>
-                        <!-- Translators: label of the action button of an infobar, when a key is not defined by a schema -->
-                        <property name="label" translatable="yes">Erase key</property>
+                        <property name="label" translatable="1">Erase key</property>
                         <property name="action-name">view.delay-erase</property>
-                        <property name="action-target">''</property>
+                        <property name="action-target">&apos;&apos;</property>
                       </object>
                     </child>
                   </object>
@@ -144,54 +111,42 @@
     </child>
     <child>
       <object class="GtkRevealer" id="one_choice_warning_revealer">
-        <property name="visible">True</property>
-        <property name="reveal-child">False</property>
         <child>
           <object class="GtkInfoBar">
-            <property name="visible">True</property>
-            <property name="message-type">info</property>
-            <child internal-child="action_area">
+            <!-- <child internal-child="action_area"> -->
+            <!--   <object class="GtkBox"> -->
+            <!--     <property name="visible">0</property> -->
+            <!--   </object> -->
+            <!-- </child> -->
+            <child>
               <object class="GtkBox">
-                <property name="visible">False</property>
-              </object>
-            </child>
-            <child internal-child="content_area">
-              <object class="GtkBox">
+                <property name="visible">0</property>
                 <child>
                   <object class="RegistryWarning">
                     <property name="visible">True</property>
                     <property name="halign">center</property>
                     <child>
                       <object class="GtkLabel" id="one_choice_enum_warning">
-                        <property name="visible">True</property>
-                        <property name="hexpand">True</property>
-                        <property name="xalign">0.5</property>
+                        <property name="hexpand">1</property>
                         <property name="max-width-chars">40</property>
-                        <property name="wrap">True</property>
-                        <!-- Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-enum' -->
-                        <property name="label" translatable="yes">This enumeration offers only one choice. That’s probably an error of the application that installed this schema. If possible, please open a bug about it.</property>
+                        <property name="wrap">1</property>
+                        <property name="label" translatable="1">This enumeration offers only one choice. That’s probably an error of the application that installed this schema. If possible, please open a bug about it.</property>
                       </object>
                     </child>
                     <child>
                       <object class="GtkLabel" id="one_choice_integer_warning">
-                        <property name="visible">True</property>
-                        <property name="hexpand">True</property>
-                        <property name="xalign">0.5</property>
+                        <property name="hexpand">1</property>
                         <property name="max-width-chars">40</property>
-                        <property name="wrap">True</property>
-                        <!-- Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-range' -->
-                        <property name="label" translatable="yes">This integer key can only take one value. That’s probably an error of the application that installed this schema. If possible, please open a bug about it.</property>
+                        <property name="wrap">1</property>
+                        <property name="label" translatable="1">This integer key can only take one value. That’s probably an error of the application that installed this schema. If possible, please open a bug about it.</property>
                       </object>
                     </child>
                     <child>
                       <object class="GtkLabel" id="one_choice_tuple_warning">
-                        <property name="visible">True</property>
-                        <property name="hexpand">True</property>
-                        <property name="xalign">0.5</property>
+                        <property name="hexpand">1</property>
                         <property name="max-width-chars">40</property>
-                        <property name="wrap">True</property>
-                        <!-- Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-triv' -->
-                        <property name="label" translatable="yes">This key has a special “empty tuple” type. That’s probably an error of the application that installed this schema. If possible, please open a bug about it.</property>
+                        <property name="wrap">1</property>
+                        <property name="label" translatable="1">This key has a special “empty tuple” type. That’s probably an error of the application that installed this schema. If possible, please open a bug about it.</property>
                       </object>
                     </child>
                   </object>
@@ -204,11 +159,9 @@
     </child>
     <child>
       <object class="GtkScrolledWindow">
-        <property name="visible">True</property>
-        <property name="vexpand">True</property>
+        <property name="vexpand">1</property>
         <child>
           <object class="GtkListBox" id="properties_list_box">
-            <property name="visible">True</property>
             <property name="selection-mode">none</property>
             <style>
               <class name="properties-list"/>

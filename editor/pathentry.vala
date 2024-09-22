@@ -55,8 +55,8 @@ using Gtk;
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/pathentry.ui")]
 private class PathEntry : Box
 {
-    [GtkChild] private unowned Button       hide_search_button;
-    [GtkChild] private unowned Button       reload_search_button;
+    // [GtkChild] private unowned Button       hide_search_button;
+    // [GtkChild] private unowned Button       reload_search_button;
 
     [GtkChild] private unowned SearchEntry search_entry;
     [GtkChild] private unowned Button       search_action_button;
@@ -69,8 +69,8 @@ private class PathEntry : Box
     //     minimum_width = 72; // the search entry does something wrong that makes the first size_allocate ask for 478px width instead of 349
     // }
 
-    private ulong can_reload_handler = 0;
-    private bool thin_window = false;
+    // private ulong can_reload_handler = 0;
+    // private bool thin_window = false;
     // private void set_window_size (AdaptativeWidget.WindowSize new_size)
     // {
     //     bool _thin_window = AdaptativeWidget.WindowSize.is_quite_thin (new_size);

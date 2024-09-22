@@ -82,7 +82,7 @@ private abstract class BookmarksHeaderBar : BrowserHeaderBar
         bookmarks_controller.hexpand = true;
 
         bookmarks_controller.visible = false;
-        _this.prepend (bookmarks_controller);
+        _this.headerbar.pack_start (bookmarks_controller);
     }
 
     internal signal void update_bookmarks_icons (Variant bookmarks_variant);

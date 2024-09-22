@@ -26,8 +26,6 @@ private const int LARGE_WINDOW_SIZE = 1042;
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/adaptative-window.ui")]
 private abstract class AdaptativeWindow : Adw.ApplicationWindow
 {
-    [GtkChild] protected unowned Adw.ToolbarView toolbar_view;
-
     private BaseHeaderBar headerbar;
     [CCode (notify = false)] public BaseHeaderBar nta_headerbar
     {
@@ -39,7 +37,6 @@ private abstract class AdaptativeWindow : Adw.ApplicationWindow
                 assert_not_reached ();
 
             headerbar = value;
-            toolbar_view.add_top_bar (value);
         }
     }
 

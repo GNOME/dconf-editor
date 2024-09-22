@@ -128,7 +128,7 @@ private class DConfHeaderBar : BookmarksHeaderBar
         modifications_actions_button.get_style_context ().add_class ("image-button");
 
         modifications_actions_button.visible = false;
-        _this.append (modifications_actions_button);
+        _this.headerbar.pack_end (modifications_actions_button);
     }
 
     private static void construct_changes_pending_menu (out GLib.Menu changes_pending_menu)

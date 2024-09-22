@@ -1,55 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  This file is part of Dconf Editor
-
-  Dconf Editor is free software: you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation, either version 3 of the License, or
-  (at your option) any later version.
-
-  Dconf Editor is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License
-  along with Dconf Editor.  If not, see <https://www.gnu.org/licenses/>.
--->
 <interface>
+  <requires lib="gtk" version="4.0"/>
   <requires lib="gtk" version="4.14"/>
   <template class="NotificationsRevealer" parent="GtkBox">
     <child>
       <object class="GtkRevealer" id="revealer">
+        <property name="visible">0</property>
         <property name="halign">center</property>
         <property name="valign">start</property>
-        <child>
+        <property name="child">
           <object class="GtkFrame">
-            <property name="visible">True</property>
             <style>
               <class name="app-notification"/>
             </style>
-            <child>
+            <property name="child">
               <object class="GtkGrid">
-                <property name="visible">True</property>
                 <property name="column-spacing">6</property>
                 <child>
                   <object class="GtkLabel" id="notification_label">
-                    <property name="visible">True</property>
-                    <property name="hexpand">True</property>
+                    <property name="hexpand">1</property>
                     <property name="xalign">0</property>
-                    <property name="wrap">True</property>
+                    <property name="wrap">1</property>
                   </object>
                 </child>
                 <child>
-                  <object class="GtkSeparator">
-                    <property name="visible">True</property>
-                  </object>
+                  <object class="GtkSeparator"/>
                 </child>
                 <child>
                   <object class="GtkButton">
-                    <property name="visible">True</property>
                     <property name="valign">center</property>
-                    <property name="focus-on-click">False</property>
+                    <property name="focus-on-click">0</property>
                     <property name="relief">none</property>
                     <property name="action-name">notification.hide</property>
                     <style>
@@ -57,17 +37,16 @@
                     </style>
                     <child>
                       <object class="GtkImage">
-                        <property name="visible">True</property>
                         <property name="icon-name">window-close-symbolic</property>
-                        <property name="icon-size">1</property>
+                        <property name="icon-size">normal</property>
                       </object>
                     </child>
                   </object>
                 </child>
               </object>
-            </child>
+            </property>
           </object>
-        </child>
+        </property>
       </object>
     </child>
   </template>

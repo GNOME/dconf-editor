@@ -100,18 +100,18 @@ private class RegistryVariantDict : Object
         return true;
     }
 
-    internal Variant? lookup_value (uint16 key, VariantType expected_type)
-    {
-        Variant? result = hash_table.lookup (key);
-        if (result == null && !((!) result).is_of_type (expected_type))
-            return null;
-        return (!) result;
-    }
+    // internal Variant? lookup_value (uint16 key, VariantType expected_type)
+    // {
+    //     Variant? result = hash_table.lookup (key);
+    //     if (result == null && !((!) result).is_of_type (expected_type))
+    //         return null;
+    //     return (!) result;
+    // }
 
-    internal bool contains (uint16 key)
-    {
-        return hash_table.contains (key);
-    }
+    // internal bool contains (uint16 key)
+    // {
+    //     return hash_table.contains (key);
+    // }
 
     internal void insert_value (uint16 key, Variant variant)
     {
@@ -119,10 +119,10 @@ private class RegistryVariantDict : Object
         hash_table.insert (key, variant);
     }
 
-    internal bool remove (uint16 key)
-    {
-        return hash_table.remove (key);
-    }
+    // internal bool remove (uint16 key)
+    // {
+    //     return hash_table.remove (key);
+    // }
 
     internal void clear ()
     {

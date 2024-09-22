@@ -570,8 +570,8 @@ private class KeyEditorChildNumberInt : Box, KeyEditorChild
     private int64 min_int64;
     private int64 max_int64;
 
-    private ulong deleted_text_handler = 0;
-    private ulong inserted_text_handler = 0;
+    // private ulong deleted_text_handler = 0;
+    // private ulong inserted_text_handler = 0;
 
     internal KeyEditorChildNumberInt (Variant initial_value, string type_string, Variant? range_content_or_null)
         requires (type_string == "y" || type_string == "n" || type_string == "q" || type_string == "i" || type_string == "u" || type_string == "h")     // "x" and "t" are managed elsewhere
@@ -844,10 +844,10 @@ private class KeyEditorChildArray : Grid, KeyEditorChild
     //     }
     //     return base.key_press_event (event);
     // }
-    private static bool event_stop ()
-    {
-        return Gdk.EVENT_STOP;
-    }
+    // private static bool event_stop ()
+    // {
+    //     return Gdk.EVENT_STOP;
+    // }
 
     private bool test_value ()
     {

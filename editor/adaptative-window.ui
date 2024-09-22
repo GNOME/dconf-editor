@@ -1,31 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  This file is part of Dconf Editor
-
-  Dconf Editor is free software: you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation, either version 3 of the License, or
-  (at your option) any later version.
-
-  Dconf Editor is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License
-  along with Dconf Editor.  If not, see <https://www.gnu.org/licenses/>.
--->
 <interface>
-  <requires lib="gtk+" version="4.14"/>
+  <requires lib="gtk" version="4.0"/>
   <template class="AdaptativeWindow" parent="AdwApplicationWindow">
-    <property name="height-request">284</property>  <!-- 288px max for Purism Librem 5 landscape, for 720px width; update gschema also -->
-    <property name="width-request">350</property>   <!-- 360px max for Purism Librem 5 portrait, for 648px height; update gschema also -->
-    <!-- <signal name="window-state-event"   handler="on_window_state_event"/> -->
-    <!-- <signal name="size-allocate"        handler="on_size_allocate"/> -->
-    <!-- <signal name="destroy"              handler="on_destroy"/> -->
-    <child>
-      <object class="AdwToolbarView" id="toolbar_view">
-      </object>
-    </child>
+    <property name="height-request">284</property>
+    <property name="width-request">350</property>
   </template>
 </interface>

@@ -27,7 +27,7 @@ private class PathWidget : Box
     [GtkChild] private unowned AdaptativePathbar    pathbar;
     [GtkChild] private unowned PathEntry            searchentry;
 
-    [GtkChild] private unowned Revealer             parent_revealer;
+    // [GtkChild] private unowned Revealer             parent_revealer;
     [GtkChild] private unowned Button          parent_button;
 
     construct
@@ -37,8 +37,8 @@ private class PathWidget : Box
         parent_button.icon_name = "go-up-symbolic";
     }
 
-    private bool quite_thin_window = false;
-    private bool extra_thin_window = false;
+    // private bool quite_thin_window = false;
+    // private bool extra_thin_window = false;
     // private void set_window_size (AdaptativeWidget.WindowSize new_size)
     // {
     //     pathbar.set_window_size (new_size);

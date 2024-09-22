@@ -185,3 +185,4 @@ private abstract class BrowserHeaderBar : BaseHeaderBar
         return base.has_popover () || path_widget.has_popover ();
     }
 }
+

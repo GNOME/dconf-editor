@@ -38,6 +38,8 @@ private interface BaseApplication : Gtk.Application
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/base-window.ui")]
 private class BaseWindow : AdaptativeWindow, AdaptativeWidget
 {
+    [GtkChild] protected unowned Adw.ToolbarView toolbar_view;
+
     private BaseView main_view;
     [CCode (notify = false)] public BaseView base_view
     {
@@ -406,20 +408,17 @@ private class BaseWindow : AdaptativeWindow, AdaptativeWidget
     * * about dialog
     \*/
 
-    private AboutDialog about_dialog;
     private void show_about_dialog ()
     {
-        // FIXME: Get rid of create_about_dialog, use Adw.AboutDialog.from_appdata.
-        if (should_init_about_dialog)
-        {
-            create_about_dialog ();
-            // about_dialog.response.connect ((_about_dialog, response) => _about_dialog.hide ());
-            // about_dialog.key_press_event.connect (about_dialog_key_press_event);
-            about_dialog.set_transient_for (this);
-            should_init_about_dialog = false;
-        }
-        about_dialog.show ();
+        // FIXME: This is probably a bit dumb; I changed it in a hurry to create
+        // about_dialog locally instead of assigning it to a property.
+        Adw.AboutDialog about_dialog = create_about_dialog ();
+        about_dialog.present (this);
+        // about_dialog.response.connect ((_about_dialog, response) => _about_dialog.hide ());
+        // about_dialog.key_press_event.connect (about_dialog_key_press_event);
+        // about_dialog.set_transient_for (this);
     }
+
     // private static bool about_dialog_key_press_event (Widget _about_dialog_widget, Gdk.EventKey event)
     // {
     //     FIXME: Shift+F1 toggles the About dialog?! That's weird. I think we
@@ -433,29 +432,30 @@ private class BaseWindow : AdaptativeWindow, AdaptativeWidget
     //     return false;
     // }
 
-    private bool should_init_about_dialog = true;
-    private void create_about_dialog ()
+    private Adw.AboutDialog create_about_dialog ()
     {
         string [] artists, authors, documenters;
         string comments, copyright, logo_icon_name, program_name, translator_credits, version, website, website_label;
 
         ((BaseApplication) get_application ()).get_about_dialog_infos (out artists, out authors, out comments, out copyright, out documenters, out logo_icon_name, out program_name, out translator_credits, out version, out website, out website_label);
 
-        about_dialog = new AboutDialog ();
+        Adw.AboutDialog about_dialog = new Adw.AboutDialog ();
         about_dialog.set_title (headerbar.about_action_label);
-        about_dialog.set_wrap_license (true);
+        // about_dialog.set_wrap_license (true);
         about_dialog.set_license_type (License.GPL_3_0);    // forced, 1/3
         if (artists.length > 0)         about_dialog.set_artists            (artists);
-        if (authors.length > 0)         about_dialog.set_authors            (authors);
+        if (authors.length > 0)         about_dialog.set_developers         (authors);
         if (comments != "")             about_dialog.set_comments           (comments);
         if (copyright != "")            about_dialog.set_copyright          (copyright);
         if (documenters.length > 0)     about_dialog.set_documenters        (documenters);
-        if (logo_icon_name != "")       about_dialog.set_logo_icon_name     (logo_icon_name);
-        if (program_name != "")         about_dialog.set_program_name       (program_name);         else assert_not_reached ();
+        if (logo_icon_name != "")       about_dialog.set_application_icon   (logo_icon_name);
+        if (program_name != "")         about_dialog.set_application_name   (program_name);         else assert_not_reached ();
         if (translator_credits != "")   about_dialog.set_translator_credits (translator_credits);
         if (version != "")              about_dialog.set_version            (version);
         if (website != "")              about_dialog.set_website            (website);
-        if (website_label != "")        about_dialog.set_website_label      (website_label);
+        // if (website_label != "")        about_dialog.set_website_label      (website_label);
+
+        return about_dialog;
     }
 
     /*\

@@ -18,7 +18,7 @@
 using Gtk;
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/registry-info.ui")]
-private class RegistryInfo : Grid, BrowsableView
+private class RegistryInfo : Box, BrowsableView
 {
     [GtkChild] private unowned Revealer conflicting_key_warning_revealer;
     [GtkChild] private unowned Revealer hard_conflicting_key_error_revealer;

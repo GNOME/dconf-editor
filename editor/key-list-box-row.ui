@@ -1,21 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  This file is part of Dconf Editor
-
-  Dconf Editor is free software: you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation, either version 3 of the License, or
-  (at your option) any later version.
-
-  Dconf Editor is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License
-  along with Dconf Editor.  If not, see <https://www.gnu.org/licenses/>.
--->
 <interface>
+  <requires lib="gtk" version="4.0"/>
   <requires lib="gtk" version="4.14"/>
   <template class="KeyListBoxRow" parent="ClickableListBoxRow">
     <property name="visible">True</property>
@@ -25,21 +10,16 @@
     </style>
     <child>
       <object class="GtkGrid" id="key_name_and_value_grid">
-        <property name="visible">True</property>
-        <property name="orientation">horizontal</property>
         <child>
           <object class="GtkGrid">
-            <property name="visible">True</property>
-            <property name="halign">fill</property>
             <child>
               <object class="GtkLabel" id="key_name_label">
-                <property name="visible">True</property>
-                <property name="vexpand">True</property>
+                <property name="vexpand">1</property>
                 <property name="valign">end</property>
                 <property name="xalign">0</property>
-                <property name="wrap">True</property>
-                <property name="wrap-mode">PANGO_WRAP_WORD_CHAR</property>
-                <property name="single-line-mode">True</property>
+                <property name="wrap">1</property>
+                <property name="wrap-mode">word-char</property>
+                <property name="single-line-mode">1</property>
                 <style>
                   <class name="key-name"/>
                 </style>
@@ -47,63 +27,60 @@
             </child>
             <child>
               <object class="GtkLabel" id="key_type_label">
-                <property name="visible">False</property>
-                <property name="hexpand">True</property>
-                <property name="vexpand">True</property>
+                <property name="visible">0</property>
+                <property name="hexpand">1</property>
+                <property name="vexpand">1</property>
                 <property name="valign">end</property>
                 <property name="xalign">1</property>
-                <property name="wrap">False</property>
                 <property name="ellipsize">end</property>
-                <property name="single-line-mode">True</property>
+                <property name="single-line-mode">1</property>
               </object>
             </child>
+            <layout>
+              <property name="column">0</property>
+              <property name="row">0</property>
+            </layout>
           </object>
-          <packing>
-            <property name="left-attach">0</property>
-            <property name="top-attach">0</property>
-          </packing>
         </child>
         <child>
           <object class="GtkLabel" id="key_info_label">
-            <property name="visible">True</property>
-            <property name="vexpand">True</property>
+            <property name="vexpand">1</property>
             <property name="valign">start</property>
             <property name="xalign">0</property>
-            <property name="hexpand">True</property>
-            <property name="wrap">True</property>
-            <property name="wrap-mode">PANGO_WRAP_WORD_CHAR</property>
+            <property name="hexpand">1</property>
+            <property name="wrap">1</property>
+            <property name="wrap-mode">word-char</property>
             <property name="lines">2</property>
             <property name="ellipsize">end</property>
-            <property name="single-line-mode">True</property> <!-- TODO needed? 1/2 -->
+            <property name="single-line-mode">1</property>
             <style>
               <class name="key-summary"/>
               <class name="dim-label"/>
             </style>
+            <layout>
+              <property name="column">0</property>
+              <property name="row">1</property>
+            </layout>
           </object>
-          <packing>
-            <property name="left-attach">0</property>
-            <property name="top-attach">1</property>
-          </packing>
         </child>
         <child>
           <object class="GtkLabel" id="key_value_label">
-            <property name="visible">True</property>
-            <property name="vexpand">True</property>
+            <property name="vexpand">1</property>
             <property name="xalign">1</property>
-            <property name="wrap">True</property>
-            <property name="wrap-mode">PANGO_WRAP_WORD_CHAR</property>
+            <property name="wrap">1</property>
+            <property name="wrap-mode">word-char</property>
             <property name="lines">3</property>
             <property name="ellipsize">end</property>
-            <property name="single-line-mode">True</property> <!-- TODO needed? 2/2 -->
+            <property name="single-line-mode">1</property>
             <style>
               <class name="key-value"/>
             </style>
+            <layout>
+              <property name="column">1</property>
+              <property name="row">0</property>
+              <property name="row-span">2</property>
+            </layout>
           </object>
-          <packing>
-            <property name="left-attach">1</property>
-            <property name="top-attach">0</property>
-            <property name="height">2</property>
-          </packing>
         </child>
       </object>
     </child>

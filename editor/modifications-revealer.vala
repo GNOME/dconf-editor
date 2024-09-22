@@ -33,7 +33,7 @@ private class ModificationsRevealer : Box
 
     StyleContext apply_button_context;
     private bool disable_action_bar = false;
-    private bool short_size_button = false;
+    // private bool short_size_button = false;
     // private void set_window_size (AdaptativeWidget.WindowSize new_size)
     // {
     //     bool _disable_action_bar = AdaptativeWidget.WindowSize.is_extra_thin (new_size)
@@ -72,7 +72,7 @@ private class ModificationsRevealer : Box
 
     public bool reveal_child { get; set; default = false; }
 
-    private ThemedIcon apply_button_icon = new ThemedIcon.from_names ({"object-select-symbolic"});
+    // private ThemedIcon apply_button_icon = new ThemedIcon.from_names ({"object-select-symbolic"});
 
     construct
     {

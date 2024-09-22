@@ -32,7 +32,7 @@ internal enum BookmarkIcon {
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/bookmarks.ui")]
 private class Bookmarks : Box
 {
-    // [GtkChild] private unowned MenuButton           button;
+    [GtkChild] private unowned MenuButton           button;
     [GtkChild] private unowned Image                bookmarks_icon;
     [GtkChild] private unowned Popover              bookmarks_popover;
     [GtkChild] private unowned Stack                edit_mode_stack;
@@ -89,7 +89,8 @@ private class Bookmarks : Box
 
         install_action_entries ();
 
-        connect ("activate", _on_activate);
+        // FIXME: ???!!!
+        // connect ("activate", _on_activate);
     }
 
     private void _on_activate () {

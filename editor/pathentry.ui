@@ -1,34 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  This file is part of Dconf Editor
-
-  Dconf Editor is free software: you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation, either version 3 of the License, or
-  (at your option) any later version.
-
-  Dconf Editor is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License
-  along with Dconf Editor.  If not, see <https://www.gnu.org/licenses/>.
--->
 <interface>
-  <requires lib="gtk+" version="3.12"/>
-  <template class="PathEntry" parent="GtkBox"> <!-- https://bugzilla.gnome.org/show_bug.cgi?id=769876 -->
-    <property name="orientation">horizontal</property>
+  <requires lib="gtk" version="4.0"/>
+  <template class="PathEntry" parent="GtkBox">
     <property name="valign">center</property>
-    <property name="hexpand">True</property>
+    <property name="hexpand">1</property>
     <style>
       <class name="linked"/>
     </style>
     <child>
       <object class="GtkSearchEntry" id="search_entry">
-        <property name="visible">True</property>
-        <property name="hexpand">True</property>
-        <!-- "next-match" (<ctrl>g) and "previous-match" (<ctrl>G) are handled in dconf-window.vala -->
+        <property name="hexpand">1</property>
         <style>
           <class name="search-entry"/>
         </style>
@@ -36,41 +17,26 @@
     </child>
     <child>
       <object class="GtkButton" id="search_action_button">
-        <property name="visible">False</property>
+        <property name="visible">0</property>
         <property name="action-name">browser.search-changed</property>
         <property name="action-target">@ms nothing</property>
       </object>
     </child>
-    <!-- child>
-      <object class="GtkButton" id="search_options_button">
-        <property name="visible">False</property>
-        <property name="sensitive" bind-source="search_bar" bind-property="search-mode-enabled"/>
-        <child>
-          <object class="GtkImage">
-            <property name="visible">True</property>
-            <property name="icon-name">pan-down-symbolic</property>
-          </object>
-        </child>
-      </object>
-    </child -->
     <child>
       <object class="GtkButton" id="hide_search_button">
-        <property name="visible">False</property>
+        <property name="visible">0</property>
         <property name="action-name">browser.hide-search</property>
         <style>
           <class name="image-button"/>
         </style>
-        <child internal-child="accessible">
-          <object class="AtkObject">
-            <!-- Translators: accessible name of the "close" button that is linked with the search entry on small windows -->
-            <property name="AtkObject::accessible-name" translatable="yes">Close search</property>
-            <!-- Translators: accessible description of the "close" button that is linked with the search entry on small windows -->
-            <property name="AtkObject::accessible-description" translatable="yes">Close search results</property>
-          </object>
-        </child>
+        <!-- <child internal-child="accessible"> -->
+        <!--   <object class="AtkObject"> -->
+        <!--     <property name="AtkObject::accessible-name" translatable="1">Close search</property> -->
+        <!--     <property name="AtkObject::accessible-description" translatable="1">Close search results</property> -->
+        <!--   </object> -->
+        <!-- </child> -->
         <child>
           <object class="GtkImage">
-            <property name="visible">True</property>
             <property name="icon-name">window-close-symbolic</property>
           </object>
         </child>
@@ -78,23 +44,19 @@
     </child>
     <child>
       <object class="GtkButton" id="reload_search_button">
-        <property name="visible">True</property>
         <property name="action-name">browser.reload-search</property>
         <style>
           <class name="image-button"/>
           <class name="suggested-action"/>
         </style>
-        <child internal-child="accessible">
-          <object class="AtkObject">
-            <!-- Translators: accessible name of the "refresh" button that is linked with the search entry on large windows -->
-            <property name="AtkObject::accessible-name" translatable="yes">Refresh</property>
-            <!-- Translators: accessible description of the "refresh" button that is linked with the search entry on large windows -->
-            <property name="AtkObject::accessible-description" translatable="yes">Refresh search results</property>
-          </object>
-        </child>
+        <!-- <child internal-child="accessible"> -->
+        <!--   <object class="AtkObject"> -->
+        <!--     <property name="AtkObject::accessible-name" translatable="1">Refresh</property> -->
+        <!--     <property name="AtkObject::accessible-description" translatable="1">Refresh search results</property> -->
+        <!--   </object> -->
+        <!-- </child> -->
         <child>
           <object class="GtkImage">
-            <property name="visible">True</property>
             <property name="icon-name">view-refresh-symbolic</property>
           </object>
         </child>

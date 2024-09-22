@@ -1,33 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  This file is part of Dconf Editor
-
-  Dconf Editor is free software: you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation, either version 3 of the License, or
-  (at your option) any later version.
-
-  Dconf Editor is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License
-  along with Dconf Editor.  If not, see <https://www.gnu.org/licenses/>.
--->
 <interface domain="dconf-editor">
+  <requires lib="gtk" version="4.0"/>
   <requires lib="gtk" version="4.14"/>
   <template class="RegistryList" parent="GtkGrid">
     <property name="orientation">vertical</property>
     <child>
       <object class="GtkScrolledWindow" id="scrolled">
-        <property name="visible">True</property>
-        <property name="expand">True</property>
-        <child>
+        <property name="hexpand">1</property>
+        <property name="vexpand">1</property>
+        <property name="child">
           <object class="GtkListBox" id="key_list_box">
-            <property name="visible">True</property>
-            <property name="activate-on-single-click">True</property>
-            <property name="selection-mode">browse</property><!-- permits to not have an item selected -->
+            <property name="selection-mode">browse</property>
             <style>
               <class name="keys-list"/>
             </style>
@@ -38,7 +21,7 @@
               </object>
             </child>
           </object>
-        </child>
+        </property>
       </object>
     </child>
   </template>

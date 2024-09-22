@@ -1,42 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  This file is part of Dconf Editor
-
-  Dconf Editor is free software: you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation, either version 3 of the License, or
-  (at your option) any later version.
-
-  Dconf Editor is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License
-  along with Dconf Editor.  If not, see <https://www.gnu.org/licenses/>.
--->
 <interface>
+  <requires lib="gtk" version="4.0"/>
   <requires lib="gtk" version="4.14"/>
   <template class="BaseView" parent="GtkBox">
+    <property name="orientation">vertical</property>
     <child>
       <object class="GtkStack" id="stack">
+        <property name="visible">True</property>
         <property name="transition-type">over-down-up</property>
         <property name="transition-duration">300</property>
         <child>
-          <object class="GtkOverlay" id="notifications_overlay"> <!-- or "main-view", see packing -->
-            <property name="visible">True</property>
-            <child>
+          <object class="GtkOverlay" id="notifications_overlay">
+            <property name="child">
               <object class="GtkBox" id="main_grid">
-                <property name="visible">True</property>
                 <property name="orientation">vertical</property>
               </object>
-            </child>
+            </property>
           </object>
         </child>
       </object>
-      <packing>
-        <property name="name">main-view</property>
-      </packing>
     </child>
   </template>
 </interface>

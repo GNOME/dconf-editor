@@ -15,7 +15,7 @@
   along with Dconf Editor.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-private class ConfigurationEditor : Gtk.Application, BaseApplication
+private class ConfigurationEditor : Adw.Application, BaseApplication
 {
     /* Translators: application name, as used in the window manager, the window title, the about dialog... */
     internal const string PROGRAM_NAME = _("dconf Editor");

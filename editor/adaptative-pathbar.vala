@@ -135,14 +135,16 @@ private class AdaptativePathbar : Adw.Bin, Pathbar
         if (start_infos_not_given)
         {
             start_infos_not_given = false;
-            if (window_size_not_given)
-                return;
+            // FIXME: Temporary hack because I removed everything about
+            //        restoring window size. We should be using AdwViewSwitcher
+            //        instead.
+            // if (window_size_not_given)
+            //     return;
             create_initial_pathbar ();
             return;
         }
 
-        if (window_size_not_given)
-            return;
+        // create_initial_pathbar ();
 
         if (large_pathbar_created)
             large_pathbar.set_path (type, path);

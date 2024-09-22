@@ -1,106 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  This file is part of Dconf Editor
-
-  Dconf Editor is free software: you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation, either version 3 of the License, or
-  (at your option) any later version.
-
-  Dconf Editor is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License
-  along with Dconf Editor.  If not, see <https://www.gnu.org/licenses/>.
--->
 <interface domain="dconf-editor">
+  <requires lib="gtk" version="4.0"/>
   <requires lib="gtk" version="4.14"/>
   <object class="GtkImage" id="big_rows_icon">
-    <property name="visible">True</property>
     <property name="icon-name">ca.desrt.dconf-editor.big-rows-symbolic</property>
-    <property name="icon-size">1</property>
+    <property name="icon-size">normal</property>
   </object>
   <object class="GtkImage" id="small_rows_icon">
-    <property name="visible">True</property>
     <property name="icon-name">ca.desrt.dconf-editor.small-rows-symbolic</property>
-    <property name="icon-size">1</property>
+    <property name="icon-size">normal</property>
   </object>
   <object class="GtkPopover" id="bookmarks_popover">
     <property name="width-request">350</property>
     <property name="height-request">300</property>
-    <!-- <signal name="key-press-event" handler="on_key_press_event"/> -->
     <style>
       <class name="bookmarks"/>
     </style>
-    <child>
+    <property name="child">
       <object class="GtkGrid">
-        <property name="visible">True</property>
         <property name="row-spacing">6</property>
-        <property name="margin">4</property>
+        <property name="margin-start">4</property>
+        <property name="margin-end">4</property>
+        <property name="margin-top">4</property>
+        <property name="margin-bottom">4</property>
         <property name="orientation">vertical</property>
         <child>
           <object class="GtkStack" id="edit_mode_stack">
-            <property name="visible">True</property>
             <child>
-              <object class="GtkGrid">
-                <property name="visible">True</property>
-                <property name="valign">center</property>
-                <property name="orientation">horizontal</property>
-                <property name="column-spacing">12</property>
-                <child>
-                  <object class="GtkLabel" id="switch_label">
-                    <property name="visible">True</property>
-                    <property name="margin-start">6</property>
-                    <property name="hexpand">True</property>
-                    <property name="halign">start</property>
-                  </object>
-                </child>
-                <child>
-                  <object class="GtkSwitch" id="bookmarked_switch">
-                    <property name="visible">True</property>
-                    <property name="halign">end</property>
-                    <property name="action-name">browser.empty</property>
-                    <property name="action-target">(byte 255,'')</property>
-                    <child internal-child="accessible">
-                      <object class="AtkObject">
-                        <!-- Translators: accessible name of the switch for bookmarking current path in the bookmarks popover -->
-                        <property name="AtkObject::accessible-name" translatable="yes">Location bookmarked</property>
-                        <!-- Translators: accessible description of the switch for bookmarking current path in the bookmarks popover -->
-                        <property name="AtkObject::accessible-description" translatable="yes">Toggle to bookmark this location</property>
+              <object class="GtkStackPage">
+                <property name="name">edit-mode-off</property>
+                <property name="child">
+                  <object class="GtkGrid">
+                    <property name="valign">center</property>
+                    <property name="column-spacing">12</property>
+                    <child>
+                      <object class="GtkLabel" id="switch_label">
+                        <property name="margin-start">6</property>
+                        <property name="hexpand">1</property>
+                        <property name="halign">start</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkSwitch" id="bookmarked_switch">
+                        <property name="halign">end</property>
+                        <property name="action-name">browser.empty</property>
+                        <property name="action-target">(byte 255,&apos;&apos;)</property>
+                        <!-- <child internal-child="accessible"> -->
+                        <!--   <object class="AtkObject"> -->
+                        <!--     <property name="AtkObject::accessible-name" translatable="1">Location bookmarked</property> -->
+                        <!--     <property name="AtkObject::accessible-description" translatable="1">Toggle to bookmark this location</property> -->
+                        <!--   </object> -->
+                        <!-- </child> -->
                       </object>
                     </child>
                   </object>
-                </child>
+                </property>
               </object>
-              <packing>
-                <property name="name">edit-mode-off</property>
-              </packing>
             </child>
             <child>
-              <object class="BookmarksController" id="bookmarks_controller">
-                <property name="visible">True</property>
-                <property name="show-rows-size-button">True</property>
-                <property name="controller-action-prefix">bookmarks</property>
-              </object>
-              <packing>
+              <object class="GtkStackPage">
                 <property name="name">edit-mode-on</property>
-              </packing>
+                <property name="child">
+                  <object class="BookmarksController" id="bookmarks_controller">
+                    <property name="visible">True</property>
+                    <property name="show-rows-size-button">True</property>
+                    <property name="controller-action-prefix">bookmarks</property>
+                  </object>
+                </property>
+              </object>
             </child>
             <child>
-              <object class="GtkLabel">
-                <property name="visible">True</property>
-                <property name="halign">center</property>
-                <!-- Translators: text that might appear in the bookmarks popover in place of the switch and its label -->
-                <property name="label" translatable="yes">The bookmarks list is not editable.</property>
-                <style>
-                  <class name="italic-label"/>
-                </style>
-              </object>
-              <packing>
+              <object class="GtkStackPage">
                 <property name="name">edit-mode-disabled</property>
-              </packing>
+                <property name="child">
+                  <object class="GtkLabel">
+                    <property name="halign">center</property>
+                    <property name="label" translatable="1">The bookmarks list is not editable.</property>
+                    <style>
+                      <class name="italic-label"/>
+                    </style>
+                  </object>
+                </property>
+              </object>
             </child>
           </object>
         </child>
@@ -110,34 +91,31 @@
             <property name="needs-shadows">True</property>
             <property name="big-placeholder">False</property>
             <property name="edit-mode-action-prefix">bookmarks</property>
-            <signal name="writability-changed"    handler="on_writability_changed"/>
-            <signal name="bookmarks-changed"      handler="on_bookmarks_changed"/>
-            <signal name="selection-changed"      handler="on_selection_changed"/>
+            <signal name="writability-changed" handler="on_writability_changed"/>
+            <signal name="bookmarks-changed" handler="on_bookmarks_changed"/>
+            <signal name="selection-changed" handler="on_selection_changed"/>
             <signal name="update_bookmarks_icons" handler="on_update_bookmarks_icons"/>
           </object>
         </child>
       </object>
-    </child>
+    </property>
   </object>
-  <template class="Bookmarks" parent="GtkMenuButton">
-    <property name="popover">bookmarks_popover</property>
-    <!-- <signal name="activate" handler="leave_edit_mode"/> -->
-<!--    <style>
-      <class name="image-button"/>  TODO bug https://bugzilla.gnome.org/show_bug.cgi?id=756731
-    </style> -->
-    <child internal-child="accessible">
-      <object class="AtkObject">
-        <!-- Translators: accessible name of the button for opening the bookmarks popover -->
-        <property name="AtkObject::accessible-name" translatable="yes">Bookmarks</property>
-        <!-- Translators: accessible description of the button for opening the bookmarks popover -->
-        <property name="AtkObject::accessible-description" translatable="yes">Manage your bookmarks</property>
-      </object>
-    </child>
+  <template class="Bookmarks" parent="GtkBox">
+    <!-- <property name="popover">bookmarks_popover</property> -->
+    <!-- <child internal-child="accessible"> -->
+    <!--   <object class="AtkObject"> -->
+    <!--     <property name="AtkObject::accessible-name" translatable="1">Bookmarks</property> -->
+    <!--     <property name="AtkObject::accessible-description" translatable="1">Manage your bookmarks</property> -->
+    <!--   </object> -->
+    <!-- </child> -->
     <child>
-      <object class="GtkImage" id="bookmarks_icon">
-        <property name="visible">True</property>
-        <property name="icon-name">non-starred-symbolic</property>
-        <property name="icon-size">1</property>
+      <object class="GtkMenuButton" id="button">
+        <child>
+          <object class="GtkImage" id="bookmarks_icon">
+            <property name="icon-name">non-starred-symbolic</property>
+            <property name="icon-size">normal</property>
+          </object>
+        </child>
       </object>
     </child>
   </template>

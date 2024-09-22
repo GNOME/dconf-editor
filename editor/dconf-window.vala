@@ -60,6 +60,8 @@ private class DConfWindow : BookmarksWindow
         headerbar = _headerbar;
         main_view = _main_view;
 
+        toolbar_view.add_top_bar (headerbar);
+
         create_modifications_revealer ();
 
         install_ui_action_entries ();

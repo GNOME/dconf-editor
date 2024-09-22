@@ -1,39 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  This file is part of Dconf Editor
-
-  Dconf Editor is free software: you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation, either version 3 of the License, or
-  (at your option) any later version.
-
-  Dconf Editor is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License
-  along with Dconf Editor.  If not, see <https://www.gnu.org/licenses/>.
--->
 <interface domain="dconf-editor">
+  <requires lib="gtk" version="4.0"/>
   <requires lib="gtk" version="4.14"/>
   <template class="Bookmark" parent="OverlayedListRow">
     <child>
-      <object class="GtkGrid"> <!-- TODO remove? -->
-        <property name="visible">True</property>
-        <property name="orientation">horizontal</property>
-        <property name="column-spacing">0</property>
+      <object class="GtkGrid">
         <style>
           <class name="bookmark"/>
         </style>
         <child>
           <object class="GtkLabel" id="bookmark_label">
-            <property name="visible">True</property>
-            <property name="hexpand">True</property>
+            <property name="hexpand">1</property>
             <property name="halign">start</property>
-            <property name="vexpand">True</property>
+            <property name="vexpand">1</property>
             <property name="max-width-chars">42</property>
-            <property name="ellipsize">PANGO_ELLIPSIZE_START</property>
+            <property name="ellipsize">start</property>
           </object>
         </child>
       </object>

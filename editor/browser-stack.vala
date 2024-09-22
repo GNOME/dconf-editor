@@ -18,7 +18,7 @@
 using Gtk;
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/browser-stack.ui")]
-private class BrowserStack : Grid, BrowserContent
+private class BrowserStack : Box, BrowserContent
 {
     [GtkChild] private unowned Stack stack;
     [GtkChild] private unowned RegistryView folder_view;

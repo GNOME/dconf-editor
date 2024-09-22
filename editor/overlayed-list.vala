@@ -20,7 +20,7 @@ using Gtk;
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/overlayed-list.ui")]
 private abstract class OverlayedList : Box
 {
-    [GtkChild] protected unowned Overlay        overlay;
+    // [GtkChild] protected unowned Overlay        overlay;
     [GtkChild] protected unowned ListBox        main_list_box;
                private   StyleContext   main_list_box_context;
                protected GLib.ListStore main_list_store = new GLib.ListStore (typeof (Widget));
@@ -91,24 +91,24 @@ private abstract class OverlayedList : Box
     //     else
     //         set_vertical (ref main_context, edit_mode_box);
     // }
-    private static inline void set_horizontal (ref StyleContext main_context, Box edit_mode_box)
-    {
-        main_context.remove_class ("vertical");
-        edit_mode_box.halign = Align.END;
-        edit_mode_box.valign = Align.CENTER;
-        edit_mode_box.orientation = Orientation.VERTICAL;
-        edit_mode_box.width_request = 160;
-        main_context.add_class ("horizontal");
-    }
-    private static inline void set_vertical (ref StyleContext main_context, Box edit_mode_box)
-    {
-        main_context.remove_class ("horizontal");
-        edit_mode_box.halign = Align.CENTER;
-        edit_mode_box.valign = Align.END;
-        edit_mode_box.orientation = Orientation.HORIZONTAL;
-        edit_mode_box.width_request = 200;
-        main_context.add_class ("vertical");
-    }
+    // private static inline void set_horizontal (ref StyleContext main_context, Box edit_mode_box)
+    // {
+    //     main_context.remove_class ("vertical");
+    //     edit_mode_box.halign = Align.END;
+    //     edit_mode_box.valign = Align.CENTER;
+    //     edit_mode_box.orientation = Orientation.VERTICAL;
+    //     edit_mode_box.width_request = 160;
+    //     main_context.add_class ("horizontal");
+    // }
+    // private static inline void set_vertical (ref StyleContext main_context, Box edit_mode_box)
+    // {
+    //     main_context.remove_class ("horizontal");
+    //     edit_mode_box.halign = Align.CENTER;
+    //     edit_mode_box.valign = Align.END;
+    //     edit_mode_box.orientation = Orientation.HORIZONTAL;
+    //     edit_mode_box.width_request = 200;
+    //     main_context.add_class ("vertical");
+    // }
 
     /*\
     * * keyboard
@@ -168,15 +168,15 @@ private abstract class OverlayedList : Box
         // return true;
     }
 
-    internal void select_all ()
-    {
-        main_list_box.select_all ();
-    }
+    // internal void select_all ()
+    // {
+    //     main_list_box.select_all ();
+    // }
 
-    internal void unselect_all ()
-    {
-        main_list_box.unselect_all ();
-    }
+    // internal void unselect_all ()
+    // {
+    //     main_list_box.unselect_all ();
+    // }
 
     protected void select_row_for_real (ListBoxRow row)   // ahem...
     {

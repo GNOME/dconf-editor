@@ -1,44 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  This file is part of Dconf Editor
-
-  Dconf Editor is free software: you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation, either version 3 of the License, or
-  (at your option) any later version.
-
-  Dconf Editor is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License
-  along with Dconf Editor.  If not, see <https://www.gnu.org/licenses/>.
--->
 <interface domain="dconf-editor">
+  <requires lib="gtk" version="4.0"/>
   <requires lib="gtk" version="4.14"/>
   <template class="ModificationsRevealer" parent="GtkBox">
     <child>
       <object class="GtkRevealer" id="revealer">
-        <child>
+        <property name="visible">0</property>
+        <property name="child">
           <object class="GtkActionBar">
-            <property name="visible">True</property>
             <style>
               <class name="modifications-revealer"/>
             </style>
             <child>
               <object class="GtkMenuButton" id="delayed_list_button">
-                <property name="visible">True</property>
-                <property name="use-popover">True</property>
+                <!-- <property name="use-popover">True</property> -->
                 <property name="popover">delayed_settings_list_popover</property>
-                <property name="focus-on-click">False</property>
+                <property name="focus-on-click">0</property>
                 <style>
                   <class name="circular"/>
                   <class name="image-button"/>
                 </style>
                 <child>
                   <object class="GtkImage">
-                    <property name="visible">True</property>
                     <property name="icon-name">view-more-symbolic</property>
                   </object>
                 </child>
@@ -46,15 +29,13 @@
             </child>
             <child>
               <object class="GtkLabel" id="label">
-                <property name="visible">True</property>
-                <property name="margin-start">6</property><!-- GtkActionBar creates a GtkBox which "spacing" property is not editable -->
+                <property name="margin-start">6</property>
                 <property name="margin-end">6</property>
                 <property name="ellipsize">end</property>
               </object>
             </child>
-            <child>
+            <child type="end">
               <object class="GtkButton">
-                <property name="visible">True</property>
                 <property name="action-name">ui.dismiss-delayed-settings</property>
                 <style>
                   <class name="flat"/>
@@ -62,47 +43,29 @@
                 </style>
                 <child>
                   <object class="GtkImage">
-                    <property name="visible">True</property>
                     <property name="icon-name">window-close-symbolic</property>
-                    <property name="icon-size">1</property>
+                    <property name="icon-size">normal</property>
                   </object>
                 </child>
               </object>
-              <packing>
-                <property name="pack-type">end</property>
-              </packing>
             </child>
-            <child>
-              <object class="GtkSeparator">
-                <property name="visible">True</property>
-                <property name="orientation">horizontal</property>
-              </object>
-              <packing>
-                <property name="pack-type">end</property>
-              </packing>
+            <child type="end">
+              <object class="GtkSeparator"/>
             </child>
-            <child>
+            <child type="end">
               <object class="GtkButton" id="apply_button">
-                <property name="visible">True</property>
-                <!-- Translators: when there are pending changes, label of the "apply" button in the bottom bar, on large windows-->
-                <property name="text" translatable="yes">Apply</property>
-                <property name="centered">True</property>
-                <property name="iconic">True</property>
+                <property name="label" translatable="1">Apply</property>
                 <property name="action-name">ui.apply-delayed-settings</property>
                 <style>
                   <class name="suggested-action"/>
                 </style>
               </object>
-              <packing>
-                <property name="pack-type">end</property>
-              </packing>
             </child>
           </object>
-        </child>
+        </property>
       </object>
     </child>
   </template>
-
   <object class="GtkPopover" id="delayed_settings_list_popover">
     <property name="height-request">300</property>
     <property name="width-request">550</property>

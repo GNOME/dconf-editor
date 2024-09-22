@@ -51,7 +51,7 @@ private class ShortPathbar : Grid, Pathbar  // TODO make MenuButton?
     * * callbacks
     \*/
 
-    private int event_x = 0;
+    // private int event_x = 0;
 
     // [GtkCallback]
     // private bool on_button_press_event (Widget widget, Gdk.EventButton event)

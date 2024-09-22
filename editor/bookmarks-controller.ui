@@ -1,116 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  This file is part of Dconf Editor
-
-  Dconf Editor is free software: you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation, either version 3 of the License, or
-  (at your option) any later version.
-
-  Dconf Editor is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License
-  along with Dconf Editor.  If not, see <https://www.gnu.org/licenses/>.
--->
 <interface domain="dconf-editor">
+  <requires lib="gtk" version="4.0"/>
   <requires lib="gtk" version="4.14"/>
   <object class="GtkImage" id="big_rows_icon">
-    <property name="visible">True</property>
     <property name="icon-name">ca.desrt.dconf-editor.big-rows-symbolic</property>
-    <property name="icon-size">1</property>
+    <property name="icon-size">normal</property>
   </object>
   <object class="GtkImage" id="small_rows_icon">
-    <property name="visible">True</property>
     <property name="icon-name">ca.desrt.dconf-editor.small-rows-symbolic</property>
-    <property name="icon-size">1</property>
+    <property name="icon-size">normal</property>
   </object>
   <template class="BookmarksController" parent="GtkGrid">
-    <property name="hexpand">True</property>
+    <property name="hexpand">1</property>
     <property name="valign">center</property>
-    <property name="orientation">horizontal</property>
     <property name="column-spacing">6</property>
     <child>
       <object class="GtkButton" id="trash_bookmark_button">
-        <property name="visible">True</property>
         <property name="halign">start</property>
         <style>
           <class name="image-button"/>
         </style>
         <child>
           <object class="GtkImage">
-            <property name="visible">True</property>
             <property name="icon-name">user-trash-symbolic</property>
-            <property name="icon-size">1</property>
+            <property name="icon-size">normal</property>
           </object>
         </child>
       </object>
     </child>
     <child>
       <object class="GtkBox">
-        <property name="visible">True</property>
         <property name="halign">start</property>
         <style>
           <class name="linked"/>
         </style>
         <child>
           <object class="GtkButton" id="move_top_button">
-            <property name="visible">True</property>
             <style>
               <class name="image-button"/>
             </style>
             <child>
               <object class="GtkImage">
-                <property name="visible">True</property>
                 <property name="icon-name">go-top-symbolic</property>
-                <property name="icon-size">1</property>
+                <property name="icon-size">normal</property>
               </object>
             </child>
           </object>
         </child>
         <child>
           <object class="GtkButton" id="move_up_button">
-            <property name="visible">True</property>
             <style>
               <class name="image-button"/>
             </style>
             <child>
               <object class="GtkImage">
-                <property name="visible">True</property>
                 <property name="icon-name">go-up-symbolic</property>
-                <property name="icon-size">1</property>
+                <property name="icon-size">normal</property>
               </object>
             </child>
           </object>
         </child>
         <child>
           <object class="GtkButton" id="move_down_button">
-            <property name="visible">True</property>
             <style>
               <class name="image-button"/>
             </style>
             <child>
               <object class="GtkImage">
-                <property name="visible">True</property>
                 <property name="icon-name">go-down-symbolic</property>
-                <property name="icon-size">1</property>
+                <property name="icon-size">normal</property>
               </object>
             </child>
           </object>
         </child>
         <child>
           <object class="GtkButton" id="move_bottom_button">
-            <property name="visible">True</property>
             <style>
               <class name="image-button"/>
             </style>
             <child>
               <object class="GtkImage">
-                <property name="visible">True</property>
                 <property name="icon-name">go-bottom-symbolic</property>
-                <property name="icon-size">1</property>
+                <property name="icon-size">normal</property>
               </object>
             </child>
           </object>
@@ -119,9 +90,10 @@
     </child>
     <child>
       <object class="GtkButton" id="rows_size_button">
-        <property name="hexpand">True</property>
+        <property name="visible">0</property>
+        <property name="hexpand">1</property>
         <property name="halign">end</property>
-        <property name="action-name">bookmarks.set-small-rows</property> <!-- only used from popover, so keep this action -->
+        <property name="action-name">bookmarks.set-small-rows</property>
         <style>
           <class name="image-button"/>
         </style>

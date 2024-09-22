@@ -94,48 +94,58 @@ private class LargePathbar : Box, Pathbar
 
         complete_path = "";
         string [] split = path.split ("/", /* max tokens disabled */ 0);
+        if (split.length == 0) {
+            // !!!
+            return;
+        }
         string last = split [split.length - 1];
 
+        Gtk.Widget? child = get_first_child ();
         bool destroy_all = false;
         bool maintain_all = false;
-        // FIXME: AAAAAAAH
-        // @foreach ((child) => {
+        // FIXME THERE HAS TO BE A BETTER WAY TO DO THIS BUT I'LL JUST MAKE IT WORSE FOR NOW
+        while (child != null) {
+            if (child is Label)
+            {
+                Gtk.Widget? next = ((!) child).get_next_sibling ();
+                if (destroy_all)
+                    remove (((!) child));
+                else
+                    complete_path += "/";
+                child = next;
+                continue;
+            }
 
-        //         if (child is Label)
-        //         {
-        //             if (destroy_all)
-        //                 child.destroy ();
-        //             else
-        //                 complete_path += "/";
-        //             return;
-        //         }
+            LargePathbarItem item = (LargePathbarItem) child;
 
-        //         LargePathbarItem item = (LargePathbarItem) child;
+            if (maintain_all)
+            {
+                complete_path += item.text_string;
+                activate_item (item, false);
+                child = ((!) child).get_next_sibling ();
+                continue;
+            }
 
-        //         if (maintain_all)
-        //         {
-        //             complete_path += item.text_string;
-        //             activate_item (item, false);
-        //             return;
-        //         }
+            if (item == root_button || (!destroy_all && item.text_string == split [0]))
+            {
+                complete_path += split [0];
+                split = split [1:split.length];
+                if (split.length == 0 || (split.length == 1 && (type == ViewType.FOLDER || type == ViewType.CONFIG)))
+                {
+                    activate_item (item, true);
+                    maintain_all = true;
+                }
+                else
+                    activate_item (item, false);
+                child = ((!) child).get_next_sibling ();
+                continue;
+            }
 
-        //         if (item == root_button || (!destroy_all && item.text_string == split [0]))
-        //         {
-        //             complete_path += split [0];
-        //             split = split [1:split.length];
-        //             if (split.length == 0 || (split.length == 1 && (type == ViewType.FOLDER || type == ViewType.CONFIG)))
-        //             {
-        //                 activate_item (item, true);
-        //                 maintain_all = true;
-        //             }
-        //             else
-        //                 activate_item (item, false);
-        //             return;
-        //         }
+            remove (((!) child));
+            destroy_all = true;
 
-        //         child.destroy ();
-        //         destroy_all = true;
-        //     });
+            child = ((!) child).get_next_sibling ();
+        }
 
         if (split.length > 0)
         {
@@ -174,59 +184,60 @@ private class LargePathbar : Box, Pathbar
     internal void update_ghosts (string non_ghost_path, bool is_search)
     {
         fallback_path = non_ghost_path;
+        Gtk.Widget? child = get_first_child ();
         string action_target = "";
-        // FIXME: Boooo :(
-        // @foreach ((child) => {
-        //         StyleContext context = child.get_style_context ();
-        //         if (child is LargePathbarItem)
-        //         {
-        //             LargePathbarItem item = (LargePathbarItem) child;
-        //             Variant? variant = item.get_action_target_value ();
-        //             if (variant == null)
-        //                 assert_not_reached ();
-        //             if (((!) variant).get_type_string () == "s")    // directory
-        //                 action_target = ((!) variant).get_string ();
-        //             else
-        //             {
-        //                 uint16 unused;
-        //                 ((!) variant).@get ("(sq)", out action_target, out unused);
-        //             }
+        // FIXME Boooo :(
+        while (child != null) {
+            // StyleContext context = child.get_style_context ();
+            if (child is LargePathbarItem)
+            {
+                LargePathbarItem item = (LargePathbarItem) child;
+                Variant? variant = item.get_action_target_value ();
+                if (variant == null)
+                    assert_not_reached ();
+                if (((!) variant).get_type_string () == "s")    // directory
+                    action_target = ((!) variant).get_string ();
+                else
+                {
+                    uint16 unused;
+                    ((!) variant).@get ("(sq)", out action_target, out unused);
+                }
 
-        //             if (item.is_active)
-        //             {
-        //                 if (is_search)
-        //                 {
-        //                     item.set_cursor_type (LargePathbarItem.CursorType.POINTER);
-        //                     item.set_detailed_action_name (item.default_action);
-        //                 }
-        //                 else
-        //                 {
-        //                     item.set_cursor_type (LargePathbarItem.CursorType.CONTEXT);
-        //                     item.set_action_name ("browser.empty");
-        //                 }
-        //                 if (non_ghost_path.has_prefix (action_target))
-        //                     context.remove_class ("inexistent");
-        //                 else
-        //                     context.add_class ("inexistent");
-        //             }
-        //             else if (non_ghost_path.has_prefix (action_target))
-        //             {
-        //                 item.set_cursor_type (LargePathbarItem.CursorType.POINTER);
-        //                 item.set_detailed_action_name (item.default_action);
-        //                 context.remove_class ("inexistent");
-        //             }
-        //             else
-        //             {
-        //                 item.set_cursor_type (LargePathbarItem.CursorType.DEFAULT);
-        //                 item.set_detailed_action_name (item.alternative_action);
-        //                 context.add_class ("inexistent");
-        //             }
-        //         }
-        //         else if (non_ghost_path.has_prefix (action_target))
-        //             context.remove_class ("inexistent");
-        //         else
-        //             context.add_class ("inexistent");
-        //     });
+                if (item.is_active)
+                {
+                    if (is_search)
+                    {
+                        item.set_cursor_type (LargePathbarItem.CursorType.POINTER);
+                        item.set_detailed_action_name (item.default_action);
+                    }
+                    else
+                    {
+                        item.set_cursor_type (LargePathbarItem.CursorType.CONTEXT);
+                        item.set_action_name ("browser.empty");
+                    }
+                    // if (non_ghost_path.has_prefix (action_target))
+                    //     context.remove_class ("inexistent");
+                    // else
+                    //     context.add_class ("inexistent");
+                }
+                else if (non_ghost_path.has_prefix (action_target))
+                {
+                    item.set_cursor_type (LargePathbarItem.CursorType.POINTER);
+                    item.set_detailed_action_name (item.default_action);
+                    // context.remove_class ("inexistent");
+                }
+                else
+                {
+                    item.set_cursor_type (LargePathbarItem.CursorType.DEFAULT);
+                    item.set_detailed_action_name (item.alternative_action);
+                    // context.add_class ("inexistent");
+                }
+            }
+            // else if (non_ghost_path.has_prefix (action_target))
+            //     context.remove_class ("inexistent");
+            // else
+            //     context.add_class ("inexistent");
+        }
     }
 
     private static inline void update_active_button_cursor (ViewType type, ref LargePathbarItem active_button)
@@ -375,7 +386,8 @@ private class LargePathbarItem : Button
         }
 
         generate_popover ();
-        ((!) popover).popup ();
+        // FIXME ?!!!!
+        // ((!) popover).popup ();
     }
 
     internal LargePathbarItem (string label, string _default_action, string _alternative_action, bool _has_config_menu)

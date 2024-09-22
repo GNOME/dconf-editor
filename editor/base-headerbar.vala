@@ -18,15 +18,13 @@
 using Gtk;
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/base-headerbar.ui")]
-private class BaseHeaderBar : Box
+private class BaseHeaderBar : Adw.Bin
 {
-    [GtkChild] protected unowned HeaderBar headerbar;
+    [GtkChild] protected unowned Adw.HeaderBar headerbar;
     [GtkChild] protected unowned Box center_box;
 
     construct
     {
-        center_box.valign = Align.FILL;
-
         register_modes ();
     }
 
@@ -214,11 +212,10 @@ private class BaseHeaderBar : Box
     * * default widgets
     \*/
 
-    [GtkChild] private unowned Button     go_back_button;
-    [GtkChild] private unowned Separator  ltr_left_separator;
-    [GtkChild] private unowned Label      title_label;
+    // [GtkChild] private unowned Button     go_back_button;
+    // [GtkChild] private unowned Separator  ltr_left_separator;
     [GtkChild] private unowned MenuButton info_button;
-    [GtkChild] private unowned Separator  ltr_right_separator;
+    // [GtkChild] private unowned Separator  ltr_right_separator;
 
     protected void set_default_widgets_states (string?  title_label_text_or_null,
                                                bool     show_go_back_button,
@@ -227,20 +224,20 @@ private class BaseHeaderBar : Box
                                                bool     show_ltr_right_separator,
                                                bool     show_quit_button_stack)
     {
-        go_back_button.visible = show_go_back_button;
-        ltr_left_separator.visible = show_ltr_left_separator;
+        headerbar.show_back_button = show_go_back_button;
+        // ltr_left_separator.visible = show_ltr_left_separator;
         if (title_label_text_or_null == null)
         {
-            title_label.set_label ("");
-            title_label.hide ();
+            // title_label.set_label ("");
+            // title_label.hide ();
         }
         else
         {
-            title_label.set_label ((!) title_label_text_or_null);
-            title_label.show ();
+            // title_label.set_label ((!) title_label_text_or_null);
+            // title_label.show ();
         }
         info_button.visible = show_info_button;
-        ltr_right_separator.visible = show_ltr_right_separator;
+        // ltr_right_separator.visible = show_ltr_right_separator;
         quit_button_stack.visible = show_quit_button_stack;
     }
 

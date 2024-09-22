@@ -1,30 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  This file is part of Dconf Editor
-
-  Dconf Editor is free software: you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation, either version 3 of the License, or
-  (at your option) any later version.
-
-  Dconf Editor is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License
-  along with Dconf Editor.  If not, see <https://www.gnu.org/licenses/>.
--->
 <interface>
+  <requires lib="gtk" version="4.0"/>
   <requires lib="gtk" version="4.14"/>
   <template class="PathWidget" parent="GtkBox">
-    <property name="valign">fill</property>
     <property name="spacing">6</property>
     <child>
       <object class="GtkStack" id="pathwidget_stack">
-        <property name="visible">True</property>
-        <property name="valign">fill</property>
-        <property name="visible-child">pathbar_grid</property> <!-- uses the "id" attribute -->
+        <property name="visible-child">pathbar_grid</property>
         <property name="transition-duration">300</property>
         <property name="transition-type">crossfade</property>
         <child>
@@ -34,7 +16,6 @@
         </child>
         <child>
           <object class="GtkGrid" id="pathbar_grid">
-            <property name="visible">True</property>
             <child>
               <object class="AdaptativePathbar" id="pathbar">
                 <property name="visible">True</property>
@@ -43,48 +24,43 @@
             </child>
             <child>
               <object class="GtkRevealer" id="parent_revealer">
-                <property name="visible">True</property>
-                <property name="reveal-child">False</property>
                 <property name="transition-type">slide-left</property>
                 <style>
                   <class name="headerbar-revealer"/>
                 </style>
-                <child>
+                <property name="child">
                   <object class="GtkButton" id="parent_button">
-                    <property name="visible">True</property>
                     <property name="valign">center</property>
-                    <property name="iconic">True</property>
-                    <property name="centered">True</property>
+                    <!-- <property name="iconic">True</property> -->
+                    <!-- <property name="centered">True</property> -->
                     <property name="action-name">browser.disabled-state-s</property>
-                    <property name="action-target">''</property>
+                    <property name="action-target">&apos;&apos;</property>
                     <style>
                       <class name="image-button"/>
                     </style>
                   </object>
-                </child>
+                </property>
               </object>
             </child>
             <child>
               <object class="GtkButton" id="search_button">
-                <property name="visible">False</property>
+                <property name="visible">0</property>
                 <property name="halign">end</property>
-                <property name="hexpand">False</property>
+                <property name="hexpand">0</property>
                 <property name="valign">center</property>
-                <property name="focus-on-click">False</property>
-                <property name="iconic">True</property>
-                <property name="centered">True</property>
+                <property name="focus-on-click">0</property>
+                <!-- <property name="iconic">True</property> -->
+                <!-- <property name="centered">True</property> -->
                 <property name="action-name">browser.show-search</property>
                 <style>
                   <class name="image-button"/>
                 </style>
-                <child internal-child="accessible">
-                  <object class="AtkObject">
-                    <!-- Translators: accessible name of the enter-search button displayed in small-size windows -->
-                    <property name="AtkObject::accessible-name" translatable="yes">Search</property>
-                    <!-- Translators: accessible description of the enter-search button displayed in small-size windows -->
-                    <property name="AtkObject::accessible-description" translatable="yes">Search keys</property>
-                  </object>
-                </child>
+                <!-- <child internal-child="accessible"> -->
+                <!--   <object class="AtkObject"> -->
+                <!--     <property name="AtkObject::accessible-name" translatable="1">Search</property> -->
+                <!--     <property name="AtkObject::accessible-description" translatable="1">Search keys</property> -->
+                <!--   </object> -->
+                <!-- </child> -->
               </object>
             </child>
           </object>
@@ -93,24 +69,21 @@
     </child>
     <child>
       <object class="GtkButton" id="search_toggle">
-        <property name="visible">True</property>
         <property name="valign">center</property>
-        <property name="focus-on-click">False</property>
-        <property name="iconic">True</property>
-        <property name="centered">True</property>
+        <property name="focus-on-click">0</property>
+        <!-- <property name="iconic">True</property> -->
+        <!-- <property name="centered">True</property> -->
         <property name="action-name">browser.toggle-search</property>
         <property name="action-target">true</property>
         <style>
           <class name="image-button"/>
         </style>
-        <child internal-child="accessible">
-          <object class="AtkObject">
-            <!-- Translators: accessible name of the search togglebutton displayed in usual-size windows -->
-            <property name="AtkObject::accessible-name" translatable="yes">Search</property>
-            <!-- Translators: accessible description of the search togglebutton displayed in usual-size windows -->
-            <property name="AtkObject::accessible-description" translatable="yes">Search keys</property>
-          </object>
-        </child>
+        <!-- <child internal-child="accessible"> -->
+        <!--   <object class="AtkObject"> -->
+        <!--     <property name="AtkObject::accessible-name" translatable="1">Search</property> -->
+        <!--     <property name="AtkObject::accessible-description" translatable="1">Search keys</property> -->
+        <!--   </object> -->
+        <!-- </child> -->
       </object>
     </child>
   </template>

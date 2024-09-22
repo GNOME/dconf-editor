@@ -38,7 +38,7 @@ private class NotificationsRevealer : Box
         revealer.set_reveal_child (true);
     }
 
-    private bool is_thin = false;
+    // private bool is_thin = false;
     // private void set_window_size (AdaptativeWidget.WindowSize new_size)
     // {
     //     bool _is_thin = AdaptativeWidget.WindowSize.is_quite_thin (new_size);
