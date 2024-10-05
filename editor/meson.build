@@ -22,7 +22,7 @@ configure_file(
   configuration: service_conf
 )
 
-appdata = dconf_editor_namespace + '.appdata.xml'
+appdata = dconf_editor_namespace + '.metainfo.xml'
 
 i18n.merge_file(
   input: appdata + '.in',
