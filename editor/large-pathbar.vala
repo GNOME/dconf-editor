@@ -17,6 +17,9 @@
 
 using Gtk;
 
+// FIXME: Replace this with a pathbar implementation inspired by the current
+//        version of Files.
+
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/large-pathbar.ui")]
 private class LargePathbar : Box, Pathbar
 {
@@ -141,10 +144,10 @@ private class LargePathbar : Box, Pathbar
                 continue;
             }
 
-            remove (((!) child));
-            destroy_all = true;
-
+            var last_child = (!) child;
             child = ((!) child).get_next_sibling ();
+            destroy_all = true;
+            remove (last_child);
         }
 
         if (split.length > 0)
