@@ -20,7 +20,7 @@ using Gtk;
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/overlayed-list.ui")]
 private abstract class OverlayedList : Box
 {
-    // [GtkChild] protected unowned Overlay        overlay;
+    [GtkChild] protected unowned Overlay        overlay;
     [GtkChild] protected unowned ListBox        main_list_box;
                protected GLib.ListStore main_list_store = new GLib.ListStore (typeof (Widget));
 

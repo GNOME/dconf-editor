@@ -5,7 +5,8 @@
   <template class="ModificationsRevealer" parent="GtkBox">
     <child>
       <object class="GtkRevealer" id="revealer">
-        <property name="visible">0</property>
+        <property name="hexpand">1</property>
+        <property name="reveal-child">1</property>
         <property name="child">
           <object class="GtkActionBar">
             <style>

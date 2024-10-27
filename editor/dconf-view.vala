@@ -175,9 +175,9 @@ private class DConfView : BookmarksView
                                                     /* big placeholder */ true);
         // modifications_list.set_window_size (saved_window_size);
         // modifications_list.selection_changed.connect (() => ...);
-        modifications_list.show ();
+        // modifications_list.show ();
         // FIXME: This is almost definitely doing something wrong
-        main_grid.append (modifications_list);
+        // main_grid.append (modifications_list);
         modifications_list_created = true;
     }
 

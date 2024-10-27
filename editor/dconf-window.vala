@@ -261,7 +261,6 @@ private class DConfWindow : BookmarksWindow
     private void create_modifications_revealer ()
     {
         revealer = new ModificationsRevealer ();
-        revealer.visible = true;
         add_to_main_box (revealer);
         // add_adaptative_child (revealer);
     }
