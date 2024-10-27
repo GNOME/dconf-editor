@@ -1,10 +1,10 @@
 {
-    "id": "ca.desrt.dconf-editor",
-    "runtime": "org.gnome.Platform",
-    "runtime-version": "master",
-    "sdk": "org.gnome.Sdk",
-    "command": "start-dconf-editor",
-    "finish-args": [
+    "id" : "ca.desrt.dconf-editor",
+    "runtime" : "org.gnome.Platform",
+    "runtime-version" : "master",
+    "sdk" : "org.gnome.Sdk",
+    "command" : "start-dconf-editor",
+    "finish-args" : [
         "--share=ipc",
         "--socket=fallback-x11",
         "--socket=wayland",
@@ -15,59 +15,65 @@
         "--env=GIO_EXTRA_MODULES=/app/lib/gio/modules/",
         "--talk-name=org.freedesktop.Flatpak"
     ],
-    "modules": [
+    "modules" : [
         {
-            "name": "dconf",
-            "buildsystem": "meson",
-            "config-opts": [
+            "name" : "dconf",
+            "buildsystem" : "meson",
+            "config-opts" : [
                 "-Dbash_completion=false",
                 "-Dman=false",
                 "-Dsystemduserunitdir=' '"
             ],
-            "cleanup": [
+            "cleanup" : [
                 "/include",
                 "/lib/pkgconfig",
                 "/libexec",
                 "/share/dbus-1"
             ],
-            "sources": [
+            "sources" : [
                 {
-                    "type": "archive",
-                    "url": "https://download.gnome.org/sources/dconf/0.40/dconf-0.40.0.tar.xz",
-                    "sha256": "cf7f22a4c9200421d8d3325c5c1b8b93a36843650c9f95d6451e20f0bcb24533"
+                    "type" : "archive",
+                    "url" : "https://download.gnome.org/sources/dconf/0.40/dconf-0.40.0.tar.xz",
+                    "sha256" : "cf7f22a4c9200421d8d3325c5c1b8b93a36843650c9f95d6451e20f0bcb24533"
                 },
                 {
-                    "type": "patch",
-                    "path": "dconf-override.patch"
+                    "type" : "patch",
+                    "path" : "dconf-override.patch"
                 }
             ]
         },
         {
-            "name": "scripts",
-            "buildsystem": "simple",
-            "build-commands": [
+            "name" : "scripts",
+            "buildsystem" : "simple",
+            "build-commands" : [
                 "install -Dm 755 start-dconf-editor.sh /app/bin/start-dconf-editor"
             ],
-            "sources": [
+            "sources" : [
                 {
-                    "type": "file",
-                    "path": "start-dconf-editor.sh"
+                    "type" : "file",
+                    "path" : "start-dconf-editor.sh"
                 }
             ]
         },
         {
-            "name": "dconf-editor",
-            "buildsystem": "meson",
-            "sources": [
+            "name" : "dconf-editor",
+            "buildsystem" : "meson",
+            "sources" : [
                 {
-                    "type": "dir",
-                    "path": "../"
+                    "type" : "dir",
+                    "path" : "../"
                 }
             ],
-            "post-install": [
+            "post-install" : [
                 "sed -i 's,^Exec=dconf-editor$,Exec=start-dconf-editor,g' /app/share/applications/ca.desrt.dconf-editor.desktop",
                 "sed -i 's,^Exec=/app/bin/dconf-editor,Exec=/app/bin/start-dconf-editor,g' /app/share/dbus-1/services/ca.desrt.dconf-editor.service"
+            ],
+            "config-opts" : [
+                "--libdir=lib"
             ]
         }
-    ]
+    ],
+    "build-options" : {
+        "env" : {        }
+    }
 }
