@@ -576,7 +576,7 @@ private class ConfigurationEditor : Adw.Application, BaseApplication
         if (display == null)
             return;
 
-        Gdk.Clipboard clipboard = ((Gdk.Display!) display).get_clipboard ();
+        Gdk.Clipboard clipboard = ((Gdk.Display) display).get_clipboard ();
         clipboard.set_text (text);
 
         // notification

@@ -52,7 +52,6 @@ private abstract class AdaptativeWindow : Adw.ApplicationWindow
         }
     }
 
-    private StyleContext window_style_context;
     [CCode (notify = false)] public string specific_css_class_or_empty
     {
         protected construct
@@ -61,22 +60,20 @@ private abstract class AdaptativeWindow : Adw.ApplicationWindow
             if (_value == null)
                 assert_not_reached ();
 
-            window_style_context = get_style_context ();
             if (value != "")
-                window_style_context.add_class (value);
+                add_css_class (value);
         }
     }
 
     construct
     {
-        // window_style_context is created by specific_css_class_or_empty
-        window_style_context.add_class ("startup");
+        add_css_class ("startup");
 
         manage_high_contrast ();
 
         load_window_state ();
 
-        Timeout.add (300, () => { window_style_context.remove_class ("startup"); return Source.REMOVE; });
+        Timeout.add (300, () => { remove_css_class ("startup"); return Source.REMOVE; });
     }
 
     /*\
@@ -99,16 +96,6 @@ private abstract class AdaptativeWindow : Adw.ApplicationWindow
     //         window_is_tiled = (event.new_window_state & tiled_state) != 0;
 
     //     return false;
-    // }
-
-    // [GtkCallback]
-    // private void on_size_allocate (Allocation allocation)
-    // {
-    //     int height = allocation.height;
-    //     int width = allocation.width;
-
-    //     update_adaptative_children (ref width, ref height);
-    //     update_window_state ();
     // }
 
     // [GtkCallback]
@@ -214,8 +201,9 @@ private abstract class AdaptativeWindow : Adw.ApplicationWindow
         headerbar.update_hamburger_menu ();
 
         if (highcontrast_new_state)
-            window_style_context.add_class ("hc-theme");
+            add_css_class ("hc-theme");
         else
-            window_style_context.remove_class ("hc-theme");
+            remove_css_class ("hc-theme");
     }
 }
+

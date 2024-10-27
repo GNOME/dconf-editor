@@ -142,7 +142,7 @@ private class KeyEditorChildFlags : Grid, KeyEditorChild
         button.visible = true;
         // button.use_popover = true;
         button.halign = Align.START;
-        button.get_style_context ().add_class ("image-button");
+        button.add_css_class ("image-button");
         this.attach (button, 0, 0, 1, 1);
 
         label.visible = true;
@@ -251,7 +251,7 @@ private class KeyEditorChildBool : Box, KeyEditorChild // might be managed by ac
         this.halign = Align.START;
         this.homogeneous = true;
         this.width_request = 100;
-        this.get_style_context ().add_class ("linked");
+        this.add_css_class ("linked");
 
         ToggleButton button_false = new ToggleButton ();
         button_false.visible = true;
@@ -289,7 +289,7 @@ private abstract class KeyEditorChildNumberCustom : Entry, KeyEditorChild
 
     construct
     {
-        get_style_context ().add_class ("key-editor-child-entry");
+        add_css_class ("key-editor-child-entry");
     }
 
     protected void connect_entry ()
@@ -311,19 +311,17 @@ private abstract class KeyEditorChildNumberCustom : Entry, KeyEditorChild
     private bool value_has_error = false;
     private void set_error_class ()
     {
-        StyleContext context = get_style_context ();
         if (value_has_error)
         {
             if (is_sensitive ())
             {
-                if (!context.has_class ("error"))
-                    context.add_class ("error");
+                add_css_class ("error");
             }
-            else if (context.has_class ("error"))
-                context.remove_class ("error");
+            else
+                remove_css_class ("error");
         }
-        else if (is_sensitive () && context.has_class ("error"))
-            context.remove_class ("error");
+        else if (is_sensitive ())
+            remove_css_class ("error");
     }
 
     protected void show_error (bool show)
@@ -699,19 +697,17 @@ private class KeyEditorChildNumberInt : Box, KeyEditorChild
     private bool value_has_error = false;
     private void set_error_class ()
     {
-        StyleContext context = get_style_context ();
         if (is_sensitive ())
         {
             if (value_has_error)
             {
-                if (!context.has_class ("error"))
-                    context.add_class ("error");
+                add_css_class ("error");
             }
-            else if (context.has_class ("error"))
-                context.remove_class ("error");
+            else
+                remove_css_class ("error");
         }
-        else if (context.has_class ("error"))
-            context.remove_class ("error");
+        else
+            remove_css_class ("error");
     }
 
     private bool test_value ()
@@ -773,7 +769,7 @@ private class KeyEditorChildArray : Grid, KeyEditorChild
 
     construct
     {
-        get_style_context ().add_class ("key-editor-child-array");
+        add_css_class ("key-editor-child-array");
     }
 
     internal KeyEditorChildArray (string type_string, Variant initial_value)
@@ -782,7 +778,7 @@ private class KeyEditorChildArray : Grid, KeyEditorChild
         this.hexpand = true;
         this.vexpand = false;
         orientation = Orientation.VERTICAL;
-        get_style_context ().add_class ("frame");
+        add_css_class ("frame");
 
         this.key_type = type_string;
         this.variant = initial_value;
@@ -857,18 +853,14 @@ private class KeyEditorChildArray : Grid, KeyEditorChild
             Variant? tmp_variant = Variant.parse (new VariantType (key_type), tmp_text);
             variant = (!) tmp_variant;
 
-            StyleContext context = get_style_context ();
-            if (context.has_class ("error"))
-                context.remove_class ("error");
+            remove_css_class ("error");
             error_revealer.reveal_child = false;
 
             return true;
         }
         catch (VariantParseError e)
         {
-            StyleContext context = get_style_context ();
-            if (!context.has_class ("error"))
-                context.add_class ("error");
+            add_css_class ("error");
             error_revealer.reveal_child = true;
 
             return false;
@@ -901,7 +893,7 @@ private class KeyEditorChildDefault : Entry, KeyEditorChild
 
     construct
     {
-        get_style_context ().add_class ("key-editor-child-entry");
+        add_css_class ("key-editor-child-entry");
     }
 
     internal KeyEditorChildDefault (string type_string, Variant initial_value)
@@ -943,18 +935,14 @@ private class KeyEditorChildDefault : Entry, KeyEditorChild
             Variant? tmp_variant = Variant.parse (new VariantType (key_type), tmp_text);
             variant = (!) tmp_variant;
 
-            StyleContext context = get_style_context ();
-            if (context.has_class ("error"))
-                context.remove_class ("error");
+            remove_css_class ("error");
             set_icon_from_icon_name (EntryIconPosition.SECONDARY, null);
 
             return true;
         }
         catch (VariantParseError e)
         {
-            StyleContext context = get_style_context ();
-            if (!context.has_class ("error"))
-                context.add_class ("error");
+            add_css_class ("error");
             secondary_icon_name = "dialog-error-symbolic";
 
             return false;

@@ -88,7 +88,7 @@ private class LargePathbar : Box, Pathbar
     }
     private void _set_path (ViewType type, string path)
     {
-        update_config_style_class (type == ViewType.CONFIG, get_style_context ());  // TODO create gtk_style_context_toggle_class()
+        update_config_style_class (type == ViewType.CONFIG);  // TODO create gtk_style_context_toggle_class()
 
         activate_item (root_button, path == "/");
 
@@ -173,12 +173,12 @@ private class LargePathbar : Box, Pathbar
         // FIXME: Noooo :(
         // @foreach ((child) => child.show ());
     }
-    private static inline void update_config_style_class (bool type_is_config, StyleContext context)
+    private void update_config_style_class (bool type_is_config)
     {
         if (type_is_config)
-            context.add_class ("config");
+            add_css_class ("config");
         else
-            context.remove_class ("config");
+            remove_css_class ("config");
     }
 
     internal void update_ghosts (string non_ghost_path, bool is_search)
@@ -188,7 +188,6 @@ private class LargePathbar : Box, Pathbar
         string action_target = "";
         // FIXME Boooo :(
         while (child != null) {
-            // StyleContext context = child.get_style_context ();
             if (child is LargePathbarItem)
             {
                 LargePathbarItem item = (LargePathbarItem) child;
@@ -306,14 +305,14 @@ private class LargePathbar : Box, Pathbar
             item.is_active = true;
             item.set_cursor_type (LargePathbarItem.CursorType.CONTEXT);
             item.set_action_name ("browser.empty");
-            item.get_style_context ().add_class ("active");
+            item.add_css_class ("active");
         }
         else
         {
             item.is_active = false;
             item.set_cursor_type (LargePathbarItem.CursorType.POINTER);
             item.set_detailed_action_name (item.default_action);
-            item.get_style_context ().remove_class ("active");
+            item.remove_css_class ("active");
         }
     }
 }
@@ -374,8 +373,7 @@ private class LargePathbarItem : Button
     [GtkCallback]
     private void update_cursor ()
     {
-        StyleContext context = get_style_context ();
-        if (context.has_class ("inexistent") && !context.has_class ("active"))  // TODO use is_active when sanitized
+        if (has_css_class ("inexistent") && !has_css_class ("active"))  // TODO use is_active when sanitized
             return;
 
         if (cursor_type != CursorType.CONTEXT)

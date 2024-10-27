@@ -278,7 +278,7 @@ private class RegistryInfo : Box, BrowsableView
         {
             /* Translators: field content when displaying key properties; displayed instead of the value, in case of conflicting keys */
             current_value_label = new Label (_("There are conflicting definitions of this key, getting value would be either problematic or meaningless."));
-            current_value_label.get_style_context ().add_class ("italic-label");
+            current_value_label.add_css_class ("italic-label");
         }
         else if (has_schema_and_is_default)
             current_value_label = new Label (get_current_value_text (null));
@@ -639,10 +639,9 @@ private class RegistryInfo : Box, BrowsableView
     {
         Label label = new Label (text);
         label.wrap = true;
-        StyleContext context = label.get_style_context ();
-        context.add_class ("italic-label");
-        context.add_class ("greyed-label");
-        context.add_class ("warning-label");
+        label.add_css_class ("italic-label");
+        label.add_css_class ("greyed-label");
+        label.add_css_class ("warning-label");
         return (Widget) label;
     }
 
@@ -669,13 +668,13 @@ private class RegistryInfo : Box, BrowsableView
     {
         if (key_value_or_null == null)
         {
-            current_value_label.get_style_context ().add_class ("italic-label");
+            current_value_label.add_css_class ("italic-label");
             /* Translators: field content when displaying key properties; the field description is "Current value", this text displayed if the key, not defined by a schema, has been erased (and so has no value anymore) */
             current_value_label.set_text (_("Key erased."));
         }
         else
         {
-            current_value_label.get_style_context ().remove_class ("italic-label");
+            current_value_label.remove_css_class ("italic-label");
             current_value_label.set_text (get_current_value_text (key_value_or_null));
         }
     }
@@ -705,10 +704,9 @@ private class PropertyRow : ListBoxRowWrapper
         value_label.selectable = true;
         value_label.can_focus = false;
 
-        StyleContext context = value_label.get_style_context ();
         if (use_italic)
-            context.add_class ("italic-label");
-        context.add_class ("property-value");
+            value_label.add_css_class ("italic-label");
+        value_label.add_css_class ("property-value");
 
         value_label.show ();
         overlay.set_child (value_label);
@@ -725,14 +723,13 @@ private class PropertyRow : ListBoxRowWrapper
         grid.orientation = Orientation.VERTICAL;
         grid.attach (widget, 0, 0, 1, 1);
 
-        StyleContext context = grid.get_style_context ();
-        context.add_class ("property-value");
+        add_css_class ("property-value");
 
         if (warning != null)
         {
             ((!) warning).hexpand = true;
             ((!) warning).halign = Align.CENTER;
-            ((!) warning).get_style_context ().add_class ("property-warning");
+            ((!) warning).add_css_class ("property-warning");
             ((!) warning).show ();
             grid.attach ((!) warning, 1, 0, 1, 1);
         }

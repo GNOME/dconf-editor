@@ -32,12 +32,12 @@ private class RegistryPlaceholder : Grid
             if (value)
             {
                 placeholder_image.pixel_size = 72;
-                get_style_context ().add_class ("big-popover");
+                add_css_class ("big-popover");
             }
             else
             {
                 placeholder_image.pixel_size = 36;
-                get_style_context ().remove_class ("big-popover");
+                remove_css_class ("big-popover");
             }
         }
     }

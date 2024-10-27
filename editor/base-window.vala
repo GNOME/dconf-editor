@@ -338,7 +338,7 @@ private class BaseWindow : AdaptativeWindow, AdaptativeWidget
         {
             UriLauncher launcher = new UriLauncher (help_string_or_empty);
             // FIXME: launcher.launch is async. We should do this differently.
-            launcher.launch (_this, null);
+            launcher.launch.begin (_this, null);
             success = true;
         }
         catch (Error e)

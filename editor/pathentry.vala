@@ -19,13 +19,6 @@ using Gtk;
 
 // private class BrowserEntry : SearchEntry
 // {
-//     private StyleContext context;
-
-//     construct
-//     {
-//         context = get_style_context ();
-//     }
-
 //     private bool has_error_class = false;
 //     internal void check_error (ref string path)
 //     {
@@ -33,12 +26,12 @@ using Gtk;
 //         if (!has_error_class && is_invalid)
 //         {
 //             has_error_class = true;
-//             context.add_class ("error");
+//             add_css_class ("error");
 //         }
 //         else if (has_error_class && !is_invalid)
 //         {
 //             has_error_class = false;
-//             context.remove_class ("error");
+//             remove_css_class ("error");
 //         }
 //     }
 

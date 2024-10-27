@@ -194,32 +194,32 @@ private class BookmarksList : OverlayedList
         Widget? bookmark_grid = ((!) bookmark_row).get_child ();
         if (bookmark_grid == null)
             assert_not_reached ();
-        _update_bookmark_icon (((!) bookmark_grid).get_style_context (), icon);
+        _update_bookmark_icon ((!) bookmark_grid, icon);
     }
-    private static inline void _update_bookmark_icon (StyleContext context, BookmarkIcon icon)
+    private static inline void _update_bookmark_icon (Widget widget, BookmarkIcon icon)
     {
         switch (icon)
         {
-            case BookmarkIcon.VALID_FOLDER: context.add_class ("folder");
+            case BookmarkIcon.VALID_FOLDER: widget.add_css_class ("folder");
                 return;
-            case BookmarkIcon.EMPTY_FOLDER: context.add_class ("folder");
-                                            context.add_class ("erase");
+            case BookmarkIcon.EMPTY_FOLDER: widget.add_css_class ("folder");
+                                            widget.add_css_class ("erase");
                 return;
-            case BookmarkIcon.SEARCH:       context.add_class ("search");
+            case BookmarkIcon.SEARCH:       widget.add_css_class ("search");
                 return;
-            case BookmarkIcon.EMPTY_OBJECT: context.add_class ("key");
-                                            context.add_class ("dconf-key");
-                                            context.add_class ("erase");
+            case BookmarkIcon.EMPTY_OBJECT: widget.add_css_class ("key");
+                                            widget.add_css_class ("dconf-key");
+                                            widget.add_css_class ("erase");
                 return;
-            case BookmarkIcon.DCONF_OBJECT: context.add_class ("key");
-                                            context.add_class ("dconf-key");
+            case BookmarkIcon.DCONF_OBJECT: widget.add_css_class ("key");
+                                            widget.add_css_class ("dconf-key");
                 return;
-            case BookmarkIcon.KEY_DEFAULTS: context.add_class ("key");
-                                            context.add_class ("gsettings-key");
+            case BookmarkIcon.KEY_DEFAULTS: widget.add_css_class ("key");
+                                            widget.add_css_class ("gsettings-key");
                 return;
-            case BookmarkIcon.EDITED_VALUE: context.add_class ("key");
-                                            context.add_class ("gsettings-key");
-                                            context.add_class ("edited");
+            case BookmarkIcon.EDITED_VALUE: widget.add_css_class ("key");
+                                            widget.add_css_class ("gsettings-key");
+                                            widget.add_css_class ("edited");
                 return;
             default: assert_not_reached ();
         }

@@ -63,12 +63,12 @@ private abstract class BookmarksHeaderBar : BrowserHeaderBar
         bookmarks_revealer = new Revealer ();
         bookmarks_revealer.transition_type = RevealerTransitionType.SLIDE_LEFT;
         bookmarks_revealer.reveal_child = true;
-        bookmarks_revealer.get_style_context ().add_class ("headerbar-revealer");
+        bookmarks_revealer.add_css_class ("headerbar-revealer");
 
         bookmarks_button = new Bookmarks ("/ca/desrt/dconf-editor/");
         bookmarks_button.valign = Align.CENTER;
         bookmarks_button.focus_on_click = false;
-        bookmarks_button.get_style_context ().add_class ("image-button");   // TODO check https://bugzilla.gnome.org/show_bug.cgi?id=756731
+        bookmarks_button.add_css_class ("image-button");   // TODO check https://bugzilla.gnome.org/show_bug.cgi?id=756731
 
         bookmarks_button.visible = true;
         bookmarks_revealer.set_child (bookmarks_button);

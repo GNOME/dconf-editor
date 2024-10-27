@@ -22,7 +22,6 @@ private abstract class OverlayedList : Box
 {
     // [GtkChild] protected unowned Overlay        overlay;
     [GtkChild] protected unowned ListBox        main_list_box;
-               private   StyleContext   main_list_box_context;
                protected GLib.ListStore main_list_store = new GLib.ListStore (typeof (Widget));
 
     [GtkChild] private   unowned ScrolledWindow scrolled;
@@ -34,8 +33,6 @@ private abstract class OverlayedList : Box
 
     construct
     {
-        main_list_box_context = main_list_box.get_style_context ();
-        main_context = get_style_context ();
         connect_handlers ();
         main_list_box.bind_model (main_list_store, create_rows);
     }
@@ -52,7 +49,7 @@ private abstract class OverlayedList : Box
     {
         construct
         {
-            get_style_context ().add_class ("needs-padding");
+            add_css_class ("needs-padding");
 
             // TODO sanitize "value"
             enter_edit_mode_button.set_detailed_action_name (value + ".set-edit-mode(true)");
@@ -83,7 +80,6 @@ private abstract class OverlayedList : Box
     * * responsive design
     \*/
 
-    private StyleContext main_context;
     // internal void set_window_size (AdaptativeWidget.WindowSize new_size)
     // {
     //     if (!AdaptativeWidget.WindowSize.is_extra_thin (new_size) && AdaptativeWidget.WindowSize.is_extra_flat (new_size))
@@ -93,21 +89,21 @@ private abstract class OverlayedList : Box
     // }
     // private static inline void set_horizontal (ref StyleContext main_context, Box edit_mode_box)
     // {
-    //     main_context.remove_class ("vertical");
+    //     remove_css_class ("vertical");
     //     edit_mode_box.halign = Align.END;
     //     edit_mode_box.valign = Align.CENTER;
     //     edit_mode_box.orientation = Orientation.VERTICAL;
     //     edit_mode_box.width_request = 160;
-    //     main_context.add_class ("horizontal");
+    //     add_css_class ("horizontal");
     // }
     // private static inline void set_vertical (ref StyleContext main_context, Box edit_mode_box)
     // {
-    //     main_context.remove_class ("horizontal");
+    //     remove_css_class ("horizontal");
     //     edit_mode_box.halign = Align.CENTER;
     //     edit_mode_box.valign = Align.END;
     //     edit_mode_box.orientation = Orientation.HORIZONTAL;
     //     edit_mode_box.width_request = 200;
-    //     main_context.add_class ("vertical");
+    //     add_css_class ("vertical");
     // }
 
     /*\
@@ -366,13 +362,13 @@ private abstract class OverlayedList : Box
     {
         if (list_is_empty && !has_empty_list_class)
         {
-            main_list_box_context.add_class ("empty-list");
+            main_list_box.add_css_class ("empty-list");
             has_empty_list_class = true;
         }
         else if (!list_is_empty && has_empty_list_class)
         {
             has_empty_list_class = false;
-            main_list_box_context.remove_class ("empty-list");
+            main_list_box.remove_css_class ("empty-list");
         }
     }
 
@@ -388,3 +384,4 @@ private abstract class OverlayedListRow : ListBoxRow
 {
     internal abstract bool handle_copy_text (out string copy_text);
 }
+

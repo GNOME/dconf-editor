@@ -206,25 +206,24 @@ private abstract class RegistryList : Grid, BrowsableView
     private static void set_delayed_icon (ModificationsHandler _modifications_handler, KeyListBoxRow row)
     {
         SettingsModel model = _modifications_handler.model;
-        StyleContext context = row.get_style_context ();
         if (_modifications_handler.key_has_planned_change (row.full_name))
         {
-            context.add_class ("delayed");
+            row.add_css_class ("delayed");
             if (!model.key_has_schema (row.full_name))
             {
                 if (_modifications_handler.get_key_planned_value (row.full_name) == null)
-                    context.add_class ("erase");
+                    row.add_css_class ("erase");
                 else
-                    context.remove_class ("erase");
+                    row.remove_css_class ("erase");
             }
         }
         else
         {
-            context.remove_class ("delayed");
+            row.remove_css_class ("delayed");
             if (!model.key_has_schema (row.full_name) && model.is_key_ghost (row.full_name))
-                context.add_class ("erase");
+                row.add_css_class ("erase");
             else
-                context.remove_class ("erase");
+                row.remove_css_class ("erase");
         }
     }
 
@@ -511,10 +510,10 @@ private abstract class RegistryList : Grid, BrowsableView
             KeyConflict key_conflict = (KeyConflict) _key_conflict;
 
             if (key_conflict == KeyConflict.SOFT)
-                row.get_style_context ().add_class ("conflict");
+                row.add_css_class ("conflict");
             else if (key_conflict == KeyConflict.HARD)
             {
-                row.get_style_context ().add_class ("hard-conflict");
+                row.add_css_class ("hard-conflict");
                 /* Translators: means that the key has (at least) one other key defined by a different schema but at the same path and with the same name; used on large windows ("conflict" is used on small windows) */
                 row.update_label (_("conflicting keys"), true,
 
@@ -553,7 +552,7 @@ private abstract class RegistryList : Grid, BrowsableView
         wrapper.set_child (row);
         if (row is FilterListBoxRow)
         {
-            wrapper.get_style_context ().add_class ("f-or-s-row");
+            wrapper.add_css_class ("f-or-s-row");
             if (((FilterListBoxRow) row).is_local_search)
                 wrapper.action_name = "browser.open-search-local";
             else if (row.full_name == "/")
@@ -563,7 +562,7 @@ private abstract class RegistryList : Grid, BrowsableView
         }
         else if (row is ReturnListBoxRow)
         {
-            wrapper.get_style_context ().add_class ("f-or-s-row");
+            wrapper.add_css_class ("f-or-s-row");
             if (ModelUtils.is_folder_context_id (row.context_id))
             {
                 wrapper.action_name = "browser.open-folder";
@@ -577,13 +576,13 @@ private abstract class RegistryList : Grid, BrowsableView
         }
         else if (row is SearchListBoxRow)
         {
-            wrapper.get_style_context ().add_class ("f-or-s-row");
+            wrapper.add_css_class ("f-or-s-row");
             wrapper.action_name = "browser.open-search";
             wrapper.set_action_target ("s", row.full_name);
         }
         else if (ModelUtils.is_folder_context_id (row.context_id))
         {
-            wrapper.get_style_context ().add_class ("f-or-s-row");
+            wrapper.add_css_class ("f-or-s-row");
             if (row is FolderListBoxRow)
             {
                 if (((FolderListBoxRow) row).path_search)
@@ -596,7 +595,7 @@ private abstract class RegistryList : Grid, BrowsableView
         }
         else if (row is KeyListBoxRow)
         {
-            wrapper.get_style_context ().add_class ("key-row");
+            wrapper.add_css_class ("key-row");
             wrapper.action_name = "browser.open-object";
             wrapper.set_action_target ("(sq)", row.full_name, row.context_id);
         }
@@ -617,11 +616,10 @@ private abstract class RegistryList : Grid, BrowsableView
             row.update_switch (key_value_boolean, "view.toggle-gsettings-key-switch(" + switch_variant.print (true) + ")");
         }
 
-        StyleContext css_context = row.get_style_context ();
         if (is_key_default)
-            css_context.remove_class ("edited");
+            row.remove_css_class ("edited");
         else
-            css_context.add_class ("edited");
+            row.add_css_class ("edited");
 
         string key_value_text = Key.cool_text_value_from_variant (key_value);
         string key_type_label;
@@ -776,6 +774,9 @@ private abstract class RegistryList : Grid, BrowsableView
 
     private void show_right_click_popover (ClickableListBoxRow row, int? nullable_event_x)
     {
+        // FIXME: This has deprecation warnings, but it is probably moot because
+        //        we shouldn't need it at all anymore.
+
         int adjustment_value = (int) adjustment.get_value ();
         Allocation list_allocation, row_allocation;
         scrolled.get_allocation (out list_allocation);

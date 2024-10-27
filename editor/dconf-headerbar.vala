@@ -89,7 +89,7 @@ private class DConfHeaderBar : BookmarksHeaderBar
         show_modifications_button = new Button.from_icon_name ("document-open-recent-symbolic");
         show_modifications_button.valign = Align.CENTER;
         show_modifications_button.action_name = "ui.show-in-window-modifications";
-        show_modifications_button.get_style_context ().add_class ("titlebutton");
+        show_modifications_button.add_css_class ("titlebutton");
 
         show_modifications_button.visible = true;
     }
@@ -105,7 +105,7 @@ private class DConfHeaderBar : BookmarksHeaderBar
         modification_actions_button = new MenuButton ();
         modification_actions_button.icon_name = "document-open-recent-symbolic";
         modification_actions_button.valign = Align.CENTER;
-        modification_actions_button.get_style_context ().add_class ("titlebutton");
+        modification_actions_button.add_css_class ("titlebutton");
 
         GLib.Menu change_pending_menu = new GLib.Menu ();
         /* Translators: when a change is requested, on a small window, entry of the menu of the "delayed settings button" that appears in place of the close button */
@@ -125,7 +125,7 @@ private class DConfHeaderBar : BookmarksHeaderBar
         modifications_actions_button = new MenuButton ();
         modifications_actions_button.icon_name = "view-more-symbolic";
         modifications_actions_button.valign = Align.CENTER;
-        modifications_actions_button.get_style_context ().add_class ("image-button");
+        modifications_actions_button.add_css_class ("image-button");
 
         modifications_actions_button.visible = false;
         _this.headerbar.pack_end (modifications_actions_button);

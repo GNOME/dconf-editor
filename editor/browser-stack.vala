@@ -45,7 +45,6 @@ private class BrowserStack : Box, BrowserContent
 
     construct
     {
-        StyleContext context = get_style_context ();
         GLib.Settings settings = new GLib.Settings ("ca.desrt.dconf-editor.Settings");
         bool has_small_keys_list_rows_class = settings.get_boolean ("small-keys-list-rows");
 
@@ -53,9 +52,9 @@ private class BrowserStack : Box, BrowserContent
                 bool small_rows = _settings.get_boolean (key_name);
                 if (small_rows)
                 {
-                    if (!has_small_keys_list_rows_class) context.add_class ("small-keys-list-rows");
+                    if (!has_small_keys_list_rows_class) add_css_class ("small-keys-list-rows");
                 }
-                else if (has_small_keys_list_rows_class) context.remove_class ("small-keys-list-rows");
+                else if (has_small_keys_list_rows_class) remove_css_class ("small-keys-list-rows");
                 has_small_keys_list_rows_class = small_rows;
 
                 folder_view.small_keys_list_rows = small_rows;
@@ -63,7 +62,7 @@ private class BrowserStack : Box, BrowserContent
             });
 
         if (has_small_keys_list_rows_class)
-            context.add_class ("small-keys-list-rows");
+            add_css_class ("small-keys-list-rows");
         folder_view.small_keys_list_rows = has_small_keys_list_rows_class;
         search_view.small_keys_list_rows = has_small_keys_list_rows_class;
 

@@ -21,6 +21,13 @@ private const int MAX_ROW_WIDTH = LARGE_WINDOW_SIZE - 42;
 
 private class ListBoxRowWrapper : ListBoxRow
 {
+    // internal override void measure (Orientation orientation, int for_size, out int minimum, out int natural, out int minimum_baseline, out int natural_baseline)
+    // {
+    //     base.measure (orientation, for_size, out minimum, out natural, out minimum_baseline, out natural_baseline);
+    //     if (orientation == Orientation.HORIZONTAL) {
+    //         natural = MAX_ROW_WIDTH;
+    //     }
+    // }
     // internal override void get_preferred_width (out int minimum_width, out int natural_width)
     // {
     //     base.get_preferred_width (out minimum_width, out natural_width);
@@ -55,9 +62,8 @@ private class ListBoxRowHeader : Box
             label.visible = true;
             label.halign = Align.START;
             label.set_ellipsize (Pango.EllipsizeMode.END);
-            StyleContext context = label.get_style_context ();
-            context.add_class ("dim-label");
-            context.add_class ("header-label");
+            add_css_class ("dim-label");
+            add_css_class ("header-label");
             append (label);
         }
 
@@ -244,9 +250,9 @@ private class KeyListBoxRow : ClickableListBoxRow
     construct
     {
         if (has_schema)
-            get_style_context ().add_class ("gsettings-key");
+            add_css_class ("gsettings-key");
         else
-            get_style_context ().add_class ("dconf-key");
+            add_css_class ("dconf-key");
 
         if (type_string == "b")
         {
@@ -287,7 +293,7 @@ private class KeyListBoxRow : ClickableListBoxRow
                 search_result_mode: _search_result_mode);
 
         if (italic_summary)
-            key_info_label.get_style_context ().add_class ("italic-label");
+            key_info_label.add_css_class ("italic-label");
         key_info_label.set_label (summary);
     }
 
@@ -360,17 +366,17 @@ private class KeyListBoxRow : ClickableListBoxRow
     {
         if (key_value_italic)
         {
-            if (!key_value_label_has_italic_label_class) key_value_label.get_style_context ().add_class ("italic-label");
+            if (!key_value_label_has_italic_label_class) key_value_label.add_css_class ("italic-label");
         }
-        else if (key_value_label_has_italic_label_class) key_value_label.get_style_context ().remove_class ("italic-label");
+        else if (key_value_label_has_italic_label_class) key_value_label.remove_css_class ("italic-label");
         key_value_label_has_italic_label_class = key_value_italic;
         key_value_label.set_label (key_value_string);
 
         if (key_type_italic)
         {
-            if (!key_type_label_has_italic_label_class) key_type_label.get_style_context ().add_class ("italic-label");
+            if (!key_type_label_has_italic_label_class) key_type_label.add_css_class ("italic-label");
         }
-        else if (key_type_label_has_italic_label_class) key_type_label.get_style_context ().remove_class ("italic-label");
+        else if (key_type_label_has_italic_label_class) key_type_label.remove_css_class ("italic-label");
         key_type_label_has_italic_label_class = key_type_italic;
         key_type_label.set_label (key_type_string);
     }

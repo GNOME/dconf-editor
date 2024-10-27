@@ -68,7 +68,7 @@ private class BookmarksView : BrowserView
         bookmarks_list.selection_changed.connect (on_bookmarks_selection_changed);
         bookmarks_list.update_bookmarks_icons.connect (on_update_bookmarks_icons);
         bookmarks_list.show ();
-        append (bookmarks_list);
+        stack.add_child (bookmarks_list);
     }
 
     private string [] old_bookmarks = new string [0];

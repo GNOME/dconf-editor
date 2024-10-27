@@ -54,22 +54,21 @@ private class Bookmarks : Box
 
             settings = new GLib.Settings.with_path (schema_id, value);
 
-            StyleContext context = bookmarks_popover.get_style_context ();
             bool has_small_bookmarks_rows_class = false;
             ulong small_bookmarks_rows_handler = settings.changed ["small-bookmarks-rows"].connect (() => {
                     bool small_bookmarks_rows = settings.get_boolean ("small-bookmarks-rows");
                     if (small_bookmarks_rows)
                     {
-                        if (!has_small_bookmarks_rows_class) context.add_class ("small-bookmarks-rows");
+                        if (!has_small_bookmarks_rows_class) bookmarks_popover.add_css_class ("small-bookmarks-rows");
                     }
-                    else if (has_small_bookmarks_rows_class) context.remove_class ("small-bookmarks-rows");
+                    else if (has_small_bookmarks_rows_class) bookmarks_popover.remove_css_class ("small-bookmarks-rows");
                     has_small_bookmarks_rows_class = small_bookmarks_rows;
                     bookmarks_controller.update_rows_size_button_icon (small_bookmarks_rows);
                 });
 
             has_small_bookmarks_rows_class = settings.get_boolean ("small-bookmarks-rows");
             if (has_small_bookmarks_rows_class)
-                context.add_class ("small-bookmarks-rows");
+                bookmarks_popover.add_css_class ("small-bookmarks-rows");
             bookmarks_controller.update_rows_size_button_icon (has_small_bookmarks_rows_class);
 
             destroy.connect (() => settings.disconnect (small_bookmarks_rows_handler));
@@ -89,8 +88,7 @@ private class Bookmarks : Box
 
         install_action_entries ();
 
-        // FIXME: ???!!!
-        // connect ("activate", _on_activate);
+        button.connect ("activate", _on_activate);
     }
 
     private void _on_activate () {

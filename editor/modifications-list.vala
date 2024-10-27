@@ -21,7 +21,7 @@ private class ModificationsList : OverlayedList
 {
     construct
     {
-        get_style_context ().add_class ("delayed-list");
+        add_css_class ("delayed-list");
 
         placeholder_icon = "document-open-recent-symbolic";
         /* Translators: placeholder text of the list of pending modifications, displayed when the user is in delayed mode but has no pending modifications */
@@ -75,10 +75,9 @@ private class ModificationsList : OverlayedList
             location_header_label.hexpand = true;
             location_header_label.halign = Align.START;
 
-            StyleContext context = location_header_label.get_style_context ();
-            context.add_class ("dim-label");
-            context.add_class ("bold-label");
-            context.add_class ("list-row-header");
+            location_header_label.add_css_class ("dim-label");
+            location_header_label.add_css_class ("bold-label");
+            location_header_label.add_css_class ("list-row-header");
 
             location_header.append (location_header_label);
 

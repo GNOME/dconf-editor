@@ -31,7 +31,6 @@ private class ModificationsRevealer : Box
         }
     }
 
-    StyleContext apply_button_context;
     private bool disable_action_bar = false;
     // private bool short_size_button = false;
     // private void set_window_size (AdaptativeWidget.WindowSize new_size)
@@ -50,15 +49,15 @@ private class ModificationsRevealer : Box
     //         short_size_button = _short_size_button;
     //         if (_short_size_button)
     //         {
-    //             apply_button_context.remove_class ("text-button");
+    //             apply_button.remove_css_class ("text-button");
     //             apply_button.icon = apply_button_icon;
-    //             apply_button_context.add_class ("image-button");
+    //             apply_button.add_css_class ("image-button");
     //         }
     //         else
     //         {
-    //             apply_button_context.remove_class ("image-button");
+    //             apply_button.remove_css_class ("image-button");
     //             apply_button.icon = null;
-    //             apply_button_context.add_class ("text-button");
+    //             apply_button.add_css_class ("text-button");
     //         }
     //     }
     // }
@@ -76,9 +75,8 @@ private class ModificationsRevealer : Box
 
     construct
     {
-        apply_button_context = apply_button.get_style_context ();
         // apply_button.icon = null;
-        apply_button.get_style_context ().add_class ("text-button");
+        apply_button.add_css_class ("text-button");
         bind_property ("reveal-child", revealer, "reveal-child", BindingFlags.SYNC_CREATE);
     }
 

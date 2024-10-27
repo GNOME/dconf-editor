@@ -38,7 +38,7 @@ private class AboutList : OverlayedList
         install_action_entries ();
 
         main_list_box.selection_mode = SelectionMode.NONE;
-        get_style_context ().add_class ("about-list");
+        add_css_class ("about-list");
 
         /* Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the second is "Credits" */
         first_mode_name = _("About");
@@ -215,7 +215,7 @@ private class AboutListItem : OverlayedListRow
         label.selectable = true;
         label.can_focus = false;
         if (css_class != null)
-            label.get_style_context ().add_class ((!) css_class);
+            label.add_css_class ((!) css_class);
         set_child (label);
     }
 
@@ -266,7 +266,7 @@ private class AboutListItem : OverlayedListRow
         label.hexpand = true;
         label.wrap_mode = Pango.WrapMode.WORD_CHAR;
         label.wrap = true;
-        label.get_style_context ().add_class ("bold-label");
+        label.add_css_class ("bold-label");
         box.append (label);
 
         label = new Label (text);
@@ -275,7 +275,7 @@ private class AboutListItem : OverlayedListRow
         label.wrap_mode = Pango.WrapMode.WORD_CHAR;
         label.wrap = true;
         label.selectable = true;
-        label.get_style_context ().add_class ("small-label");
+        label.add_css_class ("small-label");
         label.justify = Justification.CENTER;
         box.append (label);
     }
