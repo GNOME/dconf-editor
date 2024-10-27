@@ -186,6 +186,10 @@ private class LargePathbar : Box, Pathbar
 
     internal void update_ghosts (string non_ghost_path, bool is_search)
     {
+        // FIXME Changing anything in dconf leads to this being called. Is that
+        //       okay?
+        // FIXME Early return because something is very broken here
+        return;
         fallback_path = non_ghost_path;
         Gtk.Widget? child = get_first_child ();
         string action_target = "";

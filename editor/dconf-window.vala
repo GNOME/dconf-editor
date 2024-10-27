@@ -272,27 +272,26 @@ private class DConfWindow : BookmarksWindow
 
     private void show_initial_warning ()
     {
-        /* Translators: initial "use at your own risk" dialog, the welcoming text */
-        Gtk.MessageDialog dialog = new MessageDialog (this, DialogFlags.MODAL, MessageType.INFO, ButtonsType.NONE, _("Thanks for using Dconf Editor for editing your settings!"));
+        // FIXME: This should be in the UI file?!
 
-        /* Translators: initial "use at your own risk" dialog, the warning text */
-        dialog.format_secondary_text (_("Don’t forget that some options may break applications, so be careful."));
+        Adw.AlertDialog dialog = new Adw.AlertDialog (
+            /* Translators: initial "use at your own risk" dialog, the welcoming text */
+            _("Thanks for using Dconf Editor for editing your settings!"),
+            /* Translators: initial "use at your own risk" dialog, the warning text */
+              _("Don’t forget that some options may break applications, so be careful.")
+        );
 
         /* Translators: initial "use at your own risk" dialog, the button label */
-        dialog.add_buttons (_("I’ll be careful."), ResponseType.ACCEPT);
+        dialog.add_response ("close", _("I’ll be careful."));
 
-        Box box = (Box) dialog.get_message_area ();
+        dialog.set_close_response ("close");
+
         /* Translators: initial "use at your own risk" dialog, the checkbox label */
         CheckButton checkbutton = new CheckButton.with_label (_("Show this dialog next time."));
-        checkbutton.visible = true;
-        checkbutton.active = true;
-        checkbutton.margin_top = 5;
-        box.append (checkbutton);  // TODO don't show box if the user explicitly said she wanted to see the dialog next time?
+        settings.bind ("show-warning", checkbutton, "active", SettingsBindFlags.DEFAULT);
+        dialog.set_extra_child (checkbutton);
 
-        // ulong dialog_response_handler = dialog.response.connect (() => { if (!checkbutton.active) settings.set_boolean ("show-warning", false); });
-        // dialog.run ();
-        // dialog.disconnect (dialog_response_handler);
-        // dialog.destroy ();
+        dialog.present (this);
     }
 
     /*\
