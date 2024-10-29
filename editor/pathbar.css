@@ -1,0 +1,30 @@
+.pathbar {
+    border-radius: 6px;
+    background-color: color-mix(in srgb, currentColor 10%, transparent);
+}
+
+.pathbar button {
+    margin: 3px;
+    border-radius: 4px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+.pathbar button:not(:hover),
+.pathbar button.current-dir {
+  background: none;
+  box-shadow: none;
+}
+
+.pathbar button:not(.current-dir):not(:backdrop):hover label,
+.pathbar button:not(.current-dir):not(:backdrop):hover image {
+  opacity: 1;
+}
+
+.pathbar > scrolledwindow undershoot.left {
+  background: linear-gradient(to right, var(--headerbar-shade-color) 6px, transparent 24px);
+}
+
+.pathbar > scrolledwindow undershoot.right {
+  background: linear-gradient(to left, var(--headerbar-shade-color) 6px, transparent 24px);
+}

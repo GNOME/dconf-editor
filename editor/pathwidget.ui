@@ -17,9 +17,9 @@
         <child>
           <object class="GtkGrid" id="pathbar_grid">
             <child>
-              <object class="AdaptativePathbar" id="pathbar">
+              <object class="Pathbar" id="pathbar">
                 <property name="visible">True</property>
-                <property name="valign">fill</property>
+                <property name="width_request">700</property>
               </object>
             </child>
             <child>

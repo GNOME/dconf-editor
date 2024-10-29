@@ -66,7 +66,6 @@ install_data(
 sources = files(
   'about-list.vala',
   'adaptative-window.vala',
-  'adaptative-pathbar.vala',
   'base-headerbar.vala',
   'base-view.vala',
   'base-window.vala',
@@ -90,13 +89,13 @@ sources = files(
   'delayed-setting-view.vala',
   'key-editor-child.vala',
   'key-list-box-row.vala',
-  'large-pathbar.vala',
   'model-utils.vala',
   'modifications-handler.vala',
   'modifications-list.vala',
   'modifications-revealer.vala',
   'notifications-revealer.vala',
   'overlayed-list.vala',
+  'pathbar.vala',
   'pathentry.vala',
   'pathwidget.vala',
   'registry-info.vala',
@@ -106,14 +105,13 @@ sources = files(
   'registry-view.vala',
   'schemas-utility.vala',
   'setting-object.vala',
-  'short-pathbar.vala',
   'source-manager.vala'
 )
 
 css_data = files(
   'base-window.css',
   'dconf-editor.css',
-  'large-pathbar.css'
+  'pathbar.css'
 )
 
 ui_data = files(
@@ -131,11 +129,10 @@ ui_data = files(
   'folder-list-box-row.ui',
   'help-overlay.ui',
   'key-list-box-row.ui',
-  'large-pathbar-item.ui',
-  'large-pathbar.ui',
   'modifications-revealer.ui',
   'notifications-revealer.ui',
   'overlayed-list.ui',
+  'pathbar.vala',
   'pathentry.ui',
   'pathwidget.ui',
   'property-row.ui',
@@ -143,8 +140,7 @@ ui_data = files(
   'registry-list.ui',
   'registry-placeholder.ui',
   'return-list-box-row.ui',
-  'search-list-box-row.ui',
-  'short-pathbar.ui'
+  'search-list-box-row.ui'
 )
 
 resource_data = css_data + ui_data

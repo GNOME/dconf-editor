@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <template class="PathButton" parent="GtkButton">
+    <child>
+      <object class="GtkBox" id="box">
+        <property name="spacing">6</property>
+        <child>
+          <object class="GtkImage" id="icon"/>
+        </child>
+        <child>
+          <object class="GtkLabel" id="label"/>
+        </child>
+      </object>
+    </child>
+  </template>
+</interface>

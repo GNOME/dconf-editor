@@ -24,7 +24,7 @@ private class PathWidget : Box
     [GtkChild] private unowned Button          search_button;      // extra-small-window only
     [GtkChild] private unowned Stack                pathwidget_stack;
     [GtkChild] private unowned Grid                 pathbar_grid;
-    [GtkChild] private unowned AdaptativePathbar    pathbar;
+    [GtkChild] private unowned Pathbar              pathbar;
     [GtkChild] private unowned PathEntry            searchentry;
 
     // [GtkChild] private unowned Revealer             parent_revealer;
@@ -123,13 +123,13 @@ private class PathWidget : Box
 
     internal void close_popovers ()
     {
-        pathbar.close_menu ();
+        // pathbar.close_menu ();
     }
 
     internal bool has_popover ()
     {
-        if (pathbar.has_popover ())
-            return true;
+        // if (pathbar.has_popover ())
+        //     return true;
         return false;
     }
 
@@ -155,7 +155,7 @@ private class PathWidget : Box
 
     internal void toggle_pathbar_menu ()
     {
-        pathbar.toggle_menu ();
+        // pathbar.toggle_menu ();
     }
 
     /* path entry */
