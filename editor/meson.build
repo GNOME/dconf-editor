@@ -110,8 +110,8 @@ sources = files(
 
 css_data = files(
   'base-window.css',
-  'dconf-editor.css',
-  'pathbar.css'
+  'pathbar.css',
+  'style.css'
 )
 
 ui_data = files(

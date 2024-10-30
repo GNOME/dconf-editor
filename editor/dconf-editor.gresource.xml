@@ -1,22 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
+  <gresource prefix="/ca/desrt/dconf-editor">
+    <file compressed="true">base-window.css</file>
+    <file compressed="true">dconf-editor.css</file>
+    <file compressed="true">pathbar.css</file>
+    <file compressed="true">style.css</file>
+  </gresource>
   <gresource prefix="/ca/desrt/dconf-editor/ui">
     <file preprocess="xml-stripblanks">adaptative-window.ui</file>
     <file preprocess="xml-stripblanks">base-headerbar.ui</file>
     <file preprocess="xml-stripblanks">base-view.ui</file>
-    <!-- <file>base-window.css</file> -->
     <file preprocess="xml-stripblanks">base-window.ui</file>
     <file preprocess="xml-stripblanks">bookmark.ui</file>
     <file preprocess="xml-stripblanks">bookmarks.ui</file>
     <file preprocess="xml-stripblanks">bookmarks-controller.ui</file>
     <file preprocess="xml-stripblanks">browser-infobar.ui</file>
     <file preprocess="xml-stripblanks">browser-stack.ui</file>
-    <!-- <file>dconf-editor.css</file> -->
     <file preprocess="xml-stripblanks">delayed-setting-view.ui</file>
     <file preprocess="xml-stripblanks">filter-list-box-row.ui</file>
     <file preprocess="xml-stripblanks">folder-list-box-row.ui</file>
     <file preprocess="xml-stripblanks">key-list-box-row.ui</file>
-    <!-- <file>large-pathbar.css</file> -->
     <file preprocess="xml-stripblanks">large-pathbar.ui</file>
     <file preprocess="xml-stripblanks">large-pathbar-item.ui</file>
     <file preprocess="xml-stripblanks">modifications-revealer.ui</file>

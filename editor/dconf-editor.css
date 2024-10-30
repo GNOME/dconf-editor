@@ -15,15 +15,6 @@
   along with Dconf Editor.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-/*
-  THEMES HACKERS, you've got a ".dconf-editor" CSS target on the window, as all
-  the things could not be solved generically. But don't hesitate to file a bug.
-*/
-
-@import url("base-window.css");
-@import url("large-pathbar.css");
-@import url("pathbar.css");
-
 /*\
 * * bookmarks
 \*/
