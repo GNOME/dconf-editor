@@ -1,13 +1,15 @@
 .pathbar {
-    border-radius: 6px;
-    background-color: color-mix(in srgb, currentColor 10%, transparent);
+  border-radius: 6px;
+  background-color: color-mix(in srgb, currentColor 10%, transparent);
 }
 
 .pathbar button {
-    margin: 3px;
-    border-radius: 4px;
-    padding-top: 0px;
-    padding-bottom: 0px;
+  margin: 3px;
+  border-radius: 4px;
+  /* FIXME Do we still need this after sorting out headerbar structure? */
+  padding: 0px 10px;
+  /* Set the same min-width for image buttons and text buttons */
+  min-width: 16px;
 }
 
 .pathbar button:not(:hover),

@@ -45,13 +45,19 @@ public class PathButton : Gtk.Button {
         } else {
             remove_css_class ("current-dir");
             child.add_css_class ("dim-label");
-            child.halign = Gtk.Align.CENTER;
+            child.halign = Gtk.Align.FILL;
             hexpand = false;
             min_chars = DEFAULT_MIN_CHARS;
         }
     }
 
     private void on_label_changed () {
+        // We'll bend the button's existing GtkLabel to our wishes, instead of
+        // creating our own as a child. This is a bit dumb, but the alternative
+        // is we need to deal with a behaviour where setting the icon name
+        // property replaces our child widget with an image widget. Personally
+        // I think this is slightly less bad.
+
         Gtk.Label? label_widget = child as Gtk.Label;
 
         if (label_widget == null)
