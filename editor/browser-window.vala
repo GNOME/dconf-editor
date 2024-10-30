@@ -134,6 +134,7 @@ private abstract class BrowserWindow : BaseWindow
         { "empty-null",         empty },
         { "disabled-state-s",   empty, "s", "''" },
         { "disabled-state-sq",  empty, "(sq)", "('',uint16 65535)" },
+        { "edit-location",      edit_location },
 
         { "open-folder",        open_folder, "s" },
         { "open-object",        open_object, "(sq)" },
@@ -268,6 +269,8 @@ private abstract class BrowserWindow : BaseWindow
 
         action.set_state ((!) path_variant);
 
+        hide_location_editor ();
+
         if (ModelUtils.is_folder_context_id (context_id))
             request_folder (full_name, "");
         else
@@ -307,6 +310,11 @@ private abstract class BrowserWindow : BaseWindow
         else
             update_current_path (saved_type, strdup (saved_view));
         init_next_search = true;
+    }
+
+    private void edit_location (/* SimpleAction action, Variant? path_variant */)
+    {
+        show_location_editor (current_path);
     }
 
     private void show_search (/* SimpleAction action, Variant? path_variant */)
@@ -383,6 +391,16 @@ private abstract class BrowserWindow : BaseWindow
     protected abstract void request_folder (string full_name, string selected_or_empty = "", bool notify_missing = true);
     protected abstract void request_object (string full_name, uint16 context_id = ModelUtils.undefined_context_id, bool notify_missing = true, string schema_id = "");
     protected abstract void request_config (string full_name);
+
+    private void show_location_editor (string path)
+    {
+        headerbar.show_location_editor (path);
+    }
+
+    private void hide_location_editor ()
+    {
+        headerbar.hide_location_editor ();
+    }
 
     private bool init_next_search = true;
     private void request_search (PathEntry.SearchMode mode = PathEntry.SearchMode.UNCLEAR, string? search = null, bool local_search = false)

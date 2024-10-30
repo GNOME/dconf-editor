@@ -42,6 +42,16 @@ private abstract class BrowserHeaderBar : BaseHeaderBar
         update_hamburger_menu ();
     }
 
+    internal virtual void show_location_editor (string path)
+    {
+        path_widget.enter_location_mode (path);
+    }
+
+    internal virtual void hide_location_editor ()
+    {
+        path_widget.leave_location_mode ();
+    }
+
     private bool is_extra_thin = false;
     // protected override void set_window_size (AdaptativeWidget.WindowSize new_size)
     // {

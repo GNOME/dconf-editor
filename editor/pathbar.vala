@@ -17,27 +17,45 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-[GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/pathbutton.ui")]
 public class PathButton : Gtk.Button {
-    [GtkChild]
-    new unowned Gtk.Label label;
-    [GtkChild]
-    unowned Gtk.Image icon;
+    const int DEFAULT_MIN_CHARS = 3;
+    // We want to avoid ellipsizing the current directory name, but still need
+    // to set a limit.
+    const int CURRENT_DIR_MIN_CHARS = DEFAULT_MIN_CHARS * 4;
 
-    public PathButton (string name, Icon? gicon, bool is_current_dir) {
-        int min_chars = 7;
-        label.label = name;
-        tooltip_text = name;
+    private int min_chars { get; set; default = DEFAULT_MIN_CHARS; }
+    public bool is_current_dir { get; set; default = false; }
 
-        if (!is_current_dir) {
-            icon.add_css_class ("dim-label");
-            label.add_css_class ("dim-label");
-        } else {
-            // We want to avoid ellipsizing the current directory name, but
-            // still need to set a limit.
-            min_chars = 4 * min_chars;
+    public PathButton () {
+        bind_property ("label", this, "tooltip-text", BindingFlags.SYNC_CREATE);
+
+        notify["child"].connect (on_is_current_dir_changed);
+        notify["is-current-dir"].connect (on_is_current_dir_changed);
+        notify["label"].connect (on_label_changed);
+        notify["min-chars"].connect (on_label_changed);
+    }
+
+    private void on_is_current_dir_changed () {
+        if (is_current_dir) {
             add_css_class ("current-dir");
+            child.remove_css_class ("dim-label");
+            child.halign = Gtk.Align.START;
+            hexpand = true;
+            min_chars = CURRENT_DIR_MIN_CHARS;
+        } else {
+            remove_css_class ("current-dir");
+            child.add_css_class ("dim-label");
+            child.halign = Gtk.Align.CENTER;
+            hexpand = false;
+            min_chars = DEFAULT_MIN_CHARS;
         }
+    }
+
+    private void on_label_changed () {
+        Gtk.Label? label_widget = child as Gtk.Label;
+
+        if (label_widget == null)
+            return;
 
         // Labels can ellipsize until they become a single ellipsis character.
         // We don't want that, so we must set a minimum.
@@ -49,15 +67,13 @@ public class PathButton : Gtk.Button {
         // Due to variable width fonts, labels can be shorter than the space
         // that would be reserved by setting a minimum amount of characters.
         // Compensate for this with a tolerance of +50% characters.
-        if (name.length > min_chars * 1.5) {
-            label.width_chars = min_chars;
-            label.ellipsize = Pango.EllipsizeMode.MIDDLE;
-        }
-
-        icon.hide ();
-        if (gicon != null) {
-            icon.gicon = (!) gicon;
-            icon.show ();
+        int label_length = (label != null) ? ((!) label).length : 0;
+        if (label_length > min_chars * 1.5) {
+            ((!) label_widget).width_chars = min_chars;
+            ((!) label_widget).ellipsize = Pango.EllipsizeMode.MIDDLE;
+        } else {
+            ((!) label_widget).width_chars = -1;
+            ((!) label_widget).ellipsize = Pango.EllipsizeMode.NONE;
         }
     }
 }
@@ -96,12 +112,28 @@ public class Pathbar : Gtk.Box {
         clear ();
 
         List<PathButton> buttons = new List<PathButton>();
-        string [] path_parts = path.split ("/", 0);
+        // path.find ("/");
+        // string [] path_parts = path.split ("/", 0);
+        int path_length = path[-1] == '/' ? path.length - 1 : path.length;
 
-        foreach (var path_part in path_parts) {
-            bool is_current_dir = false; // FIXME: Is this just true for the last one?
-            // Instead of path_path, pass make_button the absolute path up to this point
-            buttons.append (make_button (path_part, is_current_dir));
+        int index = 0;
+
+        while (index >= 0)
+        {
+            int next_index = path.index_of ("/", index);
+
+            string full_path = (next_index == -1) ? path[0:] : path[0:next_index+1];
+            string label = (next_index == -1) ? path[index:] : path[index:next_index];
+
+            if (next_index == -1 || next_index == path_length - 1) {
+                buttons.append (make_button (full_path, label, true));
+                next_index = -1;
+            } else {
+                buttons.append (make_button (full_path, label, false));
+                next_index += 1;
+            }
+
+            index = next_index;
         }
 
         bool first_directory = true;
@@ -146,24 +178,18 @@ public class Pathbar : Gtk.Box {
         }
     }
 
-    PathButton make_button (string path, bool is_current_dir) {
-        string label;
-        Icon? gicon = null;
+    PathButton make_button (string full_path, string label, bool is_current_dir) {
+        var button = new PathButton ();
 
-        label = path;
+        button.label = label;
+        if (full_path == "/" && label == "")
+            button.icon_name = "ca.desrt.dconf-editor-symbolic";
+        button.is_current_dir = is_current_dir;
 
-        // if (path == null || path.get_depth () == 1) {
-        //     label = path;
-        //     gicon = location.symbolic_icon;
-        // } else {
-        //     label = path.display_name;
-        // }
-
-        var button = new PathButton (label, gicon, is_current_dir);
-        if (!is_current_dir) {
-            button.clicked.connect (() => {
-                item_activated (path);
-            });
+        if (is_current_dir) {
+            button.set_action_name ("browser.edit-location");
+        } else {
+            button.set_detailed_action_name ("browser.open-folder('" + full_path + "')");
         }
 
         return button;

@@ -26,7 +26,6 @@
     <file preprocess="xml-stripblanks">notifications-revealer.ui</file>
     <file preprocess="xml-stripblanks">overlayed-list.ui</file>
     <file preprocess="xml-stripblanks">pathbar.ui</file>
-    <file preprocess="xml-stripblanks">pathbutton.ui</file>
     <file preprocess="xml-stripblanks">pathentry.ui</file>
     <file preprocess="xml-stripblanks">pathwidget.ui</file>
     <file preprocess="xml-stripblanks">property-row.ui</file>

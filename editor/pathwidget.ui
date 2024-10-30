@@ -10,16 +10,20 @@
         <property name="transition-duration">300</property>
         <property name="transition-type">crossfade</property>
         <child>
-          <object class="PathEntry" id="searchentry">
-            <property name="visible">True</property>
-          </object>
+          <object class="PathEntry" id="searchentry"/>
+        </child>
+        <child>
+          <object class="PathEntry" id="location_entry"/>
         </child>
         <child>
           <object class="GtkGrid" id="pathbar_grid">
             <child>
               <object class="Pathbar" id="pathbar">
                 <property name="visible">True</property>
-                <property name="width_request">700</property>
+                <property name="width-request">700</property>
+                <style>
+                  <class name="pathbar" />
+                </style>
               </object>
             </child>
             <child>

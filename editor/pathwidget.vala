@@ -26,6 +26,8 @@ private class PathWidget : Box
     [GtkChild] private unowned Grid                 pathbar_grid;
     [GtkChild] private unowned Pathbar              pathbar;
     [GtkChild] private unowned PathEntry            searchentry;
+    // FIXME What even IS a PathEntry?
+    [GtkChild] private unowned PathEntry            location_entry;
 
     // [GtkChild] private unowned Revealer             parent_revealer;
     [GtkChild] private unowned Button          parent_button;
@@ -78,6 +80,18 @@ private class PathWidget : Box
     \*/
 
     [CCode (notify = false)] internal bool search_mode_enabled { internal get; private set; default = false; }
+
+    internal void enter_location_mode (string path)
+    {
+        // FIXME The buffer should keep in sync with the current path and we
+        //       shouldn't need to be passed it here
+        pathwidget_stack.set_visible_child (location_entry);
+    }
+
+    internal void leave_location_mode ()
+    {
+        pathwidget_stack.set_visible_child (pathbar_grid);
+    }
 
     private void enter_search_mode ()
     {
