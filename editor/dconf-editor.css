@@ -41,8 +41,8 @@
                                            background-size:1.5rem; min-height:2.6rem; }
 .small-bookmarks-rows .bookmark          { background-size:1.1rem; min-height:1.3rem; }
 
-                      .bookmark:dir(ltr) { margin-left :0.6rem; padding-left :2.2rem; margin-right:1rem; background-position:  0  center }
-                      .bookmark:dir(rtl) { margin-right:0.6rem; padding-right:2.2rem; margin-left :1rem; background-position:100% center }
+                      .bookmark:dir(ltr) { margin-left :0.6rem; padding-left :2.2rem; margin-right:1rem; background-position:  0  center; }
+                      .bookmark:dir(rtl) { margin-right:0.6rem; padding-right:2.2rem; margin-left :1rem; background-position:100% center; }
 .small-bookmarks-rows .bookmark:dir(ltr) { margin-left :0.5rem; padding-left :1.7rem; }
 .small-bookmarks-rows .bookmark:dir(rtl) { margin-right:0.5rem; padding-right:1.7rem; }
 
@@ -105,10 +105,8 @@
 
 /* round borders for large windows */
 
-.large-window                       .keys-list          > row        { border-radius:0.5em;
-                                                                      -gtk-outline-radius:calc(0.5em - 1px); }
-.large-window .small-keys-list-rows .keys-list          > row        { border-radius:0;
-                                                                      -gtk-outline-radius:2px; /* gtk+ defaults */ }
+.large-window                       .keys-list          > row        { border-radius:0.5em; }
+.large-window .small-keys-list-rows .keys-list          > row        { border-radius:0; }
 
 /* visual padding */
                                     .keys-list:dir(ltr) > row > .key    > grid { padding-left: 10px; padding-right:20px; } /* cool  8-) */

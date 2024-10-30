@@ -52,10 +52,10 @@
 }
 
 .horizontal.overlayed-list:dir(ltr).needs-padding > scrolledwindow > viewport > list > row {
-  padding-right:calc(160px+1rem); /* width-request of edit_mode_box + a bit */
+  padding-right:calc(160px + 1rem); /* width-request of edit_mode_box + a bit */
 }
 .horizontal.overlayed-list:dir(rtl).needs-padding > scrolledwindow > viewport > list > row {
-  padding-left :calc(160px+1rem); /* width-request of edit_mode_box + a bit */
+  padding-left :calc(160px + 1rem); /* width-request of edit_mode_box + a bit */
 }
 .horizontal.overlayed-list:dir(ltr).needs-padding > .linked-circular {
   margin-right:1.5rem;
@@ -67,28 +67,20 @@
   .vertical.overlayed-list:dir(rtl) > .linked-circular > .right-on-ltr,
   .vertical.overlayed-list:dir(ltr) > .linked-circular > .left-on-ltr {
   border-radius:2rem 0 0 2rem;
-  -gtk-outline-top-left-radius   :2rem;
-  -gtk-outline-bottom-left-radius:2rem;
 }
 
   .vertical.overlayed-list:dir(ltr) > .linked-circular > .right-on-ltr,
   .vertical.overlayed-list:dir(rtl) > .linked-circular > .left-on-ltr {
   border-radius:0 2rem 2rem 0;
-  -gtk-outline-top-right-radius   :2rem;
-  -gtk-outline-bottom-right-radius:2rem;
 }
 
 .horizontal.overlayed-list:dir(rtl) > .linked-circular > .right-on-ltr,
 .horizontal.overlayed-list:dir(ltr) > .linked-circular > .left-on-ltr {
   border-radius:1.5rem 1.5rem 0 0;
-  -gtk-outline-top-right-radius:1.4rem;
-  -gtk-outline-top-left-radius :1.4rem;
 }
 .horizontal.overlayed-list:dir(ltr) > .linked-circular > .right-on-ltr,
 .horizontal.overlayed-list:dir(rtl) > .linked-circular > .left-on-ltr {
   border-radius:0 0 1.5rem 1.5rem;
-  -gtk-outline-bottom-right-radius:1.4rem;
-  -gtk-outline-bottom-left-radius :1.4rem;
 }
 
 /*\
