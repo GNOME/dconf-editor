@@ -24,7 +24,7 @@ configure_file(
 
 appdata = dconf_editor_namespace + '.appdata.xml'
 
-i18n.merge_file(
+appdata_dep = i18n.merge_file(
   input: appdata + '.in',
   output: appdata,
   po_dir: po_dir,
@@ -124,6 +124,7 @@ ui_data = files(
   'bookmark.ui',
   'browser-infobar.ui',
   'browser-stack.ui',
+  'dconf-window.ui',
   'delayed-setting-view.ui',
   'filter-list-box-row.ui',
   'folder-list-box-row.ui',
@@ -143,7 +144,7 @@ ui_data = files(
   'search-list-box-row.ui'
 )
 
-resource_data = css_data + ui_data
+resource_data = css_data + ui_data + appdata_dep
 
 sources += gnome.compile_resources(
   'resources',

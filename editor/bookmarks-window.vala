@@ -351,3 +351,4 @@ private abstract class BookmarksWindow : BrowserWindow
         update_actions ();
     }
 }
+

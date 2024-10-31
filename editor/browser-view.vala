@@ -154,7 +154,7 @@ private class BrowserView : BaseView
         last_context_id = context_id;
     }
 
-    internal virtual void set_path (ViewType type, string path)
+    internal virtual void set_dconf_path (ViewType type, string path)
     {
         browser_content.set_path (type, path);
         invalidate_popovers ();

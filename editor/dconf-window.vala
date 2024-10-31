@@ -26,7 +26,9 @@ internal enum RelocatableSchemasEnabledMappings
     STARTUP
 }
 
-private class DConfWindow : BookmarksWindow
+
+[GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/dconf-window.ui")]
+private class DConfWindow : Adw.ApplicationWindow
 {
     private SettingsModel model;
     private ModificationsHandler modifications_handler;
@@ -38,33 +40,41 @@ private class DConfWindow : BookmarksWindow
 
     private ulong delayed_changes_changed_handler = 0;
 
-    private DConfHeaderBar headerbar;
-    private DConfView      main_view;
+    [GtkChild] private unowned Adw.ToolbarView toolbar_view;
+    [GtkChild] private unowned Adw.HeaderBar headerbar;
+    [GtkChild] private unowned Pathbar pathbar;
+    private DConfView main_view;
+
+    internal string saved_view { get; set; default = "/"; }
+    internal string current_path { get; set; default = "/"; }
+    internal bool search_mode_enabled { get; set; default = false; }
+    internal bool delay_mode { get; set; default = false; }
 
     internal DConfWindow (bool disable_warning, string? schema, string? path, string? key_name)
     {
-        SettingsModel _model = new SettingsModel ();
-        ModificationsHandler _modifications_handler = new ModificationsHandler (_model);
-        DConfHeaderBar _headerbar = new DConfHeaderBar ();
-        DConfView _main_view = new DConfView (_modifications_handler);
+        bind_property ("current-path", pathbar, "path", BindingFlags.SYNC_CREATE);
 
-        Object (nta_headerbar               : (BaseHeaderBar) _headerbar,
-                base_view                   : (BaseView) _main_view,
-                window_title                : ConfigurationEditor.PROGRAM_NAME,
-                specific_css_class_or_empty : "dconf-editor",
-                help_string_or_empty        : "",
-                schema_path                 : "/ca/desrt/dconf-editor/");
+        model = new SettingsModel ();
+        modifications_handler = new ModificationsHandler (model);
+        // DConfHeaderBar _headerbar = new DConfHeaderBar ();
+        //
 
-        model = _model;
-        modifications_handler = _modifications_handler;
-        headerbar = _headerbar;
-        main_view = _main_view;
+        main_view = new DConfView (modifications_handler);
+        bind_property ("current-path", main_view, "path", BindingFlags.SYNC_CREATE);
+        toolbar_view.content = main_view;
 
-        toolbar_view.add_top_bar (headerbar);
+        // Object (nta_headerbar               : (BaseHeaderBar) _headerbar,
+        //         base_view                   : (BaseView) _main_view,
+        //         window_title                : ConfigurationEditor.PROGRAM_NAME,
+        //         specific_css_class_or_empty : "dconf-editor",
+        //         help_string_or_empty        : "",
+        //         schema_path                 : "/ca/desrt/dconf-editor/");
+
 
         create_modifications_revealer ();
 
         install_ui_action_entries ();
+        install_browser_action_entries ();
         install_kbd_action_entries ();
 
         use_shortpaths_changed_handler = settings.changed ["use-shortpaths"].connect_after (reload_view);
@@ -72,17 +82,17 @@ private class DConfWindow : BookmarksWindow
 
         revealer.modifications_handler = modifications_handler;
         delayed_changes_changed_handler = modifications_handler.delayed_changes_changed.connect (() => {
-                uint total_changes_count = modifications_handler.dconf_changes_count + modifications_handler.gsettings_changes_count;
-                if (total_changes_count == 0)
-                    headerbar.set_has_pending_changes (/* has pending changes */ false,
-                                                       /* mode is not delayed */ !modifications_handler.get_current_delay_mode ());
-                else
-                {
-                    if (modifications_handler.mode == ModificationsMode.TEMPORARY && total_changes_count != 1)
-                        assert_not_reached ();
-                    headerbar.set_has_pending_changes (/* has pending changes */ true,
-                                                       /* mode is not delayed */ !modifications_handler.get_current_delay_mode ());
-                }
+                // uint total_changes_count = modifications_handler.dconf_changes_count + modifications_handler.gsettings_changes_count;
+                // if (total_changes_count == 0)
+                    // headerbar.set_has_pending_changes (/* has pending changes */ false,
+                    //                                    /* mode is not delayed */ !modifications_handler.get_current_delay_mode ());
+                // else
+                // {
+                //     if (modifications_handler.mode == ModificationsMode.TEMPORARY && total_changes_count != 1)
+                //         assert_not_reached ();
+                    // headerbar.set_has_pending_changes (/* has pending changes */ true,
+                    //                                    /* mode is not delayed */ !modifications_handler.get_current_delay_mode ());
+                // }
             });
 
         behaviour_changed_handler = settings.changed ["behaviour"].connect_after (invalidate_popovers_with_ui_reload);
@@ -104,7 +114,7 @@ private class DConfWindow : BookmarksWindow
             string fallback_path = model.get_fallback_path (settings.get_string ("saved-pathbar-path"));
             /* headerbar.set_path (ModelUtils.is_folder_path (saved_path) ? ViewType.FOLDER : ViewType.OBJECT, saved_path);
             headerbar.update_ghosts (fallback_path);  // TODO allow a complete state restoration (including search and this) */
-            headerbar.set_path (ModelUtils.is_folder_path (fallback_path) ? ViewType.FOLDER : ViewType.OBJECT, fallback_path);
+            // headerbar.set_path (ModelUtils.is_folder_path (fallback_path) ? ViewType.FOLDER : ViewType.OBJECT, fallback_path);
         }
 
         SchemasUtility schemas_utility = new SchemasUtility ();
@@ -229,17 +239,17 @@ private class DConfWindow : BookmarksWindow
     }
     private void on_paths_changed (SettingsModelCore _model, GenericSet<string> unused, bool internal_changes)
     {
-        if (current_type == ViewType.SEARCH)
-        {
-            if (!internal_changes)  // TODO do not react to value changes
-                reload_search_action.set_enabled (true);
-        }
-        else if (main_view.check_reload (current_type, current_path, !internal_changes))    // handle infobars in needed
-            reload_view ();
+        // if (current_type == ViewType.SEARCH)
+        // {
+        //     if (!internal_changes)  // TODO do not react to value changes
+        //         reload_search_action.set_enabled (true);
+        // }
+        // else if (main_view.check_reload (current_type, current_path, !internal_changes))    // handle infobars in needed
+        //     reload_view ();
 
-        string complete_path;
-        headerbar.get_complete_path (out complete_path);
-        headerbar.update_ghosts (((SettingsModel) _model).get_fallback_path (complete_path));
+        // string complete_path;
+        // headerbar.get_complete_path (out complete_path);
+        // headerbar.update_ghosts (((SettingsModel) _model).get_fallback_path (complete_path));
     }
     private void propagate_gkey_value_push (string full_name, uint16 context_id, Variant key_value, bool is_key_default)
     {
@@ -260,8 +270,9 @@ private class DConfWindow : BookmarksWindow
 
     private void create_modifications_revealer ()
     {
-        revealer = new ModificationsRevealer ();
-        add_to_main_box (revealer);
+        // FIXME JUST PUT THIS IN THE UI FILE
+        // revealer = new ModificationsRevealer ();
+        // add_to_main_box (revealer);
         // add_adaptative_child (revealer);
     }
 
@@ -371,6 +382,59 @@ private class DConfWindow : BookmarksWindow
         { "notify-object-deleted", notify_object_deleted, "(sq)" }
     };
 
+    // FIXME: We can either trim these action entries, or move them to mixins
+    //        instead of the current weird class hierarchy.
+    private void install_browser_action_entries ()
+    {
+        SimpleActionGroup action_group = new SimpleActionGroup ();
+        action_group.add_action_entries (browser_action_entries, this);
+        insert_action_group ("browser", action_group);
+
+        // disabled_state_action = (SimpleAction) action_group.lookup_action ("disabled-state-s");
+        // disabled_state_action.set_enabled (false);
+        // disabled_state_action = (SimpleAction) action_group.lookup_action ("disabled-state-sq");
+        // disabled_state_action.set_enabled (false);
+
+        // open_path_action = (SimpleAction) action_group.lookup_action ("open-path");
+
+        // reload_search_action = (SimpleAction) action_group.lookup_action ("reload-search");
+        // reload_search_action.set_enabled (false);
+    }
+
+    private const GLib.ActionEntry [] browser_action_entries =
+    {
+        { "open-folder",        open_folder, "s" },
+        { "edit-location",      edit_location },
+
+        // { "empty",              empty, "*" },
+        // { "empty-null",         empty },
+        // { "disabled-state-s",   empty, "s", "''" },
+        // { "disabled-state-sq",  empty, "(sq)", "('',uint16 65535)" },
+        // { "edit-location",      edit_location },
+
+        // { "open-folder",        open_folder, "s" },
+        // { "open-object",        open_object, "(sq)" },
+        // { "open-config",        open_config, "s" },
+        // { "open-config-local",  open_config_local },
+        // { "open-search",        open_search, "s" },
+        // { "open-search-local",  open_search_local },
+        // { "open-search-global", open_search_global },
+        // { "open-search-root",   open_search_root },
+        // { "next-search",        next_search, "s" },
+        // { "open-parent",        open_parent, "s" },
+
+        // { "open-path",          open_path, "(sq)", "('/',uint16 " + ModelUtils.folder_context_id_string + ")" },
+
+        // { "reload-folder",      reload_folder },
+        // { "reload-object",      reload_object },
+        // { "reload-search",      reload_search },
+
+        // { "hide-search",        hide_search },
+        // { "show-search",        show_search },
+        // { "toggle-search",      toggle_search, "b", "false" },
+        // { "search-changed",     search_changed, "ms" }
+    };
+
     private void reset_recursively (SimpleAction action, Variant? path_variant)
         requires (path_variant != null)
     {
@@ -393,6 +457,22 @@ private class DConfWindow : BookmarksWindow
         revealer.reset_objects (path, model.get_children (path), recursively);
     }
 
+    private void open_folder (SimpleAction action, Variant? path_variant)
+        requires (path_variant != null)
+    {
+        close_in_window_panels ();
+
+        current_path = ((!) path_variant).get_string ();
+
+        // FIXME I don't know why this is.
+        request_folder (current_path);
+    }
+
+    private void edit_location (/* SimpleAction action, Variant? path_variant */)
+    {
+        // TODO
+    }
+
     private void enter_delay_mode (/* SimpleAction action, Variant? path_variant */)
     {
         modifications_handler.enter_delay_mode ();
@@ -401,16 +481,16 @@ private class DConfWindow : BookmarksWindow
 
     private void apply_delayed_settings (/* SimpleAction action, Variant? path_variant */)
     {
-        if (main_view.in_window_modifications)
-            show_default_view ();
+        // if (main_view.in_window_modifications)
+        //     show_default_view ();
         modifications_handler.apply_delayed_settings ();
         invalidate_popovers_with_ui_reload ();
     }
 
     private void dismiss_delayed_settings (/* SimpleAction action, Variant? path_variant */)
     {
-        if (main_view.in_window_modifications)
-            show_default_view ();
+        // if (main_view.in_window_modifications)
+        //     show_default_view ();
         modifications_handler.dismiss_delayed_settings ();
         invalidate_popovers_with_ui_reload ();
     }
@@ -432,35 +512,32 @@ private class DConfWindow : BookmarksWindow
 
     private void invalidate_popovers_with_ui_reload ()
     {
-        bool delay_mode = modifications_handler.get_current_delay_mode ();
+        delay_mode = modifications_handler.get_current_delay_mode ();
         main_view.hide_or_show_toggles (!delay_mode);
         main_view.invalidate_popovers ();
-        headerbar.delay_mode = delay_mode;
     }
 
     /*\
     * * showing or hiding panels
     \*/
 
-    protected override void show_default_view ()
+    protected void show_default_view ()
     {
         if (main_view.in_window_modifications)
         {
-            headerbar.show_default_view ();
+            // headerbar.show_default_view ();
             main_view.show_default_view ();
 
-            if (current_type == ViewType.CONFIG)
-                request_folder (current_path);
+            // if (current_type == ViewType.CONFIG)
+            //     request_folder (current_path);
         }
-        else
-            base.show_default_view ();
     }
 
     private void show_modifications_view (/* SimpleAction action, Variant? path_variant */)
     {
         close_in_window_panels ();
 
-        headerbar.show_modifications_view ();
+        // headerbar.show_modifications_view ();
         main_view.show_modifications_view ();
     }
 
@@ -468,7 +545,7 @@ private class DConfWindow : BookmarksWindow
     * * bookmarks interaction
     \*/
 
-    protected override BookmarkIcon get_bookmark_icon (ref string bookmark)
+    protected BookmarkIcon get_bookmark_icon (ref string bookmark)
     {
         uint16 context_id;
         string name;
@@ -585,76 +662,79 @@ private class DConfWindow : BookmarksWindow
     * * keyboard actions overrides
     \*/
 
-    protected override void toggle_bookmark_called ()   // TODO better
+    protected void toggle_bookmark_called ()   // TODO better
     {
         if (main_view.in_window_modifications)
             show_default_view ();
     }
 
-    protected override bool escape_pressed ()
+    protected bool escape_pressed ()
     {
         if (main_view.in_window_modifications)
         {
             show_default_view ();
             return true;
         }
-        return base.escape_pressed ();
+        return false;
+        // return base.escape_pressed ();
     }
 
     /*\
     * * keyboard calls helpers
     \*/
 
-    protected override bool intercept_next_match (out bool interception_result)
+    protected bool intercept_next_match (out bool interception_result)
     {
         if (revealer.get_modifications_list_state ())   // for modifications popover
         {
             interception_result = revealer.next_match ();
             return true;
         }
-        return base.intercept_next_match (out interception_result);
+        return false;
+        // return base.intercept_next_match (out interception_result);
     }
 
-    protected override bool intercept_previous_match (out bool interception_result)
+    protected bool intercept_previous_match (out bool interception_result)
     {
         if (revealer.get_modifications_list_state ())   // for modifications popover
         {
             interception_result = revealer.previous_match ();
             return true;
         }
-        return base.intercept_previous_match (out interception_result);
+        return false;
+        // return base.intercept_previous_match (out interception_result);
     }
 
     /*\
     * * Path requests
     \*/
 
-    protected override void reconfigure_search (bool local_search)
+    protected void reconfigure_search (bool local_search)
     {
         main_view.set_search_parameters (local_search, saved_view, ((DConfHeaderBar) headerbar).get_bookmarks ());
     }
 
-    protected override void close_in_window_panels ()
+    protected void close_in_window_panels ()
     {
-        hide_notification ();
-        headerbar.close_popovers ();
-        revealer.hide_modifications_list ();
-        if (main_view.in_window_bookmarks || main_view.in_window_modifications || in_window_about)
-            show_default_view ();
+        // hide_notification ();
+        // headerbar.close_popovers ();
+        // revealer.hide_modifications_list ();
+        // if (main_view.in_window_bookmarks || main_view.in_window_modifications || in_window_about)
+        //     show_default_view ();
     }
 
-    protected override void request_config (string full_name)
+    protected void request_config (string full_name)
     {
         main_view.prepare_object_view (full_name, ModelUtils.folder_context_id,
                                        model.get_folder_properties (full_name),
                                        true);
-        update_current_path (ViewType.CONFIG, strdup (full_name));
+        current_path = strdup (full_name);
 
-        stop_search ();
+        // stop_search ();
         // headerbar.search_mode_enabled = false; // do last to avoid flickering RegistryView before PropertiesView when selecting a search result
     }
 
-    protected override void request_folder (string full_name, string selected_or_empty = "", bool notify_missing = true)
+    protected void request_folder (string full_name, string selected_or_empty = "", bool notify_missing = true)
     {
         string fallback_path = model.get_fallback_path (full_name);
 
@@ -662,14 +742,14 @@ private class DConfWindow : BookmarksWindow
             cannot_find_folder (full_name); // do not place after, full_name is in some cases changed by set_directory()...
 
         main_view.prepare_folder_view (create_key_model (fallback_path, model.get_children (fallback_path, true, true)), current_path.has_prefix (fallback_path));
-        update_current_path (ViewType.FOLDER, fallback_path);
+        current_path = fallback_path;
 
-        if (selected_or_empty == "")
-            main_view.select_row (headerbar.get_selected_child (fallback_path));
-        else
-            main_view.select_row (selected_or_empty);
+        // if (selected_or_empty == "")
+        //     main_view.select_row (headerbar.get_selected_child (fallback_path));
+        // else
+        //     main_view.select_row (selected_or_empty);
 
-        stop_search ();
+        // stop_search ();
         // headerbar.search_mode_enabled = false; // do last to avoid flickering RegistryView before PropertiesView when selecting a search result
     }
     private static GLib.ListStore create_key_model (string base_path, Variant? children)
@@ -699,7 +779,7 @@ private class DConfWindow : BookmarksWindow
         return key_model;
     }
 
-    protected override void request_object (string full_name, uint16 context_id = ModelUtils.undefined_context_id, bool notify_missing = true, string schema_id = "")
+    protected void request_object (string full_name, uint16 context_id = ModelUtils.undefined_context_id, bool notify_missing = true, string schema_id = "")
     {
         context_id = model.get_fallback_context (full_name, context_id, schema_id);
 
@@ -713,19 +793,21 @@ private class DConfWindow : BookmarksWindow
                     cannot_find_folder (full_name);
             }
             request_folder (ModelUtils.get_parent_path (full_name), full_name, false);
-            string complete_path;
-            headerbar.get_complete_path (out complete_path);
-            headerbar.update_ghosts (model.get_fallback_path (complete_path));
+            // string complete_path;
+            // headerbar.get_complete_path (out complete_path);
+            // headerbar.update_ghosts (model.get_fallback_path (complete_path));
         }
         else
         {
             main_view.prepare_object_view (full_name, context_id,
                                            model.get_key_properties (full_name, context_id, 0),
                                            current_path == ModelUtils.get_parent_path (full_name));
-            update_current_path (ViewType.OBJECT, strdup (full_name));
+            current_path = strdup (full_name);
+            // update_current_path (ViewType.OBJECT, strdup (full_name));
         }
 
-        stop_search ();
+        search_mode_enabled = false;
+        // stop_search ();
         // headerbar.search_mode_enabled = false; // do last to avoid flickering RegistryView before PropertiesView when selecting a search result
     }
 
@@ -733,31 +815,14 @@ private class DConfWindow : BookmarksWindow
     * * navigation helpers
     \*/
 
-    protected override bool handle_copy_text (out string copy_text)
+    protected bool get_alt_copy_text (out string copy_text)
     {
         model.copy_action_called ();
 
-        if (headerbar.handle_copy_text (out copy_text))     // for bookmarks popovers
-            return true;
-        if (revealer.handle_copy_text (out copy_text))      // for delayed settings popovers
-            return true;
-        if (main_view.handle_copy_text (out copy_text))  // for in-window panels and for content
-            return true;
-        if (current_type == ViewType.OBJECT)
-            copy_text = model.get_suggested_key_copy_text (current_path, main_view.last_context_id);
-        if (BaseWindow.is_empty_text (copy_text))
-            copy_text = current_path;
-        return true;
-    }
-
-    protected override bool get_alt_copy_text (out string copy_text)
-    {
-        model.copy_action_called ();
-
-        if (headerbar.search_mode_enabled)
+        if (search_mode_enabled)
         {
-            if (!main_view.handle_alt_copy_text (out copy_text))
-                copy_text = saved_view;
+            // if (!main_view.handle_alt_copy_text (out copy_text))
+            //     copy_text = saved_view;
         }
         else
             copy_text = current_path;
@@ -798,5 +863,38 @@ private class DConfWindow : BookmarksWindow
     {
         /* Translators: notification text at startup, use 'dconf-editor /org/example/empty/'; the %s is the folder path */
         show_notification (_("There’s nothing in requested folder “%s”.").printf (full_name));
+    }
+
+    protected bool row_action_blocked ()
+    {
+        // if (headerbar.has_popover ())
+        //     return true;
+        if (main_view.is_in_in_window_mode ())
+            return true;
+        return false;
+    }
+
+    protected void reload_view ()
+    {
+        // FIXME WHY DO WE NEED THIS
+        // if (main_view.current_view == ViewType.FOLDER)
+        //     request_folder (current_path, main_view.get_selected_row_name ());
+        // else if (main_view.current_view == ViewType.OBJECT)
+        //     request_object (current_path, ModelUtils.undefined_context_id, false);
+        // else if (main_view.current_view == ViewType.SEARCH)
+        // {
+        //     init_next_search = true;
+        //     request_search ();
+        // }
+    }
+
+    protected void show_notification (string notification)
+    {
+        main_view.show_notification (notification);
+    }
+
+    protected void hide_notification ()
+    {
+        main_view.hide_notification ();
     }
 }

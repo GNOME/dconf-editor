@@ -113,7 +113,8 @@ private class PathWidget : Box
 
     internal void set_path (ViewType type, string path)
     {
-        pathbar.set_path (type, path);
+        // pathbar.set_path (type, path);
+        pathbar.path = path;
         searchentry.set_path (type, path);
 
         bool is_search = type == ViewType.SEARCH;

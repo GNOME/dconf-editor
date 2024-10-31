@@ -2,6 +2,7 @@
 <gresources>
   <gresource prefix="/ca/desrt/dconf-editor">
     <file compressed="true">base-window.css</file>
+    <file compressed="true">ca.desrt.dconf-editor.appdata.xml</file>
     <file compressed="true">dconf-editor.css</file>
     <file compressed="true">pathbar.css</file>
     <file compressed="true">style.css</file>
@@ -17,6 +18,7 @@
     <file preprocess="xml-stripblanks">browser-infobar.ui</file>
     <file preprocess="xml-stripblanks">browser-stack.ui</file>
     <file preprocess="xml-stripblanks">delayed-setting-view.ui</file>
+    <file preprocess="xml-stripblanks">dconf-window.ui</file>
     <file preprocess="xml-stripblanks">filter-list-box-row.ui</file>
     <file preprocess="xml-stripblanks">folder-list-box-row.ui</file>
     <file preprocess="xml-stripblanks">key-list-box-row.ui</file>

@@ -380,8 +380,8 @@ private abstract class BrowserWindow : BaseWindow
         current_type = type;
         current_path = path;
 
-        main_view.set_path (type, path);
-        headerbar.set_path (type, path);
+        // main_view.set_path (type, path);
+        // headerbar.set_pathset_path (type, path);
 
         Variant variant = new Variant ("(sq)", path, (type == ViewType.FOLDER) || (type == ViewType.CONFIG) ? ModelUtils.folder_context_id : ModelUtils.undefined_context_id);
         open_path_action.set_state (variant);

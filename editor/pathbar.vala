@@ -89,7 +89,14 @@ public class Pathbar : Gtk.Box {
     [GtkChild]
     private unowned Gtk.Box button_box;
 
+    public string path { get; set; default = "/"; }
+
     public signal void item_activated (string path);
+
+    construct {
+        notify["path"].connect (on_path_changed);
+        on_path_changed ();
+    }
 
     [GtkCallback]
     private void on_adjustment_changed (Gtk.Adjustment adjusment) {
@@ -108,13 +115,8 @@ public class Pathbar : Gtk.Box {
         adjustment.value = adjustment.upper;
     }
 
-    internal void set_path (ViewType type, string path)
+    private void on_path_changed ()
     {
-        if (type == ViewType.SEARCH)
-            // FIXME This doesn't make sense. Search and path entry have nothing
-            //       to do with each other.
-            return;
-
         clear ();
 
         List<PathButton> buttons = new List<PathButton>();
@@ -187,9 +189,10 @@ public class Pathbar : Gtk.Box {
     PathButton make_button (string full_path, string label, bool is_current_dir) {
         var button = new PathButton ();
 
-        button.label = label;
         if (full_path == "/" && label == "")
             button.icon_name = "ca.desrt.dconf-editor-symbolic";
+        else
+            button.label = label;
         button.is_current_dir = is_current_dir;
 
         if (is_current_dir) {

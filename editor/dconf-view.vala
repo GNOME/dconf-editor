@@ -21,6 +21,8 @@ private class DConfView : BookmarksView
 {
     private BrowserStack dconf_content;
 
+    public string path { get; set; default = "/"; }
+
     construct
     {
         install_action_entries ();
@@ -32,6 +34,9 @@ private class DConfView : BookmarksView
         _dconf_content.show ();
         Object (browser_content: (BrowserContent) _dconf_content, modifications_handler: modifications_handler);
         dconf_content = _dconf_content;
+
+        notify["path"].connect (on_path_changed);
+        on_path_changed ();
     }
 
     // protected override void set_window_size (AdaptativeWidget.WindowSize new_size)
@@ -216,7 +221,13 @@ private class DConfView : BookmarksView
     * * views
     \*/
 
-    internal override void set_path (ViewType type, string path)
+    private void on_path_changed ()
+    {
+        // TODO Surely we can infer type from the path rather than pass type around?
+        set_dconf_path (ViewType.FOLDER, path);
+    }
+
+    internal override void set_dconf_path (ViewType type, string path)
     {
         dconf_content.set_path (type, path);
         modifications_handler.path_changed ();

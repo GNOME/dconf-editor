@@ -15,7 +15,7 @@
   along with Dconf Editor.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-private class ConfigurationEditor : Adw.Application, BaseApplication
+private class ConfigurationEditor : Adw.Application
 {
     /* Translators: application name, as used in the window manager, the window title, the about dialog... */
     internal const string PROGRAM_NAME = _("dconf Editor");
@@ -171,7 +171,10 @@ private class ConfigurationEditor : Adw.Application, BaseApplication
     private const GLib.ActionEntry [] action_entries =
     {
         // generic
-        { "copy", copy_cb, "s" },   // TODO is that really the good way to do things? (see Taquin)
+        // FIXME Surely we can remove this now.
+        // { "copy", copy_cb, "s" },   // TODO is that really the good way to do things? (see Taquin)
+
+        { "about", show_about_dialog },
 
         // quit
         { "quit",           quit_if_no_pending_changes },
@@ -376,10 +379,9 @@ private class ConfigurationEditor : Adw.Application, BaseApplication
         set_accels_for_action ("kbd.toggle-boolean",        { "<Primary>Return",
                                                               "<Primary>KP_Enter"       });
 
-     // set_accels_for_action ("app.about",                 { "<Shift><Primary>F1"      }); // TODO bug: needs a dance in the window
-        set_accels_for_action ("win.show-help-overlay",     {                 "F1",
-                                                                     "<Primary>question",
-                                                              "<Shift><Primary>question"}); // "<Primary>F1" is automatically done
+        // set_accels_for_action ("app.about",                 { "<Shift><Primary>F1"      });
+        set_accels_for_action ("win.show-help-overlay",     {        "<Primary>question",
+                                                              "<Shift><Primary>question" }); // "<Primary>F1" is automatically done
 
         // Gtk.CssProvider css_provider = new Gtk.CssProvider ();
         // css_provider.load_from_resource ("/ca/desrt/dconf-editor/ui/dconf-editor.css");
@@ -621,57 +623,33 @@ private class ConfigurationEditor : Adw.Application, BaseApplication
         base.quit ();
     }
 
-    /*\
-    * * about dialog infos
-    \*/
-
-    internal void get_about_dialog_infos (out string [] artists,
-                                          out string [] authors,
-                                          out string    comments,
-                                          out string    copyright,
-                                          out string [] documenters,
-                                          out string    logo_icon_name,
-                                          out string    program_name,
-                                          out string    translator_credits,
-                                          out string    version,
-                                          out string    website,
-                                          out string    website_label)
+    private void show_about_dialog ()
     {
-        /* Translators: about dialog text */
-        comments = _("A graphical viewer and editor of applications’ internal settings.");
-
-        artists = {};
-        authors = {
-        /* Translators: text crediting a game author, seen in the About dialog */
-            _("Robert Ancell"),
-
-
-        /* Translators: text crediting a game author, seen in the About dialog */
-            _("Arnaud Bonatti")
-        };
+        Adw.AboutDialog about_dialog = new Adw.AboutDialog.from_appdata ("/ca/desrt/dconf-editor/ca.desrt.dconf-editor.appdata.xml", null);
 
         /* Translators: text crediting a maintainer, seen in the About dialog */
-        copyright = _("Copyright \xc2\xa9 2010-2014 – Canonical Ltd") + "\n" +
-
+        about_dialog.copyright = _("Copyright \xc2\xa9 2010-2014 – Canonical Ltd") + "\n" +
 
         /* Translators: text crediting a maintainer, seen in the About dialog */
                     _("Copyright \xc2\xa9 2017-2018 – Davi da Silva Böger") + "\n" +
 
-
         /* Translators: text crediting a maintainer, seen in the About dialog; the %u are replaced with the years of start and end */
                     _("Copyright \xc2\xa9 %u-%u – Arnaud Bonatti").printf (2015, 2020);
 
-        documenters = {};
-        logo_icon_name = "ca.desrt.dconf-editor";
-        program_name = ConfigurationEditor.PROGRAM_NAME;
+        about_dialog.developers = {
+            /* Translators: text crediting an application developer, seen in the About dialog */
+            _("Robert Ancell"),
+
+            /* Translators: text crediting an application developer, seen in the About dialog */
+            _("Arnaud Bonatti"),
+
+            /* Translators: text crediting an application developer, seen in the About dialog */
+            _("Dylan McCall")
+        };
 
         /* Translators: about dialog text; this string should be replaced by a text crediting yourselves and your translation team, or should be left empty. Do not translate literally! */
-        translator_credits = _("translator-credits");
+        about_dialog.translator_credits = _("translator-credits");
 
-        version = Config.VERSION;
-        website = "https://wiki.gnome.org/Apps/DconfEditor";
-
-        /* Translators: about dialog text; label of the website link */
-        website_label = _("Page on GNOME wiki");
+        about_dialog.present (active_window);
     }
 }

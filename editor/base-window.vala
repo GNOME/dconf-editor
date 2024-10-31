@@ -523,3 +523,5 @@ private class BaseWindow : AdaptativeWindow, AdaptativeWidget
     }
 }
 
+
+

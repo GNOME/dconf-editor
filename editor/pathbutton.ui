@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <template class="PathButton" parent="GtkButton">
+    <child>
+      <object class="AdwButtonContent" id="button_content">
+        <property name="label" translatable="yes">_Open</property>
+        <property name="use-underline">True</property>
+      </object>
+    </child>
+  </template>
+</interface>
