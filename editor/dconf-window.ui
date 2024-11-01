@@ -31,6 +31,7 @@
                             <style>
                               <class name="pathbar" />
                             </style>
+                            <property name="hexpand">true</property>
                           </object>
                         </property>
                       </object>
@@ -45,7 +46,24 @@
                             </style>
                             <child>
                               <object class="GtkEntry" id="location_entry">
+                                <property name="hexpand">true</property>
                                 <property name="max-width-chars">88</property>
+                                <child>
+                                  <object class="GtkEventControllerFocus">
+                                    <signal name="leave" handler="on_location_entry_focus_leave"/>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkShortcutController">
+                                    <property name="scope">local</property>
+                                    <child>
+                                      <object class="GtkShortcut">
+                                        <property name="trigger">Escape</property>
+                                        <property name="action">action(browser.hide-location)</property>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
                               </object>
                             </child>
                             <child>
@@ -65,8 +83,26 @@
                       <object class="GtkStackPage">
                         <property name="name">search</property>
                         <property name="child">
-                          <object class="GtkBox" id="search_container">
-                            <property name="orientation">vertical</property>
+                          <object class="GtkBox">
+                            <style>
+                              <class name="linked"/>
+                            </style>
+                            <child>
+                              <object class="GtkSearchEntry" id="search_entry">
+                                <property name="hexpand">true</property>
+                                <child>
+                                  <object class="GtkShortcutController">
+                                    <property name="scope">local</property>
+                                    <child>
+                                      <object class="GtkShortcut">
+                                        <property name="trigger">Escape</property>
+                                        <property name="action">action(browser.hide-search)</property>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
                           </object>
                         </property>
                       </object>

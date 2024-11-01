@@ -45,6 +45,7 @@ private class DConfWindow : Adw.ApplicationWindow
     [GtkChild] private unowned Gtk.Stack toolbar_switcher;
     [GtkChild] private unowned Pathbar pathbar;
     [GtkChild] private unowned Gtk.Entry location_entry;
+    [GtkChild] private unowned Gtk.SearchEntry search_entry;
     private DConfView main_view;
 
     internal string saved_view { get; set; default = "/"; }
@@ -66,22 +67,10 @@ private class DConfWindow : Adw.ApplicationWindow
 
     internal DConfWindow (bool disable_warning, string? schema, string? path, string? key_name)
     {
-        var location_focus_controller = new Gtk.EventControllerFocus ();
-        location_entry.add_controller (location_focus_controller);
-        location_focus_controller.leave.connect (
-            () => {
-                /* Hide the location entry if it loses focus, but not if the window itself
-                 * loses focus, borrowing a behaviour from Nautilus
-                 */
-                var focus_widget = root.get_focus ();
-                if (focus_widget != null && ((!) focus_widget).is_ancestor (location_entry))
-                    return;
-                show_location = false;
-            }
-        );
-
         notify["show-search"].connect (
             () => {
+                search_entry.set_text ("");
+                search_entry.grab_focus ();
                 notify_property ("toolbar-mode");
             }
         );
@@ -236,6 +225,17 @@ private class DConfWindow : Adw.ApplicationWindow
             request_object (startup_path, ModelUtils.undefined_context_id, true, (!) schema);
         else
             request_object (startup_path, ModelUtils.undefined_context_id, true);
+    }
+
+    [GtkCallback]
+    private void on_location_entry_focus_leave () {
+        /* Hide the location entry if it loses focus, but not if the window itself
+         * loses focus, borrowing a behaviour from Nautilus
+         */
+        var focus_widget = root.get_focus ();
+        if (focus_widget != null && ((!) focus_widget).is_ancestor (location_entry))
+            return;
+        show_location = false;
     }
 
     ulong paths_changed_handler = 0;
@@ -433,6 +433,15 @@ private class DConfWindow : Adw.ApplicationWindow
         action_group.add_action_entries (browser_action_entries, this);
 
         action_group.add_action (new PropertyAction ("toggle-search", this, "show-search"));
+
+        var hide_search_action = new SimpleAction ("hide-search", null);
+        hide_search_action.activate.connect (
+            () => {
+                show_search = false;
+            }
+        );
+        action_group.add_action (hide_search_action);
+
         action_group.add_action (new PropertyAction ("edit-location", this, "show-location"));
 
         var hide_location_action = new SimpleAction ("hide-location", null);
