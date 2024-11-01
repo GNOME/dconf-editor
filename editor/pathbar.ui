@@ -15,6 +15,12 @@
           </object>
         </property>
         <child>
+          <object class="GtkEventControllerScroll">
+            <property name="flags">GTK_EVENT_CONTROLLER_SCROLL_VERTICAL</property>
+            <signal name="scroll" handler="on_scrolled_window_scroll"/>
+          </object>
+        </child>
+        <child>
           <object class="GtkBox" id="button_box"/>
         </child>
       </object>

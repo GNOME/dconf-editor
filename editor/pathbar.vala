@@ -97,10 +97,6 @@ public class Pathbar : Gtk.Box {
     public signal void item_activated (string path);
 
     construct {
-        var scroll_controller = new Gtk.EventControllerScroll (Gtk.EventControllerScrollFlags.VERTICAL);
-        scrolled_window.add_controller (scroll_controller);
-        scroll_controller.scroll.connect (on_scrolled_window_scroll);
-
         notify["path"].connect (on_path_changed);
         on_path_changed ();
     }
@@ -122,6 +118,7 @@ public class Pathbar : Gtk.Box {
         adjustment.value = adjustment.upper;
     }
 
+    [GtkCallback]
     private bool on_scrolled_window_scroll (Gtk.EventControllerScroll scroll, double dx, double dy) {
         if (dy == 0)
             return Gdk.EVENT_PROPAGATE;
