@@ -19,5 +19,28 @@
         </child>
       </object>
     </child>
+    <child>
+      <object class="GtkMenuButton" id="location_menu">
+        <property name="icon-name">view-more-symbolic</property>
+        <property name="tooltip-text" translatable="true">Current Folder Menu</property>
+        <property name="menu-model">location_menu_model</property>
+      </object>
+    </child>
   </template>
+  <menu id="location_menu_model">
+    <section>
+      <item>
+        <attribute name="label" translatable="true">Reload</attribute>
+        <attribute name="action">browser.reload-view</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="true">Copy current path</attribute>
+        <attribute name="action">browser.copy-location</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="true">Edit location</attribute>
+        <attribute name="action">browser.edit-location</attribute>
+      </item>
+    </section>
+  </menu>
 </interface>

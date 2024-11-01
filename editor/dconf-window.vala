@@ -42,16 +42,58 @@ private class DConfWindow : Adw.ApplicationWindow
 
     [GtkChild] private unowned Adw.ToolbarView toolbar_view;
     [GtkChild] private unowned Adw.HeaderBar headerbar;
+    [GtkChild] private unowned Gtk.Stack toolbar_switcher;
     [GtkChild] private unowned Pathbar pathbar;
+    [GtkChild] private unowned Gtk.Entry location_entry;
     private DConfView main_view;
 
     internal string saved_view { get; set; default = "/"; }
     internal string current_path { get; set; default = "/"; }
-    internal bool search_mode_enabled { get; set; default = false; }
     internal bool delay_mode { get; set; default = false; }
+    internal bool show_search { get; set; default = false; }
+    internal bool show_location { get; set; default = false; }
+
+    internal string toolbar_mode {
+        get {
+            if (show_search)
+                return "search";
+            else if (show_location)
+                return "location";
+            else
+                return "pathbar";
+        }
+    }
 
     internal DConfWindow (bool disable_warning, string? schema, string? path, string? key_name)
     {
+        var location_focus_controller = new Gtk.EventControllerFocus ();
+        location_entry.add_controller (location_focus_controller);
+        location_focus_controller.leave.connect (
+            () => {
+                /* Hide the location entry if it loses focus, but not if the window itself
+                 * loses focus, borrowing a behaviour from Nautilus
+                 */
+                var focus_widget = root.get_focus ();
+                if (focus_widget != null && ((!) focus_widget).is_ancestor (location_entry))
+                    return;
+                show_location = false;
+            }
+        );
+
+        notify["show-search"].connect (
+            () => {
+                notify_property ("toolbar-mode");
+            }
+        );
+
+        notify["show-location"].connect (
+            () => {
+                location_entry.set_text (current_path);
+                location_entry.grab_focus ();
+                notify_property ("toolbar-mode");
+            }
+        );
+
         bind_property ("current-path", pathbar, "path", BindingFlags.SYNC_CREATE);
 
         model = new SettingsModel ();
@@ -387,8 +429,24 @@ private class DConfWindow : Adw.ApplicationWindow
     private void install_browser_action_entries ()
     {
         SimpleActionGroup action_group = new SimpleActionGroup ();
+
         action_group.add_action_entries (browser_action_entries, this);
+
+        action_group.add_action (new PropertyAction ("toggle-search", this, "show-search"));
+        action_group.add_action (new PropertyAction ("edit-location", this, "show-location"));
+
+        var hide_location_action = new SimpleAction ("hide-location", null);
+        hide_location_action.activate.connect (
+            () => {
+                show_location = false;
+            }
+        );
+        action_group.add_action (hide_location_action);
+
         insert_action_group ("browser", action_group);
+
+        // var toolbar_mode_action = (SimpleAction) action_group.lookup_action ("toolbar-mode");
+        // bind_property ("toolbar-mode", toolbar_mode_action, "state");
 
         // disabled_state_action = (SimpleAction) action_group.lookup_action ("disabled-state-s");
         // disabled_state_action.set_enabled (false);
@@ -403,8 +461,10 @@ private class DConfWindow : Adw.ApplicationWindow
 
     private const GLib.ActionEntry [] browser_action_entries =
     {
-        { "open-folder",        open_folder, "s" },
-        { "edit-location",      edit_location },
+        { "open-folder", on_open_folder_activate, "s" },
+        { "reload-view", on_reload_view_activate },
+        { "copy-location", on_copy_location_activate },
+        // { "toggle-search", null, null, "false" }, // on_toggle_search_activate
 
         // { "empty",              empty, "*" },
         // { "empty-null",         empty },
@@ -457,7 +517,7 @@ private class DConfWindow : Adw.ApplicationWindow
         revealer.reset_objects (path, model.get_children (path), recursively);
     }
 
-    private void open_folder (SimpleAction action, Variant? path_variant)
+    private void on_open_folder_activate (SimpleAction action, Variant? path_variant)
         requires (path_variant != null)
     {
         close_in_window_panels ();
@@ -468,9 +528,15 @@ private class DConfWindow : Adw.ApplicationWindow
         request_folder (current_path);
     }
 
-    private void edit_location (/* SimpleAction action, Variant? path_variant */)
+    private void on_reload_view_activate ()
     {
-        // TODO
+        reload_view ();
+    }
+
+    private void on_copy_location_activate ()
+    {
+        Gdk.Clipboard clipboard = get_clipboard ();
+        clipboard.set_value (current_path);
     }
 
     private void enter_delay_mode (/* SimpleAction action, Variant? path_variant */)
@@ -806,7 +872,7 @@ private class DConfWindow : Adw.ApplicationWindow
             // update_current_path (ViewType.OBJECT, strdup (full_name));
         }
 
-        search_mode_enabled = false;
+        show_search = false;
         // stop_search ();
         // headerbar.search_mode_enabled = false; // do last to avoid flickering RegistryView before PropertiesView when selecting a search result
     }
@@ -819,7 +885,7 @@ private class DConfWindow : Adw.ApplicationWindow
     {
         model.copy_action_called ();
 
-        if (search_mode_enabled)
+        if (show_search)
         {
             // if (!main_view.handle_alt_copy_text (out copy_text))
             //     copy_text = saved_view;

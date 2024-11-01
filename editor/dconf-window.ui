@@ -10,11 +10,77 @@
         <child type="top">
           <object class="AdwHeaderBar" id="headerbar">
             <child type="title">
-              <object class="Pathbar" id="pathbar">
-                <property name="width-request">700</property>
-                <style>
-                  <class name="pathbar" />
-                </style>
+              <object class="GtkBox" id="header_toolbar">
+                <property name="spacing">6</property>
+                <child>
+                  <object class="GtkStack" id="toolbar_switcher">
+                    <property name="valign">center</property>
+                    <property name="hexpand">false</property>
+                    <property name="transition-type">crossfade</property>
+                    <property
+                      name="visible-child-name"
+                      bind-source="DConfWindow"
+                      bind-property="toolbar-mode"
+                      bind-flags="sync-create"
+                    />
+                    <child>
+                      <object class="GtkStackPage">
+                        <property name="name">pathbar</property>
+                        <property name="child">
+                          <object class="Pathbar" id="pathbar">
+                            <style>
+                              <class name="pathbar" />
+                            </style>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkStackPage">
+                        <property name="name">location</property>
+                        <property name="child">
+                          <object class="GtkBox">
+                            <style>
+                              <class name="linked"/>
+                            </style>
+                            <child>
+                              <object class="GtkEntry" id="location_entry">
+                                <property name="max-width-chars">88</property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkButton">
+                                <property name="icon-name">window-close-symbolic</property>
+                                <property name="tooltip_text" translatable="yes">Cancel</property>
+                                <property name="action-name">browser.hide-location</property>
+                                <!-- <property name="action-target">true</property> -->
+                                <!-- <signal name="clicked" handler="toolbar_close_location_entry" swapped="true"/> -->
+                              </object>
+                            </child>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkStackPage">
+                        <property name="name">search</property>
+                        <property name="child">
+                          <object class="GtkBox" id="search_container">
+                            <property name="orientation">vertical</property>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkToggleButton">
+                    <property name="tooltip-text" translatable="yes">Search Current Folder</property>
+                    <property name="action-name">browser.toggle-search</property>
+                    <!-- <property name="action-target">true</property> -->
+                    <property name="icon-name">edit-find-symbolic</property>
+                  </object>
+                </child>
               </object>
             </child>
             <child type="end">
@@ -22,7 +88,7 @@
                 <property name="icon-name">open-menu-symbolic</property>
                 <property name="tooltip-text" translatable="true">Main Menu</property>
                 <property name="primary">true</property>
-                <property name="menu-model">window_menu</property>
+                <property name="menu-model">primary_menu_model</property>
               </object>
             </child>
           </object>
@@ -30,7 +96,7 @@
       </object>
     </child>
   </template>
-  <menu id="window_menu">
+  <menu id="primary_menu_model">
     <section>
       <item>
         <attribute name="label" translatable="true">Enter delay mode</attribute>
