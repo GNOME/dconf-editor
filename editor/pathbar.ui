@@ -4,7 +4,7 @@
     <property name="hexpand">True</property>
     <property name="overflow">hidden</property>
     <child>
-      <object class="GtkScrolledWindow">
+      <object class="GtkScrolledWindow" id="scrolled_window">
         <property name="hexpand">True</property>
         <property name="hscrollbar-policy">external</property>
         <property name="vscrollbar-policy">never</property>

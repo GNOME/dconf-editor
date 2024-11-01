@@ -89,11 +89,18 @@ public class Pathbar : Gtk.Box {
     [GtkChild]
     private unowned Gtk.Box button_box;
 
+    [GtkChild]
+    private unowned Gtk.ScrolledWindow scrolled_window;
+
     public string path { get; set; default = "/"; }
 
     public signal void item_activated (string path);
 
     construct {
+        var scroll_controller = new Gtk.EventControllerScroll (Gtk.EventControllerScrollFlags.VERTICAL);
+        scrolled_window.add_controller (scroll_controller);
+        scroll_controller.scroll.connect (on_scrolled_window_scroll);
+
         notify["path"].connect (on_path_changed);
         on_path_changed ();
     }
@@ -113,6 +120,19 @@ public class Pathbar : Gtk.Box {
         // When window is resized, immediately set new value, otherwise we would get
         // an underflow gradient for an moment.
         adjustment.value = adjustment.upper;
+    }
+
+    private bool on_scrolled_window_scroll (Gtk.EventControllerScroll scroll, double dx, double dy) {
+        if (dy == 0)
+            return Gdk.EVENT_PROPAGATE;
+
+        /* Scroll horizontally when vertically scrolled */
+        Gtk.Adjustment hadjustment = scrolled_window.get_hadjustment ();
+        double step = hadjustment.get_step_increment ();
+        double new_value = hadjustment.get_value () + dy * step;
+        hadjustment.set_value (new_value);
+
+        return Gdk.EVENT_STOP;
     }
 
     private void on_path_changed ()
