@@ -228,6 +228,15 @@ private class DConfWindow : Adw.ApplicationWindow
     }
 
     [GtkCallback]
+    private void on_location_entry_activate () {
+        // TODO: Validate text! Show an error if it's wrong!
+        current_path = location_entry.get_text ();
+        // FIXME: We shouldn't need to do this
+        request_folder (current_path);
+        show_location = false;
+    }
+
+    [GtkCallback]
     private void on_location_entry_focus_leave () {
         /* Hide the location entry if it loses focus, but not if the window itself
          * loses focus, borrowing a behaviour from Nautilus

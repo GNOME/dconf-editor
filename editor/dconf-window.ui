@@ -48,6 +48,7 @@
                               <object class="GtkEntry" id="location_entry">
                                 <property name="hexpand">true</property>
                                 <property name="max-width-chars">88</property>
+                                <signal name="activate" handler="on_location_entry_activate"/>
                                 <child>
                                   <object class="GtkEventControllerFocus">
                                     <signal name="leave" handler="on_location_entry_focus_leave"/>
