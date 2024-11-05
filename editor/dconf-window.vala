@@ -69,7 +69,10 @@ private class DConfWindow : Adw.ApplicationWindow
     {
         notify["show-search"].connect (
             () => {
-                search_entry.set_text ("");
+                // Only reset search_entry text when it is hidden. The widget
+                // may already have text captured from elsewhere.
+                if (! show_search)
+                    search_entry.set_text ("");
                 search_entry.grab_focus ();
                 notify_property ("toolbar-mode");
             }
@@ -84,6 +87,8 @@ private class DConfWindow : Adw.ApplicationWindow
         );
 
         bind_property ("current-path", pathbar, "path", BindingFlags.SYNC_CREATE);
+
+        search_entry.set_key_capture_widget (toolbar_view);
 
         model = new SettingsModel ();
         modifications_handler = new ModificationsHandler (model);
@@ -245,6 +250,31 @@ private class DConfWindow : Adw.ApplicationWindow
         if (focus_widget != null && ((!) focus_widget).is_ancestor (location_entry))
             return;
         show_location = false;
+    }
+
+    [GtkCallback]
+    private void on_search_entry_changed () {
+        // FIXME !!!!!!
+        // Surely we should just bind current_search to main_view?
+        // Or change path to a URI and encode search query right there.
+
+        // TODO: Do we really need global search?
+        bool local_search = true;
+        string current_search = search_entry.text;
+
+        if (!show_search && current_search != "")
+            show_search = true;
+
+        // var bookmarks = ((DConfHeaderBar) headerbar).get_bookmarks ()
+        main_view.set_search_parameters (local_search, current_path, {});
+
+        if (current_search == "")
+        {
+            main_view.set_dconf_path (ViewType.FOLDER, current_path);
+            return;
+        }
+
+        main_view.set_dconf_path (ViewType.SEARCH, current_search);
     }
 
     ulong paths_changed_handler = 0;
@@ -792,11 +822,6 @@ private class DConfWindow : Adw.ApplicationWindow
     /*\
     * * Path requests
     \*/
-
-    protected void reconfigure_search (bool local_search)
-    {
-        main_view.set_search_parameters (local_search, saved_view, ((DConfHeaderBar) headerbar).get_bookmarks ());
-    }
 
     protected void close_in_window_panels ()
     {

@@ -72,8 +72,6 @@
                                 <property name="icon-name">window-close-symbolic</property>
                                 <property name="tooltip_text" translatable="yes">Cancel</property>
                                 <property name="action-name">browser.hide-location</property>
-                                <!-- <property name="action-target">true</property> -->
-                                <!-- <signal name="clicked" handler="toolbar_close_location_entry" swapped="true"/> -->
                               </object>
                             </child>
                           </object>
@@ -91,6 +89,7 @@
                             <child>
                               <object class="GtkSearchEntry" id="search_entry">
                                 <property name="hexpand">true</property>
+                                <signal name="changed" handler="on_search_entry_changed"/>
                                 <child>
                                   <object class="GtkShortcutController">
                                     <property name="scope">local</property>
@@ -114,7 +113,6 @@
                   <object class="GtkToggleButton">
                     <property name="tooltip-text" translatable="yes">Search Current Folder</property>
                     <property name="action-name">browser.toggle-search</property>
-                    <!-- <property name="action-target">true</property> -->
                     <property name="icon-name">edit-find-symbolic</property>
                   </object>
                 </child>
