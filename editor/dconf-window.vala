@@ -31,7 +31,7 @@ internal enum RelocatableSchemasEnabledMappings
 private class DConfWindow : Adw.ApplicationWindow
 {
     private SettingsModel model;
-    private ModificationsHandler modifications_handler;
+    internal ModificationsHandler modifications_handler { get; set; }
 
     private GLib.Settings settings = new GLib.Settings ("ca.desrt.dconf-editor.Settings");
 
@@ -46,6 +46,8 @@ private class DConfWindow : Adw.ApplicationWindow
     [GtkChild] private unowned Pathbar pathbar;
     [GtkChild] private unowned Gtk.Entry location_entry;
     [GtkChild] private unowned Gtk.SearchEntry search_entry;
+    [GtkChild] private unowned Gtk.Box content_box;
+    [GtkChild] private unowned ModificationsRevealer revealer;
     private DConfView main_view;
 
     internal string saved_view { get; set; default = "/"; }
@@ -92,22 +94,10 @@ private class DConfWindow : Adw.ApplicationWindow
 
         model = new SettingsModel ();
         modifications_handler = new ModificationsHandler (model);
-        // DConfHeaderBar _headerbar = new DConfHeaderBar ();
-        //
 
         main_view = new DConfView (modifications_handler);
         bind_property ("current-path", main_view, "path", BindingFlags.SYNC_CREATE);
-        toolbar_view.content = main_view;
-
-        // Object (nta_headerbar               : (BaseHeaderBar) _headerbar,
-        //         base_view                   : (BaseView) _main_view,
-        //         window_title                : ConfigurationEditor.PROGRAM_NAME,
-        //         specific_css_class_or_empty : "dconf-editor",
-        //         help_string_or_empty        : "",
-        //         schema_path                 : "/ca/desrt/dconf-editor/");
-
-
-        create_modifications_revealer ();
+        content_box.append (main_view);
 
         install_ui_action_entries ();
         install_browser_action_entries ();
@@ -116,7 +106,6 @@ private class DConfWindow : Adw.ApplicationWindow
         use_shortpaths_changed_handler = settings.changed ["use-shortpaths"].connect_after (reload_view);
         settings.bind ("use-shortpaths", model, "use-shortpaths", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
 
-        revealer.modifications_handler = modifications_handler;
         delayed_changes_changed_handler = modifications_handler.delayed_changes_changed.connect (() => {
                 // uint total_changes_count = modifications_handler.dconf_changes_count + modifications_handler.gsettings_changes_count;
                 // if (total_changes_count == 0)
@@ -341,20 +330,6 @@ private class DConfWindow : Adw.ApplicationWindow
     {
         main_view.dkey_value_push (full_name, key_value_or_null);
         revealer.dkey_value_push  (full_name, key_value_or_null);
-    }
-
-    /*\
-    * * ModificationsRevealer
-    \*/
-
-    private ModificationsRevealer revealer;
-
-    private void create_modifications_revealer ()
-    {
-        // FIXME JUST PUT THIS IN THE UI FILE
-        // revealer = new ModificationsRevealer ();
-        // add_to_main_box (revealer);
-        // add_adaptative_child (revealer);
     }
 
     /*\

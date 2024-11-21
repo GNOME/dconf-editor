@@ -37,21 +37,9 @@
             </child>
             <child type="end">
               <object class="GtkButton">
+                <property name="label" translatable="1">Cancel</property>
                 <property name="action-name">ui.dismiss-delayed-settings</property>
-                <style>
-                  <class name="flat"/>
-                  <class name="image-button"/>
-                </style>
-                <child>
-                  <object class="GtkImage">
-                    <property name="icon-name">window-close-symbolic</property>
-                    <property name="icon-size">normal</property>
-                  </object>
-                </child>
               </object>
-            </child>
-            <child type="end">
-              <object class="GtkSeparator"/>
             </child>
             <child type="end">
               <object class="GtkButton" id="apply_button">
