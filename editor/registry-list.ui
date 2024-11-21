@@ -2,24 +2,34 @@
 <interface domain="dconf-editor">
   <requires lib="gtk" version="4.0"/>
   <requires lib="gtk" version="4.14"/>
-  <template class="RegistryList" parent="GtkGrid">
-    <property name="orientation">vertical</property>
+  <template class="RegistryList" parent="GtkBox">
+    <style>
+      <class name="view" />
+    </style>
     <child>
       <object class="GtkScrolledWindow" id="scrolled">
         <property name="hexpand">1</property>
         <property name="vexpand">1</property>
         <property name="child">
-          <object class="GtkListBox" id="key_list_box">
-            <property name="selection-mode">browse</property>
-            <style>
-              <class name="keys-list"/>
-            </style>
-            <child type="placeholder">
-              <object class="RegistryPlaceholder" id="placeholder">
-                <property name="icon-name">ca.desrt.dconf-editor-symbolic</property>
-                <property name="big">True</property>
+          <object class="AdwClamp">
+            <property name="child">
+              <object class="GtkListBox" id="key_list_box">
+                <property name="selection-mode">browse</property>
+                <property name="margin-top">24</property>
+                <property name="margin-bottom">24</property>
+                <property name="margin-start">12</property>
+                <property name="margin-end">12</property>
+                <style>
+                  <class name="keys-list"/>
+                </style>
+                <child type="placeholder">
+                  <object class="RegistryPlaceholder" id="placeholder">
+                    <property name="icon-name">ca.desrt.dconf-editor-symbolic</property>
+                    <property name="big">True</property>
+                  </object>
+                </child>
               </object>
-            </child>
+            </property>
           </object>
         </property>
       </object>

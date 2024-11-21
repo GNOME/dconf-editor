@@ -67,7 +67,7 @@ private class ListBoxRowHeader : Box
             append (label);
         }
 
-        halign = Align.CENTER;
+        halign = Align.START;
 
         if (is_first_row)
             return;

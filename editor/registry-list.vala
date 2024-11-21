@@ -18,7 +18,7 @@
 using Gtk;
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/registry-list.ui")]
-private abstract class RegistryList : Grid, BrowsableView
+private abstract class RegistryList : Box, BrowsableView
 {
     [GtkChild] protected unowned ListBox key_list_box;
     [GtkChild] private unowned ScrolledWindow scrolled;
@@ -548,7 +548,7 @@ private abstract class RegistryList : Grid, BrowsableView
         /* Wrapper ensures max width for rows */
         ListBoxRowWrapper wrapper = new ListBoxRowWrapper ();
 
-        wrapper.set_halign (Align.CENTER);
+        wrapper.set_halign (Align.FILL);
         wrapper.set_child (row);
         if (row is FilterListBoxRow)
         {
