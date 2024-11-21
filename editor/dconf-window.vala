@@ -841,12 +841,6 @@ private class DConfWindow : Adw.ApplicationWindow
         GLib.ListStore key_model = new GLib.ListStore (typeof (SimpleSettingObject));
 
         string name = ModelUtils.get_name (base_path);
-        SimpleSettingObject sso = new SimpleSettingObject.from_full_name (/* context id */ ModelUtils.folder_context_id,
-                                                                          /* name       */ name,
-                                                                          /* base path  */ base_path,
-                                                                          /* is search  */ true,
-                                                                          /* is pinned  */ true);
-        key_model.append (sso);
 
         if (children != null)
         {
@@ -856,7 +850,7 @@ private class DConfWindow : Adw.ApplicationWindow
             {
                 if (ModelUtils.is_undefined_context_id (context_id))
                     assert_not_reached ();
-                sso = new SimpleSettingObject.from_base_path (context_id, name, base_path);
+                SimpleSettingObject sso = new SimpleSettingObject.from_base_path (context_id, name, base_path);
                 key_model.append (sso);
             }
         }

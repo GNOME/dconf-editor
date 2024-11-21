@@ -424,21 +424,7 @@ private abstract class RegistryList : Box, BrowsableView
             assert_not_reached ();
         bool search_mode_non_local_result = search_mode && ModelUtils.get_parent_path (full_name) != (!) current_path_if_search_mode;
 
-        if (setting_object.is_pinned)
-        {
-            if (setting_object.is_search)
-                row = new FilterListBoxRow (setting_object.name, full_name);
-            else
-                row = new ReturnListBoxRow (full_name, context_id);
-        }
-        else if (setting_object.is_search)  // setting_object.is_pinned == false
-        {
-            if (setting_object.name == "")
-                row = new FilterListBoxRow ("", full_name);
-            else
-                row = new SearchListBoxRow (full_name.slice (1, full_name.length));
-        }
-        else if (ModelUtils.is_folder_context_id (context_id))
+        if (ModelUtils.is_folder_context_id (context_id))
         {
             row = new FolderListBoxRow (setting_object.name, full_name, search_mode && search_is_path_search, search_mode_non_local_result);
         }

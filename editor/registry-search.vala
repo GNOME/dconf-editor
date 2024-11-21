@@ -83,9 +83,6 @@ private class RegistrySearch : RegistryList
 
     private static void ensure_selection (ListBox? key_list_box, string full_name)    // technical nullability
     {
-        if (key_list_box == null)   // suppresses some warnings if the window is closed while the search is processing
-            return;                 // TODO see if 5596feae9b51563a33f1bffc6a370e6ba556adb7 fixed that in Gtk 4
-
         ListBoxRow? selected_row = ((!) key_list_box).get_selected_row ();
         if (selected_row == null)
             _select_first_row ((!) key_list_box, full_name);
@@ -93,43 +90,10 @@ private class RegistrySearch : RegistryList
 
     private static void _select_first_row (ListBox key_list_box, string _term)
     {
-        string term = _term.strip ();
+        ListBoxRow? first_row = key_list_box.get_row_at_index (0);
 
-        ListBoxRow? row;
-        if (term.has_prefix ("/"))
-        {
-            row = _get_first_row (ref key_list_box);
-
-            ClickableListBoxRow? row_child = (ClickableListBoxRow?) ((!) row).get_child ();
-            if (row_child != null)
-            {
-                if (((!) row_child).full_name != term)
-                {
-                    ListBoxRow? second_row = key_list_box.get_row_at_index (1);
-                    if (second_row != null)
-                        row = second_row;
-                }
-            }
-        }
-        else if (term.length == 0)
-            row = _get_first_row (ref key_list_box);
-        else
-        {
-            row = key_list_box.get_row_at_index (1);
-            if (row == null)
-                row = _get_first_row (ref key_list_box);
-        }
-
-        key_list_box.select_row ((!) row);
-        // TODO: Do we still need this?
-        // key_list_box.get_adjustment ().set_value (0);
-    }
-    private static ListBoxRow _get_first_row (ref unowned ListBox key_list_box)
-    {
-        ListBoxRow? row = key_list_box.get_row_at_index (0);
-        if (row == null)
-            assert_not_reached ();
-        return (!) row;
+        if (first_row != null)
+            key_list_box.select_row ((!) first_row);
     }
 
     private static bool _return_pressed (ListBox key_list_box)
@@ -220,8 +184,6 @@ private class RegistrySearch : RegistryList
 
                 current_path_if_search_mode = ModelUtils.get_base_path (term);
 
-                insert_first_row ((!) current_path_if_search_mode, fallback_context_id, ref list_model);
-
                 local_search (model, sorting_options, (!) current_path_if_search_mode, ModelUtils.get_name_or_empty (term), ref list_model);
                 post_local = (int) list_model.get_n_items ();
 
@@ -256,8 +218,6 @@ private class RegistrySearch : RegistryList
                 model.clean_watched_keys ();
                 stop_global_search ();
 
-                insert_first_row ((!) current_path_if_search_mode, fallback_context_id, ref list_model);
-
                 local_search    (model, sorting_options, ModelUtils.get_base_path ((!) current_path_if_search_mode), term, ref list_model);
                 post_local      = (int) list_model.get_n_items ();
                 post_bookmarks  = post_local;
@@ -277,17 +237,6 @@ private class RegistrySearch : RegistryList
             }
         }
         old_term = term;
-    }
-    private static void insert_first_row (string current_path, uint16 _fallback_context_id, ref GLib.ListStore list_model)
-    {
-        uint16 fallback_context_id = ModelUtils.is_folder_path (current_path) ? ModelUtils.folder_context_id : _fallback_context_id;
-        string name = ModelUtils.get_name (current_path);
-        SimpleSettingObject sso = new SimpleSettingObject.from_full_name (/* context id */ fallback_context_id,
-                                                                          /* name       */ name,
-                                                                          /* base path  */ current_path,
-                                                                          /* is search  */ false,
-                                                                          /* is pinned  */ true);
-        list_model.insert (0, sso);
     }
     private static void insert_global_search_row (string current_path, uint16 _fallback_context_id, ref GLib.ListStore list_model)
     {
