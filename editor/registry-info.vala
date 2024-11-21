@@ -597,7 +597,7 @@ private class RegistryInfo : Box, BrowsableView
         separator.show ();
 
         ListBoxRowWrapper row = new ListBoxRowWrapper ();
-        row.halign = Align.CENTER;
+        row.halign = Align.FILL;
         row.set_child (separator);
         row.set_sensitive (false);
 /* TODO could be selected by down arrow        row.focus.connect ((direction) => { row.move_focus (direction); return false; }); */
@@ -683,7 +683,7 @@ private class RegistryInfo : Box, BrowsableView
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/property-row.ui")]
 private class PropertyRow : ListBoxRowWrapper
 {
-    [GtkChild] private unowned Overlay overlay;
+    [GtkChild] private unowned Gtk.Box value_box;
     [GtkChild] private unowned Label name_label;
 
     private Widget? value_widget = null;
@@ -694,11 +694,6 @@ private class PropertyRow : ListBoxRowWrapper
 
         Label value_label = new Label (property_value);
         value_widget = value_label;
-        value_label.hexpand = true;
-        value_label.halign = Align.FILL;
-        value_label.valign = Align.START;
-        value_label.xalign = 0;
-        value_label.yalign = 0;
         value_label.wrap = true;
         value_label.wrap_mode = Pango.WrapMode.WORD_CHAR;
         value_label.selectable = true;
@@ -709,7 +704,7 @@ private class PropertyRow : ListBoxRowWrapper
         value_label.add_css_class ("property-value");
 
         value_label.show ();
-        overlay.set_child (value_label);
+        value_box.append (value_label);
     }
 
     internal PropertyRow.from_widgets (string property_name, Widget widget, Widget? warning)
@@ -735,7 +730,7 @@ private class PropertyRow : ListBoxRowWrapper
         }
 
         grid.show ();
-        overlay.set_child (grid);
+        value_box.append (grid);
         grid.valign = Align.CENTER;
     }
 
