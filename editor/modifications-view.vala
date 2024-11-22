@@ -32,66 +32,6 @@ private class ModificationsView : Box
     }
 
     /*\
-    * * Resetting objects
-    \*/
-
-    internal void reset_objects (string base_path, Variant? objects, bool recursively)
-    {
-        _reset_objects (base_path, objects, recursively);
-        warn_if_no_planned_changes ();
-    }
-
-    private void _reset_objects (string base_path, Variant? objects, bool recursively)
-    {
-        if (objects == null)
-            return;
-        SettingsModel model = modifications_handler.model;
-
-        VariantIter iter = new VariantIter ((!) objects);
-        uint16 context_id;
-        string name;
-        while (iter.next ("(qs)", out context_id, out name))
-        {
-            // directory
-            if (ModelUtils.is_folder_context_id (context_id))
-            {
-                string full_name = ModelUtils.recreate_full_name (base_path, name, true);
-                if (recursively)
-                    _reset_objects (full_name, model.get_children (full_name), true);
-            }
-            // dconf key
-            else if (ModelUtils.is_dconf_context_id (context_id))
-            {
-                string full_name = ModelUtils.recreate_full_name (base_path, name, false);
-                if (!model.is_key_ghost (full_name))
-                    modifications_handler.add_delayed_setting (full_name, null, ModelUtils.dconf_context_id);
-            }
-            // gsettings
-            else
-            {
-                string full_name = ModelUtils.recreate_full_name (base_path, name, false);
-                RegistryVariantDict properties = new RegistryVariantDict.from_aqv (model.get_key_properties (full_name, context_id, (uint16) (PropertyQuery.IS_DEFAULT)));
-                bool is_key_default;
-                if (!properties.lookup (PropertyQuery.IS_DEFAULT,       "b",    out is_key_default))
-                    assert_not_reached ();
-                properties.clear ();
-
-                if (!is_key_default)
-                    modifications_handler.add_delayed_setting (full_name, null, context_id);
-            }
-        }
-    }
-
-    private void warn_if_no_planned_changes ()
-    {
-        // if (modifications_handler.dconf_changes_count == 0 && modifications_handler.gsettings_changes_count == 0)
-            /* Translators: displayed in the bottom bar in normal sized windows, when the user tries to reset keys from/for a folder that has nothing to reset */
-            // FIXME: USE A TOAST FOR THIS
-            // label = _("Nothing to reset.");
-            // FIXME appears twice
-    }
-
-    /*\
     * * keyboard calls
     \*/
 

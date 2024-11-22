@@ -6,177 +6,181 @@
     <property name="default-width">700</property>
     <property name="default-height">500</property>
     <child>
-      <object class="AdwBottomSheet" id="bottom_sheet">
-        <property
-          name="reveal-bottom-bar"
-          bind-source="DConfWindow"
-          bind-property="show-modifications-bar"
-          bind-flags="sync-create"
-        />
-        <property
-          name="open"
-          bind-source="DConfWindow"
-          bind-property="show-modifications-sheet"
-          bind-flags="bidirectional"
-        />
-        <child type="bottom-bar">
-          <object class="ModificationsActionBar">
-            <property name="opened">false</property>
+      <object class="AdwToastOverlay" id="toast_overlay">
+        <child>
+          <object class="AdwBottomSheet" id="bottom_sheet">
             <property
-              name="modifications-handler"
+              name="reveal-bottom-bar"
               bind-source="DConfWindow"
-              bind-property="modifications-handler"
+              bind-property="show-modifications-bar"
               bind-flags="sync-create"
             />
-          </object>
-        </child>
-        <child type="sheet">
-          <object class="ModificationsView" id="modifications_view">
             <property
-              name="modifications-handler"
+              name="open"
               bind-source="DConfWindow"
-              bind-property="modifications-handler"
-              bind-flags="sync-create"
+              bind-property="show-modifications-sheet"
+              bind-flags="bidirectional"
             />
-          </object>
-        </child>
-        <child type="content">
-          <object class="AdwToolbarView" id="toolbar_view">
-            <child type="top">
-              <object class="AdwHeaderBar" id="headerbar">
-                <child type="title">
-                  <object class="AdwClamp">
-                    <property name="child">
-                      <object class="GtkBox" id="header_toolbar">
-                        <property name="spacing">6</property>
-                        <child>
-                          <object class="GtkStack" id="toolbar_switcher">
-                            <property name="valign">center</property>
-                            <property name="hexpand">true</property>
-                            <property name="transition-type">crossfade</property>
-                            <property
-                              name="visible-child-name"
-                              bind-source="DConfWindow"
-                              bind-property="toolbar-mode"
-                              bind-flags="sync-create"
-                            />
-                            <child>
-                              <object class="GtkStackPage">
-                                <property name="name">pathbar</property>
-                                <property name="child">
-                                  <object class="Pathbar" id="pathbar">
-                                    <style>
-                                      <class name="pathbar" />
-                                    </style>
-                                    <property name="hexpand">true</property>
-                                  </object>
-                                </property>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkStackPage">
-                                <property name="name">location</property>
-                                <property name="child">
-                                  <object class="GtkBox">
-                                    <style>
-                                      <class name="linked"/>
-                                    </style>
-                                    <child>
-                                      <object class="GtkEntry" id="location_entry">
-                                        <property name="hexpand">true</property>
-                                        <signal name="activate" handler="on_location_entry_activate"/>
-                                        <child>
-                                          <object class="GtkEventControllerFocus">
-                                            <signal name="leave" handler="on_location_entry_focus_leave"/>
-                                          </object>
-                                        </child>
-                                        <child>
-                                          <object class="GtkShortcutController">
-                                            <property name="scope">local</property>
-                                            <child>
-                                              <object class="GtkShortcut">
-                                                <property name="trigger">Escape</property>
-                                                <property name="action">action(browser.hide-location)</property>
-                                              </object>
-                                            </child>
-                                          </object>
-                                        </child>
-                                      </object>
-                                    </child>
-                                    <child>
-                                      <object class="GtkButton">
-                                        <property name="icon-name">window-close-symbolic</property>
-                                        <property name="tooltip_text" translatable="yes">Cancel</property>
-                                        <property name="action-name">browser.hide-location</property>
-                                      </object>
-                                    </child>
-                                  </object>
-                                </property>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkStackPage">
-                                <property name="name">search</property>
-                                <property name="child">
-                                  <object class="GtkBox">
-                                    <style>
-                                      <class name="linked"/>
-                                    </style>
-                                    <child>
-                                      <object class="GtkSearchEntry" id="search_entry">
-                                        <property name="hexpand">true</property>
-                                        <signal name="changed" handler="on_search_entry_changed"/>
-                                        <child>
-                                          <object class="GtkShortcutController">
-                                            <property name="scope">local</property>
-                                            <child>
-                                              <object class="GtkShortcut">
-                                                <property name="trigger">Escape</property>
-                                                <property name="action">action(browser.hide-search)</property>
-                                              </object>
-                                            </child>
-                                          </object>
-                                        </child>
-                                      </object>
-                                    </child>
-                                  </object>
-                                </property>
-                              </object>
-                            </child>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="GtkToggleButton">
-                            <property name="tooltip-text" translatable="yes">Search Current Folder</property>
-                            <property name="action-name">browser.toggle-search</property>
-                            <property name="icon-name">edit-find-symbolic</property>
-                          </object>
-                        </child>
-                      </object>
-                    </property>
-                  </object>
-                </child>
-                <child type="end">
-                  <object class="GtkMenuButton" id="primary_menu">
-                    <property name="icon-name">open-menu-symbolic</property>
-                    <property name="tooltip-text" translatable="true">Main Menu</property>
-                    <property name="primary">true</property>
-                    <property name="menu-model">primary_menu_model</property>
-                  </object>
-                </child>
-              </object>
-            </child>
-            <property name="content">
-              <object class="GtkBox" id="content_box">
-                <property name="orientation">vertical</property>
+            <child type="bottom-bar">
+              <object class="ModificationsActionBar">
+                <property name="opened">false</property>
                 <property
-                  name="margin-bottom"
-                  bind-source="bottom_sheet"
-                  bind-property="bottom-bar-height"
+                  name="modifications-handler"
+                  bind-source="DConfWindow"
+                  bind-property="modifications-handler"
                   bind-flags="sync-create"
                 />
               </object>
-            </property>
+            </child>
+            <child type="sheet">
+              <object class="ModificationsView" id="modifications_view">
+                <property
+                  name="modifications-handler"
+                  bind-source="DConfWindow"
+                  bind-property="modifications-handler"
+                  bind-flags="sync-create"
+                />
+              </object>
+            </child>
+            <child type="content">
+              <object class="AdwToolbarView" id="toolbar_view">
+                <child type="top">
+                  <object class="AdwHeaderBar" id="headerbar">
+                    <child type="title">
+                      <object class="AdwClamp">
+                        <property name="child">
+                          <object class="GtkBox" id="header_toolbar">
+                            <property name="spacing">6</property>
+                            <child>
+                              <object class="GtkStack" id="toolbar_switcher">
+                                <property name="valign">center</property>
+                                <property name="hexpand">true</property>
+                                <property name="transition-type">crossfade</property>
+                                <property
+                                  name="visible-child-name"
+                                  bind-source="DConfWindow"
+                                  bind-property="toolbar-mode"
+                                  bind-flags="sync-create"
+                                />
+                                <child>
+                                  <object class="GtkStackPage">
+                                    <property name="name">pathbar</property>
+                                    <property name="child">
+                                      <object class="Pathbar" id="pathbar">
+                                        <style>
+                                          <class name="pathbar" />
+                                        </style>
+                                        <property name="hexpand">true</property>
+                                      </object>
+                                    </property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkStackPage">
+                                    <property name="name">location</property>
+                                    <property name="child">
+                                      <object class="GtkBox">
+                                        <style>
+                                          <class name="linked"/>
+                                        </style>
+                                        <child>
+                                          <object class="GtkEntry" id="location_entry">
+                                            <property name="hexpand">true</property>
+                                            <signal name="activate" handler="on_location_entry_activate"/>
+                                            <child>
+                                              <object class="GtkEventControllerFocus">
+                                                <signal name="leave" handler="on_location_entry_focus_leave"/>
+                                              </object>
+                                            </child>
+                                            <child>
+                                              <object class="GtkShortcutController">
+                                                <property name="scope">local</property>
+                                                <child>
+                                                  <object class="GtkShortcut">
+                                                    <property name="trigger">Escape</property>
+                                                    <property name="action">action(browser.hide-location)</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+                                          </object>
+                                        </child>
+                                        <child>
+                                          <object class="GtkButton">
+                                            <property name="icon-name">window-close-symbolic</property>
+                                            <property name="tooltip_text" translatable="yes">Cancel</property>
+                                            <property name="action-name">browser.hide-location</property>
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkStackPage">
+                                    <property name="name">search</property>
+                                    <property name="child">
+                                      <object class="GtkBox">
+                                        <style>
+                                          <class name="linked"/>
+                                        </style>
+                                        <child>
+                                          <object class="GtkSearchEntry" id="search_entry">
+                                            <property name="hexpand">true</property>
+                                            <signal name="changed" handler="on_search_entry_changed"/>
+                                            <child>
+                                              <object class="GtkShortcutController">
+                                                <property name="scope">local</property>
+                                                <child>
+                                                  <object class="GtkShortcut">
+                                                    <property name="trigger">Escape</property>
+                                                    <property name="action">action(browser.hide-search)</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </property>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkToggleButton">
+                                <property name="tooltip-text" translatable="yes">Search Current Folder</property>
+                                <property name="action-name">browser.toggle-search</property>
+                                <property name="icon-name">edit-find-symbolic</property>
+                              </object>
+                            </child>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                    <child type="end">
+                      <object class="GtkMenuButton" id="primary_menu">
+                        <property name="icon-name">open-menu-symbolic</property>
+                        <property name="tooltip-text" translatable="true">Main Menu</property>
+                        <property name="primary">true</property>
+                        <property name="menu-model">primary_menu_model</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <property name="content">
+                  <object class="GtkBox" id="content_box">
+                    <property name="orientation">vertical</property>
+                    <property
+                      name="margin-bottom"
+                      bind-source="bottom_sheet"
+                      bind-property="bottom-bar-height"
+                      bind-flags="sync-create"
+                    />
+                  </object>
+                </property>
+              </object>
+            </child>
           </object>
         </child>
       </object>

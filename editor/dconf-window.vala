@@ -40,6 +40,7 @@ private class DConfWindow : Adw.ApplicationWindow
 
     private ulong delayed_changes_changed_handler = 0;
 
+    [GtkChild] private unowned Adw.ToastOverlay toast_overlay;
     [GtkChild] private unowned Adw.ToolbarView toolbar_view;
     [GtkChild] private unowned Adw.HeaderBar headerbar;
     [GtkChild] private unowned Gtk.Stack toolbar_switcher;
@@ -542,7 +543,55 @@ private class DConfWindow : Adw.ApplicationWindow
     private void reset_path (string path, bool recursively)
     {
         enter_delay_mode ();
-        modifications_view.reset_objects (path, model.get_children (path), recursively);
+        if (!reset_objects (path, model.get_children (path), recursively))
+        {
+            /* Translators: displayed as a toast, when the user tries to reset keys from/for a folder that has nothing to reset */
+            show_notification (_("Nothing to reset."));
+            modifications_handler.dismiss_delayed_settings ();
+        }
+    }
+
+    private bool reset_objects (string base_path, Variant? objects, bool recursively)
+    {
+        if (objects == null)
+            return false;
+        SettingsModel model = modifications_handler.model;
+
+        VariantIter iter = new VariantIter ((!) objects);
+        uint16 context_id;
+        string name;
+        while (iter.next ("(qs)", out context_id, out name))
+        {
+            // directory
+            if (ModelUtils.is_folder_context_id (context_id))
+            {
+                string full_name = ModelUtils.recreate_full_name (base_path, name, true);
+                if (recursively)
+                    reset_objects (full_name, model.get_children (full_name), true);
+            }
+            // dconf key
+            else if (ModelUtils.is_dconf_context_id (context_id))
+            {
+                string full_name = ModelUtils.recreate_full_name (base_path, name, false);
+                if (!model.is_key_ghost (full_name))
+                    modifications_handler.add_delayed_setting (full_name, null, ModelUtils.dconf_context_id);
+            }
+            // gsettings
+            else
+            {
+                string full_name = ModelUtils.recreate_full_name (base_path, name, false);
+                RegistryVariantDict properties = new RegistryVariantDict.from_aqv (model.get_key_properties (full_name, context_id, (uint16) (PropertyQuery.IS_DEFAULT)));
+                bool is_key_default;
+                if (!properties.lookup (PropertyQuery.IS_DEFAULT,       "b",    out is_key_default))
+                    assert_not_reached ();
+                properties.clear ();
+
+                if (!is_key_default)
+                    modifications_handler.add_delayed_setting (full_name, null, context_id);
+            }
+        }
+
+        return modifications_handler.has_pending_changes ();
     }
 
     private void on_open_folder_activate (SimpleAction action, Variant? path_variant)
@@ -977,11 +1026,12 @@ private class DConfWindow : Adw.ApplicationWindow
 
     protected void show_notification (string notification)
     {
-        main_view.show_notification (notification);
+        Adw.Toast toast = new Adw.Toast (notification);
+        toast_overlay.add_toast (toast);
     }
 
-    protected void hide_notification ()
-    {
-        main_view.hide_notification ();
-    }
+    // protected void hide_notification ()
+    // {
+    //     main_view.hide_notification ();
+    // }
 }

@@ -123,6 +123,7 @@ private class ModificationsHandler : Object
         if (mode != ModificationsMode.TEMPORARY)
             return;
         if (behaviour == Behaviour.ALWAYS_CONFIRM_IMPLICIT || behaviour == Behaviour.SAFE)
+            // FIXME: SHOW A TOAST WHEN THIS HAPPENS
             apply_delayed_settings ();
         else if (behaviour == Behaviour.ALWAYS_CONFIRM_EXPLICIT)
             dismiss_delayed_settings ();
