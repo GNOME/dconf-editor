@@ -176,8 +176,7 @@ private class DConfView : BookmarksView
 
     private void create_modifications_list ()
     {
-        modifications_list = new ModificationsList (/* needs shadows   */ false,
-                                                    /* big placeholder */ true);
+        modifications_list = new ModificationsList (/* needs shadows   */ false);
         // modifications_list.set_window_size (saved_window_size);
         // modifications_list.selection_changed.connect (() => ...);
         // modifications_list.show ();

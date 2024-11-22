@@ -22,11 +22,13 @@ private class RegistrySearch : RegistryList
     private string [] bookmarks;
     private SortingOptions sorting_options;
 
-    /* Translators: placeholder text of the search list when there's no search results (not used in current design) */
-    [CCode (notify = false)] public override string placeholder_label { protected get { return _("No matches"); }}
-
     construct
     {
+        /* Translators: placeholder text of the search list when there's no search results (not used in current design) */
+        placeholder_title = _("No matches");
+        /* Translators: placeholder description of the search list when there's no search results (not used in current design) */
+        placeholder_description = _("Try a different search");
+
         search_mode = true;
         key_list_box.set_header_func (update_row_header);
     }

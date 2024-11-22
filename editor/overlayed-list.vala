@@ -27,6 +27,10 @@ private abstract class OverlayedList : Box
     [GtkChild] private   unowned ScrolledWindow scrolled;
     [GtkChild] private   unowned Box            edit_mode_box;
 
+    protected string placeholder_icon { get; set; }
+    protected string placeholder_title { get; set; }
+    protected string placeholder_description { get; set; }
+
     /*\
     * * differed construct
     \*/
@@ -65,15 +69,6 @@ private abstract class OverlayedList : Box
         {
             scrolled.has_frame = (bool) value;
         }
-    }
-
-    protected string placeholder_icon;
-    protected string placeholder_text;
-    [CCode (notify = false)] public bool big_placeholder { private get; internal construct; }
-    protected void add_placeholder ()
-    {
-        RegistryPlaceholder placeholder = new RegistryPlaceholder (placeholder_icon, placeholder_text, big_placeholder);
-        main_list_box.set_placeholder (placeholder);
     }
 
     /*\

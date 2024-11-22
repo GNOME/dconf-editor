@@ -33,12 +33,11 @@ private abstract class RegistryList : Box, BrowsableView
 
     [CCode (notify = false)] internal ModificationsHandler modifications_handler { protected get; set; }
 
-    [GtkChild] private unowned RegistryPlaceholder placeholder;
-    [CCode (notify = false)] public abstract string placeholder_label { protected get; }
+    protected string placeholder_title { get; set; }
+    protected string placeholder_description { get; set; }
 
     construct
     {
-        placeholder.label = placeholder_label;
         register_size_allocate ();
 
         adjustment = (!) key_list_box.get_adjustment ();

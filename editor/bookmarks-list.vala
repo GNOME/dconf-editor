@@ -28,9 +28,10 @@ private class BookmarksList : OverlayedList
     construct
     {
         placeholder_icon = "starred-symbolic";
-        /* Translators: placeholder text of the bookmarks list, displayed when the user has no bookmarks */
-        placeholder_text = _("Bookmarks will\nbe added here");
-        add_placeholder ();
+        /* Translators: placeholder title of the bookmarks list, displayed when the user has no bookmarks */
+        placeholder_title = _("No bookmarks");
+        /* Translators: placeholder description of the bookmarks list, displayed when the user has no bookmarks */
+        placeholder_description = _("Bookmarks will be added here");
 
         /* Translators: label of one of the two buttons of the bookmarks list, to switch between using the bookmarks and editing the list; the second is "Edit" */
         first_mode_name = _("Use");
@@ -38,10 +39,9 @@ private class BookmarksList : OverlayedList
         second_mode_name = _("Edit");
     }
 
-    internal BookmarksList (bool needs_shadows, bool big_placeholder, string edit_mode_action_prefix, string schema_path)
+    internal BookmarksList (bool needs_shadows, string edit_mode_action_prefix, string schema_path)
     {
         Object (needs_shadows           : needs_shadows,
-                big_placeholder         : big_placeholder,
                 edit_mode_action_prefix : edit_mode_action_prefix,
                 schema_path             : schema_path);
     }

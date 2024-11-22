@@ -62,7 +62,6 @@ private class BookmarksView : BrowserView
     private void create_bookmarks_list ()
     {
         bookmarks_list = new BookmarksList (/* needs shadows            */ false,
-                                            /* big placeholder          */ true,
                                             /* edit-mode action prefix  */ "bmk",
                                             /* schema path              */ "/ca/desrt/dconf-editor/");
         bookmarks_list.selection_changed.connect (on_bookmarks_selection_changed);

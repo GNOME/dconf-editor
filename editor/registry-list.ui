@@ -12,7 +12,7 @@
         <property name="vexpand">1</property>
         <property name="child">
           <object class="AdwClamp">
-            <property name="child">
+            <child>
               <object class="GtkListBox" id="key_list_box">
                 <property name="selection-mode">browse</property>
                 <property name="margin-top">24</property>
@@ -25,11 +25,22 @@
                 <child type="placeholder">
                   <object class="RegistryPlaceholder" id="placeholder">
                     <property name="icon-name">ca.desrt.dconf-editor-symbolic</property>
-                    <property name="big">True</property>
+                    <property
+                      name="title"
+                      bind-source="RegistryList"
+                      bind-property="placeholder-title"
+                      bind-flags="sync-create"
+                    />
+                    <property
+                      name="description"
+                      bind-source="RegistryList"
+                      bind-property="placeholder-description"
+                      bind-flags="sync-create"
+                    />
                   </object>
                 </child>
               </object>
-            </property>
+            </child>
           </object>
         </property>
       </object>

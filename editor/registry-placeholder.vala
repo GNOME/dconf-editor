@@ -17,38 +17,48 @@
 
 using Gtk;
 
-[GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/registry-placeholder.ui")]
-private class RegistryPlaceholder : Grid
-{
-    [GtkChild] private unowned Label placeholder_label;
-    [GtkChild] private unowned Image placeholder_image;
+/* FIXME: This widget is essentially a quick and dirty AdwStatusPage without a
+ *        scrolled window. As soon as libadwaita provides such a widget, replace
+ *        all uses of this widget with that one.
+ *        <https://gitlab.gnome.org/GNOME/libadwaita/-/issues/852> */
 
-    [CCode (notify = false)] public string label     { internal construct set { placeholder_label.label = value; }}
-    [CCode (notify = false)] public string icon_name { private get; internal construct; }
-    [CCode (notify = false)] public bool big
-    {
-        internal construct set
-        {
-            if (value)
-            {
-                placeholder_image.pixel_size = 72;
-                add_css_class ("big-popover");
-            }
-            else
-            {
-                placeholder_image.pixel_size = 36;
-                remove_css_class ("big-popover");
-            }
+[GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/registry-placeholder.ui")]
+private class RegistryPlaceholder : Adw.Bin
+{
+    [GtkChild] private unowned Label title_label;
+
+    public string icon_name { get; set; }
+    public string title { get; set; }
+    public string description { get; set; }
+    public bool compact { get; set; }
+    protected int icon_pixel_size {
+        get {
+            return compact ? 36 : 72;
+        }
+    }
+    protected string title_css_class {
+        get {
+            return compact ? "title-2" : "title-1";
         }
     }
 
     construct
     {
-        placeholder_image.icon_name = icon_name;
+        notify["compact"].connect (
+            () => {
+                notify_property ("icon-pixel-size");
+                notify_property ("title-css-class");
+            }
+        );
+        notify["title-css-class"].connect (update_title_css_class);
+
+        update_title_css_class ();
     }
 
-    internal RegistryPlaceholder (string _icon_name, string _label, bool _big)
+    private void update_title_css_class ()
     {
-        Object (icon_name:_icon_name, label: _label, big: _big);
+        title_label.remove_css_class ("title-1");
+        title_label.remove_css_class ("title-2");
+        title_label.add_css_class (title_css_class);
     }
 }

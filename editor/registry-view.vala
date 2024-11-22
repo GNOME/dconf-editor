@@ -19,11 +19,12 @@ using Gtk;
 
 private class RegistryView : RegistryList
 {
-    /* Translators: placeholder text of the keys list when there's nothing to display in a path (not used in current design) */
-    [CCode (notify = false)] public override string placeholder_label { protected get { return _("No keys in this path"); }}
-
     construct
     {
+        /* Translators: placeholder title of the keys list when there's nothing to display in a path (not used in current design) */
+        placeholder_title = _("No keys in this path");
+        /* Translators: placeholder description of the keys list when there's nothing to display in a path (not used in current design) */
+        placeholder_description = _("Try navigating to a different location");
         search_mode = false;
         key_list_box.set_header_func (update_row_header);
     }
