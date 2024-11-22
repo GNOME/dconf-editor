@@ -214,7 +214,7 @@ private class DConfView : BookmarksView
     private Widget delayed_setting_row_create (Object object)
     {
         SimpleSettingObject sso = (SimpleSettingObject) object;
-        return ModificationsRevealer.create_delayed_setting_row (modifications_handler, sso.name, sso.full_name, sso.context_id);
+        return ModificationsView.create_delayed_setting_row (modifications_handler, sso.name, sso.full_name, sso.context_id);
     }
 
     /*\

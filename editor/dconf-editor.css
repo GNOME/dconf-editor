@@ -207,7 +207,7 @@ window:not(.hc-theme):backdrop    .keys-list      > row:not(:selected) > * { col
 .bookmarks > grid > overlay > scrolledwindow > viewport > list > row > grid > label,
 .delayed-settings-popover list > row > grid > label,
 .delayed-settings-popover list > row > grid > grid > label,
-.modifications-revealer button {
+.modifications-view button {
   transition:all 0 ease;
 }
 

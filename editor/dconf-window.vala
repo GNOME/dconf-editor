@@ -40,7 +40,6 @@ private class DConfWindow : Adw.ApplicationWindow
 
     private ulong delayed_changes_changed_handler = 0;
 
-    [GtkChild] private unowned Adw.BottomSheet bottom_sheet;
     [GtkChild] private unowned Adw.ToolbarView toolbar_view;
     [GtkChild] private unowned Adw.HeaderBar headerbar;
     [GtkChild] private unowned Gtk.Stack toolbar_switcher;
@@ -48,7 +47,7 @@ private class DConfWindow : Adw.ApplicationWindow
     [GtkChild] private unowned Gtk.Entry location_entry;
     [GtkChild] private unowned Gtk.SearchEntry search_entry;
     [GtkChild] private unowned Gtk.Box content_box;
-    [GtkChild] private unowned ModificationsRevealer revealer;
+    [GtkChild] private unowned ModificationsView modifications_view;
     private DConfView main_view;
 
     internal string saved_view { get; set; default = "/"; }
@@ -57,6 +56,7 @@ private class DConfWindow : Adw.ApplicationWindow
     internal bool show_search { get; set; default = false; }
     internal bool show_location { get; set; default = false; }
     internal bool show_modifications_bar { get; set; default = false; }
+    internal bool show_modifications_sheet { get; set; default = false; }
 
     internal string toolbar_mode {
         get {
@@ -93,7 +93,7 @@ private class DConfWindow : Adw.ApplicationWindow
         notify["show-modifications-bar"].connect (
             () => {
                 if (!show_modifications_bar)
-                    bottom_sheet.set_open (false);
+                    show_modifications_sheet = false;
             }
         );
 
@@ -328,12 +328,12 @@ private class DConfWindow : Adw.ApplicationWindow
     private void propagate_gkey_value_push (string full_name, uint16 context_id, Variant key_value, bool is_key_default)
     {
         main_view.gkey_value_push (full_name, context_id, key_value, is_key_default);
-        revealer.gkey_value_push  (full_name, context_id, key_value, is_key_default);
+        modifications_view.gkey_value_push  (full_name, context_id, key_value, is_key_default);
     }
     private void propagate_dkey_value_push (string full_name, Variant? key_value_or_null)
     {
         main_view.dkey_value_push (full_name, key_value_or_null);
-        revealer.dkey_value_push  (full_name, key_value_or_null);
+        modifications_view.dkey_value_push  (full_name, key_value_or_null);
     }
 
     /*\
@@ -542,7 +542,7 @@ private class DConfWindow : Adw.ApplicationWindow
     private void reset_path (string path, bool recursively)
     {
         enter_delay_mode ();
-        revealer.reset_objects (path, model.get_children (path), recursively);
+        modifications_view.reset_objects (path, model.get_children (path), recursively);
     }
 
     private void on_open_folder_activate (SimpleAction action, Variant? path_variant)
@@ -550,6 +550,7 @@ private class DConfWindow : Adw.ApplicationWindow
     {
         current_path = ((!) path_variant).get_string ();
         show_search = false;
+        show_modifications_sheet = false;
 
         // FIXME I don't know why this is.
         request_folder (current_path);
@@ -564,6 +565,7 @@ private class DConfWindow : Adw.ApplicationWindow
         ((!) path_variant).@get ("(sq)", out full_name, out context_id);
 
         show_search = false;
+        show_modifications_sheet = false;
         request_object (full_name, context_id);
     }
 
@@ -592,12 +594,12 @@ private class DConfWindow : Adw.ApplicationWindow
 
     private void show_modifications (/* SimpleAction action, Variant? variant */)
     {
-        bottom_sheet.set_open (true);
+        show_modifications_sheet = true;
     }
 
     private void hide_modifications (/* SimpleAction action, Variant? variant */)
     {
-        bottom_sheet.set_open (false);
+        show_modifications_sheet = false;
     }
 
     private void enter_delay_mode (/* SimpleAction action, Variant? path_variant */)
@@ -738,17 +740,10 @@ private class DConfWindow : Adw.ApplicationWindow
 
     private void modifications_list                     (/* SimpleAction action, Variant? variant */)
     {
-        if (!modifications_handler.get_current_delay_mode ())
+        if (!show_modifications_bar)
             return;
 
-        // use popover
-        if (!disable_action_bar)
-            revealer.toggle_modifications_list ();
-        // use in-window
-        else if (main_view.in_window_modifications)
-            show_default_view ();
-        // else FIXME This might all be dead code now?
-            // show_modifications_view ();
+        show_modifications_sheet = ! show_modifications_sheet;
     }
 
     private void toggle_boolean                         (/* SimpleAction action, Variant? variant */)
@@ -767,7 +762,7 @@ private class DConfWindow : Adw.ApplicationWindow
         if (row_action_blocked ())
             return;
 
-        if (revealer.dismiss_selected_modification ())
+        if (modifications_view.dismiss_selected_modification ())
         {
             reload_view ();
             return;
@@ -807,22 +802,12 @@ private class DConfWindow : Adw.ApplicationWindow
 
     protected bool intercept_next_match (out bool interception_result)
     {
-        if (revealer.get_modifications_list_state ())   // for modifications popover
-        {
-            interception_result = revealer.next_match ();
-            return true;
-        }
         return false;
         // return base.intercept_next_match (out interception_result);
     }
 
     protected bool intercept_previous_match (out bool interception_result)
     {
-        if (revealer.get_modifications_list_state ())   // for modifications popover
-        {
-            interception_result = revealer.previous_match ();
-            return true;
-        }
         return false;
         // return base.intercept_previous_match (out interception_result);
     }

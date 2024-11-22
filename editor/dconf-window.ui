@@ -14,6 +14,12 @@
           bind-property="show-modifications-bar"
           bind-flags="sync-create"
         />
+        <property
+          name="open"
+          bind-source="DConfWindow"
+          bind-property="show-modifications-sheet"
+          bind-flags="sync-create"
+        />
         <child type="bottom-bar">
           <object class="ModificationsActionBar">
             <property name="opened">false</property>
@@ -26,7 +32,7 @@
           </object>
         </child>
         <child type="sheet">
-          <object class="ModificationsRevealer" id="revealer">
+          <object class="ModificationsView" id="modifications_view">
             <property
               name="modifications-handler"
               bind-source="DConfWindow"

@@ -2,7 +2,7 @@
 <interface domain="dconf-editor">
   <requires lib="gtk" version="4.0"/>
   <requires lib="gtk" version="4.14"/>
-  <template class="ModificationsRevealer" parent="GtkBox">
+  <template class="ModificationsView" parent="GtkBox">
     <child>
       <object class="AdwToolbarView">
         <property name="content">
@@ -15,7 +15,7 @@
             <property name="opened">true</property>
             <property
               name="modifications-handler"
-              bind-source="ModificationsRevealer"
+              bind-source="ModificationsView"
               bind-property="modifications-handler"
               bind-flags="sync-create"
             />

@@ -17,8 +17,8 @@
 
 using Gtk;
 
-[GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/modifications-revealer.ui")]
-private class ModificationsRevealer : Box
+[GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/modifications-view.ui")]
+private class ModificationsView : Box
 {
     [GtkChild] private unowned ModificationsList modifications_list;
 
@@ -95,16 +95,6 @@ private class ModificationsRevealer : Box
     * * keyboard calls
     \*/
 
-    internal bool next_match ()
-    {
-        return modifications_list.next_match ();
-    }
-
-    internal bool previous_match ()
-    {
-        return modifications_list.previous_match ();
-    }
-
     internal bool handle_copy_text (out string copy_text)
     {
         // if (delayed_list_button.active)
@@ -128,22 +118,6 @@ private class ModificationsRevealer : Box
         modifications_handler.dismiss_change ((!) selected_row_name);
         update ();
         return true;
-    }
-
-    internal void hide_modifications_list ()
-    {
-        // delayed_settings_list_popover.popdown ();
-    }
-
-    internal void toggle_modifications_list ()
-    {
-        // delayed_list_button.active = !delayed_settings_list_popover.visible;
-    }
-
-    internal bool get_modifications_list_state ()
-    {
-        return false;
-        // return delayed_list_button.active;
     }
 
     /*\
