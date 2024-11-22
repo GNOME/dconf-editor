@@ -546,6 +546,7 @@ private class DConfWindow : Adw.ApplicationWindow
         close_in_window_panels ();
 
         current_path = ((!) path_variant).get_string ();
+        show_search = false;
 
         // FIXME I don't know why this is.
         request_folder (current_path);
