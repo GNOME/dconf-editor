@@ -26,7 +26,6 @@ private abstract class RegistryList : Box, BrowsableView
 
     [CCode (notify = false)] protected bool search_mode { private get; protected set; }
     protected string? current_path_if_search_mode = null;   // TODO only used in search mode
-    protected bool search_is_path_search = false;           // TODO only used in search mode
 
     protected GLib.ListStore list_model = new GLib.ListStore (typeof (SimpleSettingObject));
 
@@ -426,7 +425,7 @@ private abstract class RegistryList : Box, BrowsableView
 
         if (ModelUtils.is_folder_context_id (context_id))
         {
-            row = new FolderListBoxRow (setting_object.name, full_name, search_mode && search_is_path_search, search_mode_non_local_result);
+            row = new FolderListBoxRow (setting_object.name, full_name, false, search_mode_non_local_result);
         }
         else
         {

@@ -166,107 +166,43 @@ private class RegistrySearch : RegistryList
 
         bool old_term_is_term_prefix = old_term != null && term.has_prefix ((!) old_term);
         SettingsModel model = modifications_handler.model;
-        if (term.has_prefix ("/"))
+        if (old_term_is_term_prefix)
         {
-            is_local = false;
-            if (old_term_is_term_prefix && !(term.slice (((!) old_term).length, term.length).contains ("/")))
-            {
-                refine_paths_results (term, ref list_model, ref post_local);
-
-                ensure_selection (key_list_box, term);
-            }
+            pause_global_search (ref search_source);
+            refine_local_results (term, ref list_model, ref post_local, ref post_bookmarks, ref post_folders);
+            refine_bookmarks_results (term, post_local, ref list_model, ref post_bookmarks, ref post_folders);
+            if ((!) old_term == "")
+                start_global_search ((!) current_path_if_search_mode, term);
             else
             {
-                search_is_path_search = true;
-
-                model.clean_watched_keys ();
-                stop_global_search ();
-
-                current_path_if_search_mode = ModelUtils.get_base_path (term);
-
-                local_search (model, sorting_options, (!) current_path_if_search_mode, ModelUtils.get_name_or_empty (term), ref list_model);
-                post_local = (int) list_model.get_n_items ();
-
-                key_list_box.bind_model (list_model, new_list_box_row);
-                _select_first_row (key_list_box, term);
+                refine_global_results (term, post_bookmarks, is_local, ref list_model, ref post_folders);
+                resume_global_search ((!) current_path_if_search_mode, term); // update search term
             }
+
+            ensure_selection (key_list_box, term);
+
             model.keys_value_push ();
         }
         else
         {
-            if (old_term_is_term_prefix)
-            {
-                pause_global_search (ref search_source);
-                refine_local_results (term, ref list_model, ref post_local, ref post_bookmarks, ref post_folders);
-                refine_bookmarks_results (term, post_local, ref list_model, ref post_bookmarks, ref post_folders);
-                if ((!) old_term == "")
-                    start_global_search ((!) current_path_if_search_mode, term);
-                else
-                {
-                    refine_global_results (term, post_bookmarks, is_local, ref list_model, ref post_folders);
-                    resume_global_search ((!) current_path_if_search_mode, term); // update search term
-                }
+            model.clean_watched_keys ();
+            stop_global_search ();
 
-                ensure_selection (key_list_box, term);
+            local_search    (model, sorting_options, ModelUtils.get_base_path ((!) current_path_if_search_mode), term, ref list_model);
+            post_local      = (int) list_model.get_n_items ();
+            post_bookmarks  = post_local;
+            bookmark_search (model, (!) current_path_if_search_mode, term, bookmarks, is_local, ref list_model, ref post_bookmarks);
+            post_folders    = post_bookmarks;
 
-                model.keys_value_push ();
-            }
-            else
-            {
-                search_is_path_search = false;
+            key_list_box.bind_model (list_model, new_list_box_row);
+            _select_first_row (key_list_box, term);
 
-                model.clean_watched_keys ();
-                stop_global_search ();
+            model.keys_value_push ();
 
-                local_search    (model, sorting_options, ModelUtils.get_base_path ((!) current_path_if_search_mode), term, ref list_model);
-                post_local      = (int) list_model.get_n_items ();
-                post_bookmarks  = post_local;
-                bookmark_search (model, (!) current_path_if_search_mode, term, bookmarks, is_local, ref list_model, ref post_bookmarks);
-                post_folders    = post_bookmarks;
-
-                key_list_box.bind_model (list_model, new_list_box_row);
-                _select_first_row (key_list_box, term);
-
-                model.keys_value_push ();
-
-                if (term != "")
-                    start_global_search ((!) current_path_if_search_mode, term);
-
-                if (is_local)
-                    insert_global_search_row ((!) current_path_if_search_mode, fallback_context_id, ref list_model);
-            }
+            if (term != "")
+                start_global_search ((!) current_path_if_search_mode, term);
         }
         old_term = term;
-    }
-    private static void insert_global_search_row (string current_path, uint16 _fallback_context_id, ref GLib.ListStore list_model)
-    {
-        uint16 fallback_context_id = ModelUtils.is_folder_path (current_path) ? ModelUtils.folder_context_id : _fallback_context_id;
-        SimpleSettingObject sso = new SimpleSettingObject.from_full_name (/* context id */ fallback_context_id,
-                                                                          /* name       */ "",
-                                                                          /* base path  */ current_path,
-                                                                          /* is search  */ true,
-                                                                          /* is pinned  */ false);
-        list_model.insert (list_model.get_n_items (), sso);
-    }
-
-    private static void refine_paths_results (string term, ref GLib.ListStore list_model, ref int post_local)
-    {
-        if (post_local < 1)
-            assert_not_reached ();
-        if (post_local == 1)
-            return;
-
-        for (int i = post_local - 1; i >= 1; i--)
-        {
-            SimpleSettingObject? item = (SimpleSettingObject?) list_model.get_item (i);
-            if (item == null)
-                assert_not_reached ();
-            if (!(term in ((!) item).full_name))
-            {
-                post_local--;
-                list_model.remove (i);
-            }
-        }
     }
 
     private static void refine_local_results (string term, ref GLib.ListStore list_model, ref int post_local, ref int post_bookmarks, ref int post_folders)
@@ -316,7 +252,7 @@ private class RegistrySearch : RegistryList
 
     private static void refine_global_results (string term, int post_bookmarks, bool is_local, ref GLib.ListStore list_model, ref int post_folders)
     {
-        for (int i = (int) list_model.get_n_items () - (is_local ? 2 : 1); i >= post_folders; i--)
+        for (int i = (int) list_model.get_n_items () - 1; i >= post_folders; i--)
         {
             SimpleSettingObject item = (SimpleSettingObject) list_model.get_item (i);
             if (!(term.casefold () in item.casefolded_name))
@@ -471,12 +407,6 @@ private class RegistrySearch : RegistryList
     private void update_row_header (ListBoxRow row, ListBoxRow? before)
     {
         int row_index = row.get_index ();
-
-        if (search_is_path_search)
-        {
-            update_row_header_with_context (row, before, modifications_handler.model, /* local search header */ false);
-            return;
-        }
 
         if (post_local > 1 && row_index < post_local)
         {
