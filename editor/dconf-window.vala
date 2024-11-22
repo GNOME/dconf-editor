@@ -493,6 +493,7 @@ private class DConfWindow : Adw.ApplicationWindow
         { "open-folder", on_open_folder_activate, "s" },
         { "reload-view", on_reload_view_activate },
         { "copy-location", on_copy_location_activate },
+        { "open-object", on_open_object_activate, "(sq)" },
         // { "toggle-search", null, null, "false" }, // on_toggle_search_activate
 
         // { "empty",              empty, "*" },
@@ -549,14 +550,26 @@ private class DConfWindow : Adw.ApplicationWindow
     private void on_open_folder_activate (SimpleAction action, Variant? path_variant)
         requires (path_variant != null)
     {
-        close_in_window_panels ();
-
         current_path = ((!) path_variant).get_string ();
         show_search = false;
 
         // FIXME I don't know why this is.
         request_folder (current_path);
     }
+
+
+    private void on_open_object_activate (SimpleAction action, Variant? path_variant)
+        requires (path_variant != null)
+    {
+        string full_name;
+        uint16 context_id;
+        ((!) path_variant).@get ("(sq)", out full_name, out context_id);
+        stdout.printf ("AAAAAAH %s %d\n", full_name, context_id);
+
+        show_search = false;
+        request_object (full_name, context_id);
+    }
+
 
     private void on_reload_view_activate ()
     {
@@ -631,8 +644,6 @@ private class DConfWindow : Adw.ApplicationWindow
 
     private void show_modifications_view (/* SimpleAction action, Variant? path_variant */)
     {
-        close_in_window_panels ();
-
         // headerbar.show_modifications_view ();
         main_view.show_modifications_view ();
     }
@@ -805,15 +816,6 @@ private class DConfWindow : Adw.ApplicationWindow
     * * Path requests
     \*/
 
-    protected void close_in_window_panels ()
-    {
-        // hide_notification ();
-        // headerbar.close_popovers ();
-        // revealer.hide_modifications_list ();
-        // if (main_view.in_window_bookmarks || main_view.in_window_modifications || in_window_about)
-        //     show_default_view ();
-    }
-
     protected void request_config (string full_name)
     {
         main_view.prepare_object_view (full_name, ModelUtils.folder_context_id,
@@ -870,6 +872,7 @@ private class DConfWindow : Adw.ApplicationWindow
 
         if (ModelUtils.is_undefined_context_id (context_id))
         {
+            // FIXME Use AdwToast, and also maybe flatten out all these functions
             if (notify_missing)
             {
                 if (ModelUtils.is_key_path (full_name))
@@ -884,10 +887,10 @@ private class DConfWindow : Adw.ApplicationWindow
         }
         else
         {
+            current_path = strdup (full_name);
             main_view.prepare_object_view (full_name, context_id,
                                            model.get_key_properties (full_name, context_id, 0),
                                            current_path == ModelUtils.get_parent_path (full_name));
-            current_path = strdup (full_name);
             // update_current_path (ViewType.OBJECT, strdup (full_name));
         }
 

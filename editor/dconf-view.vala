@@ -223,8 +223,9 @@ private class DConfView : BookmarksView
 
     private void on_path_changed ()
     {
-        // TODO Surely we can infer type from the path rather than pass type around?
-        set_dconf_path (ViewType.FOLDER, path);
+        // FIXME Let's find a better way to determine the expected view type
+        ViewType view_type = path.has_suffix ("/") ? ViewType.FOLDER : ViewType.OBJECT;
+        set_dconf_path (view_type, path);
     }
 
     internal override void set_dconf_path (ViewType type, string path)
