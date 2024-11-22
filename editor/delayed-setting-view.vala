@@ -97,10 +97,11 @@ private class DelayedSettingView : OverlayedListRow
     * * updating current value
     \*/
 
-    // internal void update_gsettings_key_current_value (Variant key_value, bool is_default)
-    // {
-    //     _update_gsettings_key_current_value (key_value, is_default, key_value_label, key_value_default);
-    // }
+    internal void update_gsettings_key_current_value (Variant key_value, bool is_default)
+    {
+        _update_gsettings_key_current_value (key_value, is_default, key_value_label, key_value_default);
+    }
+
     private static void _update_gsettings_key_current_value (Variant key_value,
                                                              bool    is_default,
                                                              Label   key_value_label,
@@ -110,10 +111,11 @@ private class DelayedSettingView : OverlayedListRow
         update_value_default_label (is_default, key_value_default);
     }
 
-    // internal void update_dconf_key_current_value (Variant? key_value_or_null)
-    // {
-    //     _update_dconf_key_current_value (key_value_or_null, key_value_label, key_value_default);
-    // }
+    internal void update_dconf_key_current_value (Variant? key_value_or_null)
+    {
+        _update_dconf_key_current_value (key_value_or_null, key_value_label, key_value_default);
+    }
+
     private static void _update_dconf_key_current_value (Variant? key_value_or_null,
                                                          Label    key_value_label,
                                                          Label    key_value_default)

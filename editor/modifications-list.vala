@@ -126,19 +126,27 @@ private class ModificationsList : OverlayedList
 
     internal void gkey_value_push (string full_name, uint16 context_id, Variant key_value, bool is_key_default)
     {
-        // main_list_box.@foreach ((widget) => {
-        //         DelayedSettingView row = (DelayedSettingView) widget;
-        //         if (row.full_name == full_name && row.context_id == context_id)
-        //             row.update_gsettings_key_current_value (key_value, is_key_default);
-        //     });
+        int index = 0;
+        Gtk.ListBoxRow? row = main_list_box.get_row_at_index (index);
+        while (row != null) {
+            DelayedSettingView delayed_setting_view = (DelayedSettingView) row;
+            if (delayed_setting_view.full_name == full_name && delayed_setting_view.context_id == context_id)
+                delayed_setting_view.update_gsettings_key_current_value (key_value, is_key_default);
+            index += 1;
+            row = main_list_box.get_row_at_index (index);
+        }
     }
 
     internal void dkey_value_push (string full_name, Variant? key_value_or_null)
     {
-        // main_list_box.@foreach ((widget) => {
-        //         DelayedSettingView row = (DelayedSettingView) widget;
-        //         if (row.full_name == full_name)
-        //             row.update_dconf_key_current_value (key_value_or_null);
-        //     });
+        int index = 0;
+        Gtk.ListBoxRow? row = main_list_box.get_row_at_index (index);
+        while (row != null) {
+            DelayedSettingView delayed_setting_view = (DelayedSettingView) row;
+            if (delayed_setting_view.full_name == full_name)
+                delayed_setting_view.update_dconf_key_current_value (key_value_or_null);
+            index += 1;
+            row = main_list_box.get_row_at_index (index);
+        }
     }
 }
