@@ -6,10 +6,24 @@
     <property name="default-width">700</property>
     <property name="default-height">500</property>
     <child>
-      <object class="AdwBottomSheet" id="bottom-sheet">
+      <object class="AdwBottomSheet" id="bottom_sheet">
         <property name="show-drag-handle">false</property>
+        <property
+          name="reveal-bottom-bar"
+          bind-source="DConfWindow"
+          bind-property="show-modifications-bar"
+          bind-flags="sync-create"
+        />
         <child type="bottom-bar">
-          <object class="ModificationsActionBar" />
+          <object class="ModificationsActionBar">
+            <property name="opened">false</property>
+            <property
+              name="modifications-handler"
+              bind-source="DConfWindow"
+              bind-property="modifications-handler"
+              bind-flags="sync-create"
+            />
+          </object>
         </child>
         <child type="sheet">
           <object class="ModificationsRevealer" id="revealer">
@@ -150,6 +164,12 @@
             <property name="content">
               <object class="GtkBox" id="content_box">
                 <property name="orientation">vertical</property>
+                <property
+                  name="margin-bottom"
+                  bind-source="bottom_sheet"
+                  bind-property="bottom-bar-height"
+                  bind-flags="sync-create"
+                />
               </object>
             </property>
           </object>

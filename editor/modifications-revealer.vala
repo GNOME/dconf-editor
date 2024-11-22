@@ -20,65 +20,15 @@ using Gtk;
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/modifications-revealer.ui")]
 private class ModificationsRevealer : Box
 {
-    private ModificationsHandler _modifications_handler;
-    [CCode (notify = false)] internal ModificationsHandler modifications_handler
-    {
-        private get { return _modifications_handler; }
-        set
-        {
-            _modifications_handler = value;
-            _modifications_handler.delayed_changes_changed.connect (update);
-        }
-    }
-
-    private bool disable_action_bar = false;
-    // private bool short_size_button = false;
-    // private void set_window_size (AdaptativeWidget.WindowSize new_size)
-    // {
-    //     bool _disable_action_bar = AdaptativeWidget.WindowSize.is_extra_thin (new_size)
-    //                             || AdaptativeWidget.WindowSize.is_extra_flat (new_size);
-    //     if (disable_action_bar != _disable_action_bar)
-    //     {
-    //         disable_action_bar = _disable_action_bar;
-    //         update ();
-    //     }
-
-    //     bool _short_size_button = AdaptativeWidget.WindowSize.is_quite_thin (new_size);
-    //     if (short_size_button != _short_size_button)
-    //     {
-    //         short_size_button = _short_size_button;
-    //         if (_short_size_button)
-    //         {
-    //             apply_button.remove_css_class ("text-button");
-    //             apply_button.icon = apply_button_icon;
-    //             apply_button.add_css_class ("image-button");
-    //         }
-    //         else
-    //         {
-    //             apply_button.remove_css_class ("image-button");
-    //             apply_button.icon = null;
-    //             apply_button.add_css_class ("text-button");
-    //         }
-    //     }
-    // }
-
-    // [GtkChild] private unowned Adw.BottomSheet bottom_sheet;
-    // [GtkChild] private unowned Label label;
-    // [GtkChild] private unowned Button apply_button;
-    // [GtkChild] private unowned Popover delayed_settings_list_popover;
     [GtkChild] private unowned ModificationsList modifications_list;
 
-    internal string label { get; set; default = ""; }
-
-    public bool reveal_child { get; set; default = false; }
-
-    // private ThemedIcon apply_button_icon = new ThemedIcon.from_names ({"object-select-symbolic"});
+    internal ModificationsHandler modifications_handler { get; set; }
 
     construct
     {
-        // apply_button.icon = null;
-        // apply_button.add_css_class ("text-button");
-        // bind_property ("reveal-child", bottom_sheet, "open", BindingFlags.SYNC_CREATE);
+        notify["modifications-handler"].connect (() => {
+            modifications_handler.delayed_changes_changed.connect (update);
+        });
     }
 
     /*\
@@ -132,19 +82,12 @@ private class ModificationsRevealer : Box
         }
     }
 
-    // public void set_reveal_child (bool _value) {
-    //     reveal_child = _value;
-    // }
-
-    // public bool get_reveal_child () {
-    //     return reveal_child;
-    // }
-
     private void warn_if_no_planned_changes ()
     {
-        if (modifications_handler.dconf_changes_count == 0 && modifications_handler.gsettings_changes_count == 0)
+        // if (modifications_handler.dconf_changes_count == 0 && modifications_handler.gsettings_changes_count == 0)
             /* Translators: displayed in the bottom bar in normal sized windows, when the user tries to reset keys from/for a folder that has nothing to reset */
-            label = _("Nothing to reset.");
+            // FIXME: USE A TOAST FOR THIS
+            // label = _("Nothing to reset.");
             // FIXME appears twice
     }
 
@@ -282,91 +225,7 @@ private class ModificationsRevealer : Box
 
     private void update ()
     {
-        if (disable_action_bar)
-        {
-            reveal_child = false;
-            return;
-        }
-
         GLib.ListStore modifications_liststore = modifications_handler.get_delayed_settings ();
         modifications_list.bind_model (modifications_liststore, delayed_setting_row_create);
-
-        // if (modifications_liststore.get_n_items () == 0)
-        //     delayed_settings_list_popover.popdown ();
-
-        if (modifications_handler.mode == ModificationsMode.NONE)
-        {
-            reveal_child = false;
-            // apply_button.sensitive = false;
-            label = "";
-            return;
-        }
-        uint total_changes_count = modifications_handler.dconf_changes_count + modifications_handler.gsettings_changes_count;
-        if (modifications_handler.mode == ModificationsMode.TEMPORARY)
-        {
-            if (total_changes_count == 0)
-            {
-                // apply_button.sensitive = false;
-                /* Translators: displayed in the bottom bar in normal sized windows, when the user edits a key and enters in the entry or text view a value that cannot be parsed to the correct data type */
-                label = _("The value is invalid.");
-            }
-            else if (total_changes_count != 1)
-                assert_not_reached ();
-            else if (modifications_handler.behaviour == Behaviour.ALWAYS_CONFIRM_EXPLICIT)
-            {
-                // apply_button.sensitive = true;
-                /* Translators: displayed in the bottom bar in normal sized windows, when the user edits a key (with the "always confirm explicit" behaviour) */
-                label = _("The change will be dismissed if you quit this view without applying.");
-            }
-            else if (modifications_handler.behaviour == Behaviour.ALWAYS_CONFIRM_IMPLICIT || modifications_handler.behaviour == Behaviour.SAFE)
-            {
-                // apply_button.sensitive = true;
-                /* Translators: displayed in the bottom bar in normal sized windows, when the user edits a key (with default "always confirm implicit" behaviour notably) */
-                label = _("The change will be applied on such request or if you quit this view.");
-            }
-            else
-                assert_not_reached ();
-            reveal_child = true;
-        }
-        else // if (mode == Mode.DELAYED)
-        {
-            if (total_changes_count == 0)
-                /* Translators: displayed in the bottom bar in normal sized windows, when the user tries to reset keys from/for a folder that has nothing to reset */
-                label = _("Nothing to reset.");
-                // FIXME appears twice
-            // apply_button.sensitive = total_changes_count > 0;
-            label = get_text (modifications_handler.dconf_changes_count, modifications_handler.gsettings_changes_count);
-            reveal_child = true;
-        }
-    }
-
-    private static string get_text (uint dconf, uint gsettings)     // TODO change text if current path is a key?
-    {
-        if (dconf == 0)
-        {
-            if (gsettings == 0)
-            /* Translators: Text displayed in the bottom bar; displayed if there are no pending changes, to document what is the "delay mode". */
-                return _("Changes will be delayed until you request it.");
-
-            /* Translators: Text displayed in the bottom bar; "gsettings" is a technical term, notably a shell command, so you probably should not translate it. */
-            return ngettext ("One gsettings operation delayed.", "%u gsettings operations delayed.", gsettings).printf (gsettings);
-        }
-        if (gsettings == 0)
-            /* Translators: Text displayed in the bottom bar; "dconf" is a technical term, notably a shell command, so you probably should not translate it. */
-            return ngettext ("One dconf operation delayed.", "%u dconf operations delayed.", dconf).printf (dconf);
-
-         /* Translators: Text displayed in the bottom bar. Hacky: I split a sentence like "One gsettings operation and 2 dconf operations delayed." in two parts, before the "and"; there is at least one gsettings operation and one dconf operation. So, you can either keep "%s%s" like that, and have the second part of the translation starting with a space (if that makes sense in your language), or you might use "%s %s" here. */
-        return _("%s%s").printf (
-
-         /* Translators: Text displayed in the bottom bar; beginning of a sentence like "One gsettings operation and 2 dconf operations delayed.", you could duplicate "delayed" if needed, as it refers to both the gsettings and dconf operations (at least one of each).
-            Also, "gsettings" is a technical term, notably a shell command, so you probably should not translate it. */
-            ngettext ("One gsettings operation", "%u gsettings operations", gsettings).printf (gsettings),
-
-         /* Translators: Text displayed in the bottom bar; second part (and end) of a sentence like "One gsettings operation and 2 dconf operations delayed.", so:
-             * the space before the "and" is probably wanted, if you keeped the "%s%s" translation as-is, and
-             * the "delayed" refers to both the gsettings and dconf operations (at least one of each).
-            Also, "dconf" is a technical term, notably a shell command, so you probably should not translate it. */
-            ngettext (" and one dconf operation delayed.", " and %u dconf operations delayed.", dconf).printf (dconf)
-        );
     }
 }

@@ -12,10 +12,11 @@
         </property>
         <child type="bottom">
           <object class="ModificationsActionBar">
+            <property name="opened">true</property>
             <property
-              name="label"
+              name="modifications-handler"
               bind-source="ModificationsRevealer"
-              bind-property="label"
+              bind-property="modifications-handler"
               bind-flags="sync-create"
             />
           </object>

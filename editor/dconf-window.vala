@@ -40,6 +40,7 @@ private class DConfWindow : Adw.ApplicationWindow
 
     private ulong delayed_changes_changed_handler = 0;
 
+    [GtkChild] private unowned Adw.BottomSheet bottom_sheet;
     [GtkChild] private unowned Adw.ToolbarView toolbar_view;
     [GtkChild] private unowned Adw.HeaderBar headerbar;
     [GtkChild] private unowned Gtk.Stack toolbar_switcher;
@@ -55,6 +56,7 @@ private class DConfWindow : Adw.ApplicationWindow
     internal bool delay_mode { get; set; default = false; }
     internal bool show_search { get; set; default = false; }
     internal bool show_location { get; set; default = false; }
+    internal bool show_modifications_bar { get; set; default = false; }
 
     internal string toolbar_mode {
         get {
@@ -88,6 +90,13 @@ private class DConfWindow : Adw.ApplicationWindow
             }
         );
 
+        notify["show-modifications-bar"].connect (
+            () => {
+                if (!show_modifications_bar)
+                    bottom_sheet.set_open (false);
+            }
+        );
+
         notify["current-path"].connect (
             () => {
                 search_entry.set_placeholder_text (_("Search in %s").printf (current_path));
@@ -101,6 +110,7 @@ private class DConfWindow : Adw.ApplicationWindow
         model = new SettingsModel ();
         modifications_handler = new ModificationsHandler (model);
 
+
         main_view = new DConfView (modifications_handler);
         bind_property ("current-path", main_view, "path", BindingFlags.SYNC_CREATE);
         content_box.append (main_view);
@@ -112,19 +122,7 @@ private class DConfWindow : Adw.ApplicationWindow
         use_shortpaths_changed_handler = settings.changed ["use-shortpaths"].connect_after (reload_view);
         settings.bind ("use-shortpaths", model, "use-shortpaths", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
 
-        delayed_changes_changed_handler = modifications_handler.delayed_changes_changed.connect (() => {
-                // uint total_changes_count = modifications_handler.dconf_changes_count + modifications_handler.gsettings_changes_count;
-                // if (total_changes_count == 0)
-                    // headerbar.set_has_pending_changes (/* has pending changes */ false,
-                    //                                    /* mode is not delayed */ !modifications_handler.get_current_delay_mode ());
-                // else
-                // {
-                //     if (modifications_handler.mode == ModificationsMode.TEMPORARY && total_changes_count != 1)
-                //         assert_not_reached ();
-                    // headerbar.set_has_pending_changes (/* has pending changes */ true,
-                    //                                    /* mode is not delayed */ !modifications_handler.get_current_delay_mode ());
-                // }
-            });
+        delayed_changes_changed_handler = modifications_handler.delayed_changes_changed.connect (on_modifications_handler_delayed_changes_changed);
 
         behaviour_changed_handler = settings.changed ["behaviour"].connect_after (invalidate_popovers_with_ui_reload);
         settings.bind ("behaviour", modifications_handler, "behaviour", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
@@ -431,14 +429,14 @@ private class DConfWindow : Adw.ApplicationWindow
         { "reset-current-recursively",      reset_current_recursively },
         { "reset-current-non-recursively",  reset_current_non_recursively },
 
+        { "show-modifications",         show_modifications },
+        { "hide-modifications",         hide_modifications },
         { "enter-delay-mode",           enter_delay_mode },
         { "apply-delayed-settings",     apply_delayed_settings },
         { "dismiss-delayed-settings",   dismiss_delayed_settings },
 
         { "dismiss-change", dismiss_change, "s" },  // here because needs to be accessed from DelayedSettingView rows
         { "erase", erase_dconf_key, "s" },          // here because needs a reload_view as we enter delay_mode
-
-        { "show-in-window-modifications",   show_modifications_view },
 
         { "notify-folder-emptied", notify_folder_emptied, "s" },
         { "notify-object-deleted", notify_object_deleted, "(sq)" }
@@ -569,7 +567,6 @@ private class DConfWindow : Adw.ApplicationWindow
         request_object (full_name, context_id);
     }
 
-
     private void on_reload_view_activate ()
     {
         reload_view ();
@@ -579,6 +576,28 @@ private class DConfWindow : Adw.ApplicationWindow
     {
         Gdk.Clipboard clipboard = get_clipboard ();
         clipboard.set_value (current_path);
+    }
+
+    private void on_modifications_handler_delayed_changes_changed ()
+    {
+        uint total_changes_count = modifications_handler.dconf_changes_count + modifications_handler.gsettings_changes_count;
+
+        action_set_enabled ("ui.apply-delayed-settings", total_changes_count > 0);
+
+        if (modifications_handler.mode == ModificationsMode.TEMPORARY && total_changes_count == 0)
+            show_modifications_bar = false;
+        else
+            show_modifications_bar = modifications_handler.mode != ModificationsMode.NONE;
+    }
+
+    private void show_modifications (/* SimpleAction action, Variant? variant */)
+    {
+        bottom_sheet.set_open (true);
+    }
+
+    private void hide_modifications (/* SimpleAction action, Variant? variant */)
+    {
+        bottom_sheet.set_open (false);
     }
 
     private void enter_delay_mode (/* SimpleAction action, Variant? path_variant */)
@@ -606,6 +625,9 @@ private class DConfWindow : Adw.ApplicationWindow
     private void dismiss_change (SimpleAction action, Variant? path_variant)
         requires (path_variant != null)
     {
+        // FIXME: This doesn't actually dismiss the change in main_view, but it used to :(
+        // FIXME: It's almost definitely because of the ModificationsHandler we passed to main_view
+        stdout.printf ("DISMISS CHANGE %s\n", ((!) path_variant).get_string ());
         modifications_handler.dismiss_change (((!) path_variant).get_string ());
         main_view.invalidate_popovers ();
         reload_view ();
@@ -639,12 +661,6 @@ private class DConfWindow : Adw.ApplicationWindow
             // if (current_type == ViewType.CONFIG)
             //     request_folder (current_path);
         }
-    }
-
-    private void show_modifications_view (/* SimpleAction action, Variant? path_variant */)
-    {
-        // headerbar.show_modifications_view ();
-        main_view.show_modifications_view ();
     }
 
     /*\
@@ -731,8 +747,8 @@ private class DConfWindow : Adw.ApplicationWindow
         // use in-window
         else if (main_view.in_window_modifications)
             show_default_view ();
-        else
-            show_modifications_view ();
+        // else FIXME This might all be dead code now?
+            // show_modifications_view ();
     }
 
     private void toggle_boolean                         (/* SimpleAction action, Variant? variant */)

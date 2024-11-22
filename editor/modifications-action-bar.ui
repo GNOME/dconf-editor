@@ -8,10 +8,37 @@
         <property name="hexpand">true</property>
         <child type="start">
           <!-- TODO: "Hide Modifications" and go-down if some property is set -->
-          <object class="GtkButton" id="open_list_button">
-            <property name="tooltip_text" translatable="yes">Show Modifications</property>
-            <property name="icon-name">go-up</property>
-            <property name="action-name">ui.show-modifications</property>
+          <object class="GtkStack">
+            <property
+              name="visible-child-name"
+              bind-source="ModificationsActionBar"
+              bind-property="action-bar-mode"
+              bind-flags="sync-create"
+            />
+            <child>
+              <object class="GtkStackPage">
+                <property name="name">closed</property>
+                <property name="child">
+                  <object class="GtkButton">
+                    <property name="tooltip_text" translatable="yes">Show Changes</property>
+                    <property name="icon-name">go-up</property>
+                    <property name="action-name">ui.show-modifications</property>
+                  </object>
+                </property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkStackPage">
+                <property name="name">opened</property>
+                <property name="child">
+                  <object class="GtkButton">
+                    <property name="tooltip_text" translatable="yes">Hide Changes</property>
+                    <property name="icon-name">go-down</property>
+                    <property name="action-name">ui.hide-modifications</property>
+                  </object>
+                </property>
+              </object>
+            </child>
           </object>
         </child>
         <child>
