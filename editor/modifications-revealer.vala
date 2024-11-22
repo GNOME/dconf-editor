@@ -62,12 +62,13 @@ private class ModificationsRevealer : Box
     //     }
     // }
 
-    [GtkChild] private unowned Revealer revealer;
-    [GtkChild] private unowned Label label;
-    [GtkChild] private unowned Button apply_button;
-    [GtkChild] private unowned MenuButton delayed_list_button;
-    [GtkChild] private unowned Popover delayed_settings_list_popover;
+    // [GtkChild] private unowned Adw.BottomSheet bottom_sheet;
+    // [GtkChild] private unowned Label label;
+    // [GtkChild] private unowned Button apply_button;
+    // [GtkChild] private unowned Popover delayed_settings_list_popover;
     [GtkChild] private unowned ModificationsList modifications_list;
+
+    internal string label { get; set; default = ""; }
 
     public bool reveal_child { get; set; default = false; }
 
@@ -76,8 +77,8 @@ private class ModificationsRevealer : Box
     construct
     {
         // apply_button.icon = null;
-        apply_button.add_css_class ("text-button");
-        bind_property ("reveal-child", revealer, "reveal-child", BindingFlags.SYNC_CREATE);
+        // apply_button.add_css_class ("text-button");
+        // bind_property ("reveal-child", bottom_sheet, "open", BindingFlags.SYNC_CREATE);
     }
 
     /*\
@@ -143,7 +144,7 @@ private class ModificationsRevealer : Box
     {
         if (modifications_handler.dconf_changes_count == 0 && modifications_handler.gsettings_changes_count == 0)
             /* Translators: displayed in the bottom bar in normal sized windows, when the user tries to reset keys from/for a folder that has nothing to reset */
-            label.set_text (_("Nothing to reset."));
+            label = _("Nothing to reset.");
             // FIXME appears twice
     }
 
@@ -163,8 +164,8 @@ private class ModificationsRevealer : Box
 
     internal bool handle_copy_text (out string copy_text)
     {
-        if (delayed_list_button.active)
-            return modifications_list.handle_copy_text (out copy_text);
+        // if (delayed_list_button.active)
+        //     return modifications_list.handle_copy_text (out copy_text);
         return BaseWindow.no_copy_text (out copy_text);
     }
 
@@ -174,8 +175,8 @@ private class ModificationsRevealer : Box
 
     internal bool dismiss_selected_modification ()
     {
-        if (!delayed_list_button.active)
-            return false;
+        // if (!delayed_list_button.active)
+        //     return false;
 
         string? selected_row_name = modifications_list.get_selected_row_name ();
         if (selected_row_name == null)
@@ -188,17 +189,18 @@ private class ModificationsRevealer : Box
 
     internal void hide_modifications_list ()
     {
-        delayed_settings_list_popover.popdown ();
+        // delayed_settings_list_popover.popdown ();
     }
 
     internal void toggle_modifications_list ()
     {
-        delayed_list_button.active = !delayed_settings_list_popover.visible;
+        // delayed_list_button.active = !delayed_settings_list_popover.visible;
     }
 
     internal bool get_modifications_list_state ()
     {
-        return delayed_list_button.active;
+        return false;
+        // return delayed_list_button.active;
     }
 
     /*\
@@ -289,14 +291,14 @@ private class ModificationsRevealer : Box
         GLib.ListStore modifications_liststore = modifications_handler.get_delayed_settings ();
         modifications_list.bind_model (modifications_liststore, delayed_setting_row_create);
 
-        if (modifications_liststore.get_n_items () == 0)
-            delayed_settings_list_popover.popdown ();
+        // if (modifications_liststore.get_n_items () == 0)
+        //     delayed_settings_list_popover.popdown ();
 
         if (modifications_handler.mode == ModificationsMode.NONE)
         {
             reveal_child = false;
-            apply_button.sensitive = false;
-            label.set_text ("");
+            // apply_button.sensitive = false;
+            label = "";
             return;
         }
         uint total_changes_count = modifications_handler.dconf_changes_count + modifications_handler.gsettings_changes_count;
@@ -304,23 +306,23 @@ private class ModificationsRevealer : Box
         {
             if (total_changes_count == 0)
             {
-                apply_button.sensitive = false;
+                // apply_button.sensitive = false;
                 /* Translators: displayed in the bottom bar in normal sized windows, when the user edits a key and enters in the entry or text view a value that cannot be parsed to the correct data type */
-                label.set_text (_("The value is invalid."));
+                label = _("The value is invalid.");
             }
             else if (total_changes_count != 1)
                 assert_not_reached ();
             else if (modifications_handler.behaviour == Behaviour.ALWAYS_CONFIRM_EXPLICIT)
             {
-                apply_button.sensitive = true;
+                // apply_button.sensitive = true;
                 /* Translators: displayed in the bottom bar in normal sized windows, when the user edits a key (with the "always confirm explicit" behaviour) */
-                label.set_text (_("The change will be dismissed if you quit this view without applying."));
+                label = _("The change will be dismissed if you quit this view without applying.");
             }
             else if (modifications_handler.behaviour == Behaviour.ALWAYS_CONFIRM_IMPLICIT || modifications_handler.behaviour == Behaviour.SAFE)
             {
-                apply_button.sensitive = true;
+                // apply_button.sensitive = true;
                 /* Translators: displayed in the bottom bar in normal sized windows, when the user edits a key (with default "always confirm implicit" behaviour notably) */
-                label.set_text (_("The change will be applied on such request or if you quit this view."));
+                label = _("The change will be applied on such request or if you quit this view.");
             }
             else
                 assert_not_reached ();
@@ -330,10 +332,10 @@ private class ModificationsRevealer : Box
         {
             if (total_changes_count == 0)
                 /* Translators: displayed in the bottom bar in normal sized windows, when the user tries to reset keys from/for a folder that has nothing to reset */
-                label.set_text (_("Nothing to reset."));
+                label = _("Nothing to reset.");
                 // FIXME appears twice
-            apply_button.sensitive = total_changes_count > 0;
-            label.set_text (get_text (modifications_handler.dconf_changes_count, modifications_handler.gsettings_changes_count));
+            // apply_button.sensitive = total_changes_count > 0;
+            label = get_text (modifications_handler.dconf_changes_count, modifications_handler.gsettings_changes_count);
             reveal_child = true;
         }
     }

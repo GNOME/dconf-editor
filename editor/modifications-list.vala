@@ -109,9 +109,10 @@ private class ModificationsList : OverlayedList
 
     internal void bind_model (GLib.ListStore modifications, ListBoxCreateWidgetFunc delayed_setting_row_create)
     {
-        // main_list_box.bind_model (modifications, delayed_setting_row_create);
+        main_list_box.bind_model (modifications, delayed_setting_row_create);
         select_first_row (main_list_box);
     }
+
     private static inline void select_first_row (ListBox main_list_box)
     {
         ListBoxRow? first_row = main_list_box.get_row_at_index (0);

@@ -4,68 +4,23 @@
   <requires lib="gtk" version="4.14"/>
   <template class="ModificationsRevealer" parent="GtkBox">
     <child>
-      <object class="GtkRevealer" id="revealer">
-        <property name="hexpand">1</property>
-        <property name="reveal-child">1</property>
-        <property name="child">
-          <object class="GtkActionBar">
-            <style>
-              <class name="modifications-revealer"/>
-            </style>
-            <child>
-              <object class="GtkMenuButton" id="delayed_list_button">
-                <!-- <property name="use-popover">True</property> -->
-                <property name="popover">delayed_settings_list_popover</property>
-                <property name="focus-on-click">0</property>
-                <style>
-                  <class name="circular"/>
-                  <class name="image-button"/>
-                </style>
-                <child>
-                  <object class="GtkImage">
-                    <property name="icon-name">view-more-symbolic</property>
-                  </object>
-                </child>
-              </object>
-            </child>
-            <child>
-              <object class="GtkLabel" id="label">
-                <property name="margin-start">6</property>
-                <property name="margin-end">6</property>
-                <property name="ellipsize">end</property>
-              </object>
-            </child>
-            <child type="end">
-              <object class="GtkButton">
-                <property name="label" translatable="1">Cancel</property>
-                <property name="action-name">ui.dismiss-delayed-settings</property>
-              </object>
-            </child>
-            <child type="end">
-              <object class="GtkButton" id="apply_button">
-                <property name="label" translatable="1">Apply</property>
-                <property name="action-name">ui.apply-delayed-settings</property>
-                <style>
-                  <class name="suggested-action"/>
-                </style>
-              </object>
-            </child>
+      <object class="AdwToolbarView">
+        <property name="content">
+          <object class="ModificationsList" id="modifications_list">
+            <property name="needs-shadows">True</property>
           </object>
         </property>
+        <child type="bottom">
+          <object class="ModificationsActionBar">
+            <property
+              name="label"
+              bind-source="ModificationsRevealer"
+              bind-property="label"
+              bind-flags="sync-create"
+            />
+          </object>
+        </child>
       </object>
     </child>
   </template>
-  <object class="GtkPopover" id="delayed_settings_list_popover">
-    <property name="height-request">300</property>
-    <property name="width-request">550</property>
-    <style>
-      <class name="delayed-settings-popover"/>
-    </style>
-    <child>
-      <object class="ModificationsList" id="modifications_list">
-        <property name="visible">True</property>
-        <property name="needs-shadows">True</property>
-      </object>
-    </child>
-  </object>
 </interface>

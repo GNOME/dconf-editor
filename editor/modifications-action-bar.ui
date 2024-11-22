@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface domain="dconf-editor">
+  <requires lib="gtk" version="4.0"/>
+  <requires lib="gtk" version="4.14"/>
+  <template class="ModificationsActionBar" parent="GtkBox">
+    <child>
+      <object class="GtkActionBar">
+        <property name="hexpand">true</property>
+        <child type="start">
+          <!-- TODO: "Hide Modifications" and go-down if some property is set -->
+          <object class="GtkButton" id="open_list_button">
+            <property name="tooltip_text" translatable="yes">Show Modifications</property>
+            <property name="icon-name">go-up</property>
+            <property name="action-name">ui.show-modifications</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkLabel">
+            <property name="margin-start">6</property>
+            <property name="margin-end">6</property>
+            <property name="ellipsize">end</property>
+            <property
+              name="label"
+              bind-source="ModificationsActionBar"
+              bind-property="label"
+              bind-flags="sync-create"
+            />
+          </object>
+        </child>
+        <child type="end">
+          <object class="GtkButton">
+            <property name="label" translatable="1">Cancel</property>
+            <property name="action-name">ui.dismiss-delayed-settings</property>
+          </object>
+        </child>
+        <child type="end">
+          <object class="GtkButton">
+            <property name="label" translatable="1">Apply</property>
+            <property name="action-name">ui.apply-delayed-settings</property>
+            <style>
+              <class name="suggested-action"/>
+            </style>
+          </object>
+        </child>
+      </object>
+    </child>
+  </template>
+</interface>

@@ -564,7 +564,6 @@ private class DConfWindow : Adw.ApplicationWindow
         string full_name;
         uint16 context_id;
         ((!) path_variant).@get ("(sq)", out full_name, out context_id);
-        stdout.printf ("AAAAAAH %s %d\n", full_name, context_id);
 
         show_search = false;
         request_object (full_name, context_id);
