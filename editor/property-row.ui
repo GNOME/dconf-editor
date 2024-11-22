@@ -3,16 +3,25 @@
   <requires lib="gtk" version="4.0"/>
   <template class="PropertyRow" parent="ListBoxRowWrapper">
     <property name="visible">True</property>
-    <property name="halign">center</property>
+    <property name="halign">fill</property>
+    <property name="margin-top">6</property>
+    <property name="margin-bottom">6</property>
     <child>
-      <object class="GtkLabel" id="name_label">
-        <style>
-          <class name="property-name-label"/>
-        </style>
+      <object class="GtkBox">
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkLabel" id="name_label">
+            <property name="halign">start</property>
+            <style>
+              <class name="property-name-label"/>
+              <class name="heading"/>
+            </style>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox" id="value_box"/>
+        </child>
       </object>
-    </child>
-    <child>
-      <object class="GtkBox" id="value_box"/>
     </child>
   </template>
 </interface>

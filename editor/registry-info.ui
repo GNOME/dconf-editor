@@ -161,11 +161,20 @@
       <object class="GtkScrolledWindow">
         <property name="vexpand">1</property>
         <child>
-          <object class="GtkListBox" id="properties_list_box">
-            <property name="selection-mode">none</property>
-            <style>
-              <class name="properties-list"/>
-            </style>
+          <object class="AdwClamp">
+            <property name="child">
+              <object class="GtkListBox" id="properties_list_box">
+                <property name="selection-mode">none</property>
+                <property name="margin-top">24</property>
+                <property name="margin-bottom">24</property>
+                <property name="margin-start">12</property>
+                <property name="margin-end">12</property>
+                <style>
+                  <class name="properties-list"/>
+                  <class name="background"/>
+                </style>
+              </object>
+            </property>
           </object>
         </child>
       </object>

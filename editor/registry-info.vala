@@ -48,6 +48,9 @@ private class RegistryInfo : Box, BrowsableView
         erase_button.set_action_target ("s", "");
         disconnect_handler (modifications_handler, ref revealer_reload_1_handler);
         disconnect_handler (modifications_handler, ref revealer_reload_2_handler);
+        for (Gtk.Widget? child = properties_list_box.get_first_child (); child != null; child = properties_list_box.get_first_child ()) {
+            properties_list_box.remove ((!) child);
+        }
         // properties_list_box.@foreach ((widget) => widget.destroy ());
     }
 
@@ -291,8 +294,6 @@ private class RegistryInfo : Box, BrowsableView
         }
         current_value_label.halign = Align.START;
         current_value_label.valign = Align.START;
-        current_value_label.xalign = 0;
-        current_value_label.yalign = 0;
         current_value_label.wrap = true;
         current_value_label.wrap_mode = Pango.WrapMode.WORD_CHAR;
         current_value_label.hexpand = true;

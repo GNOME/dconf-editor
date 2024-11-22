@@ -63,11 +63,13 @@ private class ListBoxRowHeader : Box
             label.halign = Align.START;
             label.set_ellipsize (Pango.EllipsizeMode.END);
             add_css_class ("dim-label");
-            add_css_class ("header-label");
+            add_css_class ("heading");
             append (label);
         }
 
         halign = Align.START;
+        margin_top = 6;
+        margin_bottom = 6;
 
         if (is_first_row)
             return;
