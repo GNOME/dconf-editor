@@ -88,6 +88,12 @@ private class DConfWindow : Adw.ApplicationWindow
             }
         );
 
+        notify["current-path"].connect (
+            () => {
+                search_entry.set_placeholder_text (_("Search in %s").printf (current_path));
+            }
+        );
+
         bind_property ("current-path", pathbar, "path", BindingFlags.SYNC_CREATE);
 
         search_entry.set_key_capture_widget (toolbar_view);
