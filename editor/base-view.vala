@@ -25,10 +25,7 @@ private class BaseView : Box
 
     internal virtual bool handle_copy_text (out string copy_text)
     {
-        if (in_window_about)
-            return about_list.handle_copy_text (out copy_text); // TODO copying logo...
-        else
-            return BaseWindow.no_copy_text (out copy_text);
+        return BaseWindow.no_copy_text (out copy_text);
     }
 
     internal virtual void close_popovers () {}
@@ -72,40 +69,6 @@ private class BaseView : Box
     \*/
 
     protected bool in_window_about { protected get; private set; default = false; }
-
-    private bool about_list_created = false;
-    private AboutList about_list;
-
-    internal void create_about_list (ref string [] artists,
-                                     ref string [] authors,
-                                     ref string    comments,
-                                     ref string    copyright,
-                                     ref string [] documenters,
-                                     ref string    logo_icon_name,
-                                     ref string    program_name,
-                                     ref string    translator_credits,
-                                     ref string    version,
-                                     ref string    website,
-                                     ref string    website_label)
-    {
-        about_list = new AboutList (/* needs shadows   */ false,
-                                    /* big placeholder */ true,
-                                    ref artists, ref authors, ref comments, ref copyright, ref documenters, ref logo_icon_name, ref program_name, ref translator_credits, ref version, ref website, ref website_label);
-        // FIXME: What was this about and do we really need it?
-        // about_list.set_window_size (saved_window_size);
-        about_list.show ();
-        stack.add_child (about_list);
-        about_list_created = true;
-    }
-
-    internal void show_about_view ()
-        requires (about_list_created == true)
-        requires (in_window_about == false)
-    {
-        about_list.reset ();
-        stack.set_visible_child (about_list);
-        in_window_about = true;
-    }
 
     /*\
     * * notifications

@@ -64,7 +64,6 @@ install_data(
 )
 
 sources = files(
-  'about-list.vala',
   'adaptative-window.vala',
   'base-headerbar.vala',
   'base-view.vala',

@@ -105,8 +105,6 @@ private class BaseWindow : AdaptativeWindow, AdaptativeWidget
         { "toggle-hamburger",   toggle_hamburger    },  // F10
         { "menu",               menu_pressed        },  // Menu
 
-        { "show-default-view",  show_default_view   },
-
         { "help",               help                },
         { "about",              about               }
     };
@@ -350,23 +348,6 @@ private class BaseWindow : AdaptativeWindow, AdaptativeWidget
     }
 
     /*\
-    * * adaptative stuff
-    \*/
-
-    private bool disable_popovers = false;
-    // protected virtual void set_window_size (AdaptativeWidget.WindowSize new_size)
-    // {
-    //     bool _disable_popovers = AdaptativeWidget.WindowSize.is_phone_size (new_size)
-    //                           || AdaptativeWidget.WindowSize.is_extra_thin (new_size);
-    //     if (disable_popovers != _disable_popovers)
-    //     {
-    //         disable_popovers = _disable_popovers;
-    //         if (in_window_about)
-    //             show_default_view ();
-    //     }
-    // }
-
-    /*\
     * * in-window panels
     \*/
 
@@ -374,8 +355,6 @@ private class BaseWindow : AdaptativeWindow, AdaptativeWidget
     {
         hide_notification ();
         headerbar.close_popovers ();
-        if (in_window_about)
-            show_default_view ();
     }
 
     private void _escape_pressed (/* SimpleAction action, Variant? path_variant */)
@@ -384,24 +363,7 @@ private class BaseWindow : AdaptativeWindow, AdaptativeWidget
     }
     protected virtual bool escape_pressed ()
     {
-        if (in_window_about)
-        {
-            show_default_view ();
-            return true;
-        }
         return false;
-    }
-
-    protected virtual void show_default_view (/* SimpleAction action, Variant? path_variant */)
-    {
-        if (in_window_about)
-        {
-            in_window_about = false;
-            headerbar.show_default_view ();
-            main_view.show_default_view ();
-        }
-        else
-            assert_not_reached ();
     }
 
     /*\
@@ -464,48 +426,7 @@ private class BaseWindow : AdaptativeWindow, AdaptativeWidget
 
     private void about (/* SimpleAction action, Variant? path_variant */)
     {
-        if (disable_popovers)
-            toggle_in_window_about ();
-        else
-            show_about_dialog ();
-    }
-
-    [CCode (notify = false)] protected bool in_window_about { protected get; private set; default = false; }
-
-    private void toggle_in_window_about ()
-    {
-        if (should_init_in_window_about)
-        {
-            init_in_window_about ();
-            should_init_in_window_about = false;
-            show_about_view ();
-        }
-        else if (in_window_about)
-            show_default_view ();
-        else
-            show_about_view ();
-    }
-
-    private bool should_init_in_window_about = true;
-    private void init_in_window_about ()
-    {
-        string [] artists, authors, documenters;
-        string comments, copyright, logo_icon_name, program_name, translator_credits, version, website, website_label;
-
-        ((BaseApplication) get_application ()).get_about_dialog_infos (out artists, out authors, out comments, out copyright, out documenters, out logo_icon_name, out program_name, out translator_credits, out version, out website, out website_label);
-
-        main_view.create_about_list                                   (ref artists, ref authors, ref comments, ref copyright, ref documenters, ref logo_icon_name, ref program_name, ref translator_credits, ref version, ref website, ref website_label);
-    }
-
-    private inline void show_about_view ()
-        requires (in_window_about == false)
-    {
-        close_in_window_panels ();
-
-        in_window_about = true;
-        headerbar.show_about_view ();
-        main_view.show_about_view ();
-        set_focus_visible (false);  // about-list grabs focus
+        show_about_dialog ();
     }
 
     /*\

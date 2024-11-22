@@ -90,7 +90,7 @@ private abstract class BookmarksWindow : BrowserWindow
         return base.escape_pressed ();
     }
 
-    protected override void show_default_view ()
+    protected void show_default_view ()
     {
         if (main_view.in_window_bookmarks)
         {
@@ -102,8 +102,8 @@ private abstract class BookmarksWindow : BrowserWindow
             if (current_type == ViewType.CONFIG)
                 request_folder (current_path);
         }
-        else
-            base.show_default_view ();
+        // else
+        //     base.show_default_view ();
     }
 
     private void show_use_bookmarks_view (/* SimpleAction action, Variant? path_variant */)

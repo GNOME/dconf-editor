@@ -74,8 +74,9 @@ private class BookmarksView : BrowserView
 
     internal void show_bookmarks_view (string [] bookmarks)
     {
-        if (is_in_in_window_mode ())
-            show_default_view ();
+        // FIXME NOOOOOOO NOT ANOTHER ONE
+        // if (is_in_in_window_mode ())
+        //     show_default_view ();
 
         bookmarks_list.reset ();
 

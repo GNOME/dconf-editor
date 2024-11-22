@@ -459,7 +459,7 @@ private abstract class BrowserWindow : BaseWindow
     {
         if (headerbar.in_window_properties)
         {
-            show_default_view ();
+            // show_default_view ();
             return true;
         }
         if (base.escape_pressed ())
@@ -475,21 +475,6 @@ private abstract class BrowserWindow : BaseWindow
             return true;
         }
         return false;
-    }
-
-    protected override void show_default_view ()
-    {
-        if (headerbar.in_window_properties)
-            request_folder (current_path);
-        else if (in_window_about)
-        {
-            base.show_default_view ();
-
-            if (current_type == ViewType.CONFIG)
-                request_folder (current_path);
-        }
-        else
-            base.show_default_view ();
     }
 
     /*\
