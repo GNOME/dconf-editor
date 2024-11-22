@@ -536,37 +536,7 @@ private abstract class RegistryList : Box, BrowsableView
 
         wrapper.set_halign (Align.FILL);
         wrapper.set_child (row);
-        if (row is FilterListBoxRow)
-        {
-            wrapper.add_css_class ("f-or-s-row");
-            if (((FilterListBoxRow) row).is_local_search)
-                wrapper.action_name = "browser.open-search-local";
-            else if (row.full_name == "/")
-                wrapper.action_name = "browser.open-search-root";
-            else
-                wrapper.action_name = "browser.open-search-global";
-        }
-        else if (row is ReturnListBoxRow)
-        {
-            wrapper.add_css_class ("f-or-s-row");
-            if (ModelUtils.is_folder_context_id (row.context_id))
-            {
-                wrapper.action_name = "browser.open-folder";
-                wrapper.set_action_target ("s", row.full_name);
-            }
-            else
-            {
-                wrapper.action_name = "browser.open-object";
-                wrapper.set_action_target ("(sq)", row.full_name, row.context_id);
-            }
-        }
-        else if (row is SearchListBoxRow)
-        {
-            wrapper.add_css_class ("f-or-s-row");
-            wrapper.action_name = "browser.open-search";
-            wrapper.set_action_target ("s", row.full_name);
-        }
-        else if (ModelUtils.is_folder_context_id (row.context_id))
+        if (ModelUtils.is_folder_context_id (row.context_id))
         {
             wrapper.add_css_class ("f-or-s-row");
             if (row is FolderListBoxRow)
@@ -846,10 +816,6 @@ private abstract class RegistryList : Box, BrowsableView
             else
                 return generate_dconf_popover ((KeyListBoxRow) row, modifications_handler, _get_key_copy_text_variant (row, modifications_handler));
         }
-        else if (row is ReturnListBoxRow)
-            return generate_return_popover (row);
-        else if (row is SearchListBoxRow || row is FilterListBoxRow)
-            return generate_search_popover (row);
         else assert_not_reached ();
     }
 
@@ -1126,29 +1092,25 @@ private abstract class RegistryList : Box, BrowsableView
     * * headers
     \*/
 
-    protected static bool is_first_row (int row_index, ListBoxRow? before)
+    protected static void update_row_header_with_context (ListBoxRow row, ListBoxRow? before, SettingsModel model, bool local_search_header)
     {
-        bool is_first_row = row_index == 0;
-        if (is_first_row != (before == null))
-            assert_not_reached ();
-        return is_first_row;
-    }
+        // FIXME This is absolutely deranged.
 
-    protected static void update_row_header_with_context (ListBoxRow row, ListBoxRow before, SettingsModel model, bool local_search_header)
-    {
         string? label_text = null;
         ClickableListBoxRow? row_content = (ClickableListBoxRow) row.get_child ();
         if (row_content == null)
             assert_not_reached ();
 
+        ClickableListBoxRow? before_content = null;
+
+        if (before != null)
+            before_content = (ClickableListBoxRow?) ((!) before).get_child ();
+
         if ((!) row_content is KeyListBoxRow)
         {
             KeyListBoxRow key_list_box_row = (KeyListBoxRow) (!) row_content;
             uint16 context_id = key_list_box_row.context_id;
-            ClickableListBoxRow? before_content = (ClickableListBoxRow?) before.get_child ();
-            if (before_content == null)
-                assert_not_reached ();
-            if ((!) before_content is ReturnListBoxRow || ((!) before_content).context_id != context_id)
+            if (before_content == null || ((!) before_content).context_id != context_id)
             {
                 if (key_list_box_row.has_schema)
                 {
@@ -1176,19 +1138,11 @@ private abstract class RegistryList : Box, BrowsableView
         }
         else if ((!) row_content is FolderListBoxRow)
         {
-            ClickableListBoxRow? before_content = (ClickableListBoxRow?) before.get_child ();
-            if (before_content == null)
-                assert_not_reached ();
-            if ((!) before_content is FilterListBoxRow || (!) before_content is ReturnListBoxRow)
+            if (before_content == null || !((!) before_content is FolderListBoxRow))
                 /* Translators: header displayed in the keys list during a search or during browsing */
                 label_text = _("Subfolders");
         }
-        else if ((!) row_content is FilterListBoxRow)
-        {
-            /* Translators: last header displayed in the keys list during a local search */
-            label_text = _("Other actions");
-        }
-        else if (!((!) row_content is SearchListBoxRow))
+        else
             assert_not_reached ();
 
         row.set_header (new ListBoxRowHeader (false, label_text));

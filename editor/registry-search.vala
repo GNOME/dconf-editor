@@ -471,24 +471,22 @@ private class RegistrySearch : RegistryList
     private void update_row_header (ListBoxRow row, ListBoxRow? before)
     {
         int row_index = row.get_index ();
-        if (is_first_row (row_index, before))
-            return;
 
         if (search_is_path_search)
         {
-            update_row_header_with_context (row, (!) before, modifications_handler.model, /* local search header */ false);
+            update_row_header_with_context (row, before, modifications_handler.model, /* local search header */ false);
             return;
         }
 
-        if (row_index >= 1 && post_local > 1 && row_index < post_local)
+        if (post_local > 1 && row_index < post_local)
         {
-            update_row_header_with_context (row, (!) before, modifications_handler.model, /* local search header */ true);
+            update_row_header_with_context (row, before, modifications_handler.model, /* local search header */ true);
             return;
         }
 
         if (row_index >= post_folders)
         {
-            update_row_header_with_context (row, (!) before, modifications_handler.model, /* local search header */ false);
+            update_row_header_with_context (row, before, modifications_handler.model, /* local search header */ false);
             return;
         }
 

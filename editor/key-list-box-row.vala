@@ -112,19 +112,6 @@ private abstract class ClickableListBoxRow : Box
     }
 }
 
-[GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/return-list-box-row.ui")]
-private class ReturnListBoxRow : ClickableListBoxRow
-{
-    [GtkChild] private unowned Label folder_name_label;
-
-    internal ReturnListBoxRow (string _full_name, uint16 _context_id)
-    {
-        Object (full_name: _full_name, context_id: _context_id, search_result_mode: true);
-        /* Translators: first item of the keys list displayed during a search, the %s is a folder path usually */
-        folder_name_label.set_text (_("Go to “%s”").printf (_full_name));
-    }
-}
-
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/folder-list-box-row.ui")]
 private class FolderListBoxRow : ClickableListBoxRow
 {
@@ -136,43 +123,6 @@ private class FolderListBoxRow : ClickableListBoxRow
     {
         Object (full_name: path, context_id: ModelUtils.folder_context_id, path_search: path_search, search_result_mode: search_result_mode);
         folder_name_label.set_text (search_result_mode ? path : label);
-    }
-}
-
-[GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/filter-list-box-row.ui")]
-private class FilterListBoxRow : ClickableListBoxRow
-{
-    public bool is_local_search { internal get; protected construct; }
-
-    [GtkChild] private unowned Label folder_name_label;
-
-    internal FilterListBoxRow (string name, string path)
-    {
-        Object (is_local_search: name != "" && path != "/", full_name: path, context_id: ModelUtils.folder_context_id, search_result_mode: true);
-
-        if (is_local_search)
-            /* Translators: first item of the keys list displayed during browsing, the %s is the current folder name */
-            folder_name_label.set_text (_("Search in “%s” folder").printf (name));
-
-        else if (path == "/")
-            /* Translators: first item of the keys list displayed during browsing at root path */
-            folder_name_label.set_text (_("Open path entry"));
-
-        else
-            /* Translators: last item of the keys list displayed during a local search */
-            folder_name_label.set_text (_("Search everywhere"));
-    }
-}
-
-[GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/search-list-box-row.ui")]
-private class SearchListBoxRow : ClickableListBoxRow
-{
-    [GtkChild] private unowned Label search_label;
-
-    internal SearchListBoxRow (string search)
-    {
-        Object (full_name: search, context_id: ModelUtils.undefined_context_id);
-        search_label.set_text (search);
     }
 }
 

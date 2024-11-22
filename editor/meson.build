@@ -126,7 +126,6 @@ ui_data = files(
   'browser-stack.ui',
   'dconf-window.ui',
   'delayed-setting-view.ui',
-  'filter-list-box-row.ui',
   'folder-list-box-row.ui',
   'help-overlay.ui',
   'key-list-box-row.ui',
@@ -139,9 +138,7 @@ ui_data = files(
   'property-row.ui',
   'registry-info.ui',
   'registry-list.ui',
-  'registry-placeholder.ui',
-  'return-list-box-row.ui',
-  'search-list-box-row.ui'
+  'registry-placeholder.ui'
 )
 
 resource_data = css_data + ui_data + appdata_dep
