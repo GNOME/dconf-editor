@@ -52,6 +52,12 @@
               bind-property="label"
               bind-flags="sync-create"
             />
+            <property
+              name="tooltip-text"
+              bind-source="ModificationsActionBar"
+              bind-property="label"
+              bind-flags="sync-create"
+            />
           </object>
         </child>
         <child type="end">

@@ -7,7 +7,6 @@
     <property name="default-height">500</property>
     <child>
       <object class="AdwBottomSheet" id="bottom_sheet">
-        <property name="show-drag-handle">false</property>
         <property
           name="reveal-bottom-bar"
           bind-source="DConfWindow"
@@ -18,7 +17,7 @@
           name="open"
           bind-source="DConfWindow"
           bind-property="show-modifications-sheet"
-          bind-flags="sync-create"
+          bind-flags="bidirectional"
         />
         <child type="bottom-bar">
           <object class="ModificationsActionBar">

@@ -629,7 +629,6 @@ private class DConfWindow : Adw.ApplicationWindow
     {
         // FIXME: This doesn't actually dismiss the change in main_view, but it used to :(
         // FIXME: It's almost definitely because of the ModificationsHandler we passed to main_view
-        stdout.printf ("DISMISS CHANGE %s\n", ((!) path_variant).get_string ());
         modifications_handler.dismiss_change (((!) path_variant).get_string ());
         main_view.invalidate_popovers ();
         reload_view ();
