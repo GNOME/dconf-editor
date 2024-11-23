@@ -111,7 +111,6 @@ private class DConfWindow : Adw.ApplicationWindow
         model = new SettingsModel ();
         modifications_handler = new ModificationsHandler (model);
 
-
         main_view = new DConfView (modifications_handler);
         bind_property ("current-path", main_view, "path", BindingFlags.SYNC_CREATE);
         content_box.append (main_view);
@@ -124,6 +123,8 @@ private class DConfWindow : Adw.ApplicationWindow
         settings.bind ("use-shortpaths", model, "use-shortpaths", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
 
         delayed_changes_changed_handler = modifications_handler.delayed_changes_changed.connect (on_modifications_handler_delayed_changes_changed);
+        // TODO: Do we need to keep track of the handler ID?
+        modifications_handler.delayed_changes_applied.connect (on_modifications_handler_delayed_changes_applied);
 
         behaviour_changed_handler = settings.changed ["behaviour"].connect_after (invalidate_popovers_with_ui_reload);
         settings.bind ("behaviour", modifications_handler, "behaviour", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
@@ -639,6 +640,13 @@ private class DConfWindow : Adw.ApplicationWindow
             show_modifications_bar = false;
         else
             show_modifications_bar = modifications_handler.mode != ModificationsMode.NONE;
+    }
+
+    private void on_modifications_handler_delayed_changes_applied (uint count)
+    {
+        show_notification (
+            ngettext ("One change was applied.", "%u changes were applied.", count).printf (count)
+        );
     }
 
     private void show_modifications (/* SimpleAction action, Variant? variant */)

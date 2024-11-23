@@ -43,6 +43,7 @@ private class ModificationsHandler : Object
 
     internal signal void leave_delay_mode ();
     internal signal void delayed_changes_changed ();
+    internal signal void delayed_changes_applied (uint count);
 
     [CCode (notify = false)] internal Behaviour behaviour { internal get; internal set; }
 
@@ -123,17 +124,18 @@ private class ModificationsHandler : Object
         if (mode != ModificationsMode.TEMPORARY)
             return;
         if (behaviour == Behaviour.ALWAYS_CONFIRM_IMPLICIT || behaviour == Behaviour.SAFE)
-            // FIXME: SHOW A TOAST WHEN THIS HAPPENS
-            apply_delayed_settings ();
+            apply_delayed_settings (true);
         else if (behaviour == Behaviour.ALWAYS_CONFIRM_EXPLICIT)
             dismiss_delayed_settings ();
         else
             assert_not_reached ();
     }
 
-    internal void apply_delayed_settings ()
+    internal void apply_delayed_settings (bool notify = false)
     {
         mode = ModificationsMode.NONE;
+
+        uint keys_changed = keys_awaiting_hashtable.size ();
 
         model.apply_key_value_changes (keys_awaiting_hashtable);
         gsettings_changes_set.remove_all ();
@@ -142,6 +144,11 @@ private class ModificationsHandler : Object
 
         delayed_changes_changed ();
         leave_delay_mode ();
+
+        // TODO: Can we provide an undo method?
+
+        if (notify && keys_changed > 0)
+            delayed_changes_applied (keys_changed);
     }
 
     internal void dismiss_delayed_settings ()
