@@ -18,12 +18,12 @@
  */
 
 public class PathButton : Gtk.Button {
-    const int DEFAULT_MIN_CHARS = 3;
+    const int DEFAULT_MIN_CHARS = 5;
     // We want to avoid ellipsizing the current directory name, but still need
     // to set a limit.
-    const int CURRENT_DIR_MIN_CHARS = DEFAULT_MIN_CHARS * 4;
+    const int CURRENT_DIR_MIN_CHARS = DEFAULT_MIN_CHARS * 3;
 
-    private int min_chars { get; set; default = DEFAULT_MIN_CHARS; }
+    internal int min_chars { get; set; default = DEFAULT_MIN_CHARS; }
     public bool is_current_dir { get; set; default = false; }
 
     public PathButton () {
