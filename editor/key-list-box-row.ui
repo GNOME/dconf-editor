@@ -10,6 +10,10 @@
     </style>
     <child>
       <object class="GtkGrid" id="key_name_and_value_grid">
+        <property name="margin-top">6</property>
+        <property name="margin-bottom">6</property>
+        <property name="margin-start">6</property>
+        <property name="margin-end">6</property>
         <child>
           <object class="GtkGrid">
             <child>

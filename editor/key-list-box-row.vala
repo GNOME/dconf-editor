@@ -73,11 +73,6 @@ private class ListBoxRowHeader : Box
 
         if (is_first_row)
             return;
-
-        Separator separator = new Separator (Orientation.HORIZONTAL);
-        separator.visible = true;
-        separator.hexpand = true;
-        append (separator);
     }
 }
 

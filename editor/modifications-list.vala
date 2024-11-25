@@ -68,30 +68,8 @@ private class ModificationsList : OverlayedList
 
         if (add_location_header)
         {
-            Box location_header = new Box (Orientation.VERTICAL, 0);
-
-            Label location_header_label = new Label (ModelUtils.get_parent_path (row_key_name));
-            location_header_label.show ();
-            location_header_label.hexpand = true;
-            location_header_label.halign = Align.START;
-
-            location_header_label.add_css_class ("dim-label");
-            location_header_label.add_css_class ("bold-label");
-            location_header_label.add_css_class ("list-row-header");
-
-            location_header.append (location_header_label);
-
-            Separator separator_header = new Separator (Orientation.HORIZONTAL);
-            separator_header.show ();
-            location_header.append (separator_header);
-
-            row.set_header (location_header);
-        }
-        else
-        {
-            Separator separator_header = new Separator (Orientation.HORIZONTAL);
-            separator_header.show ();
-            row.set_header (separator_header);
+            string label_text = ModelUtils.get_parent_path (row_key_name);
+            row.set_header (new ListBoxRowHeader (false, label_text));
         }
     }
 
