@@ -1037,9 +1037,4 @@ private class DConfWindow : Adw.ApplicationWindow
         Adw.Toast toast = new Adw.Toast (notification);
         toast_overlay.add_toast (toast);
     }
-
-    // protected void hide_notification ()
-    // {
-    //     main_view.hide_notification ();
-    // }
 }
