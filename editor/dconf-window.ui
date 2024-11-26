@@ -16,6 +16,12 @@
               bind-flags="sync-create"
             />
             <property
+              name="can-open"
+              bind-source="DConfWindow"
+              bind-property="show-modifications-bar"
+              bind-flags="sync-create"
+            />
+            <property
               name="open"
               bind-source="DConfWindow"
               bind-property="show-modifications-sheet"
