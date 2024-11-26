@@ -632,11 +632,9 @@ private class DConfWindow : Adw.ApplicationWindow
 
     private void on_modifications_handler_delayed_changes_changed ()
     {
-        uint total_changes_count = modifications_handler.dconf_changes_count + modifications_handler.gsettings_changes_count;
+        action_set_enabled ("ui.apply-delayed-settings", modifications_handler.has_pending_changes ());
 
-        action_set_enabled ("ui.apply-delayed-settings", total_changes_count > 0);
-
-        if (modifications_handler.mode == ModificationsMode.TEMPORARY && total_changes_count == 0)
+        if (modifications_handler.mode == ModificationsMode.TEMPORARY && ! modifications_handler.has_pending_changes ())
             show_modifications_bar = false;
         else
             show_modifications_bar = modifications_handler.mode != ModificationsMode.NONE;
