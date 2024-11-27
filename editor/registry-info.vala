@@ -20,15 +20,13 @@ using Gtk;
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/registry-info.ui")]
 private class RegistryInfo : Box, BrowsableView
 {
-    [GtkChild] private unowned Revealer conflicting_key_warning_revealer;
-    [GtkChild] private unowned Revealer hard_conflicting_key_error_revealer;
-    [GtkChild] private unowned Revealer no_schema_warning;
-    [GtkChild] private unowned Revealer one_choice_warning_revealer;
-    [GtkChild] private unowned Label one_choice_enum_warning;
-    [GtkChild] private unowned Label one_choice_integer_warning;
-    [GtkChild] private unowned Label one_choice_tuple_warning;
+    [GtkChild] private unowned Adw.Banner conflicting_key_warning_banner;
+    [GtkChild] private unowned Adw.Banner hard_conflicting_key_error_banner;
+    [GtkChild] private unowned Adw.Banner no_schema_warning_banner;
+    [GtkChild] private unowned Adw.Banner one_choice_enum_warning_banner;
+    [GtkChild] private unowned Adw.Banner one_choice_integer_warning_banner;
+    [GtkChild] private unowned Adw.Banner one_choice_tuple_warning_banner;
     [GtkChild] private unowned ListBox properties_list_box;
-    [GtkChild] private unowned Button erase_button;
 
     private Label current_value_label;
 
@@ -45,7 +43,8 @@ private class RegistryInfo : Box, BrowsableView
 
     internal void clean ()
     {
-        erase_button.set_action_target ("s", "");
+        no_schema_warning_banner.set_action_name ("view.delay-erase");
+        no_schema_warning_banner.set_action_target ("s", "");
         disconnect_handler (modifications_handler, ref revealer_reload_1_handler);
         disconnect_handler (modifications_handler, ref revealer_reload_2_handler);
         for (Gtk.Widget? child = properties_list_box.get_first_child (); child != null; child = properties_list_box.get_first_child ()) {
@@ -134,10 +133,12 @@ private class RegistryInfo : Box, BrowsableView
                 assert_not_reached ();
             add_row_from_label (NAME_FIELD_DESCRIPTION,                             folder_name);
 
-            conflicting_key_warning_revealer.set_reveal_child (false);
-            hard_conflicting_key_error_revealer.set_reveal_child (false);
-            no_schema_warning.set_reveal_child (false);
-            one_choice_warning_revealer.set_reveal_child (false);
+            conflicting_key_warning_banner.set_revealed (false);
+            hard_conflicting_key_error_banner.set_revealed (false);
+            no_schema_warning_banner.set_revealed (false);
+            one_choice_enum_warning_banner.set_revealed (false);
+            one_choice_integer_warning_banner.set_revealed (false);
+            one_choice_tuple_warning_banner.set_revealed (false);
 
             return;
         }
@@ -159,26 +160,26 @@ private class RegistryInfo : Box, BrowsableView
 
             if (key_conflict == KeyConflict.HARD)
             {
-                conflicting_key_warning_revealer.set_reveal_child (false);
-                hard_conflicting_key_error_revealer.set_reveal_child (true);
+                conflicting_key_warning_banner.set_revealed (false);
+                hard_conflicting_key_error_banner.set_revealed (true);
             }
             else if (key_conflict == KeyConflict.SOFT)
             {
-                conflicting_key_warning_revealer.set_reveal_child (true);
-                hard_conflicting_key_error_revealer.set_reveal_child (false);
+                conflicting_key_warning_banner.set_revealed (true);
+                hard_conflicting_key_error_banner.set_revealed (false);
             }
             else
             {
-                conflicting_key_warning_revealer.set_reveal_child (false);
-                hard_conflicting_key_error_revealer.set_reveal_child (false);
+                conflicting_key_warning_banner.set_revealed (false);
+                hard_conflicting_key_error_banner.set_revealed (false);
             }
         }
         else
         {
-            conflicting_key_warning_revealer.set_reveal_child (false);
-            hard_conflicting_key_error_revealer.set_reveal_child (false);
+            conflicting_key_warning_banner.set_revealed (false);
+            hard_conflicting_key_error_banner.set_revealed (false);
         }
-        no_schema_warning.set_reveal_child (!has_schema);
+        no_schema_warning_banner.set_revealed (!has_schema);
 
         // TODO g_variant_dict_lookup_value() return value is not annotated as nullable
         string type_code;
@@ -381,13 +382,9 @@ private class RegistryInfo : Box, BrowsableView
         }
 
         bool is_key_editor_child_single = key_editor_child is KeyEditorChildSingle;
-        if (is_key_editor_child_single)
-        {
-            one_choice_enum_warning.visible = type_code == "<enum>";
-            one_choice_tuple_warning.visible = type_code == "()";
-            one_choice_integer_warning.visible = (type_code != "<enum>") && (type_code != "()");
-        }
-        one_choice_warning_revealer.set_reveal_child (is_key_editor_child_single);
+        one_choice_enum_warning_banner.set_revealed (is_key_editor_child_single && type_code == "<enum>");
+        one_choice_tuple_warning_banner.set_revealed (is_key_editor_child_single && type_code == "()");
+        one_choice_integer_warning_banner.set_revealed (is_key_editor_child_single && type_code != "<enum>" && type_code != "()");
 
         properties.clear ();
 
@@ -416,7 +413,8 @@ private class RegistryInfo : Box, BrowsableView
             custom_value_switch.destroy.connect (() => custom_value_switch.disconnect (switch_active_handler));
         }
         else
-            erase_button.set_action_target ("s", full_name);
+            no_schema_warning_banner.set_action_name ("view.delay-erase");
+            no_schema_warning_banner.set_action_target ("s", full_name);
 
         ulong child_activated_handler = key_editor_child.child_activated.connect (() => modifications_handler.apply_delayed_settings ());  // TODO "only" used for string-based and spin widgets
         revealer_reload_2_handler = modifications_handler.leave_delay_mode.connect ((_modifications_handler) => on_revealer_reload_2 (_modifications_handler, key_editor_child, value_has_changed_handler, full_name, context_id, has_schema));
