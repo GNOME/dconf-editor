@@ -119,7 +119,7 @@ private class ModificationsHandler : Object
         delayed_changes_changed ();
     }
 
-    internal void path_changed ()
+    internal void apply_or_dismiss_delayed_settings ()
     {
         if (mode != ModificationsMode.TEMPORARY)
             return;

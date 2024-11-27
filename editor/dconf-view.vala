@@ -162,7 +162,7 @@ private class DConfView : BookmarksView
     internal override void set_dconf_path (ViewType type, string path)
     {
         dconf_content.set_path (type, path);
-        modifications_handler.path_changed ();
+        modifications_handler.apply_or_dismiss_delayed_settings ();
         invalidate_popovers ();
     }
 
