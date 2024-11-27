@@ -60,6 +60,7 @@ private class DConfWindow : Adw.ApplicationWindow
     internal bool show_location { get; set; default = false; }
     internal bool show_modifications_bar { get; set; default = false; }
     internal bool show_modifications_sheet { get; set; default = false; }
+    private bool reload_requested { get; set; default = false; }
 
     internal string toolbar_mode {
         get {
@@ -133,7 +134,7 @@ private class DConfWindow : Adw.ApplicationWindow
         install_browser_action_entries ();
         install_kbd_action_entries ();
 
-        use_shortpaths_changed_handler = settings.changed ["use-shortpaths"].connect_after (reload_view);
+        use_shortpaths_changed_handler = settings.changed ["use-shortpaths"].connect_after (queue_reload);
         settings.bind ("use-shortpaths", model, "use-shortpaths", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
 
         modifications_handler.notify["mode"].connect (on_modifications_handler_notify_mode);
@@ -244,10 +245,10 @@ private class DConfWindow : Adw.ApplicationWindow
 
     [GtkCallback]
     private void on_location_entry_activate () {
-        // TODO: Validate text! Show an error if it's wrong!
-        current_path = location_entry.get_text ();
-        // FIXME: We shouldn't need to do this
-        request_folder (current_path);
+        // TODO: Validate text while typing
+        // FIXME: We should be able to set current_path to the text and have the
+        //        the appropriate events fire.
+        request_path (location_entry.get_text ());
         show_location = false;
     }
 
@@ -333,7 +334,7 @@ private class DConfWindow : Adw.ApplicationWindow
         if (!main_view.check_reload (main_view.current_view, current_path, !internal_changes))
             return;
 
-        reload_view ();
+        queue_reload ();
     }
     private void propagate_gkey_value_push (string full_name, uint16 context_id, Variant key_value, bool is_key_default)
     {
@@ -461,7 +462,7 @@ private class DConfWindow : Adw.ApplicationWindow
         { "dismiss-delayed-settings",   dismiss_delayed_settings },
 
         { "dismiss-change", dismiss_change, "s" },  // here because needs to be accessed from DelayedSettingView rows
-        { "erase", erase_dconf_key, "s" },          // here because needs a reload_view as we enter delay_mode
+        { "erase", erase_dconf_key, "s" },          // here because needs a queue_reload as we enter delay_mode
 
         { "notify-folder-emptied", notify_folder_emptied, "s" },
         { "notify-object-deleted", notify_object_deleted, "(sq)" }
@@ -570,8 +571,10 @@ private class DConfWindow : Adw.ApplicationWindow
         {
             /* Translators: displayed as a toast, when the user tries to reset keys from/for a folder that has nothing to reset */
             show_notification (_("Nothing to reset."));
-            // modifications_handler.dismiss_delayed_settings ();
+            return;
         }
+
+        queue_reload ();
     }
 
     private uint reset_path (string path, bool recursive)
@@ -591,7 +594,7 @@ private class DConfWindow : Adw.ApplicationWindow
             if (model.is_key_ghost (path))
                 return 0;
 
-            if (!modifications_handler.get_current_delay_mode ())
+            if (modifications_handler.mode != ModificationsMode.DELAYED)
                 modifications_handler.enter_delay_mode ();
             modifications_handler.add_delayed_setting (path, null, ModelUtils.dconf_context_id);
             return 1;
@@ -607,7 +610,7 @@ private class DConfWindow : Adw.ApplicationWindow
             if (is_key_default)
                 return 0;
 
-            if (!modifications_handler.get_current_delay_mode ())
+            if (modifications_handler.mode != ModificationsMode.DELAYED)
                 modifications_handler.enter_delay_mode ();
             modifications_handler.add_delayed_setting (path, null, context_id);
             return 1;
@@ -638,12 +641,9 @@ private class DConfWindow : Adw.ApplicationWindow
     private void on_open_folder_activate (SimpleAction action, Variant? path_variant)
         requires (path_variant != null)
     {
-        current_path = ((!) path_variant).get_string ();
         show_search = false;
         show_modifications_sheet = false;
-
-        // FIXME I don't know why this is.
-        request_folder (current_path);
+        request_folder (((!) path_variant).get_string ());
     }
 
 
@@ -661,7 +661,7 @@ private class DConfWindow : Adw.ApplicationWindow
 
     private void on_reload_view_activate ()
     {
-        reload_view ();
+        queue_reload ();
     }
 
     private void on_copy_location_activate ()
@@ -672,7 +672,7 @@ private class DConfWindow : Adw.ApplicationWindow
 
     private void on_modifications_handler_notify_mode ()
     {
-        reload_view ();
+        queue_reload ();
     }
 
     private void on_modifications_handler_delayed_changes_changed ()
@@ -728,7 +728,7 @@ private class DConfWindow : Adw.ApplicationWindow
         // FIXME: It's almost definitely because of the ModificationsHandler we passed to main_view
         modifications_handler.dismiss_change (((!) path_variant).get_string ());
         main_view.invalidate_popovers ();
-        reload_view ();
+        queue_reload ();
     }
 
     private void erase_dconf_key (SimpleAction action, Variant? path_variant)
@@ -805,8 +805,6 @@ private class DConfWindow : Adw.ApplicationWindow
 
     private void toggle_boolean                         (/* SimpleAction action, Variant? variant */)
     {
-        if (row_action_blocked ())
-            return;
         if (modifications_handler.get_current_delay_mode ())    // TODO better
             return;
 
@@ -816,12 +814,9 @@ private class DConfWindow : Adw.ApplicationWindow
 
     private void set_to_default                         (/* SimpleAction action, Variant? variant */)
     {
-        if (row_action_blocked ())
-            return;
-
         if (modifications_view.dismiss_selected_modification ())
         {
-            reload_view ();
+            queue_reload ();
             return;
         }
         main_view.close_popovers ();
@@ -850,11 +845,13 @@ private class DConfWindow : Adw.ApplicationWindow
         bool is_ancestor = current_path.has_prefix (fallback_path);
 
         if (notify_missing && (fallback_path != full_name))
+        {
             cannot_find_folder (full_name); // do not place after, full_name is in some cases changed by set_directory()...
+            return;
+        }
 
+        main_view.prepare_folder_view (create_key_model (fallback_path, model.get_children (fallback_path, true, true)), is_ancestor);
         current_path = fallback_path;
-        main_view.prepare_folder_view (create_key_model (current_path, model.get_children (current_path, true, true)), is_ancestor);
-        main_view.set_dconf_path (ViewType.FOLDER, current_path);
 
         if (selected_or_empty != "")
             main_view.select_row (selected_or_empty);
@@ -887,7 +884,6 @@ private class DConfWindow : Adw.ApplicationWindow
 
         if (ModelUtils.is_undefined_context_id (context_id))
         {
-            // FIXME Use AdwToast, and also maybe flatten out all these functions
             if (notify_missing)
             {
                 if (ModelUtils.is_key_path (full_name))
@@ -895,23 +891,14 @@ private class DConfWindow : Adw.ApplicationWindow
                 else
                     cannot_find_folder (full_name);
             }
-            request_folder (ModelUtils.get_parent_path (full_name), full_name, false);
-            // string complete_path;
-            // headerbar.get_complete_path (out complete_path);
-            // headerbar.update_ghosts (model.get_fallback_path (complete_path));
-        }
-        else
-        {
-            current_path = strdup (full_name);
-            main_view.prepare_object_view (full_name, context_id,
-                                           model.get_key_properties (full_name, context_id, 0),
-                                           current_path == ModelUtils.get_parent_path (full_name));
-            main_view.set_dconf_path (ViewType.OBJECT, current_path);
-            // update_current_path (ViewType.OBJECT, strdup (full_name));
+            return;
         }
 
-        // stop_search ();
-        // headerbar.search_mode_enabled = false; // do last to avoid flickering RegistryView before PropertiesView when selecting a search result
+        // FIXME What stops main_view from doing this itself?
+        main_view.prepare_object_view (full_name, context_id,
+                                       model.get_key_properties (full_name, context_id, 0),
+                                       current_path == ModelUtils.get_parent_path (full_name));
+        current_path = full_name;
     }
 
     /*\
@@ -950,16 +937,16 @@ private class DConfWindow : Adw.ApplicationWindow
         show_notification (_("There’s nothing in requested folder “%s”.").printf (full_name));
     }
 
-    protected bool row_action_blocked ()
+    private void queue_reload ()
     {
-        // if (headerbar.has_popover ())
-        //     return true;
-        if (main_view.is_in_in_window_mode ())
-            return true;
-        return false;
+        if (reload_requested)
+            return;
+
+        GLib.Idle.add_once (reload_view);
+        reload_requested = true;
     }
 
-    protected void reload_view ()
+    private void reload_view ()
     {
         if (main_view.current_view == ViewType.FOLDER)
             request_folder (current_path, main_view.get_selected_row_name ());
@@ -967,6 +954,7 @@ private class DConfWindow : Adw.ApplicationWindow
             request_object (current_path, ModelUtils.undefined_context_id, false);
         else
             request_search (search_entry.text);
+        reload_requested = false;
     }
 
     protected void show_notification (string notification)
