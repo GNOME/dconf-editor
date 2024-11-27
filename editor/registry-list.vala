@@ -195,6 +195,9 @@ private abstract class RegistryList : Box, BrowsableView
                  || object.context_id == context_id)
                     return (int) position;
                 fallback = position;
+            } else if (selected.has_prefix (object.full_name))
+            {
+                fallback = position;
             }
             position++;
         }
