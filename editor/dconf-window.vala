@@ -431,6 +431,23 @@ private class DConfWindow : Adw.ApplicationWindow
         SimpleActionGroup action_group = new SimpleActionGroup ();
         action_group.add_action_entries (ui_action_entries, this);
         insert_action_group ("ui", action_group);
+
+        var show_modifications_action = new SimpleAction ("show-modifications", null);
+        bind_property ("show-modifications-bar", show_modifications_action, "enabled", BindingFlags.SYNC_CREATE);
+        show_modifications_action.activate.connect (
+            () => {
+                show_modifications_sheet = true;
+            }
+        );
+        action_group.add_action (show_modifications_action);
+
+        var hide_modifications_action = new SimpleAction ("hide-modifications", null);
+        hide_modifications_action.activate.connect (
+            () => {
+                show_modifications_sheet = false;
+            }
+        );
+        action_group.add_action (hide_modifications_action);
     }
 
     private const GLib.ActionEntry [] ui_action_entries =
@@ -439,8 +456,6 @@ private class DConfWindow : Adw.ApplicationWindow
         { "reset-current-recursively",      reset_current_recursively },
         { "reset-current-non-recursively",  reset_current_non_recursively },
 
-        { "show-modifications",         show_modifications },
-        { "hide-modifications",         hide_modifications },
         { "enter-delay-mode",           enter_delay_mode },
         { "apply-delayed-settings",     apply_delayed_settings },
         { "dismiss-delayed-settings",   dismiss_delayed_settings },
