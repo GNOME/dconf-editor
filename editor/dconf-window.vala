@@ -124,8 +124,9 @@ private class DConfWindow : Adw.ApplicationWindow
         use_shortpaths_changed_handler = settings.changed ["use-shortpaths"].connect_after (reload_view);
         settings.bind ("use-shortpaths", model, "use-shortpaths", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
 
-        delayed_changes_changed_handler = modifications_handler.delayed_changes_changed.connect (on_modifications_handler_delayed_changes_changed);
+        modifications_handler.notify["mode"].connect (on_modifications_handler_notify_mode);
         // TODO: Do we need to keep track of the handler ID?
+        delayed_changes_changed_handler = modifications_handler.delayed_changes_changed.connect (on_modifications_handler_delayed_changes_changed);
         modifications_handler.delayed_changes_applied.connect (on_modifications_handler_delayed_changes_applied);
 
         behaviour_changed_handler = settings.changed ["behaviour"].connect_after (invalidate_popovers_with_ui_reload);
@@ -667,6 +668,11 @@ private class DConfWindow : Adw.ApplicationWindow
         clipboard.set_value (current_path);
     }
 
+    private void on_modifications_handler_notify_mode ()
+    {
+        reload_view ();
+    }
+
     private void on_modifications_handler_delayed_changes_changed ()
     {
         action_set_enabled ("ui.apply-delayed-settings", modifications_handler.has_pending_changes ());
@@ -742,22 +748,6 @@ private class DConfWindow : Adw.ApplicationWindow
     }
 
     /*\
-    * * showing or hiding panels
-    \*/
-
-    protected void show_default_view ()
-    {
-        if (main_view.in_window_modifications)
-        {
-            // headerbar.show_default_view ();
-            main_view.show_default_view ();
-
-            // if (current_type == ViewType.CONFIG)
-            //     request_folder (current_path);
-        }
-    }
-
-    /*\
     * * bookmarks interaction
     \*/
 
@@ -824,19 +814,9 @@ private class DConfWindow : Adw.ApplicationWindow
 
     private const GLib.ActionEntry [] kbd_action_entries =
     {
-        { "modifications",      modifications_list  },  // <A>i
-
         { "toggle-boolean",     toggle_boolean      },  // <P>Return & <P>KP_Enter
         { "set-to-default",     set_to_default      }   // <P>Delete & <P>KP_Delete & decimalpoint & period & KP_Decimal
     };
-
-    private void modifications_list                     (/* SimpleAction action, Variant? variant */)
-    {
-        if (!show_modifications_bar)
-            return;
-
-        show_modifications_sheet = ! show_modifications_sheet;
-    }
 
     private void toggle_boolean                         (/* SimpleAction action, Variant? variant */)
     {
@@ -868,26 +848,6 @@ private class DConfWindow : Adw.ApplicationWindow
     }
 
     /*\
-    * * keyboard actions overrides
-    \*/
-
-    protected void toggle_bookmark_called ()   // TODO better
-    {
-        if (main_view.in_window_modifications)
-            show_default_view ();
-    }
-
-    protected bool escape_pressed ()
-    {
-        if (main_view.in_window_modifications)
-        {
-            show_default_view ();
-            return true;
-        }
-        return false;
-        // return base.escape_pressed ();
-    }
-
     /*\
     * * keyboard calls helpers
     \*/

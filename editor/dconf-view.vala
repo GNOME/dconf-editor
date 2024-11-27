@@ -38,14 +38,6 @@ private class DConfView : BookmarksView
         on_path_changed ();
     }
 
-    // protected override void set_window_size (AdaptativeWidget.WindowSize new_size)
-    // {
-    //     base.set_window_size (new_size);
-
-    //     if (modifications_list_created)
-    //         modifications_list.set_window_size (new_size);
-    // }
-
     private ModificationsHandler _modifications_handler;
     [CCode (notify = false)] public ModificationsHandler modifications_handler
     {
@@ -55,25 +47,7 @@ private class DConfView : BookmarksView
             _modifications_handler = value;
             sorting_options = new SortingOptions (value.model);
             sorting_options.notify ["case-sensitive"].connect (on_case_sensitive_changed);
-            _modifications_handler.delayed_changes_changed.connect (update_in_window_modifications);
         }
-    }
-
-    internal override bool is_in_in_window_mode ()
-    {
-        return (in_window_modifications || base.is_in_in_window_mode ());
-    }
-
-    internal override void show_default_view ()
-    {
-        if (in_window_modifications)
-        {
-            in_window_modifications = false;
-            // FIXME: Stack things that I broke apparently
-            // set_visible_child_name ("main-view");
-        }
-        else
-            base.show_default_view ();
     }
 
     /*\
@@ -168,47 +142,6 @@ private class DConfView : BookmarksView
     * * modifications
     \*/
 
-    [CCode (notify = false)] internal bool in_window_modifications           { internal get; private set; default = false; }
-
-    private bool modifications_list_created = false;
-    private ModificationsList modifications_list;
-
-    private void create_modifications_list ()
-    {
-        modifications_list = new ModificationsList (/* needs shadows   */ false);
-        // modifications_list.set_window_size (saved_window_size);
-        // modifications_list.selection_changed.connect (() => ...);
-        // modifications_list.show ();
-        // FIXME: This is almost definitely doing something wrong
-        // main_grid.append (modifications_list);
-        modifications_list_created = true;
-    }
-
-    internal void show_modifications_view ()
-        requires (modifications_list_created == true)
-    {
-        if (in_window_bookmarks || in_window_about)
-            show_default_view ();
-
-        modifications_list.reset ();
-
-        // FIXME: Oh nooo what did I do to all the widgets?
-        // set_visible_child (modifications_list);
-        in_window_modifications = true;
-    }
-
-    private void update_in_window_modifications ()
-    {
-        if (!modifications_list_created)
-            create_modifications_list ();
-
-        GLib.ListStore modifications_liststore = modifications_handler.get_delayed_settings ();
-        modifications_list.bind_model (modifications_liststore, delayed_setting_row_create);
-
-        if (in_window_modifications && modifications_handler.mode == ModificationsMode.NONE)
-            show_default_view ();
-    }
-
     private Widget delayed_setting_row_create (Object object)
     {
         SimpleSettingObject sso = (SimpleSettingObject) object;
@@ -287,29 +220,12 @@ private class DConfView : BookmarksView
 
     internal void hide_or_show_toggles (bool show) { dconf_content.hide_or_show_toggles (show); }
 
-    // keyboard
-    internal override bool next_match ()
-    {
-        if (in_window_modifications)
-            return modifications_list.next_match ();
-        return base.next_match ();
-    }
-
-    internal override bool previous_match ()
-    {
-        if (in_window_modifications)
-            return modifications_list.previous_match ();
-        return base.previous_match ();
-    }
-
     internal void toggle_boolean_key ()      { dconf_content.toggle_boolean_key ();      }
     internal void set_selected_to_default () { dconf_content.set_selected_to_default (); }
 
     // current row property
     internal override bool handle_copy_text (out string copy_text)
     {
-        if (in_window_modifications)
-            return modifications_list.handle_copy_text (out copy_text);
         return base.handle_copy_text (out copy_text);
     }
 
