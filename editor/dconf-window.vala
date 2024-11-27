@@ -709,16 +709,12 @@ private class DConfWindow : Adw.ApplicationWindow
 
     private void apply_delayed_settings (/* SimpleAction action, Variant? path_variant */)
     {
-        // if (main_view.in_window_modifications)
-        //     show_default_view ();
         modifications_handler.apply_delayed_settings ();
         invalidate_popovers_with_ui_reload ();
     }
 
     private void dismiss_delayed_settings (/* SimpleAction action, Variant? path_variant */)
     {
-        // if (main_view.in_window_modifications)
-        //     show_default_view ();
         modifications_handler.dismiss_delayed_settings ();
         invalidate_popovers_with_ui_reload ();
     }
@@ -787,19 +783,6 @@ private class DConfWindow : Adw.ApplicationWindow
     \*/
 
     private bool disable_action_bar = false;
-    // protected override void set_window_size (AdaptativeWidget.WindowSize new_size)
-    // {
-    //     base.set_window_size (new_size);
-
-    //     bool _disable_action_bar = AdaptativeWidget.WindowSize.is_extra_thin (new_size)
-    //                             || AdaptativeWidget.WindowSize.is_extra_flat (new_size);
-    //     if (disable_action_bar != _disable_action_bar)
-    //     {
-    //         disable_action_bar = _disable_action_bar;
-    //         if (main_view.in_window_modifications)
-    //             show_default_view ();
-    //     }
-    // }
 
     /*\
     * * Keyboard action entries
@@ -845,23 +828,6 @@ private class DConfWindow : Adw.ApplicationWindow
             reset_path ((!) selected_row, true);
         else
             main_view.set_selected_to_default ();
-    }
-
-    /*\
-    /*\
-    * * keyboard calls helpers
-    \*/
-
-    protected bool intercept_next_match (out bool interception_result)
-    {
-        return false;
-        // return base.intercept_next_match (out interception_result);
-    }
-
-    protected bool intercept_previous_match (out bool interception_result)
-    {
-        return false;
-        // return base.intercept_previous_match (out interception_result);
     }
 
     /*\
@@ -949,24 +915,6 @@ private class DConfWindow : Adw.ApplicationWindow
         show_search = false;
         // stop_search ();
         // headerbar.search_mode_enabled = false; // do last to avoid flickering RegistryView before PropertiesView when selecting a search result
-    }
-
-    /*\
-    * * navigation helpers
-    \*/
-
-    protected bool get_alt_copy_text (out string copy_text)
-    {
-        model.copy_action_called ();
-
-        if (show_search)
-        {
-            // if (!main_view.handle_alt_copy_text (out copy_text))
-            //     copy_text = saved_view;
-        }
-        else
-            copy_text = current_path;
-        return true;
     }
 
     /*\
