@@ -15,10 +15,6 @@
             <child>
               <object class="GtkListBox" id="key_list_box">
                 <property name="selection-mode">browse</property>
-                <property name="margin-top">18</property>
-                <property name="margin-bottom">18</property>
-                <property name="margin-start">12</property>
-                <property name="margin-end">12</property>
                 <style>
                   <class name="keys-list"/>
                 </style>

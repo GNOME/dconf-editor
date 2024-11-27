@@ -811,10 +811,12 @@ private class KeyEditorChildArray : Grid, KeyEditorChild
 
         Image error_icon = new Image.from_icon_name ("dialog-error-symbolic");
         error_icon.visible = true;
+        error_icon.add_css_class ("error");
         error_bar.pack_start (error_icon);
 
         Label error_label = new Label (invalid_value_text);
         error_label.visible = true;
+        error_label.add_css_class ("error");
         error_label.wrap = true;
         error_bar.pack_start (error_label);
 

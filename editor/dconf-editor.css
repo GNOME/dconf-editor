@@ -15,6 +15,47 @@
   along with Dconf Editor.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+.keys-list {
+  margin: 12px 12px 18px 12px;
+}
+
+.keys-list > row {
+  border-radius: 6px;
+  margin-top: 6px;
+  margin-bottom: 6px;
+  padding: 6px;
+}
+
+.keys-list > .header-row {
+  margin-top: 24px;
+  margin-bottom: 6px;
+}
+
+.keys-list > .header-row.first-row {
+  margin-top: 6px;
+}
+
+.properties-list {
+  margin: 12px 12px 18px 12px;
+}
+
+.properties-list > row {
+  /* margin-top: 6px; */
+  /* margin-bottom: 6px; */
+  padding: 6px;
+}
+
+                   .delayed-list          list > row        { padding:10px; }
+                   .delayed-list          list .key-name    { padding-bottom:5px; }
+
+                   .delayed-list:dir(ltr) list .value-label { padding-right:6px; }
+                   .delayed-list:dir(rtl) list .value-label { padding-left :6px; }
+
+                   .delayed-list:dir(ltr) list .diff-bullet { padding-left :20px; padding-right:6px; }
+                   .delayed-list:dir(rtl) list .diff-bullet { padding-right:20px; padding-left :6px; }
+.extra-thin-window .delayed-list:dir(ltr) list .diff-bullet { padding-left : 8px; }
+.extra-thin-window .delayed-list:dir(rtl) list .diff-bullet { padding-right: 8px; }
+
 /*\
 * * bookmarks
 \*/
@@ -59,18 +100,18 @@
 
                    .delayed-settings-popover { padding:6px; }
 
-                   .delayed-list .list-row-header { padding:5px; padding-top:10px; }
+/*                    .delayed-list .list-row-header { padding:5px; padding-top:10px; } */
 
-                   .delayed-list          > scrolledwindow > viewport > list > row        { padding:10px; }
-                   .delayed-list          > scrolledwindow > viewport > list .key-name    { padding-bottom:5px; }
+/*                    .delayed-list          list > row        { padding:10px; } */
+/*                    .delayed-list          list .key-name    { padding-bottom:5px; } */
 
-                   .delayed-list:dir(ltr) > scrolledwindow > viewport > list .value-label { padding-right:6px; }
-                   .delayed-list:dir(rtl) > scrolledwindow > viewport > list .value-label { padding-left :6px; }
+/*                    .delayed-list:dir(ltr) list .value-label { padding-right:6px; } */
+/*                    .delayed-list:dir(rtl) list .value-label { padding-left :6px; } */
 
-                   .delayed-list:dir(ltr) > scrolledwindow > viewport > list .diff-bullet { padding-left :20px; padding-right:6px; }
-                   .delayed-list:dir(rtl) > scrolledwindow > viewport > list .diff-bullet { padding-right:20px; padding-left :6px; }
-.extra-thin-window .delayed-list:dir(ltr) > scrolledwindow > viewport > list .diff-bullet { padding-left : 8px; }
-.extra-thin-window .delayed-list:dir(rtl) > scrolledwindow > viewport > list .diff-bullet { padding-right: 8px; }
+/*                    .delayed-list:dir(ltr) list .diff-bullet { padding-left :20px; padding-right:6px; } */
+/*                    .delayed-list:dir(rtl) list .diff-bullet { padding-right:20px; padding-left :6px; } */
+/* .extra-thin-window .delayed-list:dir(ltr) list .diff-bullet { padding-left : 8px; } */
+/* .extra-thin-window .delayed-list:dir(rtl) list .diff-bullet { padding-right: 8px; } */
 
 /*\
 * * lists rows height and icon
@@ -90,12 +131,12 @@
                                                                                   border-radius 0.3s; } stuttering of a single row is almost bearable */
 
                                     .keys-list          > .key-row    { min-height:4.2em; }
-                                    .keys-list          > .f-or-s-row { min-height:2.1em; }
+                                    .keys-list          > .folder-row { min-height:2.1em; }
                                     .keys-list          > row         { margin:0;      padding-top:0.25em; padding-bottom:0.25em; }
 .large-window                       .keys-list          > row         { margin:0.25em; padding-top:0;      padding-bottom:0;      }
 
               .small-keys-list-rows .keys-list          > .key-row    { min-height:2.5em; }
-              .small-keys-list-rows .keys-list          > .f-or-s-row { min-height:1.5em; }
+              .small-keys-list-rows .keys-list          > .folder-row { min-height:1.5em; }
               .small-keys-list-rows .keys-list          > row         { margin:0; padding-top:0; padding-bottom:0; }
 .large-window .small-keys-list-rows .keys-list          > row         { margin:0; padding-top:0; padding-bottom:0; }
 
@@ -168,10 +209,8 @@ window:not(.hc-theme):backdrop    .keys-list      > row:not(:selected) > * { col
              row        >                .folder               { background-image:-gtk-icontheme("folder-symbolic"); }
              row:active >                .folder               { background-image:-gtk-icontheme("folder-open-symbolic"); }
              row        >          .erase.folder               { background-image:-gtk-icontheme("action-unavailable-symbolic"); }
-             row >                       .search               { background-image:-gtk-icontheme("edit-find-symbolic"); }
 
           /* row >                       .config               { background-image:-gtk-icontheme("dialog-information-symbolic"); } */
-             row >                       .return               { background-image:-gtk-icontheme("edit-undo-symbolic"); }
 
              row >                       .key.delayed,
              row >             .dconf-key.key.delayed,

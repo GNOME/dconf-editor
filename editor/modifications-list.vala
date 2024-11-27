@@ -69,7 +69,7 @@ private class ModificationsList : OverlayedList
         if (add_location_header)
         {
             string label_text = ModelUtils.get_parent_path (row_key_name);
-            row.set_header (new ListBoxRowHeader (false, label_text));
+            row.set_header (new ListBoxRowHeader (before == null, label_text));
         }
     }
 

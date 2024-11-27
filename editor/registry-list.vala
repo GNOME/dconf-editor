@@ -536,13 +536,10 @@ private abstract class RegistryList : Box, BrowsableView
         wrapper.set_child (row);
         if (ModelUtils.is_folder_context_id (row.context_id))
         {
-            wrapper.add_css_class ("f-or-s-row");
+            wrapper.add_css_class ("folder-row");
             if (row is FolderListBoxRow)
             {
-                if (((FolderListBoxRow) row).path_search)
-                    wrapper.action_name = "browser.next-search";
-                else
-                    wrapper.action_name = "browser.open-folder";
+                wrapper.action_name = "browser.open-folder";
             }
             else assert_not_reached ();
             wrapper.set_action_target ("s", row.full_name);
@@ -1143,6 +1140,7 @@ private abstract class RegistryList : Box, BrowsableView
         else
             assert_not_reached ();
 
-        row.set_header (new ListBoxRowHeader (false, label_text));
+        if (label_text != null)
+            row.set_header (new ListBoxRowHeader (before == null, (!) label_text));
     }
 }

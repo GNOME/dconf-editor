@@ -423,7 +423,9 @@ private class RegistrySearch : RegistryList
         }
 
         string? label_text = get_header_text (row_index, post_local, post_bookmarks, post_folders);
-        row.set_header (new ListBoxRowHeader (false, label_text));
+
+        if (label_text != null)
+            row.set_header (new ListBoxRowHeader (before == null, (!) label_text));
     }
     private static string? get_header_text (int row_index, int post_local, int post_bookmarks, int post_folders)
     {

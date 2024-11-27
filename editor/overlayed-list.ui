@@ -27,10 +27,9 @@
                 <child>
                   <object class="GtkListBox" id="main_list_box">
                     <property name="selection-mode">none</property>
-                    <property name="margin-top">0</property>
-                    <property name="margin-bottom">12</property>
-                    <property name="margin-start">12</property>
-                    <property name="margin-end">12</property>
+                    <style>
+                      <class name="keys-list"/>
+                    </style>
                     <signal name="selected-rows-changed" handler="on_selection_changed"/>
                     <child type="placeholder">
                       <object class="RegistryPlaceholder">

@@ -640,9 +640,8 @@ private class RegistryInfo : Box, BrowsableView
     {
         Label label = new Label (text);
         label.wrap = true;
-        label.add_css_class ("italic-label");
-        label.add_css_class ("greyed-label");
-        label.add_css_class ("warning-label");
+        label.halign = Align.START;
+        label.add_css_class ("caption");
         return (Widget) label;
     }
 
@@ -715,24 +714,15 @@ private class PropertyRow : ListBoxRowWrapper
         if (widget is Label)    // TODO handle other rows
             value_widget = widget;
 
-        Grid grid = new Grid ();
-        grid.orientation = Orientation.VERTICAL;
-        grid.attach (widget, 0, 0, 1, 1);
+        Box box = new Box (Orientation.VERTICAL, 4);
+        box.append (widget);
 
         add_css_class ("property-value");
 
         if (warning != null)
-        {
-            ((!) warning).hexpand = true;
-            ((!) warning).halign = Align.CENTER;
-            ((!) warning).add_css_class ("property-warning");
-            ((!) warning).show ();
-            grid.attach ((!) warning, 1, 0, 1, 1);
-        }
+            box.append ((!) warning);
 
-        grid.show ();
-        value_box.append (grid);
-        grid.valign = Align.CENTER;
+        value_box.append (box);
     }
 
     internal bool handle_copy_text (out string copy_text)

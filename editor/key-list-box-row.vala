@@ -21,18 +21,11 @@ private const int MAX_ROW_WIDTH = LARGE_WINDOW_SIZE - 42;
 
 private class ListBoxRowWrapper : ListBoxRow
 {
-    // internal override void measure (Orientation orientation, int for_size, out int minimum, out int natural, out int minimum_baseline, out int natural_baseline)
-    // {
-    //     base.measure (orientation, for_size, out minimum, out natural, out minimum_baseline, out natural_baseline);
-    //     if (orientation == Orientation.HORIZONTAL) {
-    //         natural = MAX_ROW_WIDTH;
-    //     }
-    // }
-    // internal override void get_preferred_width (out int minimum_width, out int natural_width)
-    // {
-    //     base.get_preferred_width (out minimum_width, out natural_width);
-    //     natural_width = MAX_ROW_WIDTH;
-    // }
+    construct
+    {
+        margin_top = 6;
+        margin_bottom = 6;
+    }
 }
 
 private class RegistryWarning : Grid
@@ -52,27 +45,21 @@ private class ListBoxRowHeader : Box
     //     natural_width = MAX_ROW_WIDTH;
     // }
 
-    internal ListBoxRowHeader (bool is_first_row, string? header_text)
+    internal ListBoxRowHeader (bool is_first_row, string header_text)
     {
-        if (header_text != null)
-        {
-            orientation = Orientation.VERTICAL;
-
-            Label label = new Label ((!) header_text);
-            label.visible = true;
-            label.halign = Align.START;
-            label.set_ellipsize (Pango.EllipsizeMode.END);
-            add_css_class ("dim-label");
-            add_css_class ("heading");
-            append (label);
-        }
-
+        orientation = Orientation.VERTICAL;
         halign = Align.START;
-        margin_top = 6;
-        margin_bottom = 6;
-
+        add_css_class ("header-row");
         if (is_first_row)
-            return;
+            add_css_class ("first-row");
+
+        Label label = new Label ((!) header_text);
+        label.visible = true;
+        label.halign = Align.START;
+        label.set_ellipsize (Pango.EllipsizeMode.END);
+        label.add_css_class ("heading");
+        append (label);
+
     }
 }
 
