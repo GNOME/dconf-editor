@@ -267,11 +267,31 @@ private class DConfWindow : Adw.ApplicationWindow
 
         if (current_search == "")
         {
-            main_view.set_dconf_path (ViewType.FOLDER, current_path);
+            show_current_path ();
             return;
         }
 
-        main_view.set_dconf_path (ViewType.SEARCH, current_search);
+        show_search_results (current_search);
+    }
+
+    private void show_current_path ()
+    {
+        if (current_path.has_suffix ("/"))
+            main_view.set_dconf_path (ViewType.FOLDER, current_path);
+        else
+            main_view.set_dconf_path (ViewType.OBJECT, current_path);
+        action_set_enabled ("ui.reset-recursive", true);
+        action_set_enabled ("ui.reset-current-recursively", true);
+        action_set_enabled ("ui.reset-current-non-recursively", true);
+        return;
+    }
+
+    private void show_search_results (string search)
+    {
+        main_view.set_dconf_path (ViewType.SEARCH, search);
+        action_set_enabled ("ui.reset-recursive", false);
+        action_set_enabled ("ui.reset-current-recursively", false);
+        action_set_enabled ("ui.reset-current-non-recursively", false);
     }
 
     ulong paths_changed_handler = 0;
@@ -530,71 +550,86 @@ private class DConfWindow : Adw.ApplicationWindow
     private void reset_recursively (SimpleAction action, Variant? path_variant)
         requires (path_variant != null)
     {
-        reset_path (((!) path_variant).get_string (), true);
+        reset_from_path_and_notify (((!) path_variant).get_string (), true);
     }
 
     private void reset_current_recursively (/* SimpleAction action, Variant? path_variant */)
     {
-        reset_path (current_path, true);
+        reset_from_path_and_notify (current_path, true);
     }
 
     private void reset_current_non_recursively (/* SimpleAction action, Variant? path_variant */)
     {
-        reset_path (current_path, false);
+        reset_from_path_and_notify (current_path, false);
     }
 
-    private void reset_path (string path, bool recursively)
+    private void reset_from_path_and_notify (string path, bool recursive)
     {
-        enter_delay_mode ();
-        if (!reset_objects (path, model.get_children (path), recursively))
+        if (reset_path (path, recursive) == 0)
         {
             /* Translators: displayed as a toast, when the user tries to reset keys from/for a folder that has nothing to reset */
             show_notification (_("Nothing to reset."));
-            modifications_handler.dismiss_delayed_settings ();
+            // modifications_handler.dismiss_delayed_settings ();
         }
     }
 
-    private bool reset_objects (string base_path, Variant? objects, bool recursively)
+    private uint reset_path (string path, bool recursive)
+    {
+        uint16 context_id;
+        string name;
+
+        if (!model.get_object (path, out context_id, out name, false))
+            return 0;
+
+        if (ModelUtils.is_folder_context_id (context_id))
+        {
+            return reset_objects_in_path (path, model.get_children (path), recursive);
+        }
+        else if (ModelUtils.is_dconf_context_id (context_id))
+        {
+            if (model.is_key_ghost (path))
+                return 0;
+
+            enter_delay_mode ();
+            modifications_handler.add_delayed_setting (path, null, ModelUtils.dconf_context_id);
+            return 1;
+        }
+        else // is gsettings key
+        {
+            RegistryVariantDict properties = new RegistryVariantDict.from_aqv (model.get_key_properties (path, context_id, (uint16) (PropertyQuery.IS_DEFAULT)));
+            bool is_key_default;
+            if (!properties.lookup (PropertyQuery.IS_DEFAULT, "b", out is_key_default))
+                assert_not_reached ();
+            properties.clear ();
+
+            if (is_key_default)
+                return 0;
+
+            enter_delay_mode ();
+            modifications_handler.add_delayed_setting (path, null, context_id);
+            return 1;
+        }
+    }
+
+    private uint reset_objects_in_path (string base_path, Variant? objects, bool recursive)
     {
         if (objects == null)
-            return false;
-        SettingsModel model = modifications_handler.model;
+            return 0;
+
+        uint result = 0;
 
         VariantIter iter = new VariantIter ((!) objects);
         uint16 context_id;
         string name;
         while (iter.next ("(qs)", out context_id, out name))
         {
-            // directory
-            if (ModelUtils.is_folder_context_id (context_id))
-            {
-                string full_name = ModelUtils.recreate_full_name (base_path, name, true);
-                if (recursively)
-                    reset_objects (full_name, model.get_children (full_name), true);
-            }
-            // dconf key
-            else if (ModelUtils.is_dconf_context_id (context_id))
-            {
-                string full_name = ModelUtils.recreate_full_name (base_path, name, false);
-                if (!model.is_key_ghost (full_name))
-                    modifications_handler.add_delayed_setting (full_name, null, ModelUtils.dconf_context_id);
-            }
-            // gsettings
-            else
-            {
-                string full_name = ModelUtils.recreate_full_name (base_path, name, false);
-                RegistryVariantDict properties = new RegistryVariantDict.from_aqv (model.get_key_properties (full_name, context_id, (uint16) (PropertyQuery.IS_DEFAULT)));
-                bool is_key_default;
-                if (!properties.lookup (PropertyQuery.IS_DEFAULT,       "b",    out is_key_default))
-                    assert_not_reached ();
-                properties.clear ();
-
-                if (!is_key_default)
-                    modifications_handler.add_delayed_setting (full_name, null, context_id);
-            }
+            string item_path = ModelUtils.recreate_full_name (base_path, name, ModelUtils.is_folder_context_id (context_id));
+            bool skip_item = ModelUtils.is_folder_context_id (context_id) && !recursive;
+            if (!skip_item)
+                result += reset_path (item_path, recursive);
         }
 
-        return modifications_handler.has_pending_changes ();
+        return result;
     }
 
     private void on_open_folder_activate (SimpleAction action, Variant? path_variant)
@@ -635,6 +670,7 @@ private class DConfWindow : Adw.ApplicationWindow
     private void on_modifications_handler_delayed_changes_changed ()
     {
         action_set_enabled ("ui.apply-delayed-settings", modifications_handler.has_pending_changes ());
+        action_set_enabled ("ui.enter-delay-mode", modifications_handler.mode != ModificationsMode.DELAYED);
 
         if (modifications_handler.mode == ModificationsMode.TEMPORARY && ! modifications_handler.has_pending_changes ())
             show_modifications_bar = false;
