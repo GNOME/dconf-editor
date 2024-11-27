@@ -70,9 +70,7 @@ private abstract class BookmarksHeaderBar : BrowserHeaderBar
         bookmarks_button.focus_on_click = false;
         bookmarks_button.add_css_class ("image-button");   // TODO check https://bugzilla.gnome.org/show_bug.cgi?id=756731
 
-        bookmarks_button.visible = true;
         bookmarks_revealer.set_child (bookmarks_button);
-        bookmarks_revealer.visible = true;
         center_box.append (bookmarks_revealer);
     }
 

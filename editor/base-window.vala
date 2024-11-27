@@ -52,7 +52,6 @@ private class BaseWindow : AdaptativeWindow, AdaptativeWidget
 
             main_view = value;
             value.vexpand = true;
-            value.visible = true;
             add_to_main_box (value);
         }
     }

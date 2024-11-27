@@ -47,7 +47,6 @@ private class AdaptativePathbar : Adw.Bin, Pathbar
         large_pathbar = new LargePathbar (complete_path, current_type, current_path);
         large_pathbar.valign = Align.FILL;
         large_pathbar.vexpand = true;
-        large_pathbar.show ();
         stack.add_child (large_pathbar);
         large_pathbar_created = true;
     }
@@ -56,7 +55,6 @@ private class AdaptativePathbar : Adw.Bin, Pathbar
     {
         short_pathbar = new ShortPathbar (complete_path, current_type, current_path);
         short_pathbar.valign = Align.CENTER;
-        short_pathbar.show ();
         stack.add_child (short_pathbar);
         short_pathbar_created = true;
     }

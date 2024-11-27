@@ -297,7 +297,6 @@ private class RegistryInfo : Box, BrowsableView
         current_value_label.wrap = true;
         current_value_label.wrap_mode = Pango.WrapMode.WORD_CHAR;
         current_value_label.hexpand = true;
-        current_value_label.show ();
         add_row_from_widget (CURRENT_VALUE_FIELD_DESCRIPTION, current_value_label);
 
         add_separator ();
@@ -403,7 +402,6 @@ private class RegistryInfo : Box, BrowsableView
             custom_value_switch.set_can_focus (false);
             custom_value_switch.halign = Align.START;
             custom_value_switch.hexpand = true;
-            custom_value_switch.show ();
             add_switch_row (USE_DEFAULT_FIELD_DESCRIPTION, custom_value_switch);
 
             custom_value_switch.bind_property ("active", key_editor_child, "sensitive", BindingFlags.SYNC_CREATE | BindingFlags.INVERT_BOOLEAN);
@@ -595,14 +593,12 @@ private class RegistryInfo : Box, BrowsableView
         separator.halign = Align.FILL;
         separator.margin_bottom = 5;
         separator.margin_top = 5;
-        separator.show ();
 
         ListBoxRowWrapper row = new ListBoxRowWrapper ();
         row.halign = Align.FILL;
         row.set_child (separator);
         row.set_sensitive (false);
 /* TODO could be selected by down arrow        row.focus.connect ((direction) => { row.move_focus (direction); return false; }); */
-        row.show ();
         properties_list_box.append (row);
     }
 
@@ -703,7 +699,6 @@ private class PropertyRow : ListBoxRowWrapper
             value_label.add_css_class ("italic-label");
         value_label.add_css_class ("property-value");
 
-        value_label.show ();
         value_box.append (value_label);
     }
 

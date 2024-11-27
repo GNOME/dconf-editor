@@ -54,7 +54,6 @@ private class ListBoxRowHeader : Box
             add_css_class ("first-row");
 
         Label label = new Label ((!) header_text);
-        label.visible = true;
         label.halign = Align.START;
         label.set_ellipsize (Pango.EllipsizeMode.END);
         label.add_css_class ("heading");

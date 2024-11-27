@@ -31,7 +31,6 @@ private class DConfView : BookmarksView
     internal DConfView (ModificationsHandler modifications_handler)
     {
         BrowserStack _dconf_content = new BrowserStack (modifications_handler);
-        _dconf_content.show ();
         Object (browser_content: (BrowserContent) _dconf_content, modifications_handler: modifications_handler);
         dconf_content = _dconf_content;
 

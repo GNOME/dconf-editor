@@ -115,7 +115,6 @@ private class ModificationsView : Box
             Variant variant = new Variant ("(sq)", full_name, context_id);
             view.set_detailed_action_name ("browser.open-object(" + variant.print (true) + ")");
         }
-        view.show ();
         return view;
     }
 

@@ -136,14 +136,12 @@ private class DelayedSettingView : OverlayedListRow
         value_label.visible = false;
         /* Translators: displayed in the list of pending changes (could be an in-window panel, or in the popover of the bottom bar); for dconf keys */
         value_default.label = _("Key erased");
-        value_default.visible = true;
     }
 
     private static void update_labels_dconf_key_values (string key_value, Label value_label, Label value_default)
     {
         value_default.visible = false;
         value_label.label = key_value;  // TODO move Key.cool_text_value_from_variant here?
-        value_label.visible = true;
     }
 
     private static void update_value_default_label (bool is_default, Label value_default)

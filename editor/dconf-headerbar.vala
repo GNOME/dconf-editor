@@ -90,8 +90,6 @@ private class DConfHeaderBar : BookmarksHeaderBar
         show_modifications_button.valign = Align.CENTER;
         show_modifications_button.action_name = "ui.show-in-window-modifications";
         show_modifications_button.add_css_class ("titlebutton");
-
-        show_modifications_button.visible = true;
     }
 
     private inline void add_modification_actions_button ()
@@ -116,8 +114,6 @@ private class DConfHeaderBar : BookmarksHeaderBar
         change_pending_menu.freeze ();
 
         modification_actions_button.set_menu_model (change_pending_menu);
-
-        modification_actions_button.visible = true;
     }
 
     private static void add_modifications_actions_button (out MenuButton modifications_actions_button, ref unowned DConfHeaderBar _this)

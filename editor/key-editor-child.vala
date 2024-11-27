@@ -85,7 +85,6 @@ private class KeyEditorChildEnum : Box, KeyEditorChild
         button = new MenuButton();
         append(button);
 
-        this.visible = true;
         this.hexpand = true;
         this.halign = Align.START;
         // this.use_popover = true;
@@ -133,19 +132,16 @@ private class KeyEditorChildFlags : Grid, KeyEditorChild
     internal KeyEditorChildFlags (Variant initial_value, string [] _all_flags)
     {
         all_flags = _all_flags;
-        this.visible = true;
         this.hexpand = true;
         this.orientation = Orientation.HORIZONTAL;
         this.column_spacing = 8;
 
         MenuButton button = new MenuButton ();  // TODO change icon when popover will go up
-        button.visible = true;
         // button.use_popover = true;
         button.halign = Align.START;
         button.add_css_class ("image-button");
         this.attach (button, 0, 0, 1, 1);
 
-        label.visible = true;
         label.halign = Align.START;
         label.hexpand = true;
         this.attach (label, 0, 1, 1, 1);
@@ -193,7 +189,6 @@ private class KeyEditorChildNullableBool : Box, KeyEditorChild
         button = new MenuButton();
         append(button);
 
-        this.visible = true;
         this.hexpand = true;
         this.halign = Align.START;
         // this.use_popover = true;
@@ -245,7 +240,6 @@ private class KeyEditorChildBool : Box, KeyEditorChild // might be managed by ac
 
     internal KeyEditorChildBool (bool initial_value)
     {
-        this.visible = true;
         this.hexpand = true;
         this.orientation = Orientation.HORIZONTAL;
         this.halign = Align.START;
@@ -254,12 +248,10 @@ private class KeyEditorChildBool : Box, KeyEditorChild // might be managed by ac
         this.add_css_class ("linked");
 
         ToggleButton button_false = new ToggleButton ();
-        button_false.visible = true;
         button_false.label = Key.cool_boolean_text_value (false);
         this.append (button_false);
 
         button_true = new ToggleButton ();
-        button_true.visible = true;
         button_true.label = Key.cool_boolean_text_value (true);
         this.append (button_true);
 
@@ -360,7 +352,6 @@ private class KeyEditorChildNumberDouble : KeyEditorChildNumberCustom
     {
         this.variant = initial_value;
 
-        this.visible = true;
         this.hexpand = true;
         this.secondary_icon_activatable = false;
 
@@ -429,7 +420,6 @@ private class KeyEditorChildNumberInt64 : KeyEditorChildNumberCustom
     {
         this.variant = initial_value;
 
-        this.visible = true;
         this.hexpand = true;
         this.secondary_icon_activatable = false;
 
@@ -498,7 +488,6 @@ private class KeyEditorChildNumberUint64 : KeyEditorChildNumberCustom
     {
         this.variant = initial_value;
 
-        this.visible = true;
         this.hexpand = true;
         this.secondary_icon_activatable = false;
 
@@ -577,7 +566,6 @@ private class KeyEditorChildNumberInt : Box, KeyEditorChild
         this.variant = initial_value;
         this.key_type = type_string;
 
-        this.visible = true;
         this.hexpand = true;
         this.halign = Align.START;
 
@@ -774,7 +762,6 @@ private class KeyEditorChildArray : Grid, KeyEditorChild
 
     internal KeyEditorChildArray (string type_string, Variant initial_value)
     {
-        this.visible = true;
         this.hexpand = true;
         this.vexpand = false;
         orientation = Orientation.VERTICAL;
@@ -784,11 +771,8 @@ private class KeyEditorChildArray : Grid, KeyEditorChild
         this.variant = initial_value;
 
         ScrolledWindow scrolled_window = new ScrolledWindow ();
-        scrolled_window.visible = true;
 
         text_view = new TextView ();
-        text_view.visible = true;
-        // text_view.expand = true;
         text_view.hexpand = true;
         text_view.wrap_mode = WrapMode.WORD;
         text_view.monospace = true;
@@ -801,22 +785,18 @@ private class KeyEditorChildArray : Grid, KeyEditorChild
         attach (scrolled_window, 0, 0, 1, 1);
 
         error_revealer = new Revealer ();
-        error_revealer.visible = true;
         error_revealer.transition_type = RevealerTransitionType.SLIDE_UP;
         error_revealer.reveal_child = false;
         attach (error_revealer, 0, 1, 1, 1);
 
         ActionBar error_bar = new ActionBar ();
-        error_bar.visible = true;
         error_revealer.set_child (error_bar);
 
         Image error_icon = new Image.from_icon_name ("dialog-error-symbolic");
-        error_icon.visible = true;
         error_icon.add_css_class ("error");
         error_bar.pack_start (error_icon);
 
         Label error_label = new Label (invalid_value_text);
-        error_label.visible = true;
         error_label.add_css_class ("error");
         error_label.wrap = true;
         error_bar.pack_start (error_label);
@@ -904,7 +884,6 @@ private class KeyEditorChildDefault : Entry, KeyEditorChild
         this.key_type = type_string;
         this.variant = initial_value;
 
-        this.visible = true;
         this.hexpand = true;
         this.secondary_icon_activatable = false;
         this.set_icon_tooltip_text (EntryIconPosition.SECONDARY, invalid_value_text);

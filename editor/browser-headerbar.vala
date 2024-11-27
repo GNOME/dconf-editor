@@ -81,8 +81,6 @@ private abstract class BrowserHeaderBar : BaseHeaderBar
     {
         path_widget = new PathWidget ();
         path_widget.hexpand = false;
-
-        path_widget.visible = true;
         center_box.append (path_widget);
     }
 

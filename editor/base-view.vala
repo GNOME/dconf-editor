@@ -84,7 +84,6 @@ private class BaseView : Box
         notifications_revealer = new NotificationsRevealer ();
         // FIXME: Where did I put this?
         // notifications_revealer.set_window_size (saved_window_size);
-        notifications_revealer.show ();
         notifications_overlay.add_overlay (notifications_revealer);
         notifications_revealer.set_can_target (false);
         notifications_revealer_created = true;
