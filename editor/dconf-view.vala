@@ -208,7 +208,7 @@ private class DConfView : BookmarksView
             }
         }
         else if (type == ViewType.SEARCH)
-            assert_not_reached ();
+            ; // do nothing; we will always reload this view
         else
             assert_not_reached ();
         return true;

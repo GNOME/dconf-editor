@@ -264,47 +264,26 @@ private class DConfWindow : Adw.ApplicationWindow
 
     [GtkCallback]
     private void on_search_entry_changed () {
-        // FIXME !!!!!!
-        // Surely we should just bind current_search to main_view?
-        // Or change path to a URI and encode search query right there.
+        request_search (search_entry.text);
+    }
 
-        // TODO: Do we really need global search?
-        bool local_search = true;
-        string current_search = search_entry.text;
-
-        if (!show_search && current_search != "")
+    private void request_search (string search_text)
+    {
+        if (!show_search && search_text != "")
             show_search = true;
 
-        // var bookmarks = ((DConfHeaderBar) headerbar).get_bookmarks ()
-        main_view.set_search_parameters (local_search, current_path, {});
-
-        if (current_search == "")
+        if (search_text == "")
         {
-            show_current_path ();
+            request_path (current_path);
             return;
         }
 
-        show_search_results (current_search);
-    }
-
-    private void show_current_path ()
-    {
-        if (current_path.has_suffix ("/"))
-            main_view.set_dconf_path (ViewType.FOLDER, current_path);
-        else
-            main_view.set_dconf_path (ViewType.OBJECT, current_path);
-        action_set_enabled ("ui.reset-recursive", true);
-        action_set_enabled ("ui.reset-current-recursively", true);
-        action_set_enabled ("ui.reset-current-non-recursively", true);
-        return;
-    }
-
-    private void show_search_results (string search)
-    {
-        main_view.set_dconf_path (ViewType.SEARCH, search);
-        action_set_enabled ("ui.reset-recursive", false);
-        action_set_enabled ("ui.reset-current-recursively", false);
-        action_set_enabled ("ui.reset-current-non-recursively", false);
+        // FIXME: I don't know what search used to do with bookmarks but this
+        //        was involved.
+        // var bookmarks = ((DConfHeaderBar) headerbar).get_bookmarks ()
+        // TODO: Do we need global search? (Set first parameter to false);
+        main_view.set_search_parameters (true, current_path, {});
+        main_view.set_dconf_path (ViewType.SEARCH, search_text);
     }
 
     ulong paths_changed_handler = 0;
@@ -348,19 +327,13 @@ private class DConfWindow : Adw.ApplicationWindow
         gkey_value_push_handler = model.gkey_value_push.connect (propagate_gkey_value_push);
         dkey_value_push_handler = model.dkey_value_push.connect (propagate_dkey_value_push);
     }
+
     private void on_paths_changed (SettingsModelCore _model, GenericSet<string> unused, bool internal_changes)
     {
-        // if (current_type == ViewType.SEARCH)
-        // {
-        //     if (!internal_changes)  // TODO do not react to value changes
-        //         reload_search_action.set_enabled (true);
-        // }
-        // else if (main_view.check_reload (current_type, current_path, !internal_changes))    // handle infobars in needed
-        //     reload_view ();
+        if (!main_view.check_reload (main_view.current_view, current_path, !internal_changes))
+            return;
 
-        // string complete_path;
-        // headerbar.get_complete_path (out complete_path);
-        // headerbar.update_ghosts (((SettingsModel) _model).get_fallback_path (complete_path));
+        reload_view ();
     }
     private void propagate_gkey_value_push (string full_name, uint16 context_id, Variant key_value, bool is_key_default)
     {
@@ -846,35 +819,30 @@ private class DConfWindow : Adw.ApplicationWindow
     * * Path requests
     \*/
 
-    protected void request_config (string full_name)
+    private void request_path (string path)
     {
-        main_view.prepare_object_view (full_name, ModelUtils.folder_context_id,
-                                       model.get_folder_properties (full_name),
-                                       true);
-        current_path = strdup (full_name);
-
-        // stop_search ();
-        // headerbar.search_mode_enabled = false; // do last to avoid flickering RegistryView before PropertiesView when selecting a search result
+        if (path.has_suffix ("/"))
+            request_folder (path);
+        else
+            request_object (path);
     }
 
     protected void request_folder (string full_name, string selected_or_empty = "", bool notify_missing = true)
     {
         string fallback_path = model.get_fallback_path (full_name);
+        bool is_ancestor = current_path.has_prefix (fallback_path);
 
         if (notify_missing && (fallback_path != full_name))
             cannot_find_folder (full_name); // do not place after, full_name is in some cases changed by set_directory()...
 
-        main_view.prepare_folder_view (create_key_model (fallback_path, model.get_children (fallback_path, true, true)), current_path.has_prefix (fallback_path));
         current_path = fallback_path;
+        main_view.prepare_folder_view (create_key_model (current_path, model.get_children (current_path, true, true)), is_ancestor);
+        main_view.set_dconf_path (ViewType.FOLDER, current_path);
 
-        // if (selected_or_empty == "")
-        //     main_view.select_row (headerbar.get_selected_child (fallback_path));
-        // else
-        //     main_view.select_row (selected_or_empty);
-
-        // stop_search ();
-        // headerbar.search_mode_enabled = false; // do last to avoid flickering RegistryView before PropertiesView when selecting a search result
+        if (selected_or_empty != "")
+            main_view.select_row (selected_or_empty);
     }
+
     private static GLib.ListStore create_key_model (string base_path, Variant? children)
     {
         GLib.ListStore key_model = new GLib.ListStore (typeof (SimpleSettingObject));
@@ -921,10 +889,10 @@ private class DConfWindow : Adw.ApplicationWindow
             main_view.prepare_object_view (full_name, context_id,
                                            model.get_key_properties (full_name, context_id, 0),
                                            current_path == ModelUtils.get_parent_path (full_name));
+            main_view.set_dconf_path (ViewType.OBJECT, current_path);
             // update_current_path (ViewType.OBJECT, strdup (full_name));
         }
 
-        show_search = false;
         // stop_search ();
         // headerbar.search_mode_enabled = false; // do last to avoid flickering RegistryView before PropertiesView when selecting a search result
     }
@@ -976,16 +944,12 @@ private class DConfWindow : Adw.ApplicationWindow
 
     protected void reload_view ()
     {
-        // FIXME WHY DO WE NEED THIS
-        // if (main_view.current_view == ViewType.FOLDER)
-        //     request_folder (current_path, main_view.get_selected_row_name ());
-        // else if (main_view.current_view == ViewType.OBJECT)
-        //     request_object (current_path, ModelUtils.undefined_context_id, false);
-        // else if (main_view.current_view == ViewType.SEARCH)
-        // {
-        //     init_next_search = true;
-        //     request_search ();
-        // }
+        if (main_view.current_view == ViewType.FOLDER)
+            request_folder (current_path, main_view.get_selected_row_name ());
+        else if (main_view.current_view == ViewType.OBJECT)
+            request_object (current_path, ModelUtils.undefined_context_id, false);
+        else
+            request_search (search_entry.text);
     }
 
     protected void show_notification (string notification)
