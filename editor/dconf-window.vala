@@ -821,7 +821,7 @@ private class DConfWindow : Adw.ApplicationWindow
         }
         main_view.close_popovers ();
         string selected_row = main_view.get_selected_row_name ();
-        if (selected_row.has_suffix ("/"))
+        if (ModelUtils.is_folder_path (selected_row))
             reset_path ((!) selected_row, true);
         else
             main_view.set_selected_to_default ();
@@ -833,7 +833,7 @@ private class DConfWindow : Adw.ApplicationWindow
 
     private void request_path (string path)
     {
-        if (path.has_suffix ("/"))
+        if (ModelUtils.is_folder_path (path))
             request_folder (path);
         else
             request_object (path);

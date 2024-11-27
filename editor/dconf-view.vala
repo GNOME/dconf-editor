@@ -154,8 +154,7 @@ private class DConfView : BookmarksView
 
     private void on_path_changed ()
     {
-        // FIXME Let's find a better way to determine the expected view type
-        ViewType view_type = path.has_suffix ("/") ? ViewType.FOLDER : ViewType.OBJECT;
+        ViewType view_type = ModelUtils.is_folder_path (path) ? ViewType.FOLDER : ViewType.OBJECT;
         set_dconf_path (view_type, path);
     }
 
