@@ -25,7 +25,7 @@ private class BrowserStack : Box, BrowserContent
     [GtkChild] private unowned RegistryInfo object_view;
     [GtkChild] private unowned RegistrySearch search_view;
 
-    [CCode (notify = false)] internal ViewType current_view { internal get; protected set; default = ViewType.FOLDER; }
+    internal ViewType current_view { internal get; protected set; default = ViewType.FOLDER; }
 
     // private void set_window_size (AdaptativeWidget.WindowSize new_size)
     // {
