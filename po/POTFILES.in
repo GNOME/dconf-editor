@@ -1,7 +1,6 @@
 # List of source files containing translatable strings.
 # Please keep this file sorted alphabetically.
 editor/about-list.vala
-editor/adaptative-pathbar.vala
 editor/adaptative-window.vala
 editor/base-headerbar.ui
 editor/base-headerbar.vala
@@ -38,4 +37,3 @@ editor/registry-list.vala
 editor/registry-search.vala
 editor/registry-view.vala
 editor/setting-object.vala
-editor/short-pathbar.ui

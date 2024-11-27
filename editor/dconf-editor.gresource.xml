@@ -21,8 +21,6 @@
     <file preprocess="xml-stripblanks">dconf-window.ui</file>
     <file preprocess="xml-stripblanks">folder-list-box-row.ui</file>
     <file preprocess="xml-stripblanks">key-list-box-row.ui</file>
-    <file preprocess="xml-stripblanks">large-pathbar.ui</file>
-    <file preprocess="xml-stripblanks">large-pathbar-item.ui</file>
     <file preprocess="xml-stripblanks">modifications-action-bar.ui</file>
     <file preprocess="xml-stripblanks">modifications-view.ui</file>
     <file preprocess="xml-stripblanks">notifications-revealer.ui</file>
@@ -34,7 +32,6 @@
     <file preprocess="xml-stripblanks">registry-info.ui</file>
     <file preprocess="xml-stripblanks">registry-list.ui</file>
     <file preprocess="xml-stripblanks">registry-placeholder.ui</file>
-    <file preprocess="xml-stripblanks">short-pathbar.ui</file>
   </gresource>
   <gresource prefix="/ca/desrt/dconf-editor/gtk">
     <file preprocess="xml-stripblanks">help-overlay.ui</file>
