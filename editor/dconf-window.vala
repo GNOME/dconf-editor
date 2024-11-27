@@ -643,7 +643,9 @@ private class DConfWindow : Adw.ApplicationWindow
     {
         show_search = false;
         show_modifications_sheet = false;
-        request_folder (((!) path_variant).get_string ());
+        string target_path = ((!) path_variant).get_string ();
+        string selection = current_path;
+        request_folder (target_path, selection);
     }
 
 
