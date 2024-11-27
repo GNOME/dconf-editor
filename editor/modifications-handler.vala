@@ -30,7 +30,7 @@ internal enum ModificationsMode {
 
 private class ModificationsHandler : Object
 {
-    [CCode (notify = false)] internal ModificationsMode mode { internal get; private set; default = ModificationsMode.NONE; }
+    internal ModificationsMode mode { internal get; private set; default = ModificationsMode.NONE; }
 
     private HashTable<string, Variant?> keys_awaiting_hashtable = new HashTable<string, Variant?> (str_hash, str_equal);
 
