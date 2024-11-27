@@ -51,6 +51,8 @@ private class DConfWindow : Adw.ApplicationWindow
     [GtkChild] private unowned ModificationsView modifications_view;
     private DConfView main_view;
 
+    private Adw.Toast? current_toast;
+
     internal string saved_view { get; set; default = "/"; }
     internal string current_path { get; set; default = "/"; }
     internal bool delay_mode { get; set; default = false; }
@@ -1032,7 +1034,13 @@ private class DConfWindow : Adw.ApplicationWindow
 
     protected void show_notification (string notification)
     {
+        // We sometimes show toasts based on user input, so it is better if we
+        // only have one. Hide the old toast instead of forming a queue.
+        if (current_toast != null)
+            ((!) current_toast).dismiss ();
+
         Adw.Toast toast = new Adw.Toast (notification);
         toast_overlay.add_toast (toast);
+        current_toast = toast;
     }
 }
