@@ -45,16 +45,18 @@
   padding: 6px;
 }
 
+.delayed-list list .diff-bullet {
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-top: 0.17em;
+  -gtk-icon-size: 0.66em;
+}
+
                    .delayed-list          list > row        { padding:10px; }
                    .delayed-list          list .key-name    { padding-bottom:5px; }
 
                    .delayed-list:dir(ltr) list .value-label { padding-right:6px; }
                    .delayed-list:dir(rtl) list .value-label { padding-left :6px; }
-
-                   .delayed-list:dir(ltr) list .diff-bullet { padding-left :20px; padding-right:6px; }
-                   .delayed-list:dir(rtl) list .diff-bullet { padding-right:20px; padding-left :6px; }
-.extra-thin-window .delayed-list:dir(ltr) list .diff-bullet { padding-left : 8px; }
-.extra-thin-window .delayed-list:dir(rtl) list .diff-bullet { padding-right: 8px; }
 
 /*\
 * * bookmarks

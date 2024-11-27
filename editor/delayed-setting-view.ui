@@ -91,6 +91,7 @@
             <property name="icon-name">list-add-symbolic</property>
             <style>
               <class name="diff-bullet"/>
+              <class name="accent"/>
             </style>
             <layout>
               <property name="column">0</property>
