@@ -11,7 +11,7 @@
     <property name="icon-size">normal</property>
   </object>
   <template class="BookmarksController" parent="GtkGrid">
-    <property name="hexpand">1</property>
+    <property name="hexpand">true</property>
     <property name="valign">center</property>
     <property name="column-spacing">6</property>
     <child>
@@ -90,8 +90,8 @@
     </child>
     <child>
       <object class="GtkButton" id="rows_size_button">
-        <property name="visible">0</property>
-        <property name="hexpand">1</property>
+        <property name="visible">false</property>
+        <property name="hexpand">true</property>
         <property name="halign">end</property>
         <property name="action-name">bookmarks.set-small-rows</property>
         <style>

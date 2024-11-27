@@ -7,7 +7,7 @@
       <object class="AdwToolbarView">
         <property name="content">
           <object class="ModificationsList" id="modifications_list">
-            <property name="needs-shadows">True</property>
+            <property name="needs-shadows">true</property>
           </object>
         </property>
         <child type="bottom">

@@ -8,8 +8,8 @@
     </style>
     <child>
       <object class="GtkScrolledWindow" id="scrolled">
-        <property name="hexpand">1</property>
-        <property name="vexpand">1</property>
+        <property name="hexpand">true</property>
+        <property name="vexpand">true</property>
         <property name="child">
           <object class="AdwClamp">
             <child>

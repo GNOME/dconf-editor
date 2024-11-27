@@ -34,7 +34,7 @@
             </child>
             <child>
               <object class="GtkLabel" id="title_label">
-                <property name="wrap">True</property>
+                <property name="wrap">true</property>
                 <property name="wrap-mode">word-char</property>
                 <property name="justify">center</property>
                 <property
@@ -47,10 +47,10 @@
             </child>
             <child>
               <object class="GtkLabel">
-                <property name="wrap">True</property>
+                <property name="wrap">true</property>
                 <property name="wrap-mode">word-char</property>
                 <property name="justify">center</property>
-                <property name="use-markup">True</property>
+                <property name="use-markup">true</property>
                 <property
                   name="label"
                   bind-source="RegistryPlaceholder"

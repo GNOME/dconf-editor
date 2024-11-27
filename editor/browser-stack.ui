@@ -8,22 +8,16 @@
       <object class="GtkStack" id="stack">
         <!-- <property name="visible-child">folder_view</property> -->
         <property name="transition-type">crossfade</property>
-        <property name="hexpand">1</property>
-        <property name="vexpand">1</property>
+        <property name="hexpand">true</property>
+        <property name="vexpand">true</property>
         <child>
-          <object class="RegistryView" id="folder_view">
-            <property name="visible">True</property>
-          </object>
+          <object class="RegistryView" id="folder_view"/>
         </child>
         <child>
-          <object class="RegistryInfo" id="object_view">
-            <property name="visible">True</property>
-          </object>
+          <object class="RegistryInfo" id="object_view"/>
         </child>
         <child>
-          <object class="RegistrySearch" id="search_view">
-            <property name="visible">True</property>
-          </object>
+          <object class="RegistrySearch" id="search_view"/>
         </child>
       </object>
     </child>

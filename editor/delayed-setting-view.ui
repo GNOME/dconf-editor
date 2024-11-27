@@ -11,7 +11,7 @@
         <child>
           <object class="GtkLabel" id="key_name_label">
             <property name="halign">start</property>
-            <property name="hexpand">1</property>
+            <property name="hexpand">true</property>
             <style>
               <class name="key-name"/>
             </style>
@@ -25,7 +25,7 @@
         <child>
           <object class="GtkButton" id="cancel_change_button">
             <property name="halign">end</property>
-            <property name="hexpand">0</property>
+            <property name="hexpand">false</property>
             <property name="valign">center</property>
             <style>
               <class name="flat"/>
@@ -59,7 +59,7 @@
         </child>
         <child>
           <object class="GtkGrid">
-            <property name="hexpand">1</property>
+            <property name="hexpand">true</property>
             <child>
               <object class="GtkLabel" id="key_value_label">
                 <property name="halign">start</property>
@@ -73,7 +73,7 @@
             <child>
               <object class="GtkLabel" id="key_value_default">
                 <property name="halign">start</property>
-                <property name="hexpand">1</property>
+                <property name="hexpand">true</property>
                 <style>
                   <class name="bold-label"/>
                 </style>
@@ -100,7 +100,7 @@
         </child>
         <child>
           <object class="GtkGrid">
-            <property name="hexpand">1</property>
+            <property name="hexpand">true</property>
             <child>
               <object class="GtkLabel" id="planned_value_label">
                 <property name="halign">start</property>
@@ -115,7 +115,7 @@
             <child>
               <object class="GtkLabel" id="planned_value_default">
                 <property name="halign">start</property>
-                <property name="hexpand">1</property>
+                <property name="hexpand">true</property>
                 <style>
                   <class name="bold-label"/>
                 </style>

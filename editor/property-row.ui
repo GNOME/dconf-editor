@@ -2,7 +2,6 @@
 <interface>
   <requires lib="gtk" version="4.0"/>
   <template class="PropertyRow" parent="ListBoxRowWrapper">
-    <property name="visible">True</property>
     <property name="halign">fill</property>
     <property name="activatable">false</property>
     <child>

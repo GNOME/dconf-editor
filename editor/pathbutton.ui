@@ -4,7 +4,7 @@
     <child>
       <object class="AdwButtonContent" id="button_content">
         <property name="label" translatable="yes">_Open</property>
-        <property name="use-underline">True</property>
+        <property name="use-underline">true</property>
       </object>
     </child>
   </template>

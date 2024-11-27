@@ -6,7 +6,6 @@
     <property name="orientation">vertical</property>
     <child>
       <object class="GtkStack" id="stack">
-        <property name="visible">True</property>
         <property name="transition-type">over-down-up</property>
         <property name="transition-duration">300</property>
         <child>

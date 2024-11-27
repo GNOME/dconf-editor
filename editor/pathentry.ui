@@ -3,13 +3,13 @@
   <requires lib="gtk" version="4.0"/>
   <template class="PathEntry" parent="GtkBox">
     <property name="valign">center</property>
-    <property name="hexpand">1</property>
+    <property name="hexpand">true</property>
     <style>
       <class name="linked"/>
     </style>
     <child>
       <object class="GtkSearchEntry" id="search_entry">
-        <property name="hexpand">1</property>
+        <property name="hexpand">true</property>
         <style>
           <class name="search-entry"/>
         </style>
@@ -17,14 +17,14 @@
     </child>
     <child>
       <object class="GtkButton" id="search_action_button">
-        <property name="visible">0</property>
+        <property name="visible">false</property>
         <property name="action-name">browser.search-changed</property>
         <property name="action-target">@ms nothing</property>
       </object>
     </child>
     <child>
       <object class="GtkButton" id="hide_search_button">
-        <property name="visible">0</property>
+        <property name="visible">false</property>
         <property name="action-name">browser.hide-search</property>
         <style>
           <class name="image-button"/>

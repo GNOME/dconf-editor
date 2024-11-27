@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <template class="Pathbar" parent="GtkBox">
-    <property name="hexpand">True</property>
+    <property name="hexpand">true</property>
     <property name="overflow">hidden</property>
     <child>
       <object class="GtkScrolledWindow" id="scrolled_window">
-        <property name="hexpand">True</property>
+        <property name="hexpand">true</property>
         <property name="hscrollbar-policy">external</property>
         <property name="vscrollbar-policy">never</property>
         <property name="hadjustment">

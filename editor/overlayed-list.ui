@@ -2,8 +2,8 @@
 <interface>
   <requires lib="gtk" version="4.0"/>
   <template class="OverlayedList" parent="GtkBox">
-    <property name="hexpand">1</property>
-    <property name="vexpand">1</property>
+    <property name="hexpand">true</property>
+    <property name="vexpand">true</property>
     <style>
       <class name="overlayed-list"/>
       <class name="vertical"/>
@@ -11,17 +11,16 @@
     </style>
     <child>
       <object class="GtkOverlay" id="overlay">
-        <property name="visible">1</property>
-        <property name="hexpand">1</property>
-        <property name="vexpand">1</property>
+        <property name="hexpand">true</property>
+        <property name="vexpand">true</property>
         <property name="child">
           <object class="GtkScrolledWindow" id="scrolled">
-            <property name="hexpand">1</property>
-            <property name="vexpand">1</property>
+            <property name="hexpand">true</property>
+            <property name="vexpand">true</property>
             <property name="hscrollbar-policy">never</property>
             <!-- <property name="max-content-height">300</property> -->
-            <property name="propagate-natural-width">1</property>
-            <property name="propagate-natural-height">1</property>
+            <property name="propagate-natural-width">true</property>
+            <property name="propagate-natural-height">true</property>
             <child>
               <object class="AdwClamp">
                 <child>
@@ -62,7 +61,7 @@
         </property>
         <child type="overlay">
           <object class="GtkBox" id="edit_mode_box">
-            <property name="visible">0</property>
+            <property name="visible">false</property>
             <property name="halign">center</property>
             <property name="valign">end</property>
             <property name="width-request">200</property>
@@ -72,10 +71,10 @@
             </style>
             <child>
               <object class="GtkButton" id="leave_edit_mode_button">
-                <property name="hexpand">1</property>
-                <!-- <property name="centered">True</property> -->
-                <!-- <property name="iconic">True</property> -->
-                <property name="focus-on-click">0</property>
+                <property name="hexpand">true</property>
+                <!-- <property name="centered">true</property> -->
+                <!-- <property name="iconic">true</property> -->
+                <property name="focus-on-click">false</property>
                 <style>
                   <class name="left-on-ltr"/>
                 </style>
@@ -83,10 +82,10 @@
             </child>
             <child>
               <object class="GtkButton" id="enter_edit_mode_button">
-                <property name="hexpand">1</property>
-                <!-- <property name="centered">True</property> -->
-                <!-- <property name="iconic">True</property> -->
-                <property name="focus-on-click">0</property>
+                <property name="hexpand">true</property>
+                <!-- <property name="centered">true</property> -->
+                <!-- <property name="iconic">true</property> -->
+                <property name="focus-on-click">false</property>
                 <style>
                   <class name="right-on-ltr"/>
                 </style>

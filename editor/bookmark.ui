@@ -10,9 +10,9 @@
         </style>
         <child>
           <object class="GtkLabel" id="bookmark_label">
-            <property name="hexpand">1</property>
+            <property name="hexpand">true</property>
             <property name="halign">start</property>
-            <property name="vexpand">1</property>
+            <property name="vexpand">true</property>
             <property name="max-width-chars">42</property>
             <property name="ellipsize">start</property>
           </object>

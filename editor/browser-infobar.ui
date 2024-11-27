@@ -5,18 +5,18 @@
   <template class="BrowserInfoBar" parent="GtkBox">
     <child>
       <object class="GtkRevealer" id="revealer">
-        <property name="visible">0</property>
+        <property name="visible">false</property>
         <property name="child">
           <object class="GtkInfoBar">
             <property name="message-type">warning</property>
             <!-- <child type="action_area"> -->
             <!--   <object class="GtkBox"> -->
-            <!--     <property name="visible">0</property> -->
+            <!--     <property name="visible">false</property> -->
             <!--   </object> -->
             <!-- </child> -->
             <child>
               <object class="GtkBox">
-                <property name="visible">0</property>
+                <property name="visible">false</property>
                 <child>
                   <object class="GtkStack" id="content">
                     <property name="halign">center</property>

@@ -5,7 +5,7 @@
     <property name="column-spacing">6</property>
     <child>
       <object class="GtkMenuButton" id="menu_button">
-        <property name="hexpand">1</property>
+        <property name="hexpand">true</property>
         <property name="xalign">0</property>
         <style>
           <class name="invisible"/>

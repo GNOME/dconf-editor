@@ -10,21 +10,20 @@
             <property name="message-type">warning</property>
             <!-- <child internal-child="action_area"> -->
             <!--   <object class="GtkBox"> -->
-            <!--     <property name="visible">0</property> -->
+            <!--     <property name="visible">false</property> -->
             <!--   </object> -->
             <!-- </child> -->
             <child>
               <object class="GtkBox">
-                <property name="visible">0</property>
+                <property name="visible">false</property>
                 <child>
                   <object class="RegistryWarning">
-                    <property name="visible">True</property>
                     <property name="halign">center</property>
                     <child>
                       <object class="GtkLabel">
-                        <property name="hexpand">1</property>
+                        <property name="hexpand">true</property>
                         <property name="max-width-chars">40</property>
-                        <property name="wrap">1</property>
+                        <property name="wrap">true</property>
                         <property name="label" translatable="1">This key is defined and used by more than one schema. This could lead to problems. Edit value at your own risk.</property>
                       </object>
                     </child>
@@ -43,21 +42,20 @@
             <property name="message-type">warning</property>
             <!-- <child internal-child="action_area"> -->
             <!--   <object class="GtkBox"> -->
-            <!--     <property name="visible">0</property> -->
+            <!--     <property name="visible">false</property> -->
             <!--   </object> -->
             <!-- </child> -->
             <child>
               <object class="GtkBox">
-                <property name="visible">0</property>
+                <property name="visible">false</property>
                 <child>
                   <object class="RegistryWarning">
-                    <property name="visible">True</property>
                     <property name="halign">center</property>
                     <child>
                       <object class="GtkLabel">
-                        <property name="hexpand">1</property>
+                        <property name="hexpand">true</property>
                         <property name="max-width-chars">40</property>
-                        <property name="wrap">1</property>
+                        <property name="wrap">true</property>
                         <property name="label" translatable="1">This key is incompatibly defined and used by more than one schema. It is impossible to work with its value in a meaningful way.</property>
                       </object>
                     </child>
@@ -75,22 +73,21 @@
           <object class="GtkInfoBar">
             <!-- <child internal-child="action_area"> -->
             <!--   <object class="GtkBox"> -->
-            <!--     <property name="visible">0</property> -->
+            <!--     <property name="visible">false</property> -->
             <!--   </object> -->
             <!-- </child> -->
             <child>
               <object class="GtkBox">
-                <property name="visible">0</property>
+                <property name="visible">false</property>
                 <child>
                   <object class="RegistryWarning">
-                    <property name="visible">True</property>
                     <property name="halign">center</property>
                     <child>
                       <object class="GtkLabel">
-                        <property name="hexpand">1</property>
+                        <property name="hexpand">true</property>
                         <property name="xalign">0</property>
                         <property name="max-width-chars">40</property>
-                        <property name="wrap">1</property>
+                        <property name="wrap">true</property>
                         <property name="label" translatable="1">No schema available. A schema is what describes the use of a key, and Dconf Editor can’t find one associated with this key. If the application that was using this key has been uninstalled, or if this key is obsolete, you may want to erase it.</property>
                       </object>
                     </child>
@@ -115,37 +112,36 @@
           <object class="GtkInfoBar">
             <!-- <child internal-child="action_area"> -->
             <!--   <object class="GtkBox"> -->
-            <!--     <property name="visible">0</property> -->
+            <!--     <property name="visible">false</property> -->
             <!--   </object> -->
             <!-- </child> -->
             <child>
               <object class="GtkBox">
-                <property name="visible">0</property>
+                <property name="visible">false</property>
                 <child>
                   <object class="RegistryWarning">
-                    <property name="visible">True</property>
                     <property name="halign">center</property>
                     <child>
                       <object class="GtkLabel" id="one_choice_enum_warning">
-                        <property name="hexpand">1</property>
+                        <property name="hexpand">true</property>
                         <property name="max-width-chars">40</property>
-                        <property name="wrap">1</property>
+                        <property name="wrap">true</property>
                         <property name="label" translatable="1">This enumeration offers only one choice. That’s probably an error of the application that installed this schema. If possible, please open a bug about it.</property>
                       </object>
                     </child>
                     <child>
                       <object class="GtkLabel" id="one_choice_integer_warning">
-                        <property name="hexpand">1</property>
+                        <property name="hexpand">true</property>
                         <property name="max-width-chars">40</property>
-                        <property name="wrap">1</property>
+                        <property name="wrap">true</property>
                         <property name="label" translatable="1">This integer key can only take one value. That’s probably an error of the application that installed this schema. If possible, please open a bug about it.</property>
                       </object>
                     </child>
                     <child>
                       <object class="GtkLabel" id="one_choice_tuple_warning">
-                        <property name="hexpand">1</property>
+                        <property name="hexpand">true</property>
                         <property name="max-width-chars">40</property>
-                        <property name="wrap">1</property>
+                        <property name="wrap">true</property>
                         <property name="label" translatable="1">This key has a special “empty tuple” type. That’s probably an error of the application that installed this schema. If possible, please open a bug about it.</property>
                       </object>
                     </child>
@@ -159,7 +155,7 @@
     </child>
     <child>
       <object class="GtkScrolledWindow">
-        <property name="vexpand">1</property>
+        <property name="vexpand">true</property>
         <child>
           <object class="AdwClamp">
             <property name="child">
