@@ -117,6 +117,18 @@ private class DConfWindow : Adw.ApplicationWindow
         bind_property ("current-path", main_view, "path", BindingFlags.SYNC_CREATE);
         content_box.append (main_view);
 
+        main_view.notify["current_view"].connect (
+            () => {
+                bool is_listing_view = (
+                    main_view.current_view == ViewType.FOLDER
+                    || main_view.current_view == ViewType.OBJECT
+                );
+                action_set_enabled ("ui.reset-recursive", is_listing_view);
+                action_set_enabled ("ui.reset-current-recursively", is_listing_view);
+                action_set_enabled ("ui.reset-current-non-recursively", is_listing_view);
+            }
+        );
+
         install_ui_action_entries ();
         install_browser_action_entries ();
         install_kbd_action_entries ();
