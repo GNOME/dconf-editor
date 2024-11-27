@@ -789,6 +789,7 @@ private class KeyEditorChildArray : Grid, KeyEditorChild
         text_view = new TextView ();
         text_view.visible = true;
         // text_view.expand = true;
+        text_view.hexpand = true;
         text_view.wrap_mode = WrapMode.WORD;
         text_view.monospace = true;
         // text_view.key_press_event.connect (on_key_press_event);
