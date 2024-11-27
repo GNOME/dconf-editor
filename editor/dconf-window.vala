@@ -591,7 +591,8 @@ private class DConfWindow : Adw.ApplicationWindow
             if (model.is_key_ghost (path))
                 return 0;
 
-            enter_delay_mode ();
+            if (!modifications_handler.get_current_delay_mode ())
+                modifications_handler.enter_delay_mode ();
             modifications_handler.add_delayed_setting (path, null, ModelUtils.dconf_context_id);
             return 1;
         }
@@ -606,7 +607,8 @@ private class DConfWindow : Adw.ApplicationWindow
             if (is_key_default)
                 return 0;
 
-            enter_delay_mode ();
+            if (!modifications_handler.get_current_delay_mode ())
+                modifications_handler.enter_delay_mode ();
             modifications_handler.add_delayed_setting (path, null, context_id);
             return 1;
         }
