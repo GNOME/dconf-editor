@@ -191,6 +191,28 @@
         </child>
       </object>
     </child>
+    <child>
+      <object class='GtkShortcutController'>
+        <child>
+          <object class='GtkShortcut'>
+            <property name='trigger'>&lt;Alt&gt;i</property>
+            <property name='action'>action(ui.show-modifications)</property>
+          </object>
+        </child>
+        <child>
+          <object class='GtkShortcut'>
+            <property name='trigger'>&lt;Alt&gt;Return</property>
+            <property name='action'>action(ui.apply-delayed-settings)</property>
+          </object>
+        </child>
+        <child>
+          <object class='GtkShortcut'>
+            <property name='trigger'>F5|&lt;Primary&gt;r</property>
+            <property name='action'>action(browser.reload-view)</property>
+          </object>
+        </child>
+      </object>
+    </child>
   </template>
   <menu id="primary_menu_model">
     <section>
