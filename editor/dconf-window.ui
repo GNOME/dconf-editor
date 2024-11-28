@@ -5,6 +5,7 @@
   <template class="DConfWindow" parent="AdwApplicationWindow">
     <property name="default-width">700</property>
     <property name="default-height">500</property>
+    <signal name="show" handler="on_show"/>
     <child>
       <object class="AdwToastOverlay" id="toast_overlay">
         <child>
@@ -214,6 +215,18 @@
       </object>
     </child>
   </template>
+  <object class="AdwAlertDialog" id="initial_warning_dialog">
+    <property name="heading" translatable="true">Thanks for using Dconf Editor for editing your settings!</property>
+    <property name="body" translatable="true">Don’t forget that some options may break applications, so be careful.</property>
+    <responses>
+      <response id="close" translatable="yes">I’ll be careful.</response>
+    </responses>
+    <child>
+      <object class="GtkCheckButton" id="show_initial_warning_checkbutton">
+        <property name="label" translatable="true">Show this dialog next time.</property>
+      </object>
+    </child>
+  </object>
   <menu id="primary_menu_model">
     <section>
       <item>

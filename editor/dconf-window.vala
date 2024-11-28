@@ -49,10 +49,13 @@ private class DConfWindow : Adw.ApplicationWindow
     [GtkChild] private unowned Gtk.SearchEntry search_entry;
     [GtkChild] private unowned Gtk.Box content_box;
     [GtkChild] private unowned ModificationsView modifications_view;
+    [GtkChild] private unowned Adw.AlertDialog initial_warning_dialog;
+    [GtkChild] private unowned Gtk.CheckButton show_initial_warning_checkbutton;
     private DConfView main_view;
 
     private Adw.Toast? current_toast;
 
+    internal bool disable_warning { get; set; default = false; }
     internal string saved_view { get; set; default = "/"; }
     internal string current_path { get; set; default = "/"; }
     internal bool delay_mode { get; set; default = false; }
@@ -73,7 +76,7 @@ private class DConfWindow : Adw.ApplicationWindow
         }
     }
 
-    internal DConfWindow (bool disable_warning, string? schema, string? path, string? key_name)
+    internal DConfWindow (string? schema, string? path, string? key_name)
     {
         notify["show-search"].connect (
             () => {
@@ -145,8 +148,7 @@ private class DConfWindow : Adw.ApplicationWindow
         behaviour_changed_handler = settings.changed ["behaviour"].connect_after (invalidate_popovers_with_ui_reload);
         settings.bind ("behaviour", modifications_handler, "behaviour", SettingsBindFlags.GET|SettingsBindFlags.NO_SENSITIVITY);
 
-        if (!disable_warning && settings.get_boolean ("show-warning"))
-            show.connect (show_initial_warning);
+        settings.bind ("show-warning", show_initial_warning_checkbutton, "active", SettingsBindFlags.DEFAULT);
 
         /* init current_path */
         bool restore_view = settings.get_boolean ("restore-view");
@@ -244,7 +246,15 @@ private class DConfWindow : Adw.ApplicationWindow
     }
 
     [GtkCallback]
-    private void on_location_entry_activate () {
+    private void on_show ()
+    {
+        if (!disable_warning && settings.get_boolean ("show-warning"))
+            initial_warning_dialog.present (this);
+    }
+
+    [GtkCallback]
+    private void on_location_entry_activate ()
+    {
         // TODO: Validate text while typing
         // FIXME: We should be able to set current_path to the text and have the
         //        the appropriate events fire.
@@ -253,7 +263,8 @@ private class DConfWindow : Adw.ApplicationWindow
     }
 
     [GtkCallback]
-    private void on_location_entry_focus_leave () {
+    private void on_location_entry_focus_leave ()
+    {
         /* Hide the location entry if it loses focus, but not if the window itself
          * loses focus, borrowing a behaviour from Nautilus
          */
@@ -264,7 +275,8 @@ private class DConfWindow : Adw.ApplicationWindow
     }
 
     [GtkCallback]
-    private void on_search_entry_changed () {
+    private void on_search_entry_changed ()
+    {
         request_search (search_entry.text);
     }
 
@@ -276,6 +288,7 @@ private class DConfWindow : Adw.ApplicationWindow
         if (search_text == "")
         {
             request_path (current_path);
+            stdout.printf ("EXIT SEARCH %s\n", current_path);
             return;
         }
 
@@ -284,7 +297,8 @@ private class DConfWindow : Adw.ApplicationWindow
         // var bookmarks = ((DConfHeaderBar) headerbar).get_bookmarks ()
         // TODO: Do we need global search? (Set first parameter to false);
         main_view.set_search_parameters (true, current_path, {});
-        main_view.set_dconf_path (ViewType.SEARCH, search_text);
+        // FIXME AAAAH HOW DO WE DO THIS WITH THE PATH PROPERTY
+        // main_view.set_dconf_path (ViewType.SEARCH, search_text);
     }
 
     ulong paths_changed_handler = 0;
@@ -336,43 +350,17 @@ private class DConfWindow : Adw.ApplicationWindow
 
         queue_reload ();
     }
+
     private void propagate_gkey_value_push (string full_name, uint16 context_id, Variant key_value, bool is_key_default)
     {
         main_view.gkey_value_push (full_name, context_id, key_value, is_key_default);
         modifications_view.gkey_value_push  (full_name, context_id, key_value, is_key_default);
     }
+
     private void propagate_dkey_value_push (string full_name, Variant? key_value_or_null)
     {
         main_view.dkey_value_push (full_name, key_value_or_null);
         modifications_view.dkey_value_push  (full_name, key_value_or_null);
-    }
-
-    /*\
-    * * initial warning
-    \*/
-
-    private void show_initial_warning ()
-    {
-        // FIXME: This should be in the UI file?!
-
-        Adw.AlertDialog dialog = new Adw.AlertDialog (
-            /* Translators: initial "use at your own risk" dialog, the welcoming text */
-            _("Thanks for using Dconf Editor for editing your settings!"),
-            /* Translators: initial "use at your own risk" dialog, the warning text */
-              _("Don’t forget that some options may break applications, so be careful.")
-        );
-
-        /* Translators: initial "use at your own risk" dialog, the button label */
-        dialog.add_response ("close", _("I’ll be careful."));
-
-        dialog.set_close_response ("close");
-
-        /* Translators: initial "use at your own risk" dialog, the checkbox label */
-        CheckButton checkbutton = new CheckButton.with_label (_("Show this dialog next time."));
-        settings.bind ("show-warning", checkbutton, "active", SettingsBindFlags.DEFAULT);
-        dialog.set_extra_child (checkbutton);
-
-        dialog.present (this);
     }
 
     /*\

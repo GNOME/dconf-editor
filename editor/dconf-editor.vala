@@ -549,7 +549,8 @@ private class ConfigurationEditor : Adw.Application
 
     private Gtk.Window get_new_window (string? schema, string? path, string? key_name)
     {
-        DConfWindow window = new DConfWindow (disable_warning, schema, path, key_name);
+        DConfWindow window = new DConfWindow (schema, path, key_name);
+        window.disable_warning = disable_warning;
         add_window (window);
 
         return (Gtk.Window) window;
