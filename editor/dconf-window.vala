@@ -58,6 +58,7 @@ private class DConfWindow : Adw.ApplicationWindow
     internal bool disable_warning { get; set; default = false; }
     internal string saved_view { get; set; default = "/"; }
     internal string current_path { get; set; default = "/"; }
+    internal string? current_query { get; set; default = null; }
     internal bool delay_mode { get; set; default = false; }
     internal bool show_search { get; set; default = false; }
     internal bool show_location { get; set; default = false; }
@@ -117,6 +118,7 @@ private class DConfWindow : Adw.ApplicationWindow
 
         main_view = new DConfView (modifications_handler);
         bind_property ("current-path", main_view, "path", BindingFlags.SYNC_CREATE);
+        bind_property ("current-query", main_view, "query", BindingFlags.SYNC_CREATE);
         content_box.append (main_view);
 
         main_view.notify["current_view"].connect (
@@ -290,20 +292,12 @@ private class DConfWindow : Adw.ApplicationWindow
         if (!show_search && search_text != "")
             show_search = true;
 
-        if (search_text == "")
-        {
-            request_path (current_path);
-            stdout.printf ("EXIT SEARCH %s\n", current_path);
-            return;
-        }
+        // TODO: Do we need global search? (We'd need to change the path for that);
 
-        // FIXME: I don't know what search used to do with bookmarks but this
-        //        was involved.
-        // var bookmarks = ((DConfHeaderBar) headerbar).get_bookmarks ()
-        // TODO: Do we need global search? (Set first parameter to false);
-        main_view.set_search_parameters (true, current_path, {});
-        // FIXME AAAAH HOW DO WE DO THIS WITH THE PATH PROPERTY
-        // main_view.set_dconf_path (ViewType.SEARCH, search_text);
+        if (search_text != "")
+            current_query = search_text;
+        else
+            current_query = null;
     }
 
     ulong paths_changed_handler = 0;
@@ -350,7 +344,7 @@ private class DConfWindow : Adw.ApplicationWindow
 
     private void on_paths_changed (SettingsModelCore _model, GenericSet<string> unused, bool internal_changes)
     {
-        if (!main_view.check_reload (main_view.current_view, current_path, !internal_changes))
+        if (!main_view.check_reload (!internal_changes))
             return;
 
         queue_reload ();

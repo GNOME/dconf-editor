@@ -21,7 +21,8 @@ private class DConfView : BookmarksView
 {
     private BrowserStack dconf_content;
 
-    public string path { get; set; default = "/"; }
+    public string path { get; set; }
+    public string? query { get; set; }
 
     construct
     {
@@ -35,7 +36,7 @@ private class DConfView : BookmarksView
         dconf_content = _dconf_content;
 
         notify["path"].connect (on_path_changed);
-        on_path_changed ();
+        notify["query"].connect (on_path_changed);
     }
 
     private ModificationsHandler _modifications_handler;
@@ -154,14 +155,28 @@ private class DConfView : BookmarksView
 
     private void on_path_changed ()
     {
-        ViewType view_type = ModelUtils.is_folder_path (path) ? ViewType.FOLDER : ViewType.OBJECT;
-        set_dconf_path (view_type, path);
-    }
+        if (query != null)
+        {
+            // FIXME: This might break something
+            hide_reload_warning ();
+            // FIXME: I don't know what search used to do with bookmarks but this
+            //        was involved in DConfWindow.
+            // var bookmarks = ((DConfHeaderBar) headerbar).get_bookmarks ()
+            dconf_content.set_search_parameters (true, path, last_context_id, {}, sorting_options);
+            dconf_content.set_path (ViewType.SEARCH, (!) query);
+        }
+        else if (ModelUtils.is_folder_path (path))
+        {
+            dconf_content.set_path (ViewType.FOLDER, path);
+            modifications_handler.apply_or_dismiss_delayed_settings ();
+        }
+        else
+        {
+            dconf_content.set_path (ViewType.OBJECT, path);
+            modifications_handler.apply_or_dismiss_delayed_settings ();
+        }
 
-    internal override void set_dconf_path (ViewType type, string path)
-    {
-        dconf_content.set_path (type, path);
-        modifications_handler.apply_or_dismiss_delayed_settings ();
+        // TODO: Check if we actually still need this.
         invalidate_popovers ();
     }
 
@@ -169,17 +184,11 @@ private class DConfView : BookmarksView
     * * reload
     \*/
 
-    internal void set_search_parameters (bool local_search, string current_path, string [] bookmarks)
-    {
-        hide_reload_warning ();
-        dconf_content.set_search_parameters (local_search, current_path, last_context_id, bookmarks, sorting_options);
-    }
-
-    internal bool check_reload (ViewType type, string path, bool show_infobar)
+    internal bool check_reload (bool show_infobar)
     {
         SettingsModel model = modifications_handler.model;
 
-        if (type == ViewType.FOLDER || (type == ViewType.CONFIG && ModelUtils.is_folder_path (path)))
+        if (current_view == ViewType.FOLDER)
         {
             if (!dconf_content.check_reload_folder (model.get_children (path)))
                 return false;
@@ -189,7 +198,7 @@ private class DConfView : BookmarksView
                 return false;
             }
         }
-        else if (type == ViewType.OBJECT || type == ViewType.CONFIG)
+        else if (current_view == ViewType.OBJECT)
         {
             if (model.key_exists (path, last_context_id))
             {
@@ -206,7 +215,7 @@ private class DConfView : BookmarksView
                 return false;
             }
         }
-        else if (type == ViewType.SEARCH)
+        else if (current_view == ViewType.SEARCH)
             ; // do nothing; we will always reload this view
         else
             assert_not_reached ();
