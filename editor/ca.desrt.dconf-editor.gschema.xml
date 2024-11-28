@@ -82,7 +82,35 @@
 ]>
 
 <schemalist gettext-domain='dconf-editor'>
-  <schema id="ca.desrt.dconf-editor.Lib">
+  <enum id="ca.desrt.dconf-editor.Behaviour">
+    <value value="0" nick="unsafe"/>
+    <value value="1" nick="safe"/>
+    <value value="2" nick="always-confirm-implicit"/>
+    <value value="3" nick="always-confirm-explicit"/>
+    <value value="4" nick="always-delay"/>
+  </enum>
+  <flags id="ca.desrt.dconf-editor.RelocatableSchemasEnabledMappings">
+    <value value="1" nick="User"/>
+    <value value="2" nick="Built-in"/>
+    <value value="4" nick="Internal"/>
+    <value value="8" nick="Startup"/>
+  </flags>
+  <schema id="ca.desrt.dconf-editor.Settings" path="/ca/desrt/dconf-editor/">
+    <child schema="ca.desrt.dconf-editor.Demo" name="demo"/>
+    <key name="restore-view" type="b">
+      <default>true</default>
+      <!-- Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/restore-view' -->
+      <summary>A flag to restore the last view</summary>
+      <!-- Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/restore-view' -->
+      <description>If “true”, Dconf Editor tries at launch to navigate to the path described in the “saved-view” key.</description>
+    </key>
+    <key name="saved-view" type="s">
+      <default>'/'</default>
+      <!-- Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/saved-view' -->
+      <summary>A path to restore the last view</summary>
+      <!-- Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/saved-view' -->
+      <description>If the “restore-view” key is set to “true”, Dconf Editor tries at launch to navigate to this path.</description>
+    </key>
     <key name="window-width" type="i">
       <default>540</default>
       <!-- see AdaptativeWindow.width-request at data/ui/adaptative-window.ui:22 -->
@@ -107,44 +135,6 @@
       <summary>A flag to enable maximized mode</summary>
       <!-- Translators: description of a settings key, see 'dconf-editor /org/gnome/iagno/window-is-maximized' -->
       <description>If “true”, the main window starts in maximized mode.</description>
-    </key>
-  </schema>
-
-  <enum id="ca.desrt.dconf-editor.Behaviour">
-    <value value="0" nick="unsafe"/>
-    <value value="1" nick="safe"/>
-    <value value="2" nick="always-confirm-implicit"/>
-    <value value="3" nick="always-confirm-explicit"/>
-    <value value="4" nick="always-delay"/>
-  </enum>
-  <flags id="ca.desrt.dconf-editor.RelocatableSchemasEnabledMappings">
-    <value value="1" nick="User"/>
-    <value value="2" nick="Built-in"/>
-    <value value="4" nick="Internal"/>
-    <value value="8" nick="Startup"/>
-  </flags>
-  <schema id="ca.desrt.dconf-editor.Settings" path="/ca/desrt/dconf-editor/">
-    <child schema="ca.desrt.dconf-editor.Demo" name="demo"/>
-    <key name="restore-view" type="b">
-      <default>true</default>
-      <!-- Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/restore-view' -->
-      <summary>A flag to restore the last view</summary>
-      <!-- Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/restore-view' -->
-      <description>If “true”, Dconf Editor tries at launch to navigate to the path described in the “saved-view” key.</description>
-    </key>
-    <key name="saved-pathbar-path" type="s">
-      <default>'/'</default>
-      <!-- Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/saved-pathbar-path' -->
-      <summary>A path to restore the pathbar state</summary>
-      <!-- Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/saved-pathbar-path' -->
-      <description>If the “restore-view” key is set to “true”, and if the path requested at startup is a parent path of this one, Dconf Editor tries to restore the pathbar state at this path.</description>
-    </key>
-    <key name="saved-view" type="s">
-      <default>'/'</default>
-      <!-- Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/saved-view' -->
-      <summary>A path to restore the last view</summary>
-      <!-- Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/saved-view' -->
-      <description>If the “restore-view” key is set to “true”, Dconf Editor tries at launch to navigate to this path.</description>
     </key>
     <key name="show-warning" type="b">
       <default>true</default>

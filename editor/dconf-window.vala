@@ -150,7 +150,25 @@ private class DConfWindow : Adw.ApplicationWindow
 
         settings.bind ("show-warning", show_initial_warning_checkbutton, "active", SettingsBindFlags.DEFAULT);
 
-        /* init current_path */
+        if (settings.get_boolean ("restore-view"))
+            settings.bind ("saved-view", this, "current-path", SettingsBindFlags.GET|SettingsBindFlags.GET_NO_CHANGES|SettingsBindFlags.SET);
+        else
+            settings.bind ("saved-view", this, "current-path", SettingsBindFlags.SET);
+
+        settings.bind ("window-width", this, "default-width", SettingsBindFlags.DEFAULT);
+        settings.bind ("window-height", this, "default-height", SettingsBindFlags.DEFAULT);
+        settings.bind ("window-is-maximized", this, "maximized", SettingsBindFlags.DEFAULT);
+
+        prepare_model ();
+
+        reload_view ();
+    }
+
+    private string create_initial_path (string? schema, string? path, string? key_name)
+    {
+        // FIXME: Put this functionality as needed in the constructor, but
+        //        delete everything we no longer need, which should be most of it.
+
         bool restore_view = settings.get_boolean ("restore-view");
         string? settings_saved_view = null;
         if (restore_view)
@@ -161,9 +179,6 @@ private class DConfWindow : Adw.ApplicationWindow
 
             /* string saved_path = settings.get_string ("saved-pathbar-path"); */
             string fallback_path = model.get_fallback_path (settings.get_string ("saved-pathbar-path"));
-            /* headerbar.set_path (ModelUtils.is_folder_path (saved_path) ? ViewType.FOLDER : ViewType.OBJECT, saved_path);
-            headerbar.update_ghosts (fallback_path);  // TODO allow a complete state restoration (including search and this) */
-            // headerbar.set_path (ModelUtils.is_folder_path (fallback_path) ? ViewType.FOLDER : ViewType.OBJECT, fallback_path);
         }
 
         SchemasUtility schemas_utility = new SchemasUtility ();
@@ -231,18 +246,10 @@ private class DConfWindow : Adw.ApplicationWindow
                 first_path = settings_saved_view;
         }
 
-        prepare_model ();
-
         if (first_path == null)
             first_path = "/";
 
-        string startup_path = model.get_startup_path_fallback ((!) first_path);
-        if (ModelUtils.is_folder_path (startup_path))
-            request_folder (startup_path);
-        else if (schema != null)
-            request_object (startup_path, ModelUtils.undefined_context_id, true, (!) schema);
-        else
-            request_object (startup_path, ModelUtils.undefined_context_id, true);
+        return (!) first_path;
     }
 
     [GtkCallback]
