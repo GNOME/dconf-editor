@@ -78,6 +78,12 @@
                                           <class name="pathbar" />
                                         </style>
                                         <property name="hexpand">true</property>
+                                        <property
+                                          name="path"
+                                          bind-source="DConfWindow"
+                                          bind-property="current-path"
+                                          bind-flags="sync-create"
+                                        />
                                       </object>
                                     </property>
                                   </object>

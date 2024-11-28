@@ -110,8 +110,6 @@ private class DConfWindow : Adw.ApplicationWindow
             }
         );
 
-        bind_property ("current-path", pathbar, "path", BindingFlags.SYNC_CREATE);
-
         search_entry.set_key_capture_widget (toolbar_view);
 
         model = new SettingsModel ();
