@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Copyright 2015 Arnaud Bonatti <arnaud.bonatti@gmail.com> -->
-<component type="desktop">
+<component type="desktop-application">
   <id>ca.desrt.dconf-editor.desktop</id>
 
   <metadata_license>CC0-1.0</metadata_license>
@@ -46,9 +46,9 @@
     <kudo>Notifications</kudo>
   </kudos>
 
-  <url type="homepage">https://wiki.gnome.org/Apps/DconfEditor</url>
+  <url type="homepage">https://apps.gnome.org/DconfEditor/</url>
   <url type="bugtracker">https://gitlab.gnome.org/GNOME/dconf-editor/issues</url>
-  <url type="translate">https://wiki.gnome.org/TranslationProject</url>
+  <url type="translate">https://l10n.gnome.org/module/dconf-editor/</url>
   <url type="vcs-browser">https://gitlab.gnome.org/GNOME/dconf-editor</url>
   <!--GNOME Projects usually have no per-app donation page-->
   <url type="donation">https://www.gnome.org/donate/</url>
@@ -56,10 +56,14 @@
   <project_group>GNOME</project_group>
   <!--a translatable version of project_group-->
   <developer_name>The GNOME Project</developer_name>
+  <developer id="org.gnome">
+    <name>The GNOME Project</name>
+  </developer>
   <content_rating type="oars-1.1"/>
 
   <provides>
     <binary>dconf-editor</binary>
   </provides>
   <translation type="gettext">dconf-editor</translation>
+  <launchable type="desktop-id">ca.desrt.dconf-editor.desktop</launchable>
 </component>
