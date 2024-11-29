@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <requires lib="gtk" version="4.14"/>
+  <template class="KeyEditorChildArray" parent="GtkBox">
+    <property name="hexpand">true</property>
+    <property name="orientation">vertical</property>
+    <style>
+      <class name="key-editor-child-array"/>
+      <class name="frame"/>
+    </style>
+    <child>
+      <object class="GtkScrolledWindow">
+        <child>
+          <object class="GtkTextView" id="text_view">
+            <property name="hexpand">true</property>
+            <property name="wrap-mode">word</property>
+            <property name="monospace">true</property>
+            <property name="accepts-tab">false</property>
+            <property name="buffer">
+              <object class="GtkTextBuffer">
+                <signal name="changed" handler="on_text_buffer_changed"/>
+              </object>
+            </property>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="GtkRevealer" id="error_revealer">
+        <property name="transition-type">slide-up</property>
+        <property name="child">
+          <object class="GtkActionBar">
+            <child type="start">
+              <object class="GtkImage">
+                <property name="icon-name">dialog-error-symbolic</property>
+                <style>
+                  <class name="error"/>
+                </style>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="label" translatable="true">This value is invalid for the key type.</property>
+                <property name="wrap">true</property>
+                <style>
+                  <class name="error"/>
+                </style>
+              </object>
+            </child>
+          </object>
+        </property>
+      </object>
+    </child>
+  </template>
+</interface>

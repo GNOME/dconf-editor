@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <requires lib="gtk" version="4.14"/>
+  <template class="KeyEditorChildDefault" parent="GtkEntry">
+    <property name="hexpand">true</property>
+    <signal name="changed" handler="on_changed"/>
+    <signal name="activate" handler="on_activate"/>
+    <style>
+      <class name="key-editor-child-entry"/>
+    </style>
+  </template>
+</interface>

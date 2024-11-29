@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <requires lib="gtk" version="4.14"/>
+  <template class="KeyEditorChildFlags" parent="GtkBox">
+    <property name="hexpand">true</property>
+    <property name="spacing">8</property>
+    <property name="orientation">horizontal</property>
+    <child>
+      <object class="GtkMenuButton" id="button">
+        <property name="halign">start</property>
+        <style>
+          <class name="image-button"/>
+        </style>
+      </object>
+    </child>
+    <child>
+      <object class="GtkLabel" id="label"/>
+    </child>
+  </template>
+</interface>

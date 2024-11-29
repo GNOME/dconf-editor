@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <requires lib="gtk" version="4.14"/>
+  <template class="KeyEditorChildEnum" parent="GtkBox">
+    <property name="hexpand">true</property>
+    <child>
+      <object class="GtkMenuButton" id="button">
+        <property name="width-request">100</property>
+      </object>
+    </child>
+  </template>
+</interface>

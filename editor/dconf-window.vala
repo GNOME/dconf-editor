@@ -503,8 +503,11 @@ private class DConfWindow : Adw.ApplicationWindow
     {
         { "open-folder", on_open_folder_activate, "s" },
         { "reload-view", on_reload_view_activate },
-        { "copy-location", on_copy_location_activate },
+        { "copy-current-path", on_copy_current_path_activate },
         { "open-object", on_open_object_activate, "(sq)" },
+
+        { "copy-value", on_copy_value_activate, "s" },
+
         // { "toggle-search", null, null, "false" }, // on_toggle_search_activate
 
         // { "empty",              empty, "*" },
@@ -653,10 +656,18 @@ private class DConfWindow : Adw.ApplicationWindow
         queue_reload ();
     }
 
-    private void on_copy_location_activate ()
+    private void on_copy_current_path_activate ()
     {
         Gdk.Clipboard clipboard = get_clipboard ();
         clipboard.set_value (current_path);
+    }
+
+    private void on_copy_value_activate (SimpleAction action, Variant? value_variant)
+        requires (value_variant != null)
+    {
+        string value_string = ((!) value_variant).get_string ();
+        Gdk.Clipboard clipboard = get_clipboard ();
+        clipboard.set_value (value_string);
     }
 
     private void on_modifications_handler_notify_mode ()

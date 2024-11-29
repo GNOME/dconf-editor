@@ -41,7 +41,7 @@
       </item>
       <item>
         <attribute name="label" translatable="true">Copy current path</attribute>
-        <attribute name="action">browser.copy-location</attribute>
+        <attribute name="action">browser.copy-current-path</attribute>
       </item>
       <item>
         <attribute name="label" translatable="true">Edit location</attribute>

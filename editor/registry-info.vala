@@ -298,6 +298,7 @@ private class RegistryInfo : Box, BrowsableView
         current_value_label.wrap = true;
         current_value_label.wrap_mode = Pango.WrapMode.WORD_CHAR;
         current_value_label.hexpand = true;
+        current_value_label.xalign = 0;
         add_row_from_widget (CURRENT_VALUE_FIELD_DESCRIPTION, current_value_label);
 
         add_separator ();

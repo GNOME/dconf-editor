@@ -73,7 +73,7 @@ private abstract class ClickableListBoxRow : Box
     * * right click popover stuff
     \*/
 
-    internal ContextPopover? nullable_popover = null;
+    internal Popover? nullable_popover = null;
 
     internal void destroy_popover ()
     {
@@ -93,6 +93,42 @@ private abstract class ClickableListBoxRow : Box
     {
         return (nullable_popover != null) && ((!) nullable_popover).visible;
     }
+
+    internal void show_right_click_popover (int event_x, int event_y)
+    {
+        if (nullable_popover == null)
+            return;
+
+        Gdk.Rectangle position = {x: event_x, y: event_y};
+        ((!) nullable_popover).set_pointing_to (position);
+        ((!) nullable_popover).popup ();
+    }
+
+    /* FIXME: Crudely copied from RegistryList. Needs a lot of work.
+     */
+
+    internal void generate_popover_if_needed (ModificationsHandler modifications_handler)
+    {
+        if (nullable_popover != null)
+            return;
+
+        // boolean test for rows without popovers, but that never happens in current design
+        if (!generate_popover (modifications_handler))
+        {
+            // ((!) nullable_popover).destroy ();  // TODO better, again
+            // nullable_popover = null;
+            return;
+        }
+
+        ((!) nullable_popover).destroy.connect_after (() => { nullable_popover = null; });
+        ((!) nullable_popover).has_arrow = false;
+        append ((!) nullable_popover);
+    }
+
+    protected virtual bool generate_popover (ModificationsHandler modifications_handler)
+    {
+        return false;
+    }
 }
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/folder-list-box-row.ui")]
@@ -107,6 +143,40 @@ private class FolderListBoxRow : ClickableListBoxRow
         Object (full_name: path, context_id: ModelUtils.folder_context_id, path_search: path_search, search_result_mode: search_result_mode);
         folder_name_label.set_text (search_result_mode ? path : label);
     }
+
+    [GtkCallback]
+    private void on_right_mouse_button_pressed (GestureClick gesture, int n_press, double x, double y)
+    {
+        show_right_click_popover ((int) x, (int) y);
+    }
+
+    protected override bool generate_popover (ModificationsHandler modifications_handler)
+    {
+        Variant variant = new Variant.string (full_name);
+
+        ContextPopoverBuilder builder = new ContextPopoverBuilder ();
+
+        if (search_result_mode)
+        {
+            builder.new_gaction ("open-parent", "browser.open-parent(" + variant.print (false) + ")");
+            builder.new_section ();
+        }
+
+        builder.new_gaction ("open-folder", "browser.open-folder(" + variant.print (false) + ")");
+        builder.new_gaction ("copy", "browser.copy-value(" + _get_folder_copy_text_variant ().print (false) + ")");
+        builder.new_section ();
+        builder.new_gaction ("recursivereset", "ui.reset-recursive(" + variant.print (false) + ")");
+
+        nullable_popover = builder.build ();
+
+        return true;
+    }
+
+    private inline Variant _get_folder_copy_text_variant ()
+    {
+        return new Variant.string (full_name);
+    }
+
 }
 
 [GtkTemplate (ui = "/ca/desrt/dconf-editor/ui/key-list-box-row.ui")]
@@ -268,25 +338,19 @@ private class KeyListBoxRow : ClickableListBoxRow
             if (has_schema)
             {
                 variant = new Variant ("(sq)", full_name, context_id);
-                actionable.set_detailed_action_name ("view.set-to-default(" + variant.print (true) + ")");
+                activate_action_variant ("view.set-to-default", variant);
             }
             else
             {
                 variant = new Variant.string (full_name);
-                actionable.set_detailed_action_name ("ui.erase(" + variant.print (false) + ")");
+                activate_action_variant ("ui.erase", variant);
             }
         }
         else
         {
             variant = new Variant ("(sqv)", full_name, context_id, (!) new_value);
-            actionable.set_detailed_action_name ("view.set-key-value(" + variant.print (true) + ")");
+            activate_action_variant ("view.set-key-value", variant);
         }
-        // Container child = (Container) get_child ();
-        // FIXME
-        // key_name_and_value_grid.add (actionable);
-        // actionable.clicked ();
-        // key_name_and_value_grid.remove (actionable);
-        // actionable.destroy ();
     }
 
     /*\
@@ -354,34 +418,294 @@ private class KeyListBoxRow : ClickableListBoxRow
         ((!) boolean_switch).set_active (key_value_boolean);
         ((!) boolean_switch).set_detailed_action_name (detailed_action_name);
     }
+
+    [GtkCallback]
+    private void on_right_mouse_button_pressed (GestureClick gesture, int n_press, double x, double y)
+    {
+        show_right_click_popover ((int) x, (int) y);
+    }
+
+    protected override bool generate_popover (ModificationsHandler modifications_handler)
+    {
+        if (context_id != ModelUtils.dconf_context_id)
+            return generate_gsettings_popover (modifications_handler, _get_key_copy_text_variant (modifications_handler));
+        else if (modifications_handler.model.is_key_ghost (full_name))
+            return generate_ghost_popover (_get_key_copy_text_variant (modifications_handler));
+        else
+            return generate_dconf_popover (modifications_handler, _get_key_copy_text_variant (modifications_handler));
+    }
+
+    private inline Variant _get_key_copy_text_variant (ModificationsHandler modifications_handler)
+    {
+        return new Variant.string (_get_key_copy_text (modifications_handler));
+    }
+
+    private inline string _get_key_copy_text (ModificationsHandler modifications_handler)
+    {
+        return modifications_handler.model.get_suggested_key_copy_text (full_name, context_id);
+    }
+
+    private bool generate_gsettings_popover (ModificationsHandler modifications_handler, Variant copy_text_variant)
+    {
+        ContextPopoverBuilder builder = new ContextPopoverBuilder ();
+
+        SettingsModel model = modifications_handler.model;
+
+        RegistryVariantDict properties = new RegistryVariantDict.from_aqv (model.get_key_properties (full_name, context_id, (uint16) (PropertyQuery.TYPE_CODE & PropertyQuery.RANGE_TYPE & PropertyQuery.RANGE_CONTENT & PropertyQuery.IS_DEFAULT & PropertyQuery.KEY_CONFLICT & PropertyQuery.KEY_VALUE)));
+
+        string type_string;
+        uint8 _range_type, _key_conflict;
+        Variant range_content;
+        bool is_key_default;
+        if (!properties.lookup (PropertyQuery.TYPE_CODE,            "s",    out type_string))
+            assert_not_reached ();
+        if (!properties.lookup (PropertyQuery.RANGE_TYPE,           "y",    out _range_type))
+            assert_not_reached ();
+        if (!properties.lookup (PropertyQuery.RANGE_CONTENT,        "v",    out range_content))
+            assert_not_reached ();
+        if (!properties.lookup (PropertyQuery.IS_DEFAULT,           "b",    out is_key_default))
+            assert_not_reached ();
+        if (!properties.lookup (PropertyQuery.KEY_CONFLICT,         "y",    out _key_conflict))
+            assert_not_reached ();
+        RangeType range_type = (RangeType) _range_type;
+        KeyConflict key_conflict = (KeyConflict) _key_conflict;
+
+        Variant variant_s = new Variant.string (full_name);
+        Variant variant_sq = new Variant ("(sq)", full_name, context_id);
+
+        if (search_result_mode)
+        {
+            builder.new_gaction ("open-parent", "browser.open-parent(" + variant_s.print (false) + ")");
+            builder.new_section ();
+        }
+
+        if (key_conflict == KeyConflict.HARD)
+        {
+            builder.new_gaction ("detail", "browser.open-object(" + variant_sq.print (true) + ")");
+            builder.new_gaction ("copy", "browser.copy-value(" + copy_text_variant.print (false) + ")");
+            properties.clear ();
+            return true; // anything else is value-related, so we are done
+        }
+
+        bool delayed_apply_menu = modifications_handler.get_current_delay_mode ();
+        bool planned_change = modifications_handler.key_has_planned_change (full_name);
+        Variant? planned_value = modifications_handler.get_key_planned_value (full_name);
+
+        builder.new_gaction ("customize", "browser.open-object(" + variant_sq.print (true) + ")");
+        builder.new_gaction ("copy", "browser.copy-value(" + copy_text_variant.print (false) + ")");
+
+        if (type_string == "b" || type_string == "<enum>" || type_string == "mb"
+            || (
+                (type_string == "y" || type_string == "q" || type_string == "u" || type_string == "t")
+                && (range_type == RangeType.RANGE)
+                && (Key.get_variant_as_uint64 (range_content.get_child_value (1)) - Key.get_variant_as_uint64 (range_content.get_child_value (0)) < 13)
+               )
+            || (
+                (type_string == "n" || type_string == "i" || type_string == "x")    // the handle type cannot have range
+                && (range_type == RangeType.RANGE)
+                && (Key.get_variant_as_int64 (range_content.get_child_value (1)) - Key.get_variant_as_int64 (range_content.get_child_value (0)) < 13)
+               )
+            || type_string == "()")
+        {
+            GLib.Action? action = null;
+
+            builder.new_section ();
+            if (planned_change)
+                builder.create_buttons_list (true, delayed_apply_menu, planned_change, type_string, range_content,
+                                                      modifications_handler.get_key_planned_value (full_name), out action);
+            else if (is_key_default)
+                builder.create_buttons_list (true, delayed_apply_menu, planned_change, type_string, range_content,
+                                                      null, out action);
+            else
+            {
+                Variant key_value;
+                if (!properties.lookup (PropertyQuery.KEY_VALUE,    "v",    out key_value))
+                    assert_not_reached ();
+                builder.create_buttons_list (true, delayed_apply_menu, planned_change, type_string, range_content, key_value, out action);
+            }
+
+            builder.on_change_dismissed (() => on_popover_change_dismissed ());
+            builder.on_value_changed (on_popover_value_change);
+        }
+        else if (!delayed_apply_menu && !planned_change && type_string == "<flags>")
+        {
+            builder.new_section ();
+
+            if (!is_key_default)
+                builder.new_gaction ("default2", "view.set-to-default(" + variant_sq.print (true) + ")");
+
+            string [] all_flags = range_content.get_strv ();
+            builder.create_flags_list (modifications_handler.get_key_custom_value (full_name, context_id).get_strv (), all_flags);
+            // FIXME Unbreak this :/
+            ActionMap action_map;
+            builder.peek_action_map (out action_map);
+            ulong delayed_modifications_changed_handler = modifications_handler.delayed_changes_changed.connect (
+                () => {
+                    string [] active_flags = modifications_handler.get_key_custom_value (full_name, context_id).get_strv ();
+                    foreach (string flag in all_flags)
+                        ContextPopoverBuilder.update_flag_status (action_map, flag, flag in active_flags);
+                }
+            );
+            // FIXME We really need this but also I don't care yet because this whole thing needs to be replaced
+            // popover.destroy.connect (() => modifications_handler.disconnect (delayed_modifications_changed_handler));
+
+            builder.on_value_changed (set_key_value);
+        }
+        else if (planned_change)
+        {
+            builder.new_section ();
+            builder.new_gaction ("dismiss", "ui.dismiss-change(" + variant_s.print (false) + ")");
+
+            if (planned_value != null)
+                builder.new_gaction ("default1", "view.set-to-default(" + variant_sq.print (true) + ")");
+        }
+        else if (!is_key_default)
+        {
+            builder.new_section ();
+            builder.new_gaction ("default1", "view.set-to-default(" + variant_sq.print (true) + ")");
+        }
+        properties.clear ();
+
+        nullable_popover = builder.build ();
+
+        return true;
+    }
+
+    private bool generate_ghost_popover (Variant copy_text_variant)
+    {
+        nullable_popover = new ContextPopoverBuilder ()
+            .new_gaction ("copy", "browser.copy-value(" + copy_text_variant.print (false) + ")")
+            .build ();
+        return true;
+    }
+
+    private bool generate_dconf_popover (ModificationsHandler modifications_handler, Variant copy_text_variant)
+    {
+        ContextPopoverBuilder builder = new ContextPopoverBuilder ();
+
+        SettingsModel model = modifications_handler.model;
+        Variant variant_s = new Variant.string (full_name);
+        Variant variant_sq = new Variant ("(sq)", full_name, ModelUtils.dconf_context_id);
+
+        if (search_result_mode)
+        {
+            builder.new_gaction ("open-parent", "browser.open-parent(" + variant_s.print (false) + ")");
+            builder.new_section ();
+        }
+
+        builder.new_gaction ("customize", "browser.open-object(" + variant_sq.print (true) + ")");
+        builder.new_gaction ("copy", "browser.copy-value(" + copy_text_variant.print (false) + ")");
+
+        bool planned_change = modifications_handler.key_has_planned_change (full_name);
+        Variant? planned_value = modifications_handler.get_key_planned_value (full_name);
+
+        GLib.Action? action = null;
+
+        if (type_string == "b" || type_string == "mb" || type_string == "()")
+        {
+            builder.new_section ();
+            bool delayed_apply_menu = modifications_handler.get_current_delay_mode ();
+            RegistryVariantDict properties = new RegistryVariantDict.from_aqv (model.get_key_properties (full_name, ModelUtils.dconf_context_id, (uint16) PropertyQuery.KEY_VALUE));
+            Variant key_value;
+            if (!properties.lookup (PropertyQuery.KEY_VALUE,        "v",    out key_value))
+                assert_not_reached ();
+            properties.clear ();
+            builder.create_buttons_list (true, delayed_apply_menu, planned_change, type_string, null,
+                                                              planned_change ? planned_value : key_value);
+
+            builder.on_change_dismissed (() => on_popover_change_dismissed ());
+            builder.on_value_changed (on_popover_value_change);
+
+            if (!delayed_apply_menu)
+            {
+                builder.new_section ();
+                builder.new_gaction ("erase", "ui.erase(" + variant_s.print (false) + ")");
+            }
+        }
+        else
+        {
+            if (planned_change)
+            {
+                builder.new_section ();
+                builder.new_gaction (planned_value == null ? "unerase" : "dismiss", "ui.dismiss-change(" + variant_s.print (false) + ")");
+            }
+
+            if (!planned_change || planned_value != null) // not &&
+            {
+                builder.new_section ();
+                builder.new_gaction ("erase", "ui.erase(" + variant_s.print (false) + ")");
+            }
+        }
+
+        nullable_popover = builder.build ();
+
+        return true;
+    }
+
+    private void on_popover_change_dismissed ()
+    {
+        destroy_popover ();
+        change_dismissed ();
+    }
+
+    private void on_popover_value_change (Variant? gvariant)
+    {
+        set_key_value (gvariant);
+    }
 }
 
-private class ContextPopover : Popover
+private class ContextPopoverBuilder : Object
 {
     private GLib.Menu menu = new GLib.Menu ();
     private GLib.Menu current_section;
 
     private ActionMap current_group = new SimpleActionGroup ();
 
-    // public signals
-    internal signal void value_changed (Variant? gvariant);
-    internal signal void change_dismissed ();
+    internal delegate void ValueChangedCallback (Variant? gvariant);
+    internal delegate void ChangeDismissedCallback ();
 
-    internal ContextPopover ()
+    private ValueChangedCallback value_changed;
+    private ChangeDismissedCallback change_dismissed;
+
+    // public signals
+    // internal signal void value_changed (Variant? gvariant);
+    // internal signal void change_dismissed ();
+
+    internal ContextPopoverBuilder ()
     {
         new_section_real ();
+    }
 
-        insert_action_group ("popmenu", (SimpleActionGroup) current_group);
+    internal Popover build ()
+    {
+        Gtk.PopoverMenu popover = new Gtk.PopoverMenu.from_model (menu);
+        popover.insert_action_group ("popmenu", (SimpleActionGroup) current_group);
+        return popover;
+    }
 
-        // FIXME: Make this a PopoverMenu?
-        // set_menu_model (menu, null);
+    internal ContextPopoverBuilder peek_action_map (out ActionMap out_action_map)
+    {
+        out_action_map = current_group;
+        return this;
+    }
+
+    internal ContextPopoverBuilder on_value_changed (ValueChangedCallback callback)
+    {
+        value_changed = callback;
+        return this;
+    }
+
+    internal ContextPopoverBuilder on_change_dismissed (ChangeDismissedCallback callback)
+    {
+        change_dismissed = callback;
+        return this;
     }
 
     /*\
     * * Simple actions
     \*/
 
-    internal void new_gaction (string action_name, string action_action)
+    internal ContextPopoverBuilder new_gaction (string action_name, string action_action)
     {
         string action_text;
         switch (action_name)
@@ -395,7 +719,7 @@ private class ContextPopover : Popover
             /* Translators: "reset key value" action in the right-click menu on the list of keys */
             case "default1":        action_text = _("Set to default");      break;
 
-            case "default2": new_multi_default_action (action_action);      return;
+            case "default2": new_multi_default_action (action_action);      return this;
 
             /* Translators: "open key-editor page" action in the right-click menu on the list of keys, when key is hard-conflicting */
             case "detail":          action_text = _("Show details…");       break;
@@ -430,13 +754,16 @@ private class ContextPopover : Popover
             default: assert_not_reached ();
         }
         current_section.append (action_text, action_action);
+        return this;
     }
 
-    internal void new_section ()
+    internal ContextPopoverBuilder new_section ()
     {
         current_section.freeze ();
         new_section_real ();
+        return this;
     }
+
     private void new_section_real ()
     {
         current_section = new GLib.Menu ();
@@ -447,13 +774,16 @@ private class ContextPopover : Popover
     * * Flags
     \*/
 
-    internal void create_flags_list (string [] active_flags, string [] all_flags)
+    internal ContextPopoverBuilder create_flags_list (string [] active_flags, string [] all_flags)
     {
         foreach (string flag in all_flags)
             create_flag (flag, flag in active_flags, all_flags);
 
         finalize_menu ();
+
+        return this;
     }
+
     private void create_flag (string flag, bool active, string [] all_flags)
     {
         SimpleAction simple_action = new SimpleAction.stateful (flag, null, new Variant.boolean (active));
@@ -476,9 +806,9 @@ private class ContextPopover : Popover
             });
     }
 
-    internal void update_flag_status (string flag, bool active)
+    internal static void update_flag_status (ActionMap action_map, string flag, bool active)
     {
-        SimpleAction simple_action = (SimpleAction) current_group.lookup_action (flag);
+        SimpleAction simple_action = (SimpleAction) action_map.lookup_action (flag);
         if (active != simple_action.get_state ())
             simple_action.set_state (new Variant.boolean (active));
     }
@@ -487,7 +817,7 @@ private class ContextPopover : Popover
     * * Choices
     \*/
 
-    internal GLib.Action create_buttons_list (bool display_default_value, bool delayed_apply_menu, bool planned_change, string settings_type, Variant? range_content_or_null, Variant? value_variant)
+    internal ContextPopoverBuilder create_buttons_list (bool display_default_value, bool delayed_apply_menu, bool planned_change, string settings_type, Variant? range_content_or_null, Variant? value_variant, out GLib.Action out_action = null)
     {
         // TODO report bug: if using ?: inside ?:, there's a "g_variant_ref: assertion 'value->ref_count > 0' failed"
         const string ACTION_NAME = "choice";
@@ -505,8 +835,8 @@ private class ContextPopover : Popover
         else
             nullable_variant = new Variant.maybe (nullable_type, variant);
 
-        GLib.Action action = (GLib.Action) new SimpleAction.stateful (ACTION_NAME, nullable_nullable_type, nullable_variant);
-        current_group.add_action (action);
+        GLib.SimpleAction choice_action = new SimpleAction.stateful (ACTION_NAME, nullable_nullable_type, nullable_variant);
+        current_group.add_action (choice_action);
 
         if (display_default_value)
         {
@@ -567,17 +897,20 @@ private class ContextPopover : Popover
                 break;
         }
 
-        ((GLib.ActionGroup) current_group).action_state_changed [ACTION_NAME].connect ((unknown_string, tmp_variant) => {
-                Variant? change_variant = tmp_variant.get_maybe ();
-                if (change_variant != null)
-                    value_changed (((!) change_variant).get_maybe ());
+        choice_action.notify["state"].connect (
+            () => {
+                if (choice_action.state != null)
+                    value_changed (((!) choice_action.state).get_maybe ());
                 else
                     change_dismissed ();
-            });
+            }
+        );
+
+        out_action = (GLib.Action) choice_action;
 
         finalize_menu ();
 
-        return action;
+        return this;
     }
 
     /*\
@@ -597,3 +930,4 @@ private class ContextPopover : Popover
         menu.freeze ();
     }
 }
+

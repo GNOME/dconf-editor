@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <requires lib="gtk" version="4.14"/>
+  <template class="KeyEditorChildSingle" parent="GtkBox">
+    <child>
+      <object class="GtkLabel" id="label"/>
+    </child>
+  </template>
+</interface>
