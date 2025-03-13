@@ -616,8 +616,11 @@ private class RegistryInfo : Grid, BrowsableView
         }
 
         if ("v" in type)
+        {
+            string docs_url = "https://docs.gtk.org/glib/gvariant-text-format.html";
             /* Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of type "variant" (or of a type composed with a variant) */
-            return warning_label (_("Variants content should be surrounded by XML brackets (‘<’ and ‘>’). See https://docs.gtk.org/glib/gvariant-text.html for complete documentation."));
+            return warning_label (_("Variants content should be surrounded by XML brackets (‘<’ and ‘>’). See %s for complete documentation.").printf (docs_url));
+        }
 
         /* the "<flags>" special type is not concerned but has an 's' and a 'g' in it; "s", "g" and "o" types have a specific UI */
         if (type != "<flags>" && ((type != "s" && "s" in type) || (type != "g" && "g" in type)) || (type != "o" && "o" in type))
