@@ -18,9 +18,9 @@
 
   <maintainer>
     <foaf:Person>
-      <foaf:name>Arnaud Bonatti</foaf:name>
-      <foaf:mbox rdf:resource="mailto:arnaud.bonatti@gmail.com" />
-      <gnome:userid>arnaudb</gnome:userid>
+      <foaf:name>Dylan McCall</foaf:name>
+      <foaf:mbox rdf:resource="mailto:dylan@dylanmccall.ca" />
+      <gnome:userid>dylanmccall</gnome:userid>
     </foaf:Person>
   </maintainer>
 
