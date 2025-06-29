@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues/\n"
-"POT-Creation-Date: 2025-01-12 11:50+0000\n"
-"PO-Revision-Date: 2025-01-24 07:05+0700\n"
+"POT-Creation-Date: 2025-05-10 11:33+0000\n"
+"PO-Revision-Date: 2025-06-29 22:04+0700\n"
 "Last-Translator: Akom Chotiphantawanon <knight2000@gmail.com>\n"
 "Language-Team: Thai <thai-l10n@googlegroups.com>\n"
 "Language: th\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.6\n"
 
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the second is "Credits"
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the name of the view, displayed in the headerbar
@@ -201,20 +201,22 @@ msgid ""
 "Dconf Editor is a tool to allow direct editing of the dconf configuration database. This is "
 "useful when developing applications that use these settings."
 msgstr ""
+"เครื่องมือแก้ไข dconf เป็นเครื่องมือที่ให้แก้ไขฐานข้อมูลการกำหนดค่า dconf แบบโดยตรงได้ "
+"เครื่องมือนี้มีประโยชน์เมื่อต้องการพัฒนาแอปพลิเคชันที่ใช้การตั้งค่าเหล่านี้"
 
 #: editor/ca.desrt.dconf-editor.appdata.xml.in:17
 msgid ""
 "Editing your configuration directly is an advanced feature and may cause applications to not "
 "work correctly."
-msgstr ""
+msgstr "การแก้ไขการกำหนดค่าโดยตรงเป็นคุณลักษณะขั้นสูงและอาจส่งผลให้แอปพลิเคชันทำงานไม่ถูกต้อง"
 
 #: editor/ca.desrt.dconf-editor.appdata.xml.in:35
 msgid "Browse the keys used by installed applications"
-msgstr ""
+msgstr "ท่องดูคีย์ต่างๆ ที่ใช้โดยแอปพลิเคชันที่ติดตั้งอยู่"
 
 #: editor/ca.desrt.dconf-editor.appdata.xml.in:39
 msgid "Read keys descriptions and edit their values"
-msgstr ""
+msgstr "อ่านคำอธิบายคีย์ต่างๆ และแก้ไขค่าของคีย์เหล่านั้น"
 
 #. a translatable version of project_group
 #: editor/ca.desrt.dconf-editor.appdata.xml.in:58
@@ -273,12 +275,12 @@ msgstr "แฟล็กเปิดใช้โหมดขยายแผ่ห
 #. Translators: description of a settings key, see 'dconf-editor /org/gnome/iagno/window-is-maximized'
 #: editor/ca.desrt.dconf-editor.gschema.xml:109
 msgid "If “true”, the main window starts in maximized mode."
-msgstr ""
+msgstr "ถ้าเป็น “true” หน้าต่างหลักจะเริ่มทำงานในโหมดขยายแผ่"
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/restore-view'
 #: editor/ca.desrt.dconf-editor.gschema.xml:131
 msgid "A flag to restore the last view"
-msgstr ""
+msgstr "แฟล็กเรียกคืนมุมมองล่าสุด"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/restore-view'
 #: editor/ca.desrt.dconf-editor.gschema.xml:133
@@ -286,11 +288,12 @@ msgid ""
 "If “true”, Dconf Editor tries at launch to navigate to the path described in the “saved-view” "
 "key."
 msgstr ""
+"ถ้าเป็น “true” เครื่องมือแก้ไข dconf จะพยายามนำทางไปตามพาธที่กำหนดไว้ในคีย์ “saved-view” เมื่อเริ่มทำงาน"
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/saved-pathbar-path'
 #: editor/ca.desrt.dconf-editor.gschema.xml:138
 msgid "A path to restore the pathbar state"
-msgstr ""
+msgstr "พาธสำหรับเรียกคืนสถานะแถบพาธ"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/saved-pathbar-path'
 #: editor/ca.desrt.dconf-editor.gschema.xml:140
@@ -298,44 +301,45 @@ msgid ""
 "If the “restore-view” key is set to “true”, and if the path requested at startup is a parent "
 "path of this one, Dconf Editor tries to restore the pathbar state at this path."
 msgstr ""
+"ถ้าคีย์ “restore-view” ตั้งเป็น “true” และถ้าพาธที่ร้องขอตอนเริ่มทำงานเป็นพาธแม่ของพาธนี้ เครื่องมือแก้ไข dconf "
+"ก็จะพยายามเรียกคืนสถานะแถบพาธที่พาธนี้"
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/saved-view'
 #: editor/ca.desrt.dconf-editor.gschema.xml:145
 msgid "A path to restore the last view"
-msgstr ""
+msgstr "พาธสำหรับเรียกคืนมุมมองปัจจุบัน"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/saved-view'
 #: editor/ca.desrt.dconf-editor.gschema.xml:147
 msgid ""
 "If the “restore-view” key is set to “true”, Dconf Editor tries at launch to navigate to this "
 "path."
-msgstr ""
+msgstr "ถ้าคีย์ “restore-view” ตั้งเป็น “true” เครื่องมือแก้ไข dconf จะพยายามนำทางมาที่พาธนี้เมื่อเริ่มทำงาน"
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/show-warning'
 #: editor/ca.desrt.dconf-editor.gschema.xml:152
 msgid "Show initial warning"
-msgstr ""
+msgstr "แสดงคำเตือนตอนเริ่มทำงาน"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/show-warning'
 #: editor/ca.desrt.dconf-editor.gschema.xml:154
 msgid "If “true”, Dconf Editor opens a popup when launched reminding the user to be careful."
-msgstr ""
+msgstr "ถ้าเป็น “true” เครื่องมือแก้ไข dconf จะเปิดกล่องผุดขึ้นเมื่อแอปพลิเคชันเริ่มทำงานเพื่อเตือนให้ผู้ใช้ระมัดระวัง"
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/small-keys-list-rows'
 #: editor/ca.desrt.dconf-editor.gschema.xml:159
-#, fuzzy
 msgid "A flag to enable small rows for keys list"
-msgstr "แฟล็กเปิดใช้โหมดเต็มจอ"
+msgstr "แฟล็กเปิดใช้แถวขนาดเล็กสำหรับรายชื่อคีย์"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/small-keys-list-rows'
 #: editor/ca.desrt.dconf-editor.gschema.xml:161
 msgid "If “true”, the keys list use smaller rows."
-msgstr ""
+msgstr "ถ้าเป็น “true” รายชื่อคีย์จะใช้แถวขนาดเล็ก"
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/behaviour'
 #: editor/ca.desrt.dconf-editor.gschema.xml:166
 msgid "Change the behaviour of a key value change request"
-msgstr ""
+msgstr "เปลี่ยนพฤติกรรมการร้องขอเปลี่ยนแปลงค่าคีย์"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/behaviour'
 #: editor/ca.desrt.dconf-editor.gschema.xml:168
@@ -348,11 +352,17 @@ msgid ""
 "path whereas the second dismiss it. The “always-delay” value adds each change in delay mode, "
 "allowing to apply multiple keys at once."
 msgstr ""
+"ค่า “unsafe” เป็นค่าที่ไม่แนะนำให้ใช้งาน เพราะสำหรับคีย์ที่มีชนิดไม่เป็นกรณีพิเศษ "
+"ค่าดังกล่าวจะเป็นการปรับปรุงค่าคีย์ทุกครั้งที่มีการเปลี่ยนแปลงในหน่วยข้อมูล รวมถึงสถานะระดับกลางด้วย ค่า “safe” "
+"จะเป็นการขอให้ผู้ใช้ยืนยันในกรณีเหล่านี้ แต่ให้ทำการเปลี่ยนแปลงได้ทันทีสำหรับบูลีนธรรมดา รวมถึงบูลีน การแจงนับ "
+"และแฟล็กที่สามารถเก็บค่าว่างได้ ค่า “always-confirm-implicit” และ “always-confirm-explicit” "
+"จะเป็นการขอให้ผู้ใช้ยืนยันก่อนเสมอ แต่ค่าหน้าจะทำการเปลี่ยนแปลงถ้าคุณเปลี่ยนพาธ ในขณะที่ค่าหลังนั้นจะไม่ทำงานใดๆ ค่า "
+"“always-delay” จะเพิ่มการเปลี่ยนแปลงแต่ละอย่างในโหมดหน่วงเวลา ทำให้สามารถปรับใช้หลายคีย์ได้พร้อมกัน"
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/sort-case-sensitive'
 #: editor/ca.desrt.dconf-editor.gschema.xml:173
 msgid "A flag to sort keys list case-sensitively"
-msgstr ""
+msgstr "แฟล็กเรียงลำดับรายชื่อคีย์แบบพิจารณาตัวพิมพ์ใหญ่-เล็ก"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/sort-case-sensitive'
 #: editor/ca.desrt.dconf-editor.gschema.xml:175
@@ -361,25 +371,22 @@ msgid ""
 "schemas can. If “true”, the keys list is sorted case-sensitively, with in usual order upper-"
 "case folders first."
 msgstr ""
+"GSettings ไม่อนุญาตให้คีย์ใช้อักษรตัวพิมพ์ใหญ่ในชื่อคีย์ได้ แต่พาธติดตั้งของสคีมาสามารถใช้ได้ ถ้าเป็น “true” "
+"ก็จะเรียงลำดับรายชื่อคีย์แบบพิจารณาตัวพิมพ์ใหญ่-เล็ก โดยลำดับปกติจะเริ่มจากโฟลเดอร์ที่มีชื่อเป็นตัวพิมพ์ใหญ่ก่อน"
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-use-extra-buttons'
 #: editor/ca.desrt.dconf-editor.gschema.xml:180
 msgid "Use “Back” and “Forward” mouse button events"
-msgstr ""
+msgstr "ใช้เหตุการณ์ปุ่มเมาส์ “ถอยกลับ” และ “ถัดไป”"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-use-extra-buttons'
 #: editor/ca.desrt.dconf-editor.gschema.xml:182
-#, fuzzy
-#| msgid ""
-#| "For users with mice that have buttons for “Forward” and “Back”, this key will set which "
-#| "button activates the “Back” command in a browser window. Possible values range between 6 "
-#| "and 14."
 msgid ""
 "For users with mice that have buttons for “Forward” and “Back”, this key will determine if any "
 "action is taken inside of a browser window when either is pressed."
 msgstr ""
-"สำหรับผู้ใช้ที่ใช้เมาส์ที่มีปุ่ม \"ถัดไป\" และ \"ถอยกลับ\" คีย์นี้จะกำหนดว่าปุ่มใดจะสั่งคำสั่ง \"ถอยกลับ\" "
-"ในหน้าต่างเบราว์เซอร์ ค่าที่ใช้ได้จะอยู่ในช่วง 6 ถึง 14 "
+"สำหรับผู้ใช้ที่ใช้เมาส์ที่มีปุ่ม \"ถัดไป\" และ \"ถอยกลับ\" "
+"คีย์นี้จะกำหนดว่าจะมีการทำงานใดเกิดขึ้นภายในหน้าต่างเบราว์เซอร์หรือไม่เมื่อกดปุ่มใดปุ่มหนึ่ง"
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-back-buttons'
 #: editor/ca.desrt.dconf-editor.gschema.xml:188
@@ -924,198 +931,198 @@ msgid "Conflicting key from Conflict2 that should give a warning"
 msgstr ""
 
 #. Translators: command-line option description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:159
+#: editor/dconf-editor.vala:171
 msgid "Print release version and exit"
 msgstr "พิมพ์เลขรุ่นแล้วออก"
 
 #. Translators: command-line option description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:162
+#: editor/dconf-editor.vala:174
 #, fuzzy
 #| msgid "Print release version and exit"
 msgid "Print relocatable schemas and exit"
 msgstr "พิมพ์เลขรุ่นแล้วออก"
 
 #. Translators: command-line option description, see 'dconf-editor --help'; the option removes the initial "use at your own risks" dialog
-#: editor/dconf-editor.vala:165
+#: editor/dconf-editor.vala:177
 msgid "Do not show initial warning"
 msgstr "ไม่ต้องแสดงคำเตือนตอนเริ่มทำงาน"
 
 #. Translators: command-line text, description of the application in 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
-#: editor/dconf-editor.vala:203
+#: editor/dconf-editor.vala:215
 msgid "Graphical interface for editing other applications settings."
 msgstr "ส่วนติดต่อแบบกราฟิกสำหรับแก้ไขค่าตั้งของแอปพลิเคชันอื่นๆ"
 
 #. Translators: command-line text, describes how the application proceeds for editing other applications settings, in 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
-#: editor/dconf-editor.vala:206
+#: editor/dconf-editor.vala:218
 msgid "Uses the gsettings API of the glib library, among others."
 msgstr ""
 
 #. Translators: command-line header description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:209
+#: editor/dconf-editor.vala:221
 #, fuzzy
 msgid "Arguments description:"
 msgstr "คำบรรยาย:"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:213
+#: editor/dconf-editor.vala:225
 msgid "a folder path or a key path"
 msgstr ""
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:215
+#: editor/dconf-editor.vala:227
 msgid "example: “/org/gnome/” or “/ca/desrt/dconf-editor/Demo/boolean”"
 msgstr "ตัวอย่าง: “/org/gnome/” หรือ “/ca/desrt/dconf-editor/Demo/boolean”"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:219
+#: editor/dconf-editor.vala:231
 msgid "the name of a schema with fixed path"
 msgstr ""
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:221
+#: editor/dconf-editor.vala:233
 msgid "example: “ca.desrt.dconf-editor.Settings”"
 msgstr "ตัวอย่าง: “ca.desrt.dconf-editor.Settings”"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'; no need to put your translation of "relocatable" between quotation marks, that's done in English to highlight why the option is called "RELOC_SCHEMA"
-#: editor/dconf-editor.vala:225
+#: editor/dconf-editor.vala:237
 msgid "the name of a “relocatable” schema, without fixed path"
 msgstr ""
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:227
+#: editor/dconf-editor.vala:239
 msgid "see list with the “--list-relocatable-schemas” option"
 msgstr ""
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:231
+#: editor/dconf-editor.vala:243
 msgid "the path where to map the relocatable schema"
 msgstr ""
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:233
+#: editor/dconf-editor.vala:245
 msgid "example: “ca.desrt.dconf-editor.Bookmarks:/ca/desrt/dconf-editor/”"
 msgstr "ตัวอย่าง: “ca.desrt.dconf-editor.Bookmarks:/ca/desrt/dconf-editor/”"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:237
+#: editor/dconf-editor.vala:249
 msgid "the name of a key from the schema"
 msgstr ""
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:239
+#: editor/dconf-editor.vala:251
 msgid "example: “bookmarks”"
 msgstr ""
 
 #. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
-#: editor/dconf-editor.vala:295
+#: editor/dconf-editor.vala:307
 msgid "Known schemas installed:"
 msgstr ""
 
 #. Translators: command-line text, if --list-relocatable-schemas is given
-#: editor/dconf-editor.vala:301
+#: editor/dconf-editor.vala:313
 msgid "No known schemas installed."
 msgstr ""
 
 #. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
-#: editor/dconf-editor.vala:306
+#: editor/dconf-editor.vala:318
 msgid "Known schemas skipped:"
 msgstr ""
 
 #. Translators: command-line text, if --list-relocatable-schemas is given
-#: editor/dconf-editor.vala:312
+#: editor/dconf-editor.vala:324
 msgid "No known schemas skipped."
 msgstr ""
 
 #. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
-#: editor/dconf-editor.vala:317
+#: editor/dconf-editor.vala:329
 msgid "Unknown schemas:"
 msgstr ""
 
 #. Translators: command-line text, if --list-relocatable-schemas is given
-#: editor/dconf-editor.vala:323
+#: editor/dconf-editor.vala:335
 msgid "No unknown schemas."
 msgstr ""
 
 #. Translators: command-line error message, when the user requests a specific path while there is already a window opened
-#: editor/dconf-editor.vala:442
+#: editor/dconf-editor.vala:454
 msgid "Only one window can be opened for now.\n"
 msgstr ""
 
 #. Translators: command-line error message, try 'dconf-editor a b c d'
-#: editor/dconf-editor.vala:462
+#: editor/dconf-editor.vala:474
 msgid "Cannot understand: too many arguments.\n"
 msgstr "ไม่สามารถเข้าใจได้: มีอาร์กิวเมนต์มากเกินไป\n"
 
 #. Translators: command-line error message, try 'dconf-editor / a'
-#: editor/dconf-editor.vala:476
+#: editor/dconf-editor.vala:488
 msgid "Cannot understand second argument in this context.\n"
 msgstr ""
 
 #. Translators: command-line error message, try 'dconf-editor org.example /'
-#: editor/dconf-editor.vala:497
+#: editor/dconf-editor.vala:509
 msgid "Cannot understand: slash character in second argument.\n"
 msgstr ""
 
 #. Translators: command-line error message, try 'dconf-editor org.example:a'
-#: editor/dconf-editor.vala:512
+#: editor/dconf-editor.vala:524
 msgid "Schema path should start and end with a “/”.\n"
 msgstr "พาธของสกีมาควรขึ้นต้นและลงท้ายด้วย “/”\n"
 
 #. Translators: command-line error message, try 'dconf-editor //'
-#: editor/dconf-editor.vala:528
+#: editor/dconf-editor.vala:540
 msgid "Cannot understand: given path contains “//”.\n"
 msgstr "ไม่สามารถเข้าใจได้: พาธที่ระบุมีเครื่องหมาย “//”\n"
 
 #. Translators: command-line error message, try 'dconf-editor "org example" a'
-#: editor/dconf-editor.vala:536
+#: editor/dconf-editor.vala:548
 msgid "Cannot understand: space character in argument.\n"
 msgstr "ไม่สามารถเข้าใจได้: มีอักขระช่องว่างในอาร์กิวเมนต์\n"
 
 #. Translators: notification header, try ctrl-c while in the keys list
-#: editor/dconf-editor.vala:564
+#: editor/dconf-editor.vala:576
 msgid "Copied to clipboard"
 msgstr "คัดลอกลงในคลิปบอร์ดแล้ว"
 
 #. Translators: about dialog text
-#: editor/dconf-editor.vala:641
+#: editor/dconf-editor.vala:653
 msgid "A graphical viewer and editor of applications’ internal settings."
 msgstr "โปรแกรมดูและแก้ไขค่าตั้งภายในของแอปพลิเคชันแบบกราฟิก"
 
 #. Translators: text crediting a game author, seen in the About dialog
-#: editor/dconf-editor.vala:646
+#: editor/dconf-editor.vala:658
 msgid "Robert Ancell"
 msgstr "Robert Ancell"
 
 #. Translators: text crediting a game author, seen in the About dialog
-#: editor/dconf-editor.vala:650
+#: editor/dconf-editor.vala:662
 msgid "Arnaud Bonatti"
 msgstr "Arnaud Bonatti"
 
 #. Translators: text crediting a maintainer, seen in the About dialog
-#: editor/dconf-editor.vala:654
+#: editor/dconf-editor.vala:666
 msgid "Copyright © 2010-2014 – Canonical Ltd"
 msgstr "Copyright © 2010-2014 – Canonical Ltd"
 
 #. Translators: text crediting a maintainer, seen in the About dialog
-#: editor/dconf-editor.vala:658
+#: editor/dconf-editor.vala:670
 msgid "Copyright © 2017-2018 – Davi da Silva Böger"
 msgstr "Copyright © 2017-2018 – Davi da Silva Böger"
 
 #. Translators: text crediting a maintainer, seen in the About dialog; the %u are replaced with the years of start and end
-#: editor/dconf-editor.vala:662
+#: editor/dconf-editor.vala:674
 #, c-format
 msgid "Copyright © %u-%u – Arnaud Bonatti"
 msgstr "Copyright © %u-%u – Arnaud Bonatti"
 
 #. Translators: about dialog text; this string should be replaced by a text crediting yourselves and your translation team, or should be left empty. Do not translate literally!
-#: editor/dconf-editor.vala:669
+#: editor/dconf-editor.vala:681
 msgid "translator-credits"
 msgstr ""
 "Akom Chotiphantawanon <knight2000@gmail.com>\n"
 "Aefgh Threenine <aefgh39622@gmail.com>"
 
 #. Translators: about dialog text; label of the website link
-#: editor/dconf-editor.vala:675
+#: editor/dconf-editor.vala:687
 msgid "Page on GNOME wiki"
 msgstr "หน้าใน GNOME wiki"
 
