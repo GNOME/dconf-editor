@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
 "POT-Creation-Date: 2023-09-18 15:05+0000\n"
-"PO-Revision-Date: 2024-02-26 08:15+0100\n"
+"PO-Revision-Date: 2025-08-10 08:15+0100\n"
 "Last-Translator: Carles Ferrando Garcia <carles.ferrando@gamil.com>\n"
 "Language-Team: Catalan <info@softcatala.org>\n"
 "Language: ca\n"
@@ -175,7 +175,7 @@ msgstr "Refresca"
 #: editor/browser-view.vala:87
 msgid "This folder content has changed. Do you want to reload the view?"
 msgstr ""
-"Les preferències d'ordenació han canviat. Voleu tornar a carregar la vista?"
+"El contingut d'aquesta carpeta ha canviat. Voleu tornar a carregar la vista?"
 
 #. Translators: button of an infobar to reload the keys list because of a new key (for example)
 #. Translators: button of an infobar to reload the key properties because something has changed
@@ -187,7 +187,7 @@ msgstr "Actualitza"
 #: editor/browser-view.vala:93
 msgid "This key’s properties have changed. Do you want to reload the view?"
 msgstr ""
-"Les preferències d'ordenació han canviat. Voleu tornar a carregar la vista?"
+"Les propietats d'aquesta clau han canviat. Voleu tornar a carregar la vista?"
 
 #. Translators: command-line message, when the user uses the backward/forward buttons of the mouse
 #: editor/browser-window.vala:906
@@ -383,7 +383,7 @@ msgstr ""
 "implicit» i «always-confirm-explicit» sempre demanen confirmació, però el "
 "primer aplica el canvi si canvieu el camí mentre que el segon el descarta. "
 "El valor «always-delay» afegeix cada canvi en mode de retardament, permetent "
-"aplicar claus múltiples de forma immediata."
+"aplicar claus múltiples alhora."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/sort-case-sensitive'
 #: editor/ca.desrt.dconf-editor.gschema.xml:173
@@ -407,7 +407,7 @@ msgstr ""
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-use-extra-buttons'
 #: editor/ca.desrt.dconf-editor.gschema.xml:180
 msgid "Use “Back” and “Forward” mouse button events"
-msgstr "Useu els esdeveniments «Enrere» i «Avant» del botó del ratolí"
+msgstr "Useu els esdeveniments «Enrere» i «Endavant» del botó del ratolí"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-use-extra-buttons'
 #: editor/ca.desrt.dconf-editor.gschema.xml:182
@@ -2284,8 +2284,8 @@ msgid ""
 "Use a dot as decimal mark and no thousands separator. You can use the X.Ye+Z "
 "notation."
 msgstr ""
-"Useu el punt com a decimal i sense milers de separació. Podeu usar la "
-"notació X.Ye+Z ."
+"Useu el punt com a separador decimal i no useu el cap separador pels milers. Podeu usar la "
+"notació X.Ye+Z."
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of type "variant" (or of a type composed with a variant)
 #: editor/registry-info.vala:620
