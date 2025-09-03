@@ -1,3 +1,53 @@
+dconf-editor 49.rc
+=================
+
+Fix a crash with GSETTINGS_SCHEMA_DIR, fix build errors with newer versions of
+Vala, add relocatable schemas for Ptyxis and soem ibus engines, and modernize
+AppStream metadata.
+
+Translations updated:
+  Basque: Asier Sarasua Garmendia
+  Belarusian: Vasil Pupkin
+  Brazilian Portuguese: Juliano de Souza Camargo
+  British English: Andi Chandler
+  Bulgarian: Alexander Shopov
+  Catalan: Jordi Mas
+  Chinese (China): Boyuan Yang
+  Chinese (Taiwan): Chao-Hsiung Liao
+  Czech: Daniel Rusek
+  Danish: Ask Hjorth Larsen
+  Dutch: Nathan Follens
+  French: Guillaume Bernard
+  Friulian: Fabio Tomat
+  Galician: Fran Dieguez
+  Georgian: Ekaterine Papava
+  German: Jürgen Benvenuti and Tim Sabsch
+  Greek: Efstathios Iosifidis
+  Hindi: Scrambled 777
+  Hungarian: Balázs Úr
+  Indonesian: Andika Triwidada
+  Japanese: Seiji Iizuka
+  Kabyle: Athmane Mokraoui and Rachida Saci
+  Korean: Changwoo Ryu
+  Latvian: Rūdolfs Mazurs
+  Lithuanian: Aurimas Černius
+  Nepali: Pawan Chitrakar
+  Persian: Danial Behzadi
+  Polish: Piotr Drąg
+  Portuguese: Hugo Carvalho
+  Romanian: Daniel Șerbănescu
+  Russian: Artur S0
+  Serbian (Latin): Милош Поповић
+  Serbian: Милош Поповић
+  Slovak: Jose Riha
+  Slovenian: Matej Urbančič
+  Spanish: Daniel Mustieles
+  Swedish: Anders Jonsson
+  Thai: Aefgh Threenine
+  Turkish: Emin Tufan Çetin and Sabri Ünal
+  Ukrainian: Yuri Chornoivan
+  Uzbek (Latin): Baxrom Raxmatov
+
 dconf-editor 45.0
 =================
 
