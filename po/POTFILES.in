@@ -13,8 +13,8 @@ editor/bookmark.ui
 editor/browser-headerbar.vala
 editor/browser-view.vala
 editor/browser-window.vala
-editor/ca.desrt.dconf-editor.appdata.xml.in
 editor/ca.desrt.dconf-editor.desktop.in
+editor/ca.desrt.dconf-editor.metainfo.xml.in
 editor/ca.desrt.dconf-editor.gschema.xml
 editor/dconf-editor.vala
 editor/dconf-headerbar.vala
