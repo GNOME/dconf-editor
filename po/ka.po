@@ -1,14 +1,14 @@
 # Georgian translation for dconf-editor.
 # Copyright (C) 2023 for dconf-editor's authors.
 # This file is distributed under the same license as the for dconf-editor package.
-# Ekaterine Papava <papava.e@gtu.ge>, 2023-2024.
+# Ekaterine Papava <papava.e@gtu.ge>, 2023-2025.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: for dconf-editor\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues/\n"
-"POT-Creation-Date: 2024-03-08 09:02+0000\n"
-"PO-Revision-Date: 2024-03-17 03:55+0100\n"
+"POT-Creation-Date: 2025-09-04 15:50+0000\n"
+"PO-Revision-Date: 2025-09-04 17:52+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.7\n"
 
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the second is "Credits"
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the name of the view, displayed in the headerbar
@@ -190,15 +190,35 @@ msgid ""
 msgstr ""
 "იგივე თაგუნას ღილაკი დაყენებულია წინ წასასვლელადაც და უკანაც. არაფერს ვიზამ."
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:9
+#. Translators: application name, as used in the window manager, the window title, the about dialog...
+#: editor/ca.desrt.dconf-editor.desktop.in:2 editor/dconf-editor.vala:21
+msgid "dconf Editor"
+msgstr "dconf-ის რედაქტორი"
+
+#. Translators: a GenericName that gives the application goal, as defined in the desktop file spec
+#: editor/ca.desrt.dconf-editor.desktop.in:4
+msgid "Configuration editor for dconf"
+msgstr "კონფიგურაციის რედაქტორი dconf-სთვის"
+
+#. Translators: a Comment that gives the application function, as defined in the desktop file spec
+#: editor/ca.desrt.dconf-editor.desktop.in:6
+msgid "Directly edit your entire configuration database"
+msgstr "პირდაპირ ჩაასწორეთ თქვენი მთელი კონფიგურაციის მონაცემთა ბაზა"
+
+#. Translators: some search Keywords to find this application, as defined in the desktop file spec. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#: editor/ca.desrt.dconf-editor.desktop.in:8
+msgid "settings;configuration;"
+msgstr "settings;configuration;პარამეტრები;მორგება;"
+
+#: editor/ca.desrt.dconf-editor.metainfo.xml.in:9
 msgid "Dconf Editor"
 msgstr "Dconf-ის რედაქტორი"
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:10
+#: editor/ca.desrt.dconf-editor.metainfo.xml.in:10
 msgid "A graphical tool for editing the dconf database"
 msgstr "გრაფიკული პროგრამა dconf-ის ბაზის ჩასასწორებლად"
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:13
+#: editor/ca.desrt.dconf-editor.metainfo.xml.in:13
 msgid ""
 "Dconf Editor is a tool to allow direct editing of the dconf configuration "
 "database. This is useful when developing applications that use these "
@@ -208,7 +228,7 @@ msgstr ""
 "ჩასწორების საშუალებას გაძლევთ. გამოადგებათ, როცა წერთ აპლიკაციებს, რომლებიც "
 "ამ პარამეტრებს იყენებს."
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:17
+#: editor/ca.desrt.dconf-editor.metainfo.xml.in:17
 msgid ""
 "Editing your configuration directly is an advanced feature and may cause "
 "applications to not work correctly."
@@ -216,38 +236,13 @@ msgstr ""
 "თქვენი კონფიგურაციის პირდაპირ ჩასწორება დამატებითი ფუნქციაა და შეიძლება, "
 "აპლიკაციებს ნორმალურად მუშაობაში ხელი შეუშალოს."
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:35
+#: editor/ca.desrt.dconf-editor.metainfo.xml.in:36
 msgid "Browse the keys used by installed applications"
 msgstr "დაყენებული აპლიკაციების მიერ გამოყენებული გასაღებების დათვალიერება"
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:39
+#: editor/ca.desrt.dconf-editor.metainfo.xml.in:40
 msgid "Read keys descriptions and edit their values"
 msgstr "გასაღების აღწერების წაკითხვა და მათი მნიშვნელობების ჩასწორება"
-
-#. a translatable version of project_group
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:58
-msgid "The GNOME Project"
-msgstr "პროექტი \"GNOME\""
-
-#. Translators: application name, as used in the window manager, the window title, the about dialog...
-#: editor/ca.desrt.dconf-editor.desktop.in:3 editor/dconf-editor.vala:21
-msgid "dconf Editor"
-msgstr "dconf-ის რედაქტორი"
-
-#. Translators: a GenericName that gives the application goal, as defined in the desktop file spec
-#: editor/ca.desrt.dconf-editor.desktop.in:5
-msgid "Configuration editor for dconf"
-msgstr "კონფიგურაციის რედაქტორი dconf-სთვის"
-
-#. Translators: a Comment that gives the application function, as defined in the desktop file spec
-#: editor/ca.desrt.dconf-editor.desktop.in:7
-msgid "Directly edit your entire configuration database"
-msgstr "პირდაპირ ჩაასწორეთ თქვენი მთელი კონფიგურაციის მონაცემთა ბაზა"
-
-#. Translators: some search Keywords to find this application, as defined in the desktop file spec. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-#: editor/ca.desrt.dconf-editor.desktop.in:9
-msgid "settings;configuration;"
-msgstr "settings;configuration;პარამეტრები;მორგება;"
 
 #. see AdaptativeWindow.width-request at data/ui/adaptative-window.ui:22
 #. range min="350"/ FIXME
@@ -554,8 +549,8 @@ msgstr "ლოგიკური. აკრიფეთ 'b'"
 #: editor/ca.desrt.dconf-editor.gschema.xml:270
 msgid "Booleans can only take two values, “true” or “false”."
 msgstr ""
-"ლოგიკურ ცვლადებს მხოლოდ ორი მნიშვნელობა შეიძლება ჰქონდეს - "
-"\"true\" (ჭეშმარიტი) ან \"false\" (ცრუ)"
+"ლოგიკურ ცვლადებს მხოლოდ ორი მნიშვნელობა შეიძლება ჰქონდეს - \"true\" "
+"(ჭეშმარიტი) ან \"false\" (ცრუ)"
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/boolean-nullable'
 #: editor/ca.desrt.dconf-editor.gschema.xml:275
@@ -912,8 +907,8 @@ msgid ""
 "a gschema file “&#60;” and “&#62;” respectively), with a parsable "
 "representation of their content inside. If unclear, the type can be given in "
 "the value with a prefix annotation like “@x” (where “x” is the type string) "
-"or “int64”. See https://docs.gtk.org/glib/gvariant-text.html for complete "
-"documentation."
+"or “int64”. See https://docs.gtk.org/glib/gvariant-text-format.html for "
+"complete documentation."
 msgstr ""
 "ვარიანტები შეიძლება, ვარიანტების შიგნით იყოს დამახსოვრებული და საბოლოოდ, "
 "GSettings-ის ტიპით. წარმოდგენისათვის გამოიყენება XML ფრჩხილები ('<' და '>' "
@@ -921,7 +916,7 @@ msgstr ""
 "შემცველობის დამუშავებადი წარმოდგენით. თუ გაურკვეველია, ტიპი შეგძლიათ "
 "პრეფიქსის ანოტაციის მნიშვნელობაში შეგიძლიათ, გადასცეთ. მაგ: \"@x\" (სადაც x "
 "ტიპის სტრიქონია) ან \"int64\". სრული დოკუმენტაციისთვის იხილეთ ბმული https://"
-"docs.gtk.org/glib/gvariant-text.html ."
+"docs.gtk.org/glib/gvariant-text-format.html."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-enum'
 #: editor/ca.desrt.dconf-editor.gschema.xml:452
@@ -1100,194 +1095,194 @@ msgid "Conflicting key from Conflict2 that should give a warning"
 msgstr "გამომრიცხავი გასაღები Conflict2-დან, რომელმაც შეცდომა უნდა გამოაგდოს"
 
 #. Translators: command-line option description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:159
+#: editor/dconf-editor.vala:171
 msgid "Print release version and exit"
 msgstr "ვერსიის ჩვენება და გასვლა"
 
 #. Translators: command-line option description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:162
+#: editor/dconf-editor.vala:174
 msgid "Print relocatable schemas and exit"
 msgstr "გადაადგილებადი სქემების გამოტანა და გასვლა"
 
 #. Translators: command-line option description, see 'dconf-editor --help'; the option removes the initial "use at your own risks" dialog
-#: editor/dconf-editor.vala:165
+#: editor/dconf-editor.vala:177
 msgid "Do not show initial warning"
 msgstr "საწყისი გაფრთხილება ნაჩვენები არ იქნება"
 
 #. Translators: command-line text, description of the application in 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
-#: editor/dconf-editor.vala:203
+#: editor/dconf-editor.vala:215
 msgid "Graphical interface for editing other applications settings."
 msgstr "გრაფიკული ინტერფეისი სხვა აპლიკაციის პარამეტრების ჩასასწორებლად."
 
 #. Translators: command-line text, describes how the application proceeds for editing other applications settings, in 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
-#: editor/dconf-editor.vala:206
+#: editor/dconf-editor.vala:218
 msgid "Uses the gsettings API of the glib library, among others."
 msgstr "იყენებს gsettings API-ს ბიბლიოთეკიდან glib, სხვებთან ერთად."
 
 #. Translators: command-line header description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:209
+#: editor/dconf-editor.vala:221
 msgid "Arguments description:"
 msgstr "არგუმენტების აღწერა:"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:213
+#: editor/dconf-editor.vala:225
 msgid "a folder path or a key path"
 msgstr "საქაღალდის ბილიკი ან გასაღების ბილიკი"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:215
+#: editor/dconf-editor.vala:227
 msgid "example: “/org/gnome/” or “/ca/desrt/dconf-editor/Demo/boolean”"
 msgstr "მაგალითად: “/org/gnome/” ან “/ca/desrt/dconf-editor/Demo/boolean”"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:219
+#: editor/dconf-editor.vala:231
 msgid "the name of a schema with fixed path"
 msgstr "ფიქსირებული ბილიკის მქონე სქემის სახელი"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:221
+#: editor/dconf-editor.vala:233
 msgid "example: “ca.desrt.dconf-editor.Settings”"
 msgstr "მაგ: “ca.desrt.dconf-editor.Settings”"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'; no need to put your translation of "relocatable" between quotation marks, that's done in English to highlight why the option is called "RELOC_SCHEMA"
-#: editor/dconf-editor.vala:225
+#: editor/dconf-editor.vala:237
 msgid "the name of a “relocatable” schema, without fixed path"
 msgstr "\"relocatable\" სქემის სახელი, ფიქსირებული ბილიკის გარეშე"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:227
+#: editor/dconf-editor.vala:239
 msgid "see list with the “--list-relocatable-schemas” option"
 msgstr "იხილეთ სია “--list-relocatable-schemas” პარამეტრთან ერთად"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:231
+#: editor/dconf-editor.vala:243
 msgid "the path where to map the relocatable schema"
 msgstr "ბილიკი, სადაც გადატანადი სქემის ასახვა მოხდება"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:233
+#: editor/dconf-editor.vala:245
 msgid "example: “ca.desrt.dconf-editor.Bookmarks:/ca/desrt/dconf-editor/”"
 msgstr "მაგ: “ca.desrt.dconf-editor.Bookmarks:/ca/desrt/dconf-editor/”"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:237
+#: editor/dconf-editor.vala:249
 msgid "the name of a key from the schema"
 msgstr "გასაღების სახელი სქემიდან"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:239
+#: editor/dconf-editor.vala:251
 msgid "example: “bookmarks”"
 msgstr "მაგალითად: “bookmarks”"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
-#: editor/dconf-editor.vala:295
+#: editor/dconf-editor.vala:307
 msgid "Known schemas installed:"
 msgstr "ცნობილი დაყენებული სქემები:"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given
-#: editor/dconf-editor.vala:301
+#: editor/dconf-editor.vala:313
 msgid "No known schemas installed."
 msgstr "ცნობილი დაყენებული სქემები აღმოჩენილი არაა."
 
 #. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
-#: editor/dconf-editor.vala:306
+#: editor/dconf-editor.vala:318
 msgid "Known schemas skipped:"
 msgstr "ცნობილი გამოტოვებული სქემები:"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given
-#: editor/dconf-editor.vala:312
+#: editor/dconf-editor.vala:324
 msgid "No known schemas skipped."
 msgstr "ცნობილი გამოტოვებული სქემები აღმოჩენილი არაა."
 
 #. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
-#: editor/dconf-editor.vala:317
+#: editor/dconf-editor.vala:329
 msgid "Unknown schemas:"
 msgstr "უცნობი სქემები:"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given
-#: editor/dconf-editor.vala:323
+#: editor/dconf-editor.vala:335
 msgid "No unknown schemas."
 msgstr "უცნობი სქემების გარეშე."
 
 #. Translators: command-line error message, when the user requests a specific path while there is already a window opened
-#: editor/dconf-editor.vala:442
+#: editor/dconf-editor.vala:454
 msgid "Only one window can be opened for now.\n"
 msgstr "აქ მხოლოდ ერთ ფანჯარა შეგიძლიათ, გახსნათ.\n"
 
 #. Translators: command-line error message, try 'dconf-editor a b c d'
-#: editor/dconf-editor.vala:462
+#: editor/dconf-editor.vala:474
 msgid "Cannot understand: too many arguments.\n"
 msgstr "ვერ გავიგე: მეტისმეტად ბევრი არგუმენტი.\n"
 
 #. Translators: command-line error message, try 'dconf-editor / a'
-#: editor/dconf-editor.vala:476
+#: editor/dconf-editor.vala:488
 msgid "Cannot understand second argument in this context.\n"
 msgstr "ვერ გავიგე: მეორე არგუმენტი ამ კონტექსტში.\n"
 
 #. Translators: command-line error message, try 'dconf-editor org.example /'
-#: editor/dconf-editor.vala:497
+#: editor/dconf-editor.vala:509
 msgid "Cannot understand: slash character in second argument.\n"
 msgstr "ვერ გავიგე: დახრილი ხაზი მეორე არგუმენტში.\n"
 
 #. Translators: command-line error message, try 'dconf-editor org.example:a'
-#: editor/dconf-editor.vala:512
+#: editor/dconf-editor.vala:524
 msgid "Schema path should start and end with a “/”.\n"
 msgstr "სქემის ბილიკი არ შეიძლება, '/'-ით იწყებოდეს და მთავრდებოდეს.\n"
 
 #. Translators: command-line error message, try 'dconf-editor //'
-#: editor/dconf-editor.vala:528
+#: editor/dconf-editor.vala:540
 msgid "Cannot understand: given path contains “//”.\n"
 msgstr "ვერ გავიგე: მითითებული ბილიკი შეიცავს '//'.\n"
 
 #. Translators: command-line error message, try 'dconf-editor "org example" a'
-#: editor/dconf-editor.vala:536
+#: editor/dconf-editor.vala:548
 msgid "Cannot understand: space character in argument.\n"
 msgstr "ვერ გავიგე: გამოტოვების სიმბოლო არგუმენტში.\n"
 
 #. Translators: notification header, try ctrl-c while in the keys list
-#: editor/dconf-editor.vala:564
+#: editor/dconf-editor.vala:576
 msgid "Copied to clipboard"
 msgstr "დაკოპირდა გაცვლის ბაფერში"
 
 #. Translators: about dialog text
-#: editor/dconf-editor.vala:641
+#: editor/dconf-editor.vala:653
 msgid "A graphical viewer and editor of applications’ internal settings."
 msgstr ""
 "გრაფიკული დამთვალიერებელი და რედაქტორი აპლიკაციების შიდა პარამეტრებისთვის."
 
 #. Translators: text crediting a game author, seen in the About dialog
-#: editor/dconf-editor.vala:646
+#: editor/dconf-editor.vala:658
 msgid "Robert Ancell"
 msgstr "Robert Ancell"
 
 #. Translators: text crediting a game author, seen in the About dialog
-#: editor/dconf-editor.vala:650
+#: editor/dconf-editor.vala:662
 msgid "Arnaud Bonatti"
 msgstr "Arnaud Bonatti"
 
 #. Translators: text crediting a maintainer, seen in the About dialog
-#: editor/dconf-editor.vala:654
+#: editor/dconf-editor.vala:666
 msgid "Copyright © 2010-2014 – Canonical Ltd"
 msgstr "საავტორო უფლებები © 2010-2014 – Canonical Ltd"
 
 #. Translators: text crediting a maintainer, seen in the About dialog
-#: editor/dconf-editor.vala:658
+#: editor/dconf-editor.vala:670
 msgid "Copyright © 2017-2018 – Davi da Silva Böger"
 msgstr "საავტორო უფლებები © 2017-2018 – Davi da Silva Böger"
 
 #. Translators: text crediting a maintainer, seen in the About dialog; the %u are replaced with the years of start and end
-#: editor/dconf-editor.vala:662
+#: editor/dconf-editor.vala:674
 #, c-format
 msgid "Copyright © %u-%u – Arnaud Bonatti"
 msgstr "საავტორო უფლებები © %u-%u – Arnaud Bonatti"
 
 #. Translators: about dialog text; this string should be replaced by a text crediting yourselves and your translation team, or should be left empty. Do not translate literally!
-#: editor/dconf-editor.vala:669
+#: editor/dconf-editor.vala:681
 msgid "translator-credits"
 msgstr "მთარგმნელის შესახებ"
 
 #. Translators: about dialog text; label of the website link
-#: editor/dconf-editor.vala:675
+#: editor/dconf-editor.vala:687
 msgid "Page on GNOME wiki"
 msgstr "გვერდი GNOME-ის ვიკიზე"
 
@@ -2287,27 +2282,28 @@ msgstr ""
 "შეგიძლიათ გამოიყენოთ X.Ye+Z ნოტაცია."
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of type "variant" (or of a type composed with a variant)
-#: editor/registry-info.vala:620
+#: editor/registry-info.vala:622
+#, c-format
 msgid ""
-"Variants content should be surrounded by XML brackets (‘<’ and ‘>’). See "
-"https://docs.gtk.org/glib/gvariant-text.html for complete documentation."
+"Variants content should be surrounded by XML brackets (‘<’ and ‘>’). See %s "
+"for complete documentation."
 msgstr ""
 "ვარიანტების შემცველობა XML ფრჩხილებში ('<' და '>') უნდა ჩაგესვათ. სრული "
-"დოკუმენტაციისთვის იხილეთ ბმული https://docs.gtk.org/glib/gvariant-text.html ."
+"დოკუმენტაციისთვის იხილეთ ბმული %s."
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a "maybe type" and with a string type (or similar); neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
-#: editor/registry-info.vala:627
+#: editor/registry-info.vala:630
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value. Strings, signatures and object paths should be surrounded by "
 "quotation marks."
 msgstr ""
-"გამოიყენეთ საკვანძო სიტყვა \"nothing\", რომ დააყენოთ ტიპი "
-"\"შეიძლება\" (იწყება სიმბოლოთი \"m\") მის ცარიელ მნიშვნელობაზე. სტრიქონები, "
-"ხელმოწერები და ობიექტის ბილიკები ციტატის ნიშნებით უნდა იყოს შემოსაზღვრული."
+"გამოიყენეთ საკვანძო სიტყვა \"nothing\", რომ დააყენოთ ტიპი \"შეიძლება\" "
+"(იწყება სიმბოლოთი \"m\") მის ცარიელ მნიშვნელობაზე. სტრიქონები, ხელმოწერები "
+"და ობიექტის ბილიკები ციტატის ნიშნებით უნდა იყოს შემოსაზღვრული."
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a string type (or similar)
-#: editor/registry-info.vala:630
+#: editor/registry-info.vala:633
 msgid ""
 "Strings, signatures and object paths should be surrounded by quotation marks."
 msgstr ""
@@ -2315,7 +2311,7 @@ msgstr ""
 "შემოსაზღვრული."
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a "maybe type"; neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
-#: editor/registry-info.vala:635
+#: editor/registry-info.vala:638
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value."
@@ -2324,7 +2320,7 @@ msgstr ""
 "სიმბოლოთი \"m\") მის ცარიელ მნიშვნელობაზე."
 
 #. Translators: field content when displaying key properties; the field description is "Current value", this text displayed if the key, not defined by a schema, has been erased (and so has no value anymore)
-#: editor/registry-info.vala:674
+#: editor/registry-info.vala:677
 msgid "Key erased."
 msgstr "გასაღები წაიშალა."
 
@@ -2450,6 +2446,9 @@ msgstr "გადაადგილებადი სქემა"
 #: editor/setting-object.vala:417
 msgid "DConf backend"
 msgstr "DConf-ის უკანაბოლო"
+
+#~ msgid "The GNOME Project"
+#~ msgstr "პროექტი \"GNOME\""
 
 #~ msgid "Pause night mode"
 #~ msgstr "ღამის რეჟიმის შეჩერება"
