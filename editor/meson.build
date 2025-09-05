@@ -24,13 +24,21 @@ configure_file(
 
 appdata = dconf_editor_namespace + '.metainfo.xml'
 
-i18n.merge_file(
+appdata_file = i18n.merge_file(
   input: appdata + '.in',
   output: appdata,
   po_dir: po_dir,
   install: true,
   install_dir: join_paths(dconf_editor_datadir, 'metainfo')
 )
+
+appstreamcli = find_program('appstreamcli', required: false)
+if appstreamcli.found()
+  test(
+    'validate-appdata', appstreamcli,
+    args: ['validate', '--no-net', '--explain', appdata_file.full_path()],
+  )
+endif
 
 gschema = dconf_editor_namespace + '.gschema.xml'
 dconf_editor_schemadir = join_paths(dconf_editor_datadir, 'glib-2.0', 'schemas')
