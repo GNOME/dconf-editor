@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: d-conf\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues/\n"
-"POT-Creation-Date: 2025-09-08 12:56+0000\n"
-"PO-Revision-Date: 2025-09-09 23:56+0200\n"
+"POT-Creation-Date: 2025-09-09 21:57+0000\n"
+"PO-Revision-Date: 2025-09-10 00:53+0200\n"
 "Last-Translator: Nathan Follens <nfollens@gnome.org>\n"
 "Language-Team: GNOME-NL https://matrix.to/#/#nl:gnome.org\n"
 "Language: nl\n"
@@ -974,7 +974,7 @@ msgstr ""
 #: editor/ca.desrt.dconf-editor.gschema.xml:489
 msgid "A 32-bit signed integer, defined by a relocatable schema."
 msgstr ""
-"Een 32-bit ondertekende integer, gedefinieerd door een herplaatsbaar schema."
+"Een 32-bits signed integer, gedefinieerd door een herplaatsbaar schema."
 
 #. Translators: summary of a demo key, see 'dconf-editor ca.desrt.dconf-editor.Demo.Conflict1 a-non-conflicting-key'
 #: editor/ca.desrt.dconf-editor.gschema.xml:503
@@ -1727,7 +1727,7 @@ msgstr "Kon niet als 64-bits integer parseren."
 #. Translators: tooltip text of the entry's icon when editing the value of an unsigned 64-bit key, if the written value cannot be parsed
 #: editor/key-editor-child.vala:518
 msgid "Failed to parse as unsigned 64-bit integer."
-msgstr "Kon niet als niet-ondertekende 64-bits integer parseren."
+msgstr "Kon niet als unsigned 64-bits integer parseren."
 
 #. Translators: first item of the keys list displayed during a search, the %s is a folder path usually
 #: editor/key-list-box-row.vala:118
@@ -1873,32 +1873,32 @@ msgstr "D-Bus-ondertekening"
 #. Translators: that's a name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:373
 msgid "Signed 16-bit integer"
-msgstr "Ondertekende 16-bits integer"
+msgstr "Signed 16-bits integer"
 
 #. Translators: that's a name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:376
 msgid "Unsigned 16-bit integer"
-msgstr "Niet-ondertekende 16-bits integer"
+msgstr "Unsigned 16-bits integer"
 
 #. Translators: that's a name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:379
 msgid "Signed 32-bit integer"
-msgstr "Ondertekende 32-bits integer"
+msgstr "Signed 32-bits integer"
 
 #. Translators: that's a name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:382
 msgid "Unsigned 32-bit integer"
-msgstr "Niet-ondertekende 32-bits integer"
+msgstr "Unsigned 32-bits integer"
 
 #. Translators: that's a name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:385
 msgid "Signed 64-bit integer"
-msgstr "Ondertekende 64-bits integer"
+msgstr "Signed 64-bits integer"
 
 #. Translators: that's a name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:388
 msgid "Unsigned 64-bit integer"
-msgstr "Niet-ondertekende 64-bits integer"
+msgstr "Unsigned 64-bits integer"
 
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:391
