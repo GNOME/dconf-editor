@@ -1,20 +1,20 @@
-# dconf's Portuguese translation.
-# Copyright © 2012, 2013 dconf
-# This file is distributed under the same license as the dconf package.
+# Portuguese translation for dconf-editor.
+# Copyright © 2025 dconf-editor
+# This file is distributed under the same license as the dconf-editor package.
 # Duarte Loreto <happyguy_pt@hotmail.com>, 2012, 2013.
 # Pedro Albuquerque <palbuquerque73@gmail.com>, 2015.
 # Sérgio Cardeira <cardeira dot sergio at gmail dot com>, 2016.
 # Tiago Santos <tiagofsantos81@sapo.pt>, 2014 - 2016.
 # Juliano de Souza Camargo <julianosc@protonmail.com>, 2020.
-# Hugo Carvalho <hugokarvalho@hotmail.com>, 2020, 2021, 2022, 2023, 2024.
+# Hugo Carvalho <hugokarvalho@hotmail.com>, 2020, 2021, 2022, 2023, 2024, 2025.
 # João Carvalhinho <joao.carvalhinho@gmail.com>, 2024.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: 3.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues/\n"
-"POT-Creation-Date: 2024-05-01 14:50+0000\n"
-"PO-Revision-Date: 2024-05-04 22:57+0100\n"
+"POT-Creation-Date: 2025-09-13 04:05+0000\n"
+"PO-Revision-Date: 2025-09-13 11:29+0100\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Portuguese <>\n"
 "Language: pt\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.7\n"
 "X-Language: pt_PT\n"
 "X-Source-Language: C\n"
 "X-Project-Style: gnome\n"
@@ -212,15 +212,35 @@ msgstr ""
 "O mesmo botão do rato está definido para avançar e recuar. Acabando por "
 "fazer nada."
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:9
+#. Translators: application name, as used in the window manager, the window title, the about dialog...
+#: editor/ca.desrt.dconf-editor.desktop.in:2 editor/dconf-editor.vala:21
+msgid "dconf Editor"
+msgstr "Editor dconf"
+
+#. Translators: a GenericName that gives the application goal, as defined in the desktop file spec
+#: editor/ca.desrt.dconf-editor.desktop.in:4
+msgid "Configuration editor for dconf"
+msgstr "Editor de configurações para dconf"
+
+#. Translators: a Comment that gives the application function, as defined in the desktop file spec
+#: editor/ca.desrt.dconf-editor.desktop.in:6
+msgid "Directly edit your entire configuration database"
+msgstr "Edite diretamente toda a sua base de dados de configuração"
+
+#. Translators: some search Keywords to find this application, as defined in the desktop file spec. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#: editor/ca.desrt.dconf-editor.desktop.in:8
+msgid "settings;configuration;"
+msgstr "definições;configuração;"
+
+#: editor/ca.desrt.dconf-editor.metainfo.xml.in:9
 msgid "Dconf Editor"
 msgstr "Editor Dconf"
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:10
+#: editor/ca.desrt.dconf-editor.metainfo.xml.in:10
 msgid "A graphical tool for editing the dconf database"
 msgstr "Uma ferramenta gráfica para editar a base de dados dconf"
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:13
+#: editor/ca.desrt.dconf-editor.metainfo.xml.in:13
 msgid ""
 "Dconf Editor is a tool to allow direct editing of the dconf configuration "
 "database. This is useful when developing applications that use these "
@@ -230,7 +250,7 @@ msgstr ""
 "de configurações dconf. É útil quando desenvolver aplicações que utilizem "
 "estas definições."
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:17
+#: editor/ca.desrt.dconf-editor.metainfo.xml.in:17
 msgid ""
 "Editing your configuration directly is an advanced feature and may cause "
 "applications to not work correctly."
@@ -238,38 +258,13 @@ msgstr ""
 "Editar as configurações diretamente é uma funcionalidade avançada e pode "
 "fazer com que certas aplicações não funcionem corretamente."
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:35
+#: editor/ca.desrt.dconf-editor.metainfo.xml.in:37
 msgid "Browse the keys used by installed applications"
 msgstr "Navegar pelas chaves utilizadas pelas aplicações instaladas"
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:39
+#: editor/ca.desrt.dconf-editor.metainfo.xml.in:41
 msgid "Read keys descriptions and edit their values"
 msgstr "Ler as descrições das chaves e editar os seus valores"
-
-#. a translatable version of project_group
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:58
-msgid "The GNOME Project"
-msgstr "Projeto GNOME"
-
-#. Translators: application name, as used in the window manager, the window title, the about dialog...
-#: editor/ca.desrt.dconf-editor.desktop.in:3 editor/dconf-editor.vala:21
-msgid "dconf Editor"
-msgstr "Editor dconf"
-
-#. Translators: a GenericName that gives the application goal, as defined in the desktop file spec
-#: editor/ca.desrt.dconf-editor.desktop.in:5
-msgid "Configuration editor for dconf"
-msgstr "Editor de configurações para dconf"
-
-#. Translators: a Comment that gives the application function, as defined in the desktop file spec
-#: editor/ca.desrt.dconf-editor.desktop.in:7
-msgid "Directly edit your entire configuration database"
-msgstr "Edite diretamente toda a sua base de dados de configuração"
-
-#. Translators: some search Keywords to find this application, as defined in the desktop file spec. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-#: editor/ca.desrt.dconf-editor.desktop.in:9
-msgid "settings;configuration;"
-msgstr "definições;configuração;"
 
 #. see AdaptativeWindow.width-request at data/ui/adaptative-window.ui:22
 #. range min="350"/ FIXME
@@ -925,16 +920,16 @@ msgid ""
 "a gschema file “&#60;” and “&#62;” respectively), with a parsable "
 "representation of their content inside. If unclear, the type can be given in "
 "the value with a prefix annotation like “@x” (where “x” is the type string) "
-"or “int64”. See https://docs.gtk.org/glib/gvariant-text.html for complete "
-"documentation."
+"or “int64”. See https://docs.gtk.org/glib/gvariant-text-format.html for "
+"complete documentation."
 msgstr ""
-"Variantes podem ser gravadas dentro de variantes, e consequentemente como um "
-"tipo GSettings. Suas representações utilizam parêntesis XML (caracteres “<” "
-"e “>”, no ficheiro gschema “&#60;” e “&#62;” respetivamente), com uma "
-"representação processável de seu conteúdo interno. Se incerto, o tipo pode "
-"ser dado no valor com uma anotação de prefixo como “@x” (onde “x” é o tipo "
-"cadeia) ou “int64”. Ver https://docs.gtk.org/glib/struct.Variant.html para "
-"obter a documentação completa."
+"Variantes podem ser armazenadas dentro de variantes, e consequentemente como "
+"um tipo GSettings. As suas representações utilizam parêntesis XML "
+"(caracteres “<” e “>”, no ficheiro gschema “&#60;” e “&#62;” "
+"respetivamente), com uma representação processável de seu conteúdo interno. "
+"Se incerto, o tipo pode ser dado no valor com uma anotação de prefixo como "
+"“@x” (onde “x” é o tipo cadeia) ou “int64”. Consulte https://docs.gtk.org/"
+"glib/gvariant-text-format.html para obter a documentação completa."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-enum'
 #: editor/ca.desrt.dconf-editor.gschema.xml:452
@@ -1102,189 +1097,189 @@ msgid "Conflicting key from Conflict2 that should give a warning"
 msgstr "Chave conflituante de Conflict2 que devem gerar um aviso"
 
 #. Translators: command-line option description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:159
+#: editor/dconf-editor.vala:171
 msgid "Print release version and exit"
 msgstr "Imprimir versão do lançamento e sair"
 
 #. Translators: command-line option description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:162
+#: editor/dconf-editor.vala:174
 msgid "Print relocatable schemas and exit"
 msgstr "Imprimir esquemas móveis e sair"
 
 #. Translators: command-line option description, see 'dconf-editor --help'; the option removes the initial "use at your own risks" dialog
-#: editor/dconf-editor.vala:165
+#: editor/dconf-editor.vala:177
 msgid "Do not show initial warning"
 msgstr "Não mostrar o aviso inicial"
 
 #. Translators: command-line text, description of the application in 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
-#: editor/dconf-editor.vala:203
+#: editor/dconf-editor.vala:215
 msgid "Graphical interface for editing other applications settings."
 msgstr "Uma ferramenta gráfica para editar outras definições de aplicações."
 
 #. Translators: command-line text, describes how the application proceeds for editing other applications settings, in 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
-#: editor/dconf-editor.vala:206
+#: editor/dconf-editor.vala:218
 msgid "Uses the gsettings API of the glib library, among others."
 msgstr "Usa a API gsettings da biblioteca glib, entre outras."
 
 #. Translators: command-line header description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:209
+#: editor/dconf-editor.vala:221
 msgid "Arguments description:"
 msgstr "Descrição de argumentos:"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:213
+#: editor/dconf-editor.vala:225
 msgid "a folder path or a key path"
 msgstr "um caminho de pasta ou de chave"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:215
+#: editor/dconf-editor.vala:227
 msgid "example: “/org/gnome/” or “/ca/desrt/dconf-editor/Demo/boolean”"
 msgstr "exemplo: “/org/gnome/” ou “/ca/desrt/dconf-editor/Demo/boolean”"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:219
+#: editor/dconf-editor.vala:231
 msgid "the name of a schema with fixed path"
 msgstr "o nome do esquema com caminho fixo"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:221
+#: editor/dconf-editor.vala:233
 msgid "example: “ca.desrt.dconf-editor.Settings”"
 msgstr "exemplo: “ca.desrt.dconf-editor.Settings”"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'; no need to put your translation of "relocatable" between quotation marks, that's done in English to highlight why the option is called "RELOC_SCHEMA"
-#: editor/dconf-editor.vala:225
+#: editor/dconf-editor.vala:237
 msgid "the name of a “relocatable” schema, without fixed path"
 msgstr "o nome do esquema “relocatable” (móvel), sem o caminho fixo"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:227
+#: editor/dconf-editor.vala:239
 msgid "see list with the “--list-relocatable-schemas” option"
 msgstr "ver lista com a opção “--list-relocatable-schemas”"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:231
+#: editor/dconf-editor.vala:243
 msgid "the path where to map the relocatable schema"
 msgstr "o caminho onde associar o esquema móvel"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:233
+#: editor/dconf-editor.vala:245
 msgid "example: “ca.desrt.dconf-editor.Bookmarks:/ca/desrt/dconf-editor/”"
 msgstr "exemplo: “ca.desrt.dconf-editor.Bookmarks:/ca/desrt/dconf-editor/”"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:237
+#: editor/dconf-editor.vala:249
 msgid "the name of a key from the schema"
 msgstr "o nome da chave do esquema"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:239
+#: editor/dconf-editor.vala:251
 msgid "example: “bookmarks”"
 msgstr "exemplo: “bookmarks”"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
-#: editor/dconf-editor.vala:295
+#: editor/dconf-editor.vala:307
 msgid "Known schemas installed:"
 msgstr "Esquemas conhecidos instalados:"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given
-#: editor/dconf-editor.vala:301
+#: editor/dconf-editor.vala:313
 msgid "No known schemas installed."
 msgstr "Sem esquemas conhecidos instalados."
 
 #. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
-#: editor/dconf-editor.vala:306
+#: editor/dconf-editor.vala:318
 msgid "Known schemas skipped:"
 msgstr "Esquemas conhecidos ignorados:"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given
-#: editor/dconf-editor.vala:312
+#: editor/dconf-editor.vala:324
 msgid "No known schemas skipped."
 msgstr "Sem esquemas conhecidos ignorados."
 
 #. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
-#: editor/dconf-editor.vala:317
+#: editor/dconf-editor.vala:329
 msgid "Unknown schemas:"
 msgstr "Esquemas desconhecidos:"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given
-#: editor/dconf-editor.vala:323
+#: editor/dconf-editor.vala:335
 msgid "No unknown schemas."
 msgstr "Sem esquemas desconhecidos."
 
 #. Translators: command-line error message, when the user requests a specific path while there is already a window opened
-#: editor/dconf-editor.vala:442
+#: editor/dconf-editor.vala:454
 msgid "Only one window can be opened for now.\n"
 msgstr "Só uma janela pode ser aberta por ora.\n"
 
 #. Translators: command-line error message, try 'dconf-editor a b c d'
-#: editor/dconf-editor.vala:462
+#: editor/dconf-editor.vala:474
 msgid "Cannot understand: too many arguments.\n"
 msgstr "Impossível compreender: demasiados argumentos.\n"
 
 #. Translators: command-line error message, try 'dconf-editor / a'
-#: editor/dconf-editor.vala:476
+#: editor/dconf-editor.vala:488
 msgid "Cannot understand second argument in this context.\n"
 msgstr "Impossível compreender o segundo argumento neste contexto.\n"
 
 #. Translators: command-line error message, try 'dconf-editor org.example /'
-#: editor/dconf-editor.vala:497
+#: editor/dconf-editor.vala:509
 msgid "Cannot understand: slash character in second argument.\n"
 msgstr "Impossível compreender: caracteres riscados no segundo argumento.\n"
 
 #. Translators: command-line error message, try 'dconf-editor org.example:a'
-#: editor/dconf-editor.vala:512
+#: editor/dconf-editor.vala:524
 msgid "Schema path should start and end with a “/”.\n"
 msgstr "Caminho do esquema deve começar e terminar com um “/”.\n"
 
 #. Translators: command-line error message, try 'dconf-editor //'
-#: editor/dconf-editor.vala:528
+#: editor/dconf-editor.vala:540
 msgid "Cannot understand: given path contains “//”.\n"
 msgstr "Impossível compreender: caminho dado contém “//”.\n"
 
 #. Translators: command-line error message, try 'dconf-editor "org example" a'
-#: editor/dconf-editor.vala:536
+#: editor/dconf-editor.vala:548
 msgid "Cannot understand: space character in argument.\n"
 msgstr "Impossível compreender: carácter espaço no argumento.\n"
 
 #. Translators: notification header, try ctrl-c while in the keys list
-#: editor/dconf-editor.vala:564
+#: editor/dconf-editor.vala:576
 msgid "Copied to clipboard"
 msgstr "Copiado para a área de transferência"
 
 #. Translators: about dialog text
-#: editor/dconf-editor.vala:641
+#: editor/dconf-editor.vala:653
 msgid "A graphical viewer and editor of applications’ internal settings."
 msgstr ""
 "Um visualizador e editor gráfico das definições internas das aplicações."
 
 #. Translators: text crediting a game author, seen in the About dialog
-#: editor/dconf-editor.vala:646
+#: editor/dconf-editor.vala:658
 msgid "Robert Ancell"
 msgstr "Robert Ancell"
 
 #. Translators: text crediting a game author, seen in the About dialog
-#: editor/dconf-editor.vala:650
+#: editor/dconf-editor.vala:662
 msgid "Arnaud Bonatti"
 msgstr "Arnaud Bonatti"
 
 #. Translators: text crediting a maintainer, seen in the About dialog
-#: editor/dconf-editor.vala:654
+#: editor/dconf-editor.vala:666
 msgid "Copyright © 2010-2014 – Canonical Ltd"
 msgstr "Copyright © 2010-2014 – Canonical Ltd"
 
 #. Translators: text crediting a maintainer, seen in the About dialog
-#: editor/dconf-editor.vala:658
+#: editor/dconf-editor.vala:670
 msgid "Copyright © 2017-2018 – Davi da Silva Böger"
 msgstr "Copyright © 2017-2018 – Davi da Silva Böger"
 
 #. Translators: text crediting a maintainer, seen in the About dialog; the %u are replaced with the years of start and end
-#: editor/dconf-editor.vala:662
+#: editor/dconf-editor.vala:674
 #, c-format
 msgid "Copyright © %u-%u – Arnaud Bonatti"
 msgstr "Copyright © %u-%u – Arnaud Bonatti"
 
 #. Translators: about dialog text; this string should be replaced by a text crediting yourselves and your translation team, or should be left empty. Do not translate literally!
-#: editor/dconf-editor.vala:669
+#: editor/dconf-editor.vala:681
 msgid "translator-credits"
 msgstr ""
 "Duarte Loreto <happyguy_pt@hotmail.com>\n"
@@ -1295,7 +1290,7 @@ msgstr ""
 "João Carvalhinho <joao.carvalhinho@gmail.com>"
 
 #. Translators: about dialog text; label of the website link
-#: editor/dconf-editor.vala:675
+#: editor/dconf-editor.vala:687
 msgid "Page on GNOME wiki"
 msgstr "Página Web na wiki GNOME"
 
@@ -2292,16 +2287,17 @@ msgstr ""
 
 # Added the correct Link/URL as the new original one points to a 404
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of type "variant" (or of a type composed with a variant)
-#: editor/registry-info.vala:620
+#: editor/registry-info.vala:622
+#, c-format
 msgid ""
-"Variants content should be surrounded by XML brackets (‘<’ and ‘>’). See "
-"https://docs.gtk.org/glib/gvariant-text.html for complete documentation."
+"Variants content should be surrounded by XML brackets (‘<’ and ‘>’). See %s "
+"for complete documentation."
 msgstr ""
-"Variantes devem ser envoltos por parênteses XML (‘<’ e ‘>’). Veja https://"
-"docs.gtk.org/glib/struct.Variant.html para obter a documentação completa."
+"O conteúdo das variantes deve ser colocado entre parênteses XML (‘<’ e ‘>’). "
+"Consulte %s para obter a documentação completa."
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a "maybe type" and with a string type (or similar); neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
-#: editor/registry-info.vala:627
+#: editor/registry-info.vala:630
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value. Strings, signatures and object paths should be surrounded by "
@@ -2312,14 +2308,14 @@ msgstr ""
 "objetos devem ser rodeados por aspas."
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a string type (or similar)
-#: editor/registry-info.vala:630
+#: editor/registry-info.vala:633
 msgid ""
 "Strings, signatures and object paths should be surrounded by quotation marks."
 msgstr ""
 "Cadeias, assinaturas e caminhos de objetos devem ser rodeados por aspas."
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a "maybe type"; neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
-#: editor/registry-info.vala:635
+#: editor/registry-info.vala:638
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value."
@@ -2328,7 +2324,7 @@ msgstr ""
 "por \"m\") nos seus valores vazios."
 
 #. Translators: field content when displaying key properties; the field description is "Current value", this text displayed if the key, not defined by a schema, has been erased (and so has no value anymore)
-#: editor/registry-info.vala:674
+#: editor/registry-info.vala:677
 msgid "Key erased."
 msgstr "Chave apagada."
 
@@ -2454,6 +2450,9 @@ msgstr "Esquema móvel"
 #: editor/setting-object.vala:417
 msgid "DConf backend"
 msgstr "Infra-estrutura Dconf"
+
+#~ msgid "The GNOME Project"
+#~ msgstr "Projeto GNOME"
 
 #~ msgid "Pause night mode"
 #~ msgstr "Pausar o modo noturno"
