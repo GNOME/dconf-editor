@@ -7,21 +7,22 @@
 # sicklylife <translation@sicklylife.jp>, 2019-2020.
 # Kusano Takayuki <https://bsky.app/profile/tkusano.jp>, 2025.
 # Seiji Iizuka <seiji@iizuka.dev>, 2025.
+# Makoto Sakaguchi <ycco34vx@gmail.com>, 2025.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf-editor master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues/\n"
-"POT-Creation-Date: 2025-05-10 11:33+0000\n"
-"PO-Revision-Date: 2025-05-23 10:20+0900\n"
-"Last-Translator: Seiji Iizuka <seiji@iizuka.dev>\n"
+"POT-Creation-Date: 2025-09-10 19:07+0000\n"
+"PO-Revision-Date: 2025-09-11 06:33+0900\n"
+"Last-Translator: Makoto Sakaguchi <ycco34vx@gmail.com>\n"
 "Language-Team: Japanese <https://l10n.gnome.org/teams/ja/>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Gtranslator 48.0\n"
+"X-Generator: Poedit 3.7\n"
 
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the second is "Credits"
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the name of the view, displayed in the headerbar
@@ -51,13 +52,7 @@ msgstr "作成者"
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the header of the translators names
 #: editor/about-list.vala:166
 msgid "Translators"
-msgstr ""
-"相花 毅\n"
-"松澤 二郎\n"
-"Ryo Nakano\n"
-"sicklylife\n"
-"Kusano Takayuki\n"
-"Seiji Iizuka"
+msgstr "翻訳者"
 
 #. Translators: menu entry of the pathbar menu
 #: editor/adaptative-pathbar.vala:251
@@ -201,15 +196,35 @@ msgid ""
 msgstr ""
 "マウスの同じボタンが「戻る」と「進む」に設定されています。何もしません。"
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:9
+#. Translators: application name, as used in the window manager, the window title, the about dialog...
+#: editor/ca.desrt.dconf-editor.desktop.in:2 editor/dconf-editor.vala:21
+msgid "dconf Editor"
+msgstr "dconfエディター"
+
+#. Translators: a GenericName that gives the application goal, as defined in the desktop file spec
+#: editor/ca.desrt.dconf-editor.desktop.in:4
+msgid "Configuration editor for dconf"
+msgstr "dconf 用の設定エディター"
+
+#. Translators: a Comment that gives the application function, as defined in the desktop file spec
+#: editor/ca.desrt.dconf-editor.desktop.in:6
+msgid "Directly edit your entire configuration database"
+msgstr "設定データベースを直接編集します"
+
+#. Translators: some search Keywords to find this application, as defined in the desktop file spec. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#: editor/ca.desrt.dconf-editor.desktop.in:8
+msgid "settings;configuration;"
+msgstr "settings;configuration;設定;gsettings;gschema;"
+
+#: editor/ca.desrt.dconf-editor.metainfo.xml.in:9
 msgid "Dconf Editor"
 msgstr "dconfエディター"
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:10
+#: editor/ca.desrt.dconf-editor.metainfo.xml.in:10
 msgid "A graphical tool for editing the dconf database"
 msgstr "dconf データベースを編集するためのグラフィカルツールです"
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:13
+#: editor/ca.desrt.dconf-editor.metainfo.xml.in:13
 msgid ""
 "Dconf Editor is a tool to allow direct editing of the dconf configuration "
 "database. This is useful when developing applications that use these "
@@ -218,7 +233,7 @@ msgstr ""
 "dconfエディターは、dconf 設定データベースを直接編集できるツールです。これらの"
 "設定を使用するアプリケーションを開発する際に便利です。"
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:17
+#: editor/ca.desrt.dconf-editor.metainfo.xml.in:17
 msgid ""
 "Editing your configuration directly is an advanced feature and may cause "
 "applications to not work correctly."
@@ -226,38 +241,13 @@ msgstr ""
 "設定を直接編集することは上級者向けの機能であり、アプリケーションが正しく動作"
 "しない原因となる場合があります。"
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:35
+#: editor/ca.desrt.dconf-editor.metainfo.xml.in:36
 msgid "Browse the keys used by installed applications"
 msgstr "インストールされたアプリケーションで使用されているキーを閲覧"
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:39
+#: editor/ca.desrt.dconf-editor.metainfo.xml.in:40
 msgid "Read keys descriptions and edit their values"
 msgstr "キーの説明を読み、値を編集"
-
-#. a translatable version of project_group
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:58
-msgid "The GNOME Project"
-msgstr "The GNOME Project"
-
-#. Translators: application name, as used in the window manager, the window title, the about dialog...
-#: editor/ca.desrt.dconf-editor.desktop.in:3 editor/dconf-editor.vala:21
-msgid "dconf Editor"
-msgstr "dconfエディター"
-
-#. Translators: a GenericName that gives the application goal, as defined in the desktop file spec
-#: editor/ca.desrt.dconf-editor.desktop.in:5
-msgid "Configuration editor for dconf"
-msgstr "dconf 用の設定エディター"
-
-#. Translators: a Comment that gives the application function, as defined in the desktop file spec
-#: editor/ca.desrt.dconf-editor.desktop.in:7
-msgid "Directly edit your entire configuration database"
-msgstr "設定データベースを直接編集します"
-
-#. Translators: some search Keywords to find this application, as defined in the desktop file spec. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-#: editor/ca.desrt.dconf-editor.desktop.in:9
-msgid "settings;configuration;"
-msgstr "settings;configuration;設定;gsettings;gschema;"
 
 #. see AdaptativeWindow.width-request at data/ui/adaptative-window.ui:22
 #. range min="350"/ FIXME
@@ -895,15 +885,15 @@ msgid ""
 "a gschema file “&#60;” and “&#62;” respectively), with a parsable "
 "representation of their content inside. If unclear, the type can be given in "
 "the value with a prefix annotation like “@x” (where “x” is the type string) "
-"or “int64”. See https://docs.gtk.org/glib/gvariant-text.html for complete "
-"documentation."
+"or “int64”. See https://docs.gtk.org/glib/gvariant-text-format.html for "
+"complete documentation."
 msgstr ""
 "バリアントはバリアントの中に格納できるので、GSettings 型として格納できます。"
 "バリアントの表現は XML の山括弧 (‘<’ および ‘>’ 文字、gschema ファイルではそ"
 "れぞれ “&#60;” および “&#62;”) を使用し、その中に格納したい内容の解析可能な表"
 "現を含みます。不明な場合、値の先頭に注釈を付けて型を指定できます (例: “@x” "
-"(“x” は型文字列) または “int64”)。完全なドキュメントについては、https://docs."
-"gtk.org/glib/gvariant-text-format.html を参照してください。"
+"(“x” は型文字列) または “int64”)。完全なドキュメントについては、https://"
+"docs.gtk.org/glib/gvariant-text-format.html を参照してください。"
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-enum'
 #: editor/ca.desrt.dconf-editor.gschema.xml:452
@@ -1257,7 +1247,8 @@ msgstr ""
 "Ryo Nakano <ryonakaknock3@gmail.com>\n"
 "sicklylife <translation@sicklylife.jp>\n"
 "Japanese Translation Team https://l10n.gnome.org/teams/ja/\n"
-"Kusano Takayuki https://bsky.app/profile/tkusano.jp"
+"Kusano Takayuki https://bsky.app/profile/tkusano.jp\n"
+"Makoto Sakaguchi <ycco34vx@gmail.com>"
 
 #. Translators: about dialog text; label of the website link
 #: editor/dconf-editor.vala:687
@@ -1340,24 +1331,24 @@ msgstr "スキーマは指定したパスにインストールされていませ
 #: editor/dconf-window.vala:168
 #, c-format
 msgid "Unknown schema “%s”."
-msgstr "“%s”は不明なスキーマです。"
+msgstr "“%s” は不明なスキーマです。"
 
 #. Translators: initial "use at your own risk" dialog, the welcoming text
 #: editor/dconf-window.vala:274
 msgid "Thanks for using Dconf Editor for editing your settings!"
-msgstr "設定の編集に dconfエディターをお使いいただきありがとうございます。"
+msgstr "設定の編集に dconfエディターをお使いいただきありがとうございます！"
 
 #. Translators: initial "use at your own risk" dialog, the warning text
 #: editor/dconf-window.vala:277
 msgid "Don’t forget that some options may break applications, so be careful."
 msgstr ""
-"変更するとアプリケーションが正常に動作しなくなる可能性のあるオプションもある"
-"ことを忘れないようご注意ください。"
+"これらの設定を変更すると、システムやアプリケーションに予期しない問題が発生す"
+"る可能性があります。"
 
 #. Translators: initial "use at your own risk" dialog, the button label
 #: editor/dconf-window.vala:280
 msgid "I’ll be careful."
-msgstr "注意する"
+msgstr "承知しました"
 
 #. Translators: initial "use at your own risk" dialog, the checkbox label
 #: editor/dconf-window.vala:284
@@ -1377,25 +1368,25 @@ msgstr ""
 #: editor/dconf-window.vala:777
 #, c-format
 msgid "Folder “%s” is now empty."
-msgstr "フォルダー“%s”を空にしました。"
+msgstr "フォルダー “%s” を空にしました。"
 
 #. Translators: notification text, when the requested key has been removed; the %s is the key path
 #: editor/dconf-window.vala:788
 #, c-format
 msgid "Key “%s” has been deleted."
-msgstr "キー“%s”を削除しました。"
+msgstr "キー “%s” を削除しました。"
 
 #. Translators: notification text at startup, use 'dconf-editor /org/example/test'; the %s is the key path
 #: editor/dconf-window.vala:794
 #, c-format
 msgid "Cannot find key “%s”."
-msgstr "キー“%s”が見つかりません。"
+msgstr "キー “%s” が見つかりません。"
 
 #. Translators: notification text at startup, use 'dconf-editor /org/example/empty/'; the %s is the folder path
 #: editor/dconf-window.vala:800
 #, c-format
 msgid "There’s nothing in requested folder “%s”."
-msgstr "指定したフォルダー“%s”には何もありません。"
+msgstr "指定したフォルダー “%s” には何もありません。"
 
 #. Translators: displayed in the list of pending changes (could be an in-window panel, or in the popover of the bottom bar); for dconf keys
 #: editor/delayed-setting-view.vala:136
@@ -1681,34 +1672,34 @@ msgstr "この値はこのキーの種類では無効です。"
 #. Translators: tooltip text of the entry's icon when editing the value of a double key, if the written value cannot be parsed
 #: editor/key-editor-child.vala:380
 msgid "Failed to parse as double."
-msgstr "double としてパースすることに失敗しました。"
+msgstr "double として解析できませんでした。"
 
 #. Translators: tooltip text of the entry's icon when editing the value of a signed 64-bit key, if the written value cannot be parsed
 #: editor/key-editor-child.vala:449
 msgid "Failed to parse as 64-bit integer."
-msgstr "64 ビット整数としての解析に失敗しました。"
+msgstr "64 ビット整数として解析できませんでした。"
 
 #. Translators: tooltip text of the entry's icon when editing the value of an unsigned 64-bit key, if the written value cannot be parsed
 #: editor/key-editor-child.vala:518
 msgid "Failed to parse as unsigned 64-bit integer."
-msgstr "符号なし 64 ビット整数としての解析に失敗しました。"
+msgstr "符号なし 64 ビット整数として解析できませんでした。"
 
 #. Translators: first item of the keys list displayed during a search, the %s is a folder path usually
 #: editor/key-list-box-row.vala:118
 #, c-format
 msgid "Go to “%s”"
-msgstr "“%s”へ移動"
+msgstr "“%s” へ移動"
 
 #. Translators: first item of the keys list displayed during browsing, the %s is the current folder name
 #: editor/key-list-box-row.vala:149
 #, c-format
 msgid "Search in “%s” folder"
-msgstr "“%s”フォルダーを検索"
+msgstr "“%s” フォルダーを検索"
 
 #. Translators: first item of the keys list displayed during browsing at root path
 #: editor/key-list-box-row.vala:153
 msgid "Open path entry"
-msgstr "パスエントリーを開く"
+msgstr "パスエントリを開く"
 
 #. Translators: last item of the keys list displayed during a local search
 #: editor/key-list-box-row.vala:157
@@ -2253,17 +2244,17 @@ msgstr ""
 "小数点にはカンマではなくドットを使用してください。X.Ye+Z 表記を使用できます。"
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of type "variant" (or of a type composed with a variant)
-#: editor/registry-info.vala:620
+#: editor/registry-info.vala:622
+#, c-format
 msgid ""
-"Variants content should be surrounded by XML brackets (‘<’ and ‘>’). See "
-"https://docs.gtk.org/glib/gvariant-text.html for complete documentation."
+"Variants content should be surrounded by XML brackets (‘<’ and ‘>’). See %s "
+"for complete documentation."
 msgstr ""
-"バリアントの内容は XML の山括弧（‘<’ および ‘>’）で囲む必要があります。完全な"
-"ドキュメントについては、 https://docs.gtk.org/glib/gvariant-text-format.html "
-"を参照してください。"
+"バリアントの内容は XML の山括弧 (‘<’ および ‘>’) で囲む必要があります。完全な"
+"ドキュメントについては、 %s を参照してください。"
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a "maybe type" and with a string type (or similar); neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
-#: editor/registry-info.vala:627
+#: editor/registry-info.vala:630
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value. Strings, signatures and object paths should be surrounded by "
@@ -2273,13 +2264,13 @@ msgstr ""
 "ます。文字列、シグネチャ、オブジェクトパスは引用符で囲む必要があります。"
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a string type (or similar)
-#: editor/registry-info.vala:630
+#: editor/registry-info.vala:633
 msgid ""
 "Strings, signatures and object paths should be surrounded by quotation marks."
 msgstr "文字列、シグネチャ、オブジェクトパスは引用符で括る必要があります。"
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a "maybe type"; neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
-#: editor/registry-info.vala:635
+#: editor/registry-info.vala:638
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value."
@@ -2288,7 +2279,7 @@ msgstr ""
 "ます。"
 
 #. Translators: field content when displaying key properties; the field description is "Current value", this text displayed if the key, not defined by a schema, has been erased (and so has no value anymore)
-#: editor/registry-info.vala:674
+#: editor/registry-info.vala:677
 msgid "Key erased."
 msgstr "キーは消去されました。"
 
@@ -2321,7 +2312,7 @@ msgstr "消去されました"
 #: editor/registry-list.vala:679
 #, c-format
 msgid "type “%s”"
-msgstr "種類“%s”"
+msgstr "種類 “%s”"
 
 #. Translators: header displayed in the keys list during a search only; indicates that the schema (the %s is the schema id) is installed at the path where the search has started
 #: editor/registry-list.vala:1176
@@ -2367,17 +2358,17 @@ msgstr "このパスにキーはありません"
 #. Translators: the boolean "true" value; capitalized (if that makes sense)
 #: editor/setting-object.vala:173
 msgid "True"
-msgstr "true"
+msgstr "True"
 
 #. Translators: the boolean "false" value; capitalized (if that makes sense)
 #: editor/setting-object.vala:177
 msgid "False"
-msgstr "false"
+msgstr "False"
 
 #. Translators: "nothing" value of a nullable key; capitalized (if that makes sense); "nothing" here is a keyword, but you do not need to show it in your translation, that will be done with the non-capitalized version of the word
 #: editor/setting-object.vala:180
 msgid "Nothing"
-msgstr "nothing"
+msgstr "Nothing"
 
 #. Translators: the boolean "true" value; non capitalized (if that makes sense)
 #: editor/setting-object.vala:186
@@ -2414,6 +2405,9 @@ msgstr "再配置可能なスキーマ"
 #: editor/setting-object.vala:417
 msgid "DConf backend"
 msgstr "DConf バックエンド"
+
+#~ msgid "The GNOME Project"
+#~ msgstr "The GNOME Project"
 
 #~ msgid "Pause night mode"
 #~ msgstr "夜間モードを一時停止"
