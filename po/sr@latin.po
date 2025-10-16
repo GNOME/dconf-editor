@@ -4,23 +4,24 @@
 # Miroslav Nikolić <miroslavnikolic@rocketmail.com>, 2012—2017.
 # Marko M. Kostić <marko.m.kostic@gmail.com>, 2016.
 # Miloš Popović <gpopac@gmail.com>, 2024.
+# aceydot <aceydot@tuta.io>, 2025.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2023-09-18 15:05+0000\n"
-"PO-Revision-Date: 2024-03-23 16:48+0100\n"
-"Last-Translator: Miloš Popović <gpopac@gmail.com>\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues/\n"
+"POT-Creation-Date: 2025-10-10 11:45+0000\n"
+"PO-Revision-Date: 2025-10-13 22:13+0200\n"
+"Last-Translator: aceydot <aceydot@tuta.io>\n"
 "Language-Team: Serbian <Serbian <gnome-sr@googlegroups.com>>\n"
 "Language: sr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n==1? 3 : n%10==1 && n%100!=11 ? 0 : "
-"n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2\n"
+"n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Project-Style: gnome\n"
-"X-Generator: Gtranslator 45.3\n"
+"X-Generator: Poedit 3.6\n"
 
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the second is "Credits"
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the name of the view, displayed in the headerbar
@@ -194,15 +195,35 @@ msgid ""
 msgstr ""
 "Isti taster miša je namešten za kretanje nazad i napred. Ne radim bilo šta."
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:9
+#. Translators: application name, as used in the window manager, the window title, the about dialog...
+#: editor/ca.desrt.dconf-editor.desktop.in:2 editor/dconf-editor.vala:21
+msgid "dconf Editor"
+msgstr "dkonf uređivač"
+
+#. Translators: a GenericName that gives the application goal, as defined in the desktop file spec
+#: editor/ca.desrt.dconf-editor.desktop.in:4
+msgid "Configuration editor for dconf"
+msgstr "Uređivač podešavanja za dkonf"
+
+#. Translators: a Comment that gives the application function, as defined in the desktop file spec
+#: editor/ca.desrt.dconf-editor.desktop.in:6
+msgid "Directly edit your entire configuration database"
+msgstr "Neposredno uredite vašu bazu sa podešavanjima"
+
+#. Translators: some search Keywords to find this application, as defined in the desktop file spec. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#: editor/ca.desrt.dconf-editor.desktop.in:8
+msgid "settings;configuration;"
+msgstr "podešavanja;postavke;konfiguracija;podešavanja;postavke;konfiguracija;podesavanja;settings;configuration;"
+
+#: editor/ca.desrt.dconf-editor.metainfo.xml.in:9
 msgid "Dconf Editor"
 msgstr "Dkonf uređivač"
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:10
+#: editor/ca.desrt.dconf-editor.metainfo.xml.in:10
 msgid "A graphical tool for editing the dconf database"
 msgstr "Grafički alat za uređivanje baze podataka dkonf-a"
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:13
+#: editor/ca.desrt.dconf-editor.metainfo.xml.in:13
 msgid ""
 "Dconf Editor is a tool to allow direct editing of the dconf configuration "
 "database. This is useful when developing applications that use these "
@@ -212,7 +233,7 @@ msgstr ""
 "podešavanja dkonf-a. Ovo je korisno kada razvijate programe koji koriste ova "
 "podešavanja."
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:17
+#: editor/ca.desrt.dconf-editor.metainfo.xml.in:17
 msgid ""
 "Editing your configuration directly is an advanced feature and may cause "
 "applications to not work correctly."
@@ -220,40 +241,13 @@ msgstr ""
 "Uređivanje vaših podešavanja direktno je napredna mogućnost i može dovesti do "
 "neispravnog rada programa."
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:34
+#: editor/ca.desrt.dconf-editor.metainfo.xml.in:37
 msgid "Browse the keys used by installed applications"
 msgstr "Razgledajte ključeve koje koriste instalirani programi"
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:38
+#: editor/ca.desrt.dconf-editor.metainfo.xml.in:41
 msgid "Read keys descriptions and edit their values"
 msgstr "Čitajte opise ključeva i uređujte njihove vrednosti"
-
-#. a translatable version of project_group
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:53
-msgid "The GNOME Project"
-msgstr "Gnomov projekat"
-
-#. Translators: application name, as used in the window manager, the window title, the about dialog...
-#: editor/ca.desrt.dconf-editor.desktop.in:3 editor/dconf-editor.vala:21
-msgid "dconf Editor"
-msgstr "dkonf uređivač"
-
-#. Translators: a GenericName that gives the application goal, as defined in the desktop file spec
-#: editor/ca.desrt.dconf-editor.desktop.in:5
-msgid "Configuration editor for dconf"
-msgstr "Uređivač podešavanja za dkonf"
-
-#. Translators: a Comment that gives the application function, as defined in the desktop file spec
-#: editor/ca.desrt.dconf-editor.desktop.in:7
-msgid "Directly edit your entire configuration database"
-msgstr "Neposredno uredite vašu bazu sa podešavanjima"
-
-#. Translators: some search Keywords to find this application, as defined in the desktop file spec. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-#: editor/ca.desrt.dconf-editor.desktop.in:9
-msgid "settings;configuration;"
-msgstr ""
-"podešavanja;postavke;konfiguracija;podešavanja;postavke;konfiguracija;"
-"podesavanja;settings;configuration;"
 
 #. see AdaptativeWindow.width-request at data/ui/adaptative-window.ui:22
 #. range min="350"/ FIXME
@@ -555,8 +549,8 @@ msgstr "Logička vrednost, vrsta „b“"
 #: editor/ca.desrt.dconf-editor.gschema.xml:270
 msgid "Booleans can only take two values, “true” or “false”."
 msgstr ""
-"Logičke vrednosti mogu imati samo dve vrednosti, „true“ (tačno) ili "
-"„false“ (netačno)."
+"Logičke vrednosti mogu imati samo dve vrednosti, „true“ (tačno) ili „false“ "
+"(netačno)."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/boolean-nullable'
 #: editor/ca.desrt.dconf-editor.gschema.xml:275
@@ -572,8 +566,8 @@ msgid ""
 msgstr ""
 "G-podešavanja dozvoljavaju ništavne vrste, koje su slične drugim vrstama ali "
 "mogu da sadrže vrednost „nothing“ (ništa). Ništavna logička vrednost može da "
-"ima samo tri vrednosti, „true“ (tačno), „false“ (netačno) i "
-"„nothing“ (ništa)."
+"ima samo tri vrednosti, „true“ (tačno), „false“ (netačno) i „nothing“ "
+"(ništa)."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/byte'
 #: editor/ca.desrt.dconf-editor.gschema.xml:282
@@ -902,16 +896,16 @@ msgid ""
 "a gschema file “&#60;” and “&#62;” respectively), with a parsable "
 "representation of their content inside. If unclear, the type can be given in "
 "the value with a prefix annotation like “@x” (where “x” is the type string) "
-"or “int64”. See https://docs.gtk.org/glib/gvariant-text.html for complete "
-"documentation."
+"or “int64”. See https://docs.gtk.org/glib/gvariant-text-format.html for "
+"complete documentation."
 msgstr ""
 "Varijante se mogu skladištiti unutar varijanti i dodatno kao vrsta "
-"GSettings. Njihova predstava koristi Iks-ML zagrade („<“ i „>“ znakove, u g-"
+"gpodešavanja. Njihova predstava koristi Iks-ML zagrade („<“ i „>“ znakove, u g-"
 "šema datoteci „&#60;“ i „&#62;“), sa obradivom predstavom njihovog sadržaja "
 "unutar. Ako ovo nije razumljivo, vrsta se može dati unutar vrednosti sa "
 "prefiksom kao što je „@x“ (gde je „x“ niska) ili „int64“. Potpuna "
-"dokumentacija je dostupna na adresi https://docs.gtk.org/glib/gvariant-text."
-"html."
+"dokumentacija je dostupna na adresi https://docs.gtk.org/glib/gvariant-text-"
+"format.html."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-enum'
 #: editor/ca.desrt.dconf-editor.gschema.xml:452
@@ -1081,188 +1075,188 @@ msgid "Conflicting key from Conflict2 that should give a warning"
 msgstr "Sukobljeni ključ iz Conflict2 koji bi trebao da izazove grešku"
 
 #. Translators: command-line option description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:159
+#: editor/dconf-editor.vala:171
 msgid "Print release version and exit"
 msgstr "Ispisuje izdanje i izlazi"
 
 #. Translators: command-line option description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:162
+#: editor/dconf-editor.vala:174
 msgid "Print relocatable schemas and exit"
 msgstr "Ispiši premostive šeme i izađi"
 
 #. Translators: command-line option description, see 'dconf-editor --help'; the option removes the initial "use at your own risks" dialog
-#: editor/dconf-editor.vala:165
+#: editor/dconf-editor.vala:177
 msgid "Do not show initial warning"
 msgstr "Ne prikazuj početno upozorenje"
 
 #. Translators: command-line text, description of the application in 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
-#: editor/dconf-editor.vala:203
+#: editor/dconf-editor.vala:215
 msgid "Graphical interface for editing other applications settings."
 msgstr "Grafičko sučelje za izmenu podešavanja drugih programa."
 
 #. Translators: command-line text, describes how the application proceeds for editing other applications settings, in 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
-#: editor/dconf-editor.vala:206
+#: editor/dconf-editor.vala:218
 msgid "Uses the gsettings API of the glib library, among others."
 msgstr "Koristi API g-podešavanja (gsettings) glib biblioteke, između ostalog."
 
 #. Translators: command-line header description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:209
+#: editor/dconf-editor.vala:221
 msgid "Arguments description:"
 msgstr "Opis argumenata:"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:213
+#: editor/dconf-editor.vala:225
 msgid "a folder path or a key path"
 msgstr "putanja do fascikle ili putanja do ključa"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:215
+#: editor/dconf-editor.vala:227
 msgid "example: “/org/gnome/” or “/ca/desrt/dconf-editor/Demo/boolean”"
 msgstr "na primer: „/org/gnome/“ ili „/ca/desrt/dconf-editor/Demo/boolean“"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:219
+#: editor/dconf-editor.vala:231
 msgid "the name of a schema with fixed path"
 msgstr "naziv šeme sa fiksnom putanjom"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:221
+#: editor/dconf-editor.vala:233
 msgid "example: “ca.desrt.dconf-editor.Settings”"
 msgstr "na primer: „ca.desrt.dconf-editor.Settings“"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'; no need to put your translation of "relocatable" between quotation marks, that's done in English to highlight why the option is called "RELOC_SCHEMA"
-#: editor/dconf-editor.vala:225
+#: editor/dconf-editor.vala:237
 msgid "the name of a “relocatable” schema, without fixed path"
 msgstr "naziv „premestive“ šeme, bez fiksne putanje"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:227
+#: editor/dconf-editor.vala:239
 msgid "see list with the “--list-relocatable-schemas” option"
-msgstr "pogledaj spisak koristeći opciju „--list-relocatable-schemas“"
+msgstr "prikazuje spisak koristeći opciju „--list-relocatable-schemas“"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:231
+#: editor/dconf-editor.vala:243
 msgid "the path where to map the relocatable schema"
 msgstr "putanja u koju treba mapirati premostivu šemu"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:233
+#: editor/dconf-editor.vala:245
 msgid "example: “ca.desrt.dconf-editor.Bookmarks:/ca/desrt/dconf-editor/”"
 msgstr "na primer: „ca.desrt.dconf-editor.Bookmarks:/ca/desrt/dconf-editor/“"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:237
+#: editor/dconf-editor.vala:249
 msgid "the name of a key from the schema"
 msgstr "naziv ključa iz šeme"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:239
+#: editor/dconf-editor.vala:251
 msgid "example: “bookmarks”"
 msgstr "na primer: „bookmarks“"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
-#: editor/dconf-editor.vala:295
+#: editor/dconf-editor.vala:307
 msgid "Known schemas installed:"
 msgstr "Instalirane poznate šeme:"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given
-#: editor/dconf-editor.vala:301
+#: editor/dconf-editor.vala:313
 msgid "No known schemas installed."
 msgstr "Nema instaliranih poznatih šema."
 
 #. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
-#: editor/dconf-editor.vala:306
+#: editor/dconf-editor.vala:318
 msgid "Known schemas skipped:"
 msgstr "Preskočene poznate šeme:"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given
-#: editor/dconf-editor.vala:312
+#: editor/dconf-editor.vala:324
 msgid "No known schemas skipped."
 msgstr "Nema preskočenih poznatih šema."
 
 #. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
-#: editor/dconf-editor.vala:317
+#: editor/dconf-editor.vala:329
 msgid "Unknown schemas:"
 msgstr "Nepoznate šeme:"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given
-#: editor/dconf-editor.vala:323
+#: editor/dconf-editor.vala:335
 msgid "No unknown schemas."
 msgstr "Nema nepoznatih šema."
 
 #. Translators: command-line error message, when the user requests a specific path while there is already a window opened
-#: editor/dconf-editor.vala:442
+#: editor/dconf-editor.vala:454
 msgid "Only one window can be opened for now.\n"
 msgstr "Samo jedan prozor može biti otvoren za sada.\n"
 
 #. Translators: command-line error message, try 'dconf-editor a b c d'
-#: editor/dconf-editor.vala:462
+#: editor/dconf-editor.vala:474
 msgid "Cannot understand: too many arguments.\n"
 msgstr "Ne razumem: suviše argumenata.\n"
 
 #. Translators: command-line error message, try 'dconf-editor / a'
-#: editor/dconf-editor.vala:476
+#: editor/dconf-editor.vala:488
 msgid "Cannot understand second argument in this context.\n"
 msgstr "Ne razumem drugi argument u ovom kontekstu.\n"
 
 #. Translators: command-line error message, try 'dconf-editor org.example /'
-#: editor/dconf-editor.vala:497
+#: editor/dconf-editor.vala:509
 msgid "Cannot understand: slash character in second argument.\n"
 msgstr "Ne razumem: kosa linija u drugom argumentu.\n"
 
 #. Translators: command-line error message, try 'dconf-editor org.example:a'
-#: editor/dconf-editor.vala:512
+#: editor/dconf-editor.vala:524
 msgid "Schema path should start and end with a “/”.\n"
 msgstr "Putanja šeme treba počinjati i završavati se sa znakom „/“.\n"
 
 #. Translators: command-line error message, try 'dconf-editor //'
-#: editor/dconf-editor.vala:528
+#: editor/dconf-editor.vala:540
 msgid "Cannot understand: given path contains “//”.\n"
 msgstr "Ne razumem: data putanja sadrži „//“\n"
 
 #. Translators: command-line error message, try 'dconf-editor "org example" a'
-#: editor/dconf-editor.vala:536
+#: editor/dconf-editor.vala:548
 msgid "Cannot understand: space character in argument.\n"
 msgstr "Ne razumem: znak razmaka u argumentu.\n"
 
 #. Translators: notification header, try ctrl-c while in the keys list
-#: editor/dconf-editor.vala:564
+#: editor/dconf-editor.vala:576
 msgid "Copied to clipboard"
 msgstr "Umnoženo u ostavu"
 
 #. Translators: about dialog text
-#: editor/dconf-editor.vala:641
+#: editor/dconf-editor.vala:653
 msgid "A graphical viewer and editor of applications’ internal settings."
 msgstr "Grafički pregledač i uređivač unutrašnjih podešavanja programa."
 
 #. Translators: text crediting a game author, seen in the About dialog
-#: editor/dconf-editor.vala:646
+#: editor/dconf-editor.vala:658
 msgid "Robert Ancell"
 msgstr "Robert Ansel (Robert Ancell)"
 
 #. Translators: text crediting a game author, seen in the About dialog
-#: editor/dconf-editor.vala:650
+#: editor/dconf-editor.vala:662
 msgid "Arnaud Bonatti"
 msgstr "Arnaud Bonati (Arnaud Bonatti)"
 
 #. Translators: text crediting a maintainer, seen in the About dialog
-#: editor/dconf-editor.vala:654
+#: editor/dconf-editor.vala:666
 msgid "Copyright © 2010-2014 – Canonical Ltd"
 msgstr "Autorska prava © 2010-2014 – Kanonikal d.o.o. (Canonical Ltd)"
 
 #. Translators: text crediting a maintainer, seen in the About dialog
-#: editor/dconf-editor.vala:658
+#: editor/dconf-editor.vala:670
 msgid "Copyright © 2017-2018 – Davi da Silva Böger"
 msgstr "Autorska prava © 2017-2018 – Davi da Silva Böger"
 
 #. Translators: text crediting a maintainer, seen in the About dialog; the %u are replaced with the years of start and end
-#: editor/dconf-editor.vala:662
+#: editor/dconf-editor.vala:674
 #, c-format
 msgid "Copyright © %u-%u – Arnaud Bonatti"
 msgstr "Autorska prava © %u-%u – Arnaud Bonati (Arnaud Bonatti)"
 
 #. Translators: about dialog text; this string should be replaced by a text crediting yourselves and your translation team, or should be left empty. Do not translate literally!
-#: editor/dconf-editor.vala:669
+#: editor/dconf-editor.vala:681
 msgid "translator-credits"
 msgstr ""
 "Miroslav Nikolić <miroslavnikolic@rocketmail.com>\n"
@@ -1271,7 +1265,7 @@ msgstr ""
 "http://prevod.org — prevod na srpski jezik"
 
 #. Translators: about dialog text; label of the website link
-#: editor/dconf-editor.vala:675
+#: editor/dconf-editor.vala:687
 msgid "Page on GNOME wiki"
 msgstr "Stranica na Gnomovom vikiju"
 
@@ -1718,7 +1712,7 @@ msgstr "Potraži unutar fascikle „%s“"
 #. Translators: first item of the keys list displayed during browsing at root path
 #: editor/key-list-box-row.vala:153
 msgid "Open path entry"
-msgstr "Otvori unos u putanji."
+msgstr "Otvori unos u putanji"
 
 #. Translators: last item of the keys list displayed during a local search
 #: editor/key-list-box-row.vala:157
@@ -2278,16 +2272,17 @@ msgstr ""
 "Š.Dž+Ž način beleženja."
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of type "variant" (or of a type composed with a variant)
-#: editor/registry-info.vala:620
+#: editor/registry-info.vala:622
+#, c-format
 msgid ""
-"Variants content should be surrounded by XML brackets (‘<’ and ‘>’). See "
-"https://docs.gtk.org/glib/gvariant-text.html for complete documentation."
+"Variants content should be surrounded by XML brackets (‘<’ and ‘>’). See %s "
+"for complete documentation."
 msgstr ""
-"Sadržaj varijanti mora biti okružen Iks-ML zagradama („<“ i „>“). Potpuna "
-"dokumentacija je na stranici https://docs.gtk.org/glib/gvariant-text.html."
+"Sadržaj varijanti mora biti okružen Iks-ML zagradama („<“ i „>“). Pogledajte "
+"%s za potpunu dokumentaciju."
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a "maybe type" and with a string type (or similar); neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
-#: editor/registry-info.vala:627
+#: editor/registry-info.vala:630
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value. Strings, signatures and object paths should be surrounded by "
@@ -2298,13 +2293,13 @@ msgstr ""
 "znacima navoda."
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a string type (or similar)
-#: editor/registry-info.vala:630
+#: editor/registry-info.vala:633
 msgid ""
 "Strings, signatures and object paths should be surrounded by quotation marks."
 msgstr "Niske, potpisi i putanje objekata trebaju biti pod znacima navoda."
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a "maybe type"; neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
-#: editor/registry-info.vala:635
+#: editor/registry-info.vala:638
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value."
@@ -2313,7 +2308,7 @@ msgstr ""
 "na njenu praznu vrednost."
 
 #. Translators: field content when displaying key properties; the field description is "Current value", this text displayed if the key, not defined by a schema, has been erased (and so has no value anymore)
-#: editor/registry-info.vala:674
+#: editor/registry-info.vala:677
 msgid "Key erased."
 msgstr "Ključ je obrisan."
 
@@ -2439,6 +2434,9 @@ msgstr "Premostiva šema"
 #: editor/setting-object.vala:417
 msgid "DConf backend"
 msgstr "Dkonf pozadinac"
+
+#~ msgid "The GNOME Project"
+#~ msgstr "Gnomov projekat"
 
 #~ msgid "Pause night mode"
 #~ msgstr "Zaustavi noćni režim"
