@@ -10,9 +10,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues\n"
-"POT-Creation-Date: 2023-09-18 15:05+0000\n"
-"PO-Revision-Date: 2024-03-07 13:36+0700\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues/\n"
+"POT-Creation-Date: 2025-09-13 04:01+0000\n"
+"PO-Revision-Date: 2026-01-21 12:35+0700\n"
 "Last-Translator: Andika Triwidada <andika@gmail.com>\n"
 "Language-Team: Indonesian <gnome-l10n-id@googlegroups.com>\n"
 "Language: id\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.8\n"
 
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the second is "Credits"
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the name of the view, displayed in the headerbar
@@ -197,15 +197,35 @@ msgstr ""
 "Tombol tetikus yang sama diatur untuk mundur dan maju. Tidak melakukan "
 "apapun."
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:9
+#. Translators: application name, as used in the window manager, the window title, the about dialog...
+#: editor/ca.desrt.dconf-editor.desktop.in:2 editor/dconf-editor.vala:21
+msgid "dconf Editor"
+msgstr "Penyunting dconf"
+
+#. Translators: a GenericName that gives the application goal, as defined in the desktop file spec
+#: editor/ca.desrt.dconf-editor.desktop.in:4
+msgid "Configuration editor for dconf"
+msgstr "Penyunting konfigurasi bagi dconf"
+
+#. Translators: a Comment that gives the application function, as defined in the desktop file spec
+#: editor/ca.desrt.dconf-editor.desktop.in:6
+msgid "Directly edit your entire configuration database"
+msgstr "Menyunting langsung seluruh basis data konfigurasi Anda"
+
+#. Translators: some search Keywords to find this application, as defined in the desktop file spec. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#: editor/ca.desrt.dconf-editor.desktop.in:8
+msgid "settings;configuration;"
+msgstr "pengaturan;konfigurasi;"
+
+#: editor/ca.desrt.dconf-editor.metainfo.xml.in:9
 msgid "Dconf Editor"
 msgstr "Penyunting Dconf"
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:10
+#: editor/ca.desrt.dconf-editor.metainfo.xml.in:10
 msgid "A graphical tool for editing the dconf database"
 msgstr "Alat grafis untuk menyunting basis data dconf"
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:13
+#: editor/ca.desrt.dconf-editor.metainfo.xml.in:13
 msgid ""
 "Dconf Editor is a tool to allow direct editing of the dconf configuration "
 "database. This is useful when developing applications that use these "
@@ -215,7 +235,7 @@ msgstr ""
 "data dari konfigurasi dconf. Alat ini berguna bagi pengembang aplikasi yang "
 "menggunakan pengaturan ini."
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:17
+#: editor/ca.desrt.dconf-editor.metainfo.xml.in:17
 msgid ""
 "Editing your configuration directly is an advanced feature and may cause "
 "applications to not work correctly."
@@ -223,38 +243,13 @@ msgstr ""
 "Menyunting konfigurasi Anda secara langsung adalah fitur tingkat lanjut yang "
 "mungkin menyebabkan aplikasi tidak dapat berjalan sebagaimana mestinya."
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:34
+#: editor/ca.desrt.dconf-editor.metainfo.xml.in:37
 msgid "Browse the keys used by installed applications"
 msgstr "Ramban kunci yang dipakai oleh aplikasi yang terpasang"
 
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:38
+#: editor/ca.desrt.dconf-editor.metainfo.xml.in:41
 msgid "Read keys descriptions and edit their values"
 msgstr "Baca deskripsi kunci dan sunting nilai mereka"
-
-#. a translatable version of project_group
-#: editor/ca.desrt.dconf-editor.appdata.xml.in:53
-msgid "The GNOME Project"
-msgstr "Projek GNOME"
-
-#. Translators: application name, as used in the window manager, the window title, the about dialog...
-#: editor/ca.desrt.dconf-editor.desktop.in:3 editor/dconf-editor.vala:21
-msgid "dconf Editor"
-msgstr "Penyunting dconf"
-
-#. Translators: a GenericName that gives the application goal, as defined in the desktop file spec
-#: editor/ca.desrt.dconf-editor.desktop.in:5
-msgid "Configuration editor for dconf"
-msgstr "Penyunting konfigurasi bagi dconf"
-
-#. Translators: a Comment that gives the application function, as defined in the desktop file spec
-#: editor/ca.desrt.dconf-editor.desktop.in:7
-msgid "Directly edit your entire configuration database"
-msgstr "Menyunting langsung seluruh basis data konfigurasi Anda"
-
-#. Translators: some search Keywords to find this application, as defined in the desktop file spec. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-#: editor/ca.desrt.dconf-editor.desktop.in:9
-msgid "settings;configuration;"
-msgstr "pengaturan;konfigurasi;"
 
 #. see AdaptativeWindow.width-request at data/ui/adaptative-window.ui:22
 #. range min="350"/ FIXME
@@ -377,10 +372,10 @@ msgid ""
 msgstr ""
 "Nilai \"unsafe\" (tidak aman) tidak disarankan: untuk kunci yang memiliki "
 "tipe bukan-kasus-khusus, itu memutakhirkan nilai kunci setiap kali terjadi "
-"perubahan dalam entri, sehingga termasuk keadaan antara. Nilai "
-"\"safe\" (aman) meminta konfirmasi dalam kasus ini, namun memungkinkan "
-"perubahan seketika untuk boolean dan boolean nullable, enum, dan flag. Nilai "
-"\"always-confirm-implicit\" dan \"always-confirm-explicit\" selalu meminta "
+"perubahan dalam entri, sehingga termasuk keadaan antara. Nilai \"safe\" "
+"(aman) meminta konfirmasi dalam kasus ini, namun memungkinkan perubahan "
+"seketika untuk boolean dan boolean nullable, enum, dan flag. Nilai \"always-"
+"confirm-implicit\" dan \"always-confirm-explicit\" selalu meminta "
 "konfirmasi, tapi yang pertama menerapkan perubahan jika Anda mengubah path "
 "sedangkan yang kedua menolaknya. Nilai \"always-delay\" menambahkan setiap "
 "perubahan dalam mode tunda, yang memungkinkan untuk menerapkan beberapa "
@@ -915,16 +910,16 @@ msgid ""
 "a gschema file “&#60;” and “&#62;” respectively), with a parsable "
 "representation of their content inside. If unclear, the type can be given in "
 "the value with a prefix annotation like “@x” (where “x” is the type string) "
-"or “int64”. See https://docs.gtk.org/glib/gvariant-text.html for complete "
-"documentation."
+"or “int64”. See https://docs.gtk.org/glib/gvariant-text-format.html for "
+"complete documentation."
 msgstr ""
 "Varian dapat disimpan di dalam varian, dan akibatnya sebagai tipe GSettings. "
-"Representasinya menggunakan tanda kurung XML (karakter '<' dan '>', dalam "
-"berkas gschema masing-masing \"&#60;\" dan \"&#62;\"), dengan representasi "
-"yang dapat diuraikan dari konten mereka di dalamnya. Jika tidak jelas, tipe "
-"dapat diberikan dalam nilai dengan anotasi awalan seperti \"@x\" (di mana "
+"Representasinya menggunakan tanda kurung XML (karakter '<' dan '>', masing-"
+"masing dalam berkas gschema \"&#60;\" dan \"&#62;\"), dengan representasi "
+"yang dapat diurai dari konten mereka di dalamnya. Jika tidak jelas, tipe "
+"dapat diberikan dalam nilai dengan anotasi awalan seperti \"@x\" (dimana "
 "\"x\" adalah string tipe) atau \"int64\". Lihat https://docs.gtk.org/glib/"
-"gvariant-text.html untuk dokumentasi lengkap."
+"gvariant-text-format.html untuk dokumentasi lengkap."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-enum'
 #: editor/ca.desrt.dconf-editor.gschema.xml:452
@@ -1103,197 +1098,197 @@ msgid "Conflicting key from Conflict2 that should give a warning"
 msgstr "Kunci berkonflik dari Conflict2 yang harus memberikan peringatan"
 
 #. Translators: command-line option description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:159
+#: editor/dconf-editor.vala:171
 msgid "Print release version and exit"
 msgstr "Cetak versi rilis dan keluar"
 
 #. Translators: command-line option description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:162
+#: editor/dconf-editor.vala:174
 msgid "Print relocatable schemas and exit"
 msgstr "Cetak skema yang dapat dipindah dan keluar"
 
 #. Translators: command-line option description, see 'dconf-editor --help'; the option removes the initial "use at your own risks" dialog
-#: editor/dconf-editor.vala:165
+#: editor/dconf-editor.vala:177
 msgid "Do not show initial warning"
 msgstr "Jangan tampilkan peringatan awal mula"
 
 #. Translators: command-line text, description of the application in 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
-#: editor/dconf-editor.vala:203
+#: editor/dconf-editor.vala:215
 msgid "Graphical interface for editing other applications settings."
 msgstr "Antarmuka grafis untuk menyunting pengaturan aplikasi lain."
 
 #. Translators: command-line text, describes how the application proceeds for editing other applications settings, in 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
-#: editor/dconf-editor.vala:206
+#: editor/dconf-editor.vala:218
 msgid "Uses the gsettings API of the glib library, among others."
 msgstr "Gunakan API gsettings dari pustaka glib, diantara yang lain."
 
 #. Translators: command-line header description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:209
+#: editor/dconf-editor.vala:221
 msgid "Arguments description:"
 msgstr "Keterangan argumen:"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:213
+#: editor/dconf-editor.vala:225
 msgid "a folder path or a key path"
 msgstr "path folder atau path kunci"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:215
+#: editor/dconf-editor.vala:227
 msgid "example: “/org/gnome/” or “/ca/desrt/dconf-editor/Demo/boolean”"
 msgstr "contoh: “/org/gnome/” atau “/ca/desrt/dconf-editor/Demo/boolean”"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:219
+#: editor/dconf-editor.vala:231
 msgid "the name of a schema with fixed path"
 msgstr "nama skema dengan path tetap"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:221
+#: editor/dconf-editor.vala:233
 msgid "example: “ca.desrt.dconf-editor.Settings”"
 msgstr "contoh: “ca.desrt.dconf-editor.Settings”"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'; no need to put your translation of "relocatable" between quotation marks, that's done in English to highlight why the option is called "RELOC_SCHEMA"
-#: editor/dconf-editor.vala:225
+#: editor/dconf-editor.vala:237
 msgid "the name of a “relocatable” schema, without fixed path"
 msgstr "nama skema \"relocatable\", tanpa path tetap"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:227
+#: editor/dconf-editor.vala:239
 msgid "see list with the “--list-relocatable-schemas” option"
 msgstr "lihat daftar dengan opsi “--list-relocatable-schemas”"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:231
+#: editor/dconf-editor.vala:243
 msgid "the path where to map the relocatable schema"
 msgstr "path tempat memetakan skema yang dapat dipindahkan"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:233
+#: editor/dconf-editor.vala:245
 msgid "example: “ca.desrt.dconf-editor.Bookmarks:/ca/desrt/dconf-editor/”"
 msgstr "contoh: “ca.desrt.dconf-editor.Markah:/ca/desrt/dconf-editor/”"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:237
+#: editor/dconf-editor.vala:249
 msgid "the name of a key from the schema"
 msgstr "nama kunci dari skema"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
-#: editor/dconf-editor.vala:239
+#: editor/dconf-editor.vala:251
 msgid "example: “bookmarks”"
 msgstr "contoh: “bookmarks”"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
-#: editor/dconf-editor.vala:295
+#: editor/dconf-editor.vala:307
 msgid "Known schemas installed:"
 msgstr "Skema yang diketahui terpasang:"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given
-#: editor/dconf-editor.vala:301
+#: editor/dconf-editor.vala:313
 msgid "No known schemas installed."
 msgstr "Tidak ada skema yang diketahui terpasang."
 
 #. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
-#: editor/dconf-editor.vala:306
+#: editor/dconf-editor.vala:318
 msgid "Known schemas skipped:"
 msgstr "Skema yang diketahui dilewati:"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given
-#: editor/dconf-editor.vala:312
+#: editor/dconf-editor.vala:324
 msgid "No known schemas skipped."
 msgstr "Tidak diketahui skema yang dilewati."
 
 #. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
-#: editor/dconf-editor.vala:317
+#: editor/dconf-editor.vala:329
 msgid "Unknown schemas:"
 msgstr "Skema tidak diketahui:"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given
-#: editor/dconf-editor.vala:323
+#: editor/dconf-editor.vala:335
 msgid "No unknown schemas."
 msgstr "Tidak ada skema yang tidak diketahui."
 
 #. Translators: command-line error message, when the user requests a specific path while there is already a window opened
-#: editor/dconf-editor.vala:442
+#: editor/dconf-editor.vala:454
 msgid "Only one window can be opened for now.\n"
 msgstr "Hanya satu jendela yang bisa dibuka untuk saat ini.\n"
 
 #. Translators: command-line error message, try 'dconf-editor a b c d'
-#: editor/dconf-editor.vala:462
+#: editor/dconf-editor.vala:474
 msgid "Cannot understand: too many arguments.\n"
 msgstr "Tidak dapat memahami: terlalu banyak argumen.\n"
 
 #. Translators: command-line error message, try 'dconf-editor / a'
-#: editor/dconf-editor.vala:476
+#: editor/dconf-editor.vala:488
 msgid "Cannot understand second argument in this context.\n"
 msgstr "Tidak dapat memahami argumen kedua dalam konteks ini.\n"
 
 #. Translators: command-line error message, try 'dconf-editor org.example /'
-#: editor/dconf-editor.vala:497
+#: editor/dconf-editor.vala:509
 msgid "Cannot understand: slash character in second argument.\n"
 msgstr "Tidak dapat memahami: karakter slash dalam argumen kedua.\n"
 
 #. Translators: command-line error message, try 'dconf-editor org.example:a'
-#: editor/dconf-editor.vala:512
+#: editor/dconf-editor.vala:524
 msgid "Schema path should start and end with a “/”.\n"
 msgstr "Path skema harus dimulai dan diakhiri dengan \"/\".\n"
 
 #. Translators: command-line error message, try 'dconf-editor //'
-#: editor/dconf-editor.vala:528
+#: editor/dconf-editor.vala:540
 msgid "Cannot understand: given path contains “//”.\n"
 msgstr "Tidak bisa memahami: path yang diberikan mengandung \"//\".\n"
 
 #. Translators: command-line error message, try 'dconf-editor "org example" a'
-#: editor/dconf-editor.vala:536
+#: editor/dconf-editor.vala:548
 msgid "Cannot understand: space character in argument.\n"
 msgstr "Tidak dapat memahami: karakter spasi dalam argumen.\n"
 
 #. Translators: notification header, try ctrl-c while in the keys list
-#: editor/dconf-editor.vala:564
+#: editor/dconf-editor.vala:576
 msgid "Copied to clipboard"
 msgstr "Disalin ke papan klip"
 
 #. Translators: about dialog text
-#: editor/dconf-editor.vala:641
+#: editor/dconf-editor.vala:653
 msgid "A graphical viewer and editor of applications’ internal settings."
 msgstr "Penampil grafis dan penyunting pengaturan internal aplikasi."
 
 #. Translators: text crediting a game author, seen in the About dialog
-#: editor/dconf-editor.vala:646
+#: editor/dconf-editor.vala:658
 msgid "Robert Ancell"
 msgstr "Robert Ancell"
 
 #. Translators: text crediting a game author, seen in the About dialog
-#: editor/dconf-editor.vala:650
+#: editor/dconf-editor.vala:662
 msgid "Arnaud Bonatti"
 msgstr "Arnaud Bonatti"
 
 #. Translators: text crediting a maintainer, seen in the About dialog
-#: editor/dconf-editor.vala:654
+#: editor/dconf-editor.vala:666
 msgid "Copyright © 2010-2014 – Canonical Ltd"
 msgstr "Hak Cipta © 2010-2014 – Canonical Ltd"
 
 #. Translators: text crediting a maintainer, seen in the About dialog
-#: editor/dconf-editor.vala:658
+#: editor/dconf-editor.vala:670
 msgid "Copyright © 2017-2018 – Davi da Silva Böger"
 msgstr "Hak Cipta © 2017-2018 – Davi da Silva Böger"
 
 #. Translators: text crediting a maintainer, seen in the About dialog; the %u are replaced with the years of start and end
-#: editor/dconf-editor.vala:662
+#: editor/dconf-editor.vala:674
 #, c-format
 msgid "Copyright © %u-%u – Arnaud Bonatti"
 msgstr "Hak Cipta © %u-%u – Arnaud Bonatti"
 
 #. Translators: about dialog text; this string should be replaced by a text crediting yourselves and your translation team, or should be left empty. Do not translate literally!
-#: editor/dconf-editor.vala:669
+#: editor/dconf-editor.vala:681
 msgid "translator-credits"
 msgstr ""
 "Dirgita <dirgitadevina@yahoo.co.id>, 2012.\n"
-"Andika Triwidada <andika@gmail.com>, 2012, 2013, 2018, 2024.\n"
+"Andika Triwidada <andika@gmail.com>, 2012, 2013, 2018, 2024, 2026.\n"
 "Kukuh Syafaat <kukuhsyafaat@gnome.org>, 2017-2021.\n"
 "Sucipto <sucipto@pm.me>, 2020."
 
 #. Translators: about dialog text; label of the website link
-#: editor/dconf-editor.vala:675
+#: editor/dconf-editor.vala:687
 msgid "Page on GNOME wiki"
 msgstr "Halaman di wiki GNOME"
 
@@ -2292,16 +2287,17 @@ msgstr ""
 "menggunakan notasi X.Ye+Z."
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of type "variant" (or of a type composed with a variant)
-#: editor/registry-info.vala:620
+#: editor/registry-info.vala:622
+#, c-format
 msgid ""
-"Variants content should be surrounded by XML brackets (‘<’ and ‘>’). See "
-"https://docs.gtk.org/glib/gvariant-text.html for complete documentation."
+"Variants content should be surrounded by XML brackets (‘<’ and ‘>’). See %s "
+"for complete documentation."
 msgstr ""
-"Konten varian harus diapit oleh braket XML ('<' dan '>'). Lihat https://docs."
-"gtk.org/glib/gvariant-text.html untuk dokumentasi lengkap."
+"Konten varian harus diapit oleh braket XML ('<' dan '>'). Lihat %s untuk "
+"dokumentasi lengkap."
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a "maybe type" and with a string type (or similar); neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
-#: editor/registry-info.vala:627
+#: editor/registry-info.vala:630
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value. Strings, signatures and object paths should be surrounded by "
@@ -2312,13 +2308,13 @@ msgstr ""
 "diapit dengan tanda kutip."
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a string type (or similar)
-#: editor/registry-info.vala:630
+#: editor/registry-info.vala:633
 msgid ""
 "Strings, signatures and object paths should be surrounded by quotation marks."
 msgstr "String, tanda tangan, dan path objek mesti diapit oleh tanda kutip."
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a "maybe type"; neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
-#: editor/registry-info.vala:635
+#: editor/registry-info.vala:638
 msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value."
@@ -2327,7 +2323,7 @@ msgstr ""
 "dengan \"m\") ke nilai kosongnya."
 
 #. Translators: field content when displaying key properties; the field description is "Current value", this text displayed if the key, not defined by a schema, has been erased (and so has no value anymore)
-#: editor/registry-info.vala:674
+#: editor/registry-info.vala:677
 msgid "Key erased."
 msgstr "Kunci dihapus."
 
@@ -2453,58 +2449,3 @@ msgstr "Skema yang dapat direlokasi"
 #: editor/setting-object.vala:417
 msgid "DConf backend"
 msgstr "Backend DConf"
-
-#~ msgid "Pause night mode"
-#~ msgstr "Jeda mode malam"
-
-#~ msgid "Reuse night mode"
-#~ msgstr "Gunakan kembali mode malam"
-
-#~ msgid "Use night mode"
-#~ msgstr "Gunakan mode malam"
-
-#~ msgid "A flag to follow system night light"
-#~ msgstr "Tanda untuk mengikuti cahaya malam sistem"
-
-#~ msgid "Use GNOME night light setting to activate night-mode."
-#~ msgstr ""
-#~ "Gunakan pengaturan cahaya malam GNOME untuk mengaktifkan mode malam."
-
-#~ msgid ""
-#~ "Copyright © 2010-2014 – Canonical Ltd\n"
-#~ "Copyright © 2017-2018 – Davi da Silva Böger\n"
-#~ "Copyright © 2015-2019 – Arnaud Bonatti"
-#~ msgstr ""
-#~ "Hak Cipta © 2010-2014 – Canonical Ltd\n"
-#~ "Hak Cipta © 2017-2018 – Davi da Silva Böger\n"
-#~ "Hak Cipta © 2015-2019 – Arnaud Bonatti"
-
-#~ msgid "ca.desrt.dconf-editor"
-#~ msgstr "ca.desrt.dconf-editor"
-
-#~ msgid "Remove"
-#~ msgstr "Hapus"
-
-#~ msgid "Remove this bookmark"
-#~ msgstr "Buang penanda taut ini"
-
-#~ msgid "_About"
-#~ msgstr "Tent_ang"
-
-#~ msgid "_Quit"
-#~ msgstr "_Keluar"
-
-#~ msgid "[PATH|FIXED_SCHEMA [KEY]|RELOCATABLE_SCHEMA:PATH [KEY]]"
-#~ msgstr "[PATH|FIXED_SCHEMA [KEY]|RELOCATABLE_SCHEMA:PATH [KEY]]"
-
-#~ msgid "Copy descriptor"
-#~ msgstr "Salin deskriptor"
-
-#~ msgid "Delayed setting changes will be shown here"
-#~ msgstr "Perubahan pengaturan yang tertunda akan ditampilkan di sini"
-
-#~ msgid "Current folder"
-#~ msgstr "Folder saat ini"
-
-#~ msgid "Keys"
-#~ msgstr "Kunci"
