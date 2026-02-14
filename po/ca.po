@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues/\n"
 "POT-Creation-Date: 2025-09-13 10:32+0000\n"
-"PO-Revision-Date: 2025-09-13 17:31+0200\n"
+"PO-Revision-Date: 2026-02-14 17:31+0200\n"
 "Last-Translator: Carles Ferrando Garcia <carles.ferrando@gamil.com>\n"
 "Language-Team: Catalan <info@softcatala.org>\n"
 "Language: ca\n"
@@ -1181,7 +1181,7 @@ msgstr "Esquemes coneguts instal·lats:"
 #. Translators: command-line text, if --list-relocatable-schemas is given
 #: editor/dconf-editor.vala:313
 msgid "No known schemas installed."
-msgstr "Esquemes sense conèixer instal·lats."
+msgstr "No hi ha esquemes coneguts instal·lats."
 
 #. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
 #: editor/dconf-editor.vala:318
@@ -1191,7 +1191,7 @@ msgstr "Esquemes coneguts omesos:"
 #. Translators: command-line text, if --list-relocatable-schemas is given
 #: editor/dconf-editor.vala:324
 msgid "No known schemas skipped."
-msgstr "Esquemes sense conèixer omesos."
+msgstr "No hi ha esquemes coneguts omesos."
 
 #. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
 #: editor/dconf-editor.vala:329
