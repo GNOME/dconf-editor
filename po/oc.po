@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues/\n"
 "POT-Creation-Date: 2025-09-13 04:01+0000\n"
-"PO-Revision-Date: 2026-01-16 16:36+0100\n"
+"PO-Revision-Date: 2026-02-26 11:44+0100\n"
 "Last-Translator: Quentin PAGÈS\n"
 "Language-Team: Tot En Òc\n"
 "Language: oc\n"
@@ -523,7 +523,7 @@ msgstr ""
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/use-shortpaths'
 #: editor/ca.desrt.dconf-editor.gschema.xml:224
 msgid "A flag for skipping unnecessary subfolders"
-msgstr ""
+msgstr "Un drapèl per passar los sosdossièrs non necessaris"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/use-shortpaths'
 #: editor/ca.desrt.dconf-editor.gschema.xml:226
@@ -531,6 +531,9 @@ msgid ""
 "When a folder only contains one subfolder and no keys, Dconf Editor can jump "
 "to that subfolder directly. This flag enables that behaviour."
 msgstr ""
+"Quand un dorsièr conten pas qu'un sosdorsièr e pas cap de clau, l'editor "
+"Dconf pòt anar dirèctament a aqueste sosdorsièr. Aqueste indicator activa "
+"aquel compòrtament."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/bookmarks'
 #: editor/ca.desrt.dconf-editor.gschema.xml:233
@@ -709,6 +712,9 @@ msgid ""
 "A dictionary maps values of a basic type to another value (of any type). A "
 "dictionary entry is one such mapping."
 msgstr ""
+"Un diccionari fa correspondre de valors d'un tipe de basa a una autra valor "
+"(de quin tipe que siá). Una entrada de diccionari es una tala "
+"correspondéncia."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dictionary'
 #: editor/ca.desrt.dconf-editor.gschema.xml:338
@@ -723,6 +729,9 @@ msgid ""
 "A dictionary maps values of a basic type to another value (of any type). One "
 "simple use case is to map strings to variants."
 msgstr ""
+"Un diccionari fa correspondre de valors d'un tipe de basa a una autra valor "
+"(de quin tipe que siá). Un cas d'usatge simple es de far correspondre de "
+"cadenas de caractèrs a de variants."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/double'
 #: editor/ca.desrt.dconf-editor.gschema.xml:345
@@ -930,6 +939,14 @@ msgid ""
 "or “int64”. See https://docs.gtk.org/glib/gvariant-text-format.html for "
 "complete documentation."
 msgstr ""
+"Las variantas se pòdon emmagazinar a l'interior d'autras variantas, e doncas "
+"coma un tipe GSettings. Lor representacion utiliza los parentèsis XML (los "
+"caractèrs « < » e « > », respectivament « &#60; » e « &#62; » dins un "
+"fichièr gschema), amb una representacion parsabla de lor contengut a "
+"l'interior. S'es pas clar, lo tipe se pòt indicar dins la valor amb una "
+"anotacion prefixada coma « @x » (ont « x » es la cadena de tipe) o "
+"« int64 ». Consultatz https://docs.gtk.org/glib/gvariant-text-format.html "
+"per una documentacion completa."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-enum'
 #: editor/ca.desrt.dconf-editor.gschema.xml:452
@@ -963,7 +980,7 @@ msgstr ""
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-triv'
 #: editor/ca.desrt.dconf-editor.gschema.xml:467
 msgid "The empty tuple, type and value “()”"
-msgstr ""
+msgstr "Un tuple void, tipe e valor « () »"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-triv'
 #: editor/ca.desrt.dconf-editor.gschema.xml:469
@@ -971,6 +988,8 @@ msgid ""
 "There’s an empty tuple type (called sometimes “triv”) that is a tuple with "
 "no content, and can only take “()” as value."
 msgstr ""
+"Existís un tipe de tuple void (nomenat de còps « triv ») qu'es un tuple sens "
+"contengut, e que pòt prendre sonque « () » coma valor."
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/relocatable/boolean' (with default /ca/desrt/dconf-editor/relocatable-* settings)
 #: editor/ca.desrt.dconf-editor.gschema.xml:482
@@ -1124,7 +1143,7 @@ msgstr ""
 #. Translators: command-line text, describes how the application proceeds for editing other applications settings, in 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
 #: editor/dconf-editor.vala:218
 msgid "Uses the gsettings API of the glib library, among others."
-msgstr ""
+msgstr "Utiliza l'API gsettings de la bibliotèca glib, demest d’autras."
 
 #. Translators: command-line header description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:221
@@ -1141,12 +1160,12 @@ msgstr "un emplaçament de dossièr o un empleçament de clau"
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:227
 msgid "example: “/org/gnome/” or “/ca/desrt/dconf-editor/Demo/boolean”"
-msgstr ""
+msgstr "exemple : « /org/gnome/ » o « /ca/desrt/dconf-editor/Demo/boolean »"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:231
 msgid "the name of a schema with fixed path"
-msgstr ""
+msgstr "lo nom de l’esquèma amb un camin fixe"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:233
@@ -1178,12 +1197,12 @@ msgstr ""
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:249
 msgid "the name of a key from the schema"
-msgstr ""
+msgstr "lo nom d’una clau a partir de l’esquèma"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:251
 msgid "example: “bookmarks”"
-msgstr ""
+msgstr "exemple : « marcapaginas »"
 
 #. Translators: command-line text, if --list-relocatable-schemas is given; introduces a list of schemas ids
 #: editor/dconf-editor.vala:307
@@ -1293,7 +1312,9 @@ msgstr "Copyright © %u-%u – Arnaud Bonatti"
 #. Translators: about dialog text; this string should be replaced by a text crediting yourselves and your translation team, or should be left empty. Do not translate literally!
 #: editor/dconf-editor.vala:681
 msgid "translator-credits"
-msgstr "Cédric Valmary (totenoc.eu) <cvalmary@yahoo.fr>"
+msgstr ""
+"Cédric Valmary (totenoc.eu) <cvalmary@yahoo.fr>\n"
+"Quentin PAGÈS"
 
 #. Translators: about dialog text; label of the website link
 #: editor/dconf-editor.vala:687
@@ -1583,7 +1604,7 @@ msgstr "Modificar l’emplaçament raiç"
 #: editor/help-overlay.ui:192
 msgctxt "shortcut window"
 msgid "Browse keys tree"
-msgstr ""
+msgstr "Percórrer l’arborescéncia de las claus"
 
 #. Translators: header in the shortcut window, for when browsing
 #: editor/help-overlay.ui:202
@@ -1607,13 +1628,13 @@ msgstr "Linha precedenta"
 #: editor/help-overlay.ui:223
 msgctxt "shortcut window"
 msgid "Next line"
-msgstr "Linha seguenta."
+msgstr "Linha seguenta"
 
 #. Translators: entry disabled for now; Ctrl-I action, when browsing; displays information on selected folder
 #: editor/help-overlay.ui:231
 msgctxt "shortcut window"
 msgid "Toggle folder properties"
-msgstr ""
+msgstr "Alternar las proprietats del dossièr"
 
 #. Translators: Ctrl-Delete action, when browsing; sets the selected key to its default value
 #: editor/help-overlay.ui:239
@@ -1697,13 +1718,13 @@ msgstr "Quitar"
 #: editor/help-overlay.ui:340
 msgctxt "shortcut window"
 msgid "Quit if there’s no pending changes"
-msgstr ""
+msgstr "Quitar se cap de modificacion es pas en pendenta"
 
 #. Translators: Ctrl-Shift-Q action
 #: editor/help-overlay.ui:348
 msgctxt "shortcut window"
 msgid "Apply pending changes and quit"
-msgstr ""
+msgstr "Aplicar las modificacions pendentas e quitar"
 
 #. Translators: Alt-F4 action
 #: editor/help-overlay.ui:356
@@ -1748,13 +1769,13 @@ msgstr "Impossible d’analisar coma doble."
 #: editor/key-list-box-row.vala:118
 #, c-format
 msgid "Go to “%s”"
-msgstr ""
+msgstr "Anar a « %s »"
 
 #. Translators: first item of the keys list displayed during browsing, the %s is the current folder name
 #: editor/key-list-box-row.vala:149
 #, c-format
 msgid "Search in “%s” folder"
-msgstr ""
+msgstr "Recèrca dins lo dossièr « %s »"
 
 #. Translators: first item of the keys list displayed during browsing at root path
 #: editor/key-list-box-row.vala:153
@@ -2032,12 +2053,12 @@ msgstr ""
 #. Translators: that's the name of a data type; capitalized (if that makes sense)
 #: editor/model-utils.vala:463
 msgid "Empty tuple"
-msgstr ""
+msgstr "Tuple void"
 
 #. Translators: that's the name of a data type; non capitalized (if that makes sense)
 #: editor/model-utils.vala:466
 msgid "empty tuple"
-msgstr ""
+msgstr "tuple void"
 
 #. Translators: placeholder text of the list of pending modifications, displayed when the user is in delayed mode but has no pending modifications
 #: editor/modifications-list.vala:28
@@ -2050,7 +2071,7 @@ msgstr ""
 #. Translators: label of one of the two buttons of the list of pending modifications, to switch between applying changes to the whole list and selecting some items for more advanced things (not displayed currently, but this change is wanted); the second is "Select"
 #: editor/modifications-list.vala:32
 msgid "Rule all"
-msgstr ""
+msgstr "Aplicar pertot"
 
 #. Translators: label of one of the two buttons of the list of pending modifications, to switch between applying changes to the whole list and selecting some items for more advanced things (not displayed currently, but this change is wanted); the first is "Rule all"
 #: editor/modifications-list.vala:34
@@ -2262,7 +2283,7 @@ msgstr "Còdi del tipe"
 #. Translators: field description when displaying key properties; if the numeral key has a minimum or a maximum set
 #: editor/registry-info.vala:96
 msgid "Forced range"
-msgstr ""
+msgstr "Interval forçat"
 
 #. Translators: field description when displaying key properties; the minimum value a numeral key can take
 #: editor/registry-info.vala:99
@@ -2403,7 +2424,7 @@ msgstr "escafada"
 #: editor/registry-list.vala:679
 #, c-format
 msgid "type “%s”"
-msgstr ""
+msgstr "tipe « %s »"
 
 #. Translators: header displayed in the keys list during a search only; indicates that the schema (the %s is the schema id) is installed at the path where the search has started
 #: editor/registry-list.vala:1176
