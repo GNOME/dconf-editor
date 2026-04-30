@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: dconf\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues/\n"
 "POT-Creation-Date: 2025-09-13 04:01+0000\n"
-"PO-Revision-Date: 2026-04-29 22:18+0200\n"
+"PO-Revision-Date: 2026-04-30 11:22+0200\n"
 "Last-Translator: Jose Riha <jose1711@gmail.com>\n"
 "Language-Team: Slovak <gnome-sk-list@gnome.org>\n"
 "Language: sk\n"
@@ -280,7 +280,8 @@ msgstr "Príznak, ktorý povolí režim maximalizovaného okna"
 #. Translators: description of a settings key, see 'dconf-editor /org/gnome/iagno/window-is-maximized'
 #: editor/ca.desrt.dconf-editor.gschema.xml:109
 msgid "If “true”, the main window starts in maximized mode."
-msgstr "Ak je hodnota „pravda“, hlavné okno sa otvorí v maximalizovanom režime."
+msgstr ""
+"Ak je hodnota „pravda“, hlavné okno sa otvorí v maximalizovanom režime."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/restore-view'
 #: editor/ca.desrt.dconf-editor.gschema.xml:131
@@ -294,8 +295,8 @@ msgid ""
 "If “true”, Dconf Editor tries at launch to navigate to the path described in "
 "the “saved-view” key."
 msgstr ""
-"Ak je hodnota „pravda“, editor systému Dconf sa pokúsi po spustení naviesť na "
-"cestu popísanú v kľúči „saved-view“."
+"Ak je hodnota „pravda“, editor systému Dconf sa pokúsi po spustení naviesť "
+"na cestu popísanú v kľúči „saved-view“."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/saved-pathbar-path'
 #: editor/ca.desrt.dconf-editor.gschema.xml:138
@@ -411,7 +412,7 @@ msgid ""
 "is pressed."
 msgstr ""
 "Pre používateľov s myšou, ktorá má tlačidlá „dopredu“ a „dozadu“, tento kľúč "
-"určí, či sa vykoná nejaká akcia  v okne prehliadača, keď je niektoré z nich "
+"určí, či sa vykoná nejaká akcia v okne prehliadača, keď je niektoré z nich "
 "stlačené."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-back-buttons'
@@ -508,7 +509,7 @@ msgstr ""
 "sa, aby sa umožnilo priradiť premiestniteľné schémy k určitým cestám. "
 "Špecifikácie ciest môžu obsahovať zástupné znaky vo forme prázdnych súčastí "
 "(napr./ca/desrt/dconf-editor// ), čo definuje viacero možných ciest. Rovnaký "
-"identifikátor schémy môže byť priradený k  viacerým špecifikáciám ciest."
+"identifikátor schémy môže byť priradený k viacerým špecifikáciám ciest."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/use-shortpaths'
 #: editor/ca.desrt.dconf-editor.gschema.xml:224
