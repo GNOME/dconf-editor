@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the dconf-editor package.
 # Adriannho <raziel_theripper@yahoo.com>, 2015.
 # Daniel Șerbănescu <daniel [at] serbanescu [dot] dk>, 2015.
-# Antonio Marin <gnmer.6qxyg@slmail.me>, 2025.
+# Antonio Marin <gnmer.6qxyg@slmail.me>, 2025-2026.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf-editor gnome-3-18\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues/\n"
-"POT-Creation-Date: 2025-09-13 16:40+0000\n"
-"PO-Revision-Date: 2025-09-14 14:18+0200\n"
+"POT-Creation-Date: 2025-09-13 04:01+0000\n"
+"PO-Revision-Date: 2026-08-09 18:55+0200\n"
 "Last-Translator: Antonio Marin <gnmer.6qxyg@slmail.me>\n"
 "Language-Team: Romanian <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -19,9 +19,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
 "20)) ? 1 : 2);\n"
-"X-Generator: Gtranslator 48.0\n"
+"X-Generator: Gtranslator 50.0\n"
 "X-Project-Style: gnome\n"
 "X-Poedit-SourceCharset: UTF-8\n"
+"X-DL-VCS-Web: https://gitlab.gnome.org/GNOME/dconf-editor/\n"
+"X-DL-Lang: ro\n"
+"X-DL-Module: dconf-editor\n"
+"X-DL-Branch: master\n"
+"X-DL-Domain: po\n"
+"X-DL-State: Translating\n"
 
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the second is "Credits"
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the name of the view, displayed in the headerbar
@@ -32,7 +38,7 @@ msgstr "Despre"
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the first is "About"
 #: editor/about-list.vala:46
 msgid "Credits"
-msgstr "Credite"
+msgstr "Colaboratori"
 
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of the link to the GPL license; TODO better text, as in the usual about dialog
 #: editor/about-list.vala:135
@@ -56,7 +62,7 @@ msgstr "Traducători"
 #. Translators: menu entry of the pathbar menu
 #: editor/adaptative-pathbar.vala:251
 msgid "Copy current path"
-msgstr "Copiază calea curentă"
+msgstr "Copiază calea actuală"
 
 #. Translators: menu entry of the pathbar menu (not displayed for now)
 #. Translators: "open" action in the right-click menu on a "show folder info" row
@@ -72,12 +78,12 @@ msgstr "Acțiuni"
 #. Translators: accessible description of the hamburger menu
 #: editor/base-headerbar.ui:115
 msgid "Current view actions"
-msgstr "Acțiuni de vizualizare curente"
+msgstr "Acțiunile actuale de afișare"
 
 #. Translators: usual menu entry of the hamburger menu
 #: editor/base-headerbar.vala:115
 msgid "Keyboard Shortcuts"
-msgstr "Scurtături de tastatură"
+msgstr "Scurtături"
 
 #. Translators: on really small windows, the bookmarks popover is replaced by an in-window view; here is the name of the view, displayed in the headerbar
 #. Translators: accessible name of the button for opening the bookmarks popover
@@ -85,27 +91,27 @@ msgstr "Scurtături de tastatură"
 #: editor/bookmarks-headerbar.vala:159 editor/bookmarks.ui:131
 #: editor/registry-search.vala:552
 msgid "Bookmarks"
-msgstr "Marcaje"
+msgstr "Preferate"
 
 #. Translators: hamburger menu entry on small windows (not used in current design)
 #: editor/bookmarks-headerbar.vala:254
 msgid "Hide bookmarks"
-msgstr "Ascunde marcajele"
+msgstr "Ascunde preferatele"
 
 #. Translators: hamburger menu entry on small windows, to unbookmark the currently browsed path
 #: editor/bookmarks-headerbar.vala:259
 msgid "Unbookmark"
-msgstr "Demarchează"
+msgstr "Șterge din Preferate"
 
 #. Translators: hamburger menu entry on small windows, to bookmark the currently browsed path
 #: editor/bookmarks-headerbar.vala:262
 msgid "Bookmark"
-msgstr "Marchează"
+msgstr "Adaugă în Preferate"
 
 #. Translators: hamburger menu entry on small windows, to show the bookmarks list
 #: editor/bookmarks-headerbar.vala:265
 msgid "Show bookmarks"
-msgstr "Arată marcajele"
+msgstr "Arată preferatele"
 
 #. Translators: placeholder text of the bookmarks list, displayed when the user has no bookmarks
 #: editor/bookmarks-list.vala:32
@@ -113,48 +119,48 @@ msgid ""
 "Bookmarks will\n"
 "be added here"
 msgstr ""
-"Marcajele vor fi\n"
+"Preferatele vor fi\n"
 "adăugate aici"
 
 #. Translators: label of one of the two buttons of the bookmarks list, to switch between using the bookmarks and editing the list; the second is "Edit"
 #: editor/bookmarks-list.vala:36
 msgid "Use"
-msgstr "Utilizează"
+msgstr "Folosește"
 
 #. Translators: label of one of the two buttons of the bookmarks list, to switch between using the bookmarks and editing the list; the first is "Use"
 #: editor/bookmarks-list.vala:38
 msgid "Edit"
-msgstr "Editează"
+msgstr "Modifică"
 
 #. Translators: accessible name of the switch for bookmarking current path in the bookmarks popover
 #: editor/bookmarks.ui:69
 msgid "Location bookmarked"
-msgstr "Locație marcată"
+msgstr "Loc salvat în Preferate"
 
 #. Translators: accessible description of the switch for bookmarking current path in the bookmarks popover
 #: editor/bookmarks.ui:71
 msgid "Toggle to bookmark this location"
-msgstr "Comută marcarea acestei locații"
+msgstr "Salvează sau șterge acest loc din Preferate"
 
 #. Translators: text that might appear in the bookmarks popover in place of the switch and its label
 #: editor/bookmarks.ui:96
 msgid "The bookmarks list is not editable."
-msgstr "Lista cu marcaje nu este editabilă."
+msgstr "Lista cu preferate nu poate fi modificată."
 
 #. Translators: accessible description of the button for opening the bookmarks popover
 #: editor/bookmarks.ui:133
 msgid "Manage your bookmarks"
-msgstr "Administrează marcajele"
+msgstr "Gestionează preferatele"
 
 #. Translators: label of the switch in the bookmarks popover, when searching
 #: editor/bookmarks.vala:404
 msgid "Bookmark this Search"
-msgstr "Marchează această căutare"
+msgstr "Salvează în Preferate această căutare"
 
 #. Translators: label of the switch in the bookmarks popover, when browsing
 #: editor/bookmarks.vala:407
 msgid "Bookmark this Location"
-msgstr "Marchează această locație"
+msgstr "Salvează în Preferate acest loc"
 
 #. Translators: on really small windows, name of the view when showing a folder properties, displayed in the headerbar
 #: editor/browser-headerbar.vala:165
@@ -164,20 +170,18 @@ msgstr "Proprietăți"
 #. Translators: text of an infobar to sort again the keys list ("refresh" only, no "reload")
 #: editor/browser-view.vala:81
 msgid "Sort preferences have changed. Do you want to refresh the view?"
-msgstr ""
-"Preferințele sortării s-au modificat. Doriți să reîmprospătați vizualizarea?"
+msgstr "Preferințele de aranjare s-au schimbat. Se actualizează ordinea?"
 
 #. Translators: button of an infobar to sort again the keys list ("refresh" only, no "reload")
 #. Translators: accessible name of the "refresh" button that is linked with the search entry on large windows
 #: editor/browser-view.vala:84 editor/pathentry.ui:90
 msgid "Refresh"
-msgstr "Reîmprospătează"
+msgstr "Actualizează"
 
 #. Translators: text of an infobar to reload the keys list because of a new key (for example)
 #: editor/browser-view.vala:87
 msgid "This folder content has changed. Do you want to reload the view?"
-msgstr ""
-"Conținutul acestui dosar s-a modificat. Doriți să reîncărcați vizualizarea?"
+msgstr "Conținutul acestui dosar s-a schimbat. Se reîncarcă conținutul?"
 
 #. Translators: button of an infobar to reload the keys list because of a new key (for example)
 #. Translators: button of an infobar to reload the key properties because something has changed
@@ -185,20 +189,19 @@ msgstr ""
 msgid "Reload"
 msgstr "Reîncarcă"
 
+# Aici key se referă la o reglare anume care a fost schimbată între timp.
 #. Translators: text of an infobar to reload the key properties because something has changed
 #: editor/browser-view.vala:93
 msgid "This key’s properties have changed. Do you want to reload the view?"
-msgstr ""
-"Proprietățile acestei chei s-au modificat. Doriți să reîncărcați "
-"vizualizarea?"
+msgstr "Această reglare a fost schimbată. Se actualizează afișarea?"
 
 #. Translators: command-line message, when the user uses the backward/forward buttons of the mouse
 #: editor/browser-window.vala:906
 msgid ""
 "The same mouse button is set for going backward and forward. Doing nothing."
 msgstr ""
-"Același buton de maus este configurat pentru a naviga înapoi și înainte. Nu "
-"se efectuează nimic."
+"Același buton al mausului este folosit atât pentru înapoi, cât și pentru "
+"înainte. Nu se execută nicio acțiune."
 
 #. Translators: application name, as used in the window manager, the window title, the about dialog...
 #: editor/ca.desrt.dconf-editor.desktop.in:2 editor/dconf-editor.vala:21
@@ -208,18 +211,17 @@ msgstr "Editor dconf"
 #. Translators: a GenericName that gives the application goal, as defined in the desktop file spec
 #: editor/ca.desrt.dconf-editor.desktop.in:4
 msgid "Configuration editor for dconf"
-msgstr "Editor de configurații pentru dconf"
+msgstr "Personalizări pentru dconf"
 
 #. Translators: a Comment that gives the application function, as defined in the desktop file spec
 #: editor/ca.desrt.dconf-editor.desktop.in:6
 msgid "Directly edit your entire configuration database"
-msgstr ""
-"Editați în mod direct întreaga dumneavoastră bază de date cu configurări"
+msgstr "Modifică toate reglările care sunt în baza de date dconf"
 
 #. Translators: some search Keywords to find this application, as defined in the desktop file spec. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: editor/ca.desrt.dconf-editor.desktop.in:8
 msgid "settings;configuration;"
-msgstr "settings;configuration;configurări;configurație;setări;"
+msgstr "settings;configuration;configurări;preferințe;setări;reglări;"
 
 #: editor/ca.desrt.dconf-editor.metainfo.xml.in:9
 msgid "Dconf Editor"
@@ -227,7 +229,7 @@ msgstr "Editorul dconf"
 
 #: editor/ca.desrt.dconf-editor.metainfo.xml.in:10
 msgid "A graphical tool for editing the dconf database"
-msgstr "Un utilitar grafic pentru editarea bazei de date dconf"
+msgstr "O aplicație pentru modificarea bazei de date dconf"
 
 #: editor/ca.desrt.dconf-editor.metainfo.xml.in:13
 msgid ""
@@ -235,25 +237,29 @@ msgid ""
 "database. This is useful when developing applications that use these "
 "settings."
 msgstr ""
-"Editorul Dconf este o unealtă ce vă permite editarea directă a bazei de date "
-"pentru configurații dconf. Este util când dezvoltați aplicații care folosesc "
-"aceste configurări."
+"Editorul dconf este o unealtă ce permite modificarea directă a bazei de date "
+"pentru reglări dconf. Este utilă când se creează aplicații care folosesc "
+"aceste reglări."
 
 #: editor/ca.desrt.dconf-editor.metainfo.xml.in:17
 msgid ""
 "Editing your configuration directly is an advanced feature and may cause "
 "applications to not work correctly."
 msgstr ""
-"Editarea configurației în mod direct este o funcționalitate avansată și "
-"poate cauza funcționarea incorectă a aplicațiilor."
+"Modificarea directă a reglărilor este o caracteristică avansată și poate "
+"cauza funcționarea incorectă a aplicațiilor."
 
 #: editor/ca.desrt.dconf-editor.metainfo.xml.in:37
 msgid "Browse the keys used by installed applications"
-msgstr "Navighează cheile folosite de aplicațiile instalate"
+msgstr "Explorează reglările folosite de aplicațiile instalate"
 
 #: editor/ca.desrt.dconf-editor.metainfo.xml.in:41
 msgid "Read keys descriptions and edit their values"
-msgstr "Citește descrierile cheilor și editează valorile lor"
+msgstr "Citește descrierile reglărilor și modifică valorile lor"
+
+#: editor/ca.desrt.dconf-editor.metainfo.xml.in:59
+msgid "The GNOME Project"
+msgstr "Proiectul GNOME"
 
 #. see AdaptativeWindow.width-request at data/ui/adaptative-window.ui:22
 #. range min="350"/ FIXME
@@ -272,7 +278,7 @@ msgstr "Lățimea în pixeli a ferestrei principale."
 #. Translators: summary of a settings key, see 'dconf-editor /org/gnome/iagno/window-height'
 #: editor/ca.desrt.dconf-editor.gschema.xml:100
 msgid "The height of the window"
-msgstr "Înălțimea ferestrei principale"
+msgstr "Înălțimea ferestrei"
 
 #. Translators: description of a settings key, see 'dconf-editor /org/gnome/iagno/window-height'
 #: editor/ca.desrt.dconf-editor.gschema.xml:102
@@ -282,17 +288,19 @@ msgstr "Înălțimea în pixeli a ferestrei principale."
 #. Translators: summary of a settings key, see 'dconf-editor /org/gnome/iagno/window-is-maximized'
 #: editor/ca.desrt.dconf-editor.gschema.xml:107
 msgid "A flag to enable maximized mode"
-msgstr "Un marcaj pentru a activa modul maximizat"
+msgstr "O opțiune pentru activarea modului maximizat"
 
 #. Translators: description of a settings key, see 'dconf-editor /org/gnome/iagno/window-is-maximized'
 #: editor/ca.desrt.dconf-editor.gschema.xml:109
 msgid "If “true”, the main window starts in maximized mode."
-msgstr "Dacă este „adevărat”, fereastra principală începe în modul maximizat."
+msgstr ""
+"Dacă este „true” (adevărat), fereastra principală se deschide în modul "
+"maximizat."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/restore-view'
 #: editor/ca.desrt.dconf-editor.gschema.xml:131
 msgid "A flag to restore the last view"
-msgstr "Un fanion pentru a restaura ultima vizualizare"
+msgstr "O opțiune pentru a reveni la ultima pagină vizitată"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/restore-view'
 #: editor/ca.desrt.dconf-editor.gschema.xml:133
@@ -300,13 +308,13 @@ msgid ""
 "If “true”, Dconf Editor tries at launch to navigate to the path described in "
 "the “saved-view” key."
 msgstr ""
-"Dacă este „adevărat”, Editorul Dconf va încerca la lansare să navigheze la "
-"calea descrisă în cheia „saved-view”."
+"Dacă este „true” (adevărat), aplicația dconf va încerca, la deschidere, să "
+"afișeze direct calea salvată în „saved-view”."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/saved-pathbar-path'
 #: editor/ca.desrt.dconf-editor.gschema.xml:138
 msgid "A path to restore the pathbar state"
-msgstr "O cale de restaurat starea barei de cale"
+msgstr "Calea salvată pentru a reveni la poziția din bara de navigare"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/saved-pathbar-path'
 #: editor/ca.desrt.dconf-editor.gschema.xml:140
@@ -315,14 +323,14 @@ msgid ""
 "startup is a parent path of this one, Dconf Editor tries to restore the "
 "pathbar state at this path."
 msgstr ""
-"Dacă cheia „restore-view” este stabilită la „adevărat”, și dacă calea cerută "
-"la pornire este o cale părinte a acesteia, Editorul Dconf încearcă să "
-"restaureze starea barei de cale la această cale."
+"Dacă opțiunea „restore-view” este activată, adică „true” (adevărat), și "
+"dosarul deschis la pornire este unul superior, aplicația dconf va încerca să "
+"revină la calea preferată salvată."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/saved-view'
 #: editor/ca.desrt.dconf-editor.gschema.xml:145
 msgid "A path to restore the last view"
-msgstr "O cale de restaurat ultima vizualizare"
+msgstr "Calea folosită pentru a relua navigarea de unde ai rămas"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/saved-view'
 #: editor/ca.desrt.dconf-editor.gschema.xml:147
@@ -330,8 +338,8 @@ msgid ""
 "If the “restore-view” key is set to “true”, Dconf Editor tries at launch to "
 "navigate to this path."
 msgstr ""
-"Dacă cheia „restore-view” este stabilită la „adevărat”, Editorul Dconf "
-"încearcă la lansare să navigheze la această cale."
+"Dacă opțiunea „restore-view” este activată, adică „true” (adevărat), "
+"aplicația dconf va încerca să deschidă direct această cale la pornire."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/show-warning'
 #: editor/ca.desrt.dconf-editor.gschema.xml:152
