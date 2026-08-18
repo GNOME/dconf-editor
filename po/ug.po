@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: dconf\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues/\n"
 "POT-Creation-Date: 2025-09-13 04:01+0000\n"
-"PO-Revision-Date: 2026-03-12 18:05-0400\n"
+"PO-Revision-Date: 2026-08-18 13:07-0400\n"
 "Last-Translator: Abduqadir Abliz <sahranbay@gmail.com>\n"
 "Language-Team: Uyghur Computer Science Association <UKIJ@yahoogroups.com>\n"
 "Language: ug\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-DamnedLies-Scope: partial\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.9\n"
 
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the second is "Credits"
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the name of the view, displayed in the headerbar
@@ -130,7 +130,7 @@ msgstr "ئالماشتۇرۇپ بۇ ئورۇننى خەتكۈشكە قوشىدۇ
 #. Translators: text that might appear in the bookmarks popover in place of the switch and its label
 #: editor/bookmarks.ui:96
 msgid "The bookmarks list is not editable."
-msgstr "بۇ خەتكۈش تىزىمىنى تەھرىرلىگىلى بولمايدۇز"
+msgstr "بۇ خەتكۈش تىزىمىنى تەھرىرلىگىلى بولمايدۇ."
 
 #. Translators: accessible description of the button for opening the bookmarks popover
 #: editor/bookmarks.ui:133
@@ -228,6 +228,10 @@ msgstr "ئورنىتىلغان پىروگرامما ئىشلىتىدىغان ك�
 msgid "Read keys descriptions and edit their values"
 msgstr "كۇنۇپكا چۈشەندۈرۈشىنى ئوقۇپ ۋە قىممىتىنى تەھرىرلەيدۇ"
 
+#: editor/ca.desrt.dconf-editor.metainfo.xml.in:59
+msgid "The GNOME Project"
+msgstr "GNOME قۇرۇلۇشى"
+
 #. see AdaptativeWindow.width-request at data/ui/adaptative-window.ui:22
 #. range min="350"/ FIXME
 #. Translators: summary of a settings key, see 'dconf-editor /org/gnome/iagno/window-width'
@@ -262,6 +266,16 @@ msgstr "ئەڭ چوڭ قىلىش ھالىتىنى قوزغىتىدىغان تا�
 msgid "Show initial warning"
 msgstr "دەسلەپكى ئاگاھلاندۇرۇشنى كۆرسەت"
 
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/small-keys-list-rows'
+#: editor/ca.desrt.dconf-editor.gschema.xml:159
+msgid "A flag to enable small rows for keys list"
+msgstr "كۇنۇپكا تىزىمغا كىچىك قۇر بەلگىسىنى قوزغىتىدۇ"
+
+#. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-use-extra-buttons'
+#: editor/ca.desrt.dconf-editor.gschema.xml:182
+msgid "For users with mice that have buttons for “Forward” and “Back”, this key will determine if any action is taken inside of a browser window when either is pressed."
+msgstr "«ئالدىغا» ۋە «قايت» توپچە بار چاشقىنەك ئىشلىتىدىغان ئىشلەتكۈچىلەرگە نىسبەتەن بۇ كۇنۇپكا خالىغان بىر توپچە بېسىلغاندا توركۆرگۈ كۆزنىكىنىڭ ئىچكى قىسمىدا مۇناسىپ مەشغۇلات ئېلىپ بېرىش بارماسلىقنى جەزملەيدۇ."
+
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-back-buttons'
 #: editor/ca.desrt.dconf-editor.gschema.xml:188
 msgid "Mouse button to activate the “Back” command in browser window"
@@ -281,6 +295,41 @@ msgstr "توركۆرگۈ كۆزنىكىدە «ئالدىغا» بۇيرۇقىن�
 #: editor/ca.desrt.dconf-editor.gschema.xml:198
 msgid "For users with mice that have buttons for “Forward” and “Back”, this key will set which button activates the “Forward” command in a browser window. Possible values range between 6 and 14."
 msgstr "«ئالدىغا» ۋە «قايت» توپچە بار چاشقىنەك ئىشلىتىدىغان ئىشلەتكۈچىلەرگە نىسبەتەن بۇ كۇنۇپكا قايسى توپچىنىڭ بىر توركۆرگۈ كۆزنىكىنىڭ «ئالدىغا» بۇيرۇقىنى ئاكتىپلاشنى بەلگىلەيدۇ. ئىشلەتكىلى بولىدىغان قىممەت دائىرىسى 6 دىن 14 كىچە."
+
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/relocatable-schemas-enabled-mappings'
+#: editor/ca.desrt.dconf-editor.gschema.xml:210
+msgid "Enabled relocatable schema mapping facilities"
+msgstr "قۇرۇلما خەرىتىلەش ئىقتىدارىنى قايتا نىشانلاش قوزغىتىلغان"
+
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-handle'
+#: editor/ca.desrt.dconf-editor.gschema.xml:303
+msgid "A D-Bus handle type, type ‘h’"
+msgstr "D-Bus دەستە تۈرى، تۈرى «h»"
+
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-object-path'
+#: editor/ca.desrt.dconf-editor.gschema.xml:310
+msgid "A D-Bus object path, type ‘o’"
+msgstr "بىر D-Bus جىسىمنىڭ يولى، تۈرى «o»"
+
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-object-path-array'
+#: editor/ca.desrt.dconf-editor.gschema.xml:317
+msgid "A D-Bus object path array, type ‘ao’"
+msgstr "D-Bus جىسىم يولىنىڭ سانلار قاتارى، تۈرى «ao»"
+
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-signature'
+#: editor/ca.desrt.dconf-editor.gschema.xml:324
+msgid "A D-Bus signature, type ‘g’"
+msgstr "D-Bus ئىمزاسى، تۈرى «g»"
+
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/enumeration'
+#: editor/ca.desrt.dconf-editor.gschema.xml:352
+msgid "A 5-choices enumeration"
+msgstr "5 تاللاش ساناق"
+
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-enum'
+#: editor/ca.desrt.dconf-editor.gschema.xml:452
+msgid "A 1-choice enumeration"
+msgstr "1 تاللاش ساناق"
 
 #. Translators: command-line option description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:171
@@ -478,7 +527,7 @@ msgstr "GNOME نىڭ ۋىكىدىكى بېتى"
 #. Translators: usual menu entry of the hamburger menu
 #: editor/dconf-headerbar.vala:53
 msgid "About Dconf Editor"
-msgstr "Dconf تەھرىرلىگۈچ ھەققىدە"
+msgstr "dconf تەھرىرلىگۈچ ھەققىدە"
 
 #. Translators: when a change is requested, on a small window, entry of the menu of the "delayed settings button" that appears in place of the close button
 #. Translators: when there are pending changes, label of the "apply" button in the bottom bar, on large windows
@@ -1560,9 +1609,6 @@ msgstr "قايتا نىشانلىنىشچان ئەندىزە"
 #: editor/setting-object.vala:417
 msgid "DConf backend"
 msgstr "DConf ئارقا ئۇچى"
-
-#~ msgid "The GNOME Project"
-#~ msgstr "GNOME قۇرۇلۇشى"
 
 #~ msgid "dconf-editor"
 #~ msgstr "dconf تەھرىرلىگۈچى"
