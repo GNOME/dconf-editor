@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: dconf\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues/\n"
 "POT-Creation-Date: 2025-09-13 04:01+0000\n"
-"PO-Revision-Date: 2026-08-18 13:07-0400\n"
+"PO-Revision-Date: 2026-08-19 11:20-0400\n"
 "Last-Translator: Abduqadir Abliz <sahranbay@gmail.com>\n"
 "Language-Team: Uyghur Computer Science Association <UKIJ@yahoogroups.com>\n"
 "Language: ug\n"
@@ -301,6 +301,37 @@ msgstr "«ئالدىغا» ۋە «قايت» توپچە بار چاشقىنەك 
 msgid "Enabled relocatable schema mapping facilities"
 msgstr "قۇرۇلما خەرىتىلەش ئىقتىدارىنى قايتا نىشانلاش قوزغىتىلغان"
 
+#. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/small-bookmarks-rows'
+#: editor/ca.desrt.dconf-editor.gschema.xml:240
+msgid "A flag to enable small rows for bookmarks list"
+msgstr "خەتكۈچ تىزىمىغا كىچىك قۇر بەلگىسىنى قوزغىتىدۇ"
+
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/boolean'
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/relocatable/boolean' (with default /ca/desrt/dconf-editor/relocatable-* settings)
+#: editor/ca.desrt.dconf-editor.gschema.xml:268 editor/ca.desrt.dconf-editor.gschema.xml:480
+msgid "A boolean, type ‘b’"
+msgstr "بۇلىن قىممىتى، تۈرى «b»"
+
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/boolean-nullable'
+#: editor/ca.desrt.dconf-editor.gschema.xml:275
+msgid "A nullable boolean, type ‘mb’"
+msgstr "بوش قالدۇرۇشقا بولىدىغان بۇلىن قىممىتى، تۈرى «mb»"
+
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/byte'
+#: editor/ca.desrt.dconf-editor.gschema.xml:282
+msgid "A byte (unsigned), type ‘y’"
+msgstr "ئىمزاسىز بايت قىممىتى، تۈرى «y»"
+
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/bytestring'
+#: editor/ca.desrt.dconf-editor.gschema.xml:289
+msgid "A bytestring, type ‘ay’"
+msgstr "بايت تىزىق قىممىتى، تۈرى «ay»"
+
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/bytestring-array'
+#: editor/ca.desrt.dconf-editor.gschema.xml:296
+msgid "A bytestring array, type ‘aay’"
+msgstr "بايت تىزىق سانلار قاتارى، تۈرى «aay»"
+
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dbus-handle'
 #: editor/ca.desrt.dconf-editor.gschema.xml:303
 msgid "A D-Bus handle type, type ‘h’"
@@ -321,15 +352,81 @@ msgstr "D-Bus جىسىم يولىنىڭ سانلار قاتارى، تۈرى «a
 msgid "A D-Bus signature, type ‘g’"
 msgstr "D-Bus ئىمزاسى، تۈرى «g»"
 
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/double'
+#: editor/ca.desrt.dconf-editor.gschema.xml:345
+msgid "A double, type ‘d’"
+msgstr "قوش ئېنىقلىق، تۈرى «d»"
+
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/enumeration'
 #: editor/ca.desrt.dconf-editor.gschema.xml:352
 msgid "A 5-choices enumeration"
 msgstr "5 تاللاش ساناق"
 
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-16-signed'
+#: editor/ca.desrt.dconf-editor.gschema.xml:366
+msgid "A short integer, type ‘n’"
+msgstr "قىسقا پۈتۈن سان، تۈرى «n»"
+
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-16-unsigned'
+#: editor/ca.desrt.dconf-editor.gschema.xml:373
+msgid "An unsigned short integer, type ‘q’"
+msgstr "ئىمزاسىز قىسقا پۈتۈن سان، تۈرى «q»"
+
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-32-signed'
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/relocatable/integer' (with default /ca/desrt/dconf-editor/relocatable-* settings)
+#: editor/ca.desrt.dconf-editor.gschema.xml:380 editor/ca.desrt.dconf-editor.gschema.xml:487
+msgid "An usual integer, type ‘i’"
+msgstr "ئادەتتىكى پۈتۈن سان، تۈرى «i»"
+
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-32-unsigned'
+#: editor/ca.desrt.dconf-editor.gschema.xml:387
+msgid "An unsigned usual integer, type ‘u’"
+msgstr "ئىمزاسىز ئادەتتىكى پۈتۈن سان، تۈرى «u»"
+
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-64-signed'
+#: editor/ca.desrt.dconf-editor.gschema.xml:394
+msgid "A long integer, type ‘x’"
+msgstr "ئۇزۇن پۈتۈن سان، تۈرى «x»"
+
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/integer-64-unsigned'
+#: editor/ca.desrt.dconf-editor.gschema.xml:401
+msgid "An unsigned long integer, type ‘t’"
+msgstr "ئىمزاسىز ئۇزۇن پۈتۈن سان، تۈرى «t»"
+
+#. Translators: do not forget the parenthesis, they are meaningful; summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/pair-of-integers'
+#: editor/ca.desrt.dconf-editor.gschema.xml:417
+msgid "A custom type, here ‘(ii)’"
+msgstr "ئىختىيارى تۈر، بۇ جايدا «(ii)»"
+
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string'
+#: editor/ca.desrt.dconf-editor.gschema.xml:424
+msgid "A string, type ‘s’"
+msgstr "ھەرپ تىزىقى، تۈرى «s»"
+
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string-array'
+#: editor/ca.desrt.dconf-editor.gschema.xml:431
+msgid "A string array, type ‘as’"
+msgstr "ھەرپ تىزىقى ماترىسسا، تۈرى «as»"
+
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string-nullable'
+#: editor/ca.desrt.dconf-editor.gschema.xml:438
+msgid "A nullable string, type ‘ms’"
+msgstr "بوش قالدۇرۇشقا بولىدىغان ھەرپ تىزىقى، تۈرى «ms»"
+
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/variant'
+#: editor/ca.desrt.dconf-editor.gschema.xml:445
+msgid "A variant, type ‘v’"
+msgstr "ئۆزگەرگۈچى، تۈرى «v»"
+
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-enum'
 #: editor/ca.desrt.dconf-editor.gschema.xml:452
 msgid "A 1-choice enumeration"
 msgstr "1 تاللاش ساناق"
+
+#. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-range'
+#: editor/ca.desrt.dconf-editor.gschema.xml:460
+msgid "A 1-choice integer value"
+msgstr "1 تاللاش پۈتۈن سان"
 
 #. Translators: command-line option description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:171
