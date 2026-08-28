@@ -5,15 +5,15 @@
 # Osman Karagöz <osmank3@gmail.com>, 2017.
 # Muhammet Kara <muhammetk@gmail.com>, 2013, 2015, 2016, 2017, 2018.
 # Sabri Ünal <libreajans@gmail.com>, 2019, 2023, 2025.
-# Emin Tufan Çetin <etcetin@gmail.com>, 2017-2025.
+# Emin Tufan Çetin <etcetin@gmail.com>, 2017-2026.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues/\n"
-"POT-Creation-Date: 2025-09-04 15:54+0000\n"
-"PO-Revision-Date: 2025-09-04 19:28+0300\n"
-"Last-Translator: Sabri Ünal <yakushabb@gmail.com>\n"
+"POT-Creation-Date: 2025-09-13 04:01+0000\n"
+"PO-Revision-Date: 2026-08-28 08:00+0300\n"
+"Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
 "Language-Team: Türkçe <takim@gnome.org.tr>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
@@ -243,13 +243,17 @@ msgstr ""
 "Yapılandırmanızı doğrudan düzenlemek ileri düzey bir özelliktir ve "
 "uygulamaların düzgün çalışmamasına neden olabilir."
 
-#: editor/ca.desrt.dconf-editor.metainfo.xml.in:36
+#: editor/ca.desrt.dconf-editor.metainfo.xml.in:37
 msgid "Browse the keys used by installed applications"
 msgstr "Kurulan uygulamalar tarafından kullanılan anahtarlara göz atın"
 
-#: editor/ca.desrt.dconf-editor.metainfo.xml.in:40
+#: editor/ca.desrt.dconf-editor.metainfo.xml.in:41
 msgid "Read keys descriptions and edit their values"
 msgstr "Anahtarların açıklamalarını okuyup değerlerini düzenleyin"
+
+#: editor/ca.desrt.dconf-editor.metainfo.xml.in:59
+msgid "The GNOME Project"
+msgstr "GNOME Projesi"
 
 #. see AdaptativeWindow.width-request at data/ui/adaptative-window.ui:22
 #. range min="350"/ FIXME
@@ -1271,9 +1275,10 @@ msgstr "Telif Hakkı © %u-%u – Arnaud Bonatti"
 #: editor/dconf-editor.vala:681
 msgid "translator-credits"
 msgstr ""
+"Emin Tufan Çetin <etcetin@gmail.com>\n"
+"Sabri Ünal <libreajans@gmail.com>\n"
 "Muhammet Kara <muhammetk@gmail.com>\n"
-"Osman Karagöz <osmank3@gmail.com>\n"
-"Sabri Ünal <libreajans@gmail.com>"
+"Osman Karagöz <osmank3@gmail.com>"
 
 #. Translators: about dialog text; label of the website link
 #: editor/dconf-editor.vala:687
