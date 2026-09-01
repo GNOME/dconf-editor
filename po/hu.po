@@ -1,23 +1,23 @@
 # Hungarian translation for dconf-editor.
-# Copyright (C) 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2023, 2025 Free Software Foundation, Inc.
+# Copyright (C) 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2023, 2025, 2026 Free Software Foundation, Inc.
 # This file is distributed under the same license as the dconf-editor package.
 #
 # Gabor Kelemen <kelemeng at gnome dot hu>, 2012, 2015, 2016, 2017, 2018.
-# Balázs Úr <ur.balazs at fsf dot hu>, 2012, 2013, 2014, 2015, 2016, 2018, 2019, 2020, 2023, 2025.
+# Balázs Úr <ur.balazs at fsf dot hu>, 2012, 2013, 2014, 2015, 2016, 2018, 2019, 2020, 2023, 2025, 2026.
 # Balázs Meskó <mesko.balazs at fsf dot hu>, 2019.
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf-editor master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues/\n"
-"POT-Creation-Date: 2025-09-08 06:38+0000\n"
-"PO-Revision-Date: 2025-09-08 08:56+0200\n"
+"POT-Creation-Date: 2025-09-13 04:01+0000\n"
+"PO-Revision-Date: 2026-09-01 09:19+0200\n"
 "Last-Translator: Balázs Úr <ur.balazs at fsf dot hu>\n"
 "Language-Team: Hungarian <openscope at fsf dot hu>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 24.12.3\n"
+"X-Generator: Lokalize 25.12.3\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the second is "Credits"
@@ -239,13 +239,17 @@ msgstr ""
 "A konfiguráció közvetlen szerkesztése speciális funkció, és az alkalmazások "
 "nem megfelelő működését okozhatja."
 
-#: editor/ca.desrt.dconf-editor.metainfo.xml.in:36
+#: editor/ca.desrt.dconf-editor.metainfo.xml.in:37
 msgid "Browse the keys used by installed applications"
 msgstr "A telepített alkalmazások által használt kulcsot böngészése"
 
-#: editor/ca.desrt.dconf-editor.metainfo.xml.in:40
+#: editor/ca.desrt.dconf-editor.metainfo.xml.in:41
 msgid "Read keys descriptions and edit their values"
 msgstr "Kulcsok leírásainak olvasása és azok értékeinek szerkesztése"
+
+#: editor/ca.desrt.dconf-editor.metainfo.xml.in:59
+msgid "The GNOME Project"
+msgstr "A GNOME projekt"
 
 #. see AdaptativeWindow.width-request at data/ui/adaptative-window.ui:22
 #. range min="350"/ FIXME
@@ -898,14 +902,6 @@ msgstr "Egy variáns, típusa „v”"
 
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/variant'
 #: editor/ca.desrt.dconf-editor.gschema.xml:447
-#| msgid ""
-#| "Variants could be stored inside variants, and consequently as a GSettings "
-#| "type. Their representation use the XML brackets (‘<’ and ‘>’ characters, "
-#| "in a gschema file “&#60;” and “&#62;” respectively), with a parsable "
-#| "representation of their content inside. If unclear, the type can be given "
-#| "in the value with a prefix annotation like “@x” (where “x” is the type "
-#| "string) or “int64”. See https://docs.gtk.org/glib/gvariant-text.html for "
-#| "complete documentation."
 msgid ""
 "Variants could be stored inside variants, and consequently as a GSettings "
 "type. Their representation use the XML brackets (‘<’ and ‘>’ characters, in "
@@ -915,12 +911,13 @@ msgid ""
 "or “int64”. See https://docs.gtk.org/glib/gvariant-text-format.html for "
 "complete documentation."
 msgstr ""
-"A variánsok variánsokon belül tárolhatóak, tehát GSettings típusként. Az ábráz"
-"olásuk XML zárójeleket használ („<” és „>” karaktereket, a gschema fájlban ren"
-"dre „&#60;” és „&#62;”), amelyek a tartalmuk feldolgozható ábrázolását tartalm"
-"azza. Ha nem világos, akkor a típusa megadható az értékben a „@x” prefix annot"
-"ációval (ahol „x” a típuskarakterlánc), vagy így: „int64”. A teljes dokumentác"
-"ióért nézze meg a https://docs.gtk.org/glib/gvariant-text-format.html oldalt."
+"A variánsok variánsokon belül tárolhatóak, tehát GSettings típusként. Az "
+"ábrázolásuk XML zárójeleket használ („<” és „>” karaktereket, a gschema "
+"fájlban rendre „&#60;” és „&#62;”), amelyek a tartalmuk feldolgozható "
+"ábrázolását tartalmazza. Ha nem világos, akkor a típusa megadható az "
+"értékben a „@x” prefix annotációval (ahol „x” a típuskarakterlánc), vagy "
+"így: „int64”. A teljes dokumentációért nézze meg a https://docs.gtk.org/glib/"
+"gvariant-text-format.html oldalt."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-enum'
 #: editor/ca.desrt.dconf-editor.gschema.xml:452
@@ -2286,15 +2283,12 @@ msgstr ""
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of type "variant" (or of a type composed with a variant)
 #: editor/registry-info.vala:622
 #, c-format
-#| msgid ""
-#| "Variants content should be surrounded by XML brackets (‘<’ and ‘>’). See "
-#| "https://docs.gtk.org/glib/gvariant-text.html for complete documentation."
 msgid ""
 "Variants content should be surrounded by XML brackets (‘<’ and ‘>’). See %s "
 "for complete documentation."
 msgstr ""
-"A variánsok tartalmát XML zárójelek közé kell tenni („<” és „>”). A teljes dok"
-"umentációért nézze meg a %s oldalt."
+"A variánsok tartalmát XML zárójelek közé kell tenni („<” és „>”). A teljes "
+"dokumentációért nézze meg a %s oldalt."
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a "maybe type" and with a string type (or similar); neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
 #: editor/registry-info.vala:630
