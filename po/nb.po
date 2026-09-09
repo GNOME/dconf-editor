@@ -1,14 +1,14 @@
 # Norwegian bokmål translation of dconf-editor.
 # Copyright (C) 1999-2003 Free Software Foundation, Inc.
-# Kjartan Maraas <kmaraas@gnome.org>, 1999-2025.
+# Kjartan Maraas <kmaraas@gnome.org>, 1999-2026.
 # Torstein Adolf Winterseth <kvikende@fsfe.org>, 2010.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf-editor 4.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues/\n"
-"POT-Creation-Date: 2025-12-10 11:41+0000\n"
-"PO-Revision-Date: 2026-01-08 16:33+0100\n"
+"POT-Creation-Date: 2025-09-13 04:01+0000\n"
+"PO-Revision-Date: 2026-09-09 10:19+0200\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian bokmål <i18n-nb@lister.ping.uio.no>\n"
 "Language: nb\n"
@@ -242,6 +242,10 @@ msgstr "Bla gjennom nøkler som brukes av installerte programmer"
 #: editor/ca.desrt.dconf-editor.metainfo.xml.in:41
 msgid "Read keys descriptions and edit their values"
 msgstr "Les nøkkelbeskrivelser og rediger verdiene"
+
+#: editor/ca.desrt.dconf-editor.metainfo.xml.in:59
+msgid "The GNOME Project"
+msgstr "GNOME prosjektet"
 
 #. see AdaptativeWindow.width-request at data/ui/adaptative-window.ui:22
 #. range min="350"/ FIXME
@@ -1993,7 +1997,10 @@ msgid ""
 "This enumeration offers only one choice. That’s probably an error of the "
 "application that installed this schema. If possible, please open a bug about "
 "it."
-msgstr "Denne listen tilbyr kun ett valg. Det er sannsynligvis en feil i applikasjonen som installerte dette skjemaet. Rapporter en feil til utviklerene av applikasjonen hvis mulig."
+msgstr ""
+"Denne listen tilbyr kun ett valg. Det er sannsynligvis en feil i "
+"applikasjonen som installerte dette skjemaet. Rapporter en feil til "
+"utviklerene av applikasjonen hvis mulig."
 
 #. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-range'
 #: editor/registry-info.ui:183
@@ -2008,7 +2015,6 @@ msgstr ""
 
 #. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-triv'
 #: editor/registry-info.ui:194
-#, fuzzy
 msgid ""
 "This key has a special “empty tuple” type. That’s probably an error of the "
 "application that installed this schema. If possible, please open a bug about "
