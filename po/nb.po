@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: dconf-editor 4.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues/\n"
 "POT-Creation-Date: 2025-09-13 04:01+0000\n"
-"PO-Revision-Date: 2026-09-09 10:19+0200\n"
+"PO-Revision-Date: 2026-09-15 08:10+0200\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian bokmål <i18n-nb@lister.ping.uio.no>\n"
 "Language: nb\n"
@@ -2144,7 +2144,7 @@ msgstr ""
 msgid ""
 "Variants content should be surrounded by XML brackets (‘<’ and ‘>’). See %s "
 "for complete documentation."
-msgstr ""
+msgstr "Innhold i varianter skal ha XML-klammer («<» og «>») rundt seg. Se %s for komplett dokumentasjon."
 
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a "maybe type" and with a string type (or similar); neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
 #: editor/registry-info.vala:630
