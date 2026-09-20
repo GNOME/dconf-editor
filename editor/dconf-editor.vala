@@ -345,6 +345,7 @@ private class ConfigurationEditor : Gtk.Application, BaseApplication
         Hdy.init ();
 
         Environment.set_application_name (PROGRAM_NAME);
+        Environment.set_prgname ("ca.desrt.dconf-editor");
         Gtk.Window.set_default_icon_name ("ca.desrt.dconf-editor");
 
         Hdy.StyleManager.get_default ().set_color_scheme (PREFER_LIGHT);
