@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: 3.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues/\n"
 "POT-Creation-Date: 2026-09-20 10:09+0000\n"
-"PO-Revision-Date: 2026-10-04 17:47+0100\n"
+"PO-Revision-Date: 2026-10-05 15:39+0100\n"
 "Last-Translator: Cátia Silva <catias89@gmail.com>\n"
 "Language-Team: Portuguese <li@pt.corg>\n"
 "Language: pt\n"
@@ -406,7 +406,9 @@ msgstr ""
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/sort-case-sensitive'
 #: editor/ca.desrt.dconf-editor.gschema.xml:173
 msgid "A flag to sort keys list case-sensitively"
-msgstr "Um parâmetro para ordenar a lista de chaves por capitulações"
+msgstr ""
+"Um parâmetro para ordenar a lista de chaves com sensibilidade a maiúsculas e"
+" min"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/sort-case-sensitive'
 #: editor/ca.desrt.dconf-editor.gschema.xml:175
@@ -418,7 +420,8 @@ msgstr ""
 "O GSettings não permite que as chaves utilizem letra maiúscula nos seus "
 "nomes, mas o caminho de instalação do esquema sim. Caso seja verdadeiro, a"
 " lista "
-"de chaves é ordenada por capitulação, onde normalmente as pastas com letra "
+"de chaves é ordenada com sensibilidade a maiúsculas e minúsculas, onde"
+" normalmente as pastas com letra "
 "maiúscula são apresentadas em primeiro lugar."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-use-extra-buttons'
