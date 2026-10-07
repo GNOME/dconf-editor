@@ -682,7 +682,7 @@ private class ConfigurationEditor : Gtk.Application, BaseApplication
         translator_credits = _("translator-credits");
 
         version = Config.VERSION;
-        website = "https://wiki.gnome.org/Apps/DconfEditor";
+        website = "https://gitlab.gnome.org/GNOME/dconf-editor/";
 
         /* Translators: about dialog text; label of the website link */
         website_label = _("Page on GNOME wiki");
