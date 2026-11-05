@@ -3,27 +3,29 @@
 # This file is distributed under the same license as the dconf-editor package.
 # Piotr Drąg <piotrdrag@gmail.com>, 2012-2020.
 # Aviary.pl <community-poland@mozilla.org>, 2012-2020.
+# Marcel Mrówka <micro.mail88@gmail.com>, 2026.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf-editor\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues/\n"
-"POT-Creation-Date: 2025-09-04 15:45+0000\n"
-"PO-Revision-Date: 2020-02-20 14:17+0100\n"
-"Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
-"Language-Team: Polish <community-poland@mozilla.org>\n"
+"POT-Creation-Date: 2026-09-20 10:09+0000\n"
+"PO-Revision-Date: 2026-11-05 20:10+0100\n"
+"Last-Translator: Tomasz Bojanowski <tomasz@bojanowski.me>\n"
+"Language-Team: Polish <https://l10n.gnome.org/teams/pl/>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
+"X-Generator: Gtranslator 50.0\n"
 
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the second is "Credits"
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the name of the view, displayed in the headerbar
 #: editor/about-list.vala:44 editor/base-headerbar.vala:309
 msgid "About"
-msgstr "O programie"
+msgstr "O aplikacji"
 
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the first is "About"
 #: editor/about-list.vala:46
@@ -58,7 +60,7 @@ msgstr "Skopiuj bieżącą ścieżkę"
 #. Translators: "open" action in the right-click menu on a "show folder info" row
 #: editor/adaptative-pathbar.vala:264 editor/key-list-box-row.vala:475
 msgid "Show properties"
-msgstr "Właściwości"
+msgstr "Wyświetl właściwości"
 
 #. Translators: accessible name of the hamburger menu
 #: editor/base-headerbar.ui:113
@@ -101,7 +103,7 @@ msgstr "Dodaj zakładkę"
 #. Translators: hamburger menu entry on small windows, to show the bookmarks list
 #: editor/bookmarks-headerbar.vala:265
 msgid "Show bookmarks"
-msgstr "Zakładki"
+msgstr "Wyświetl zakładki"
 
 #. Translators: placeholder text of the bookmarks list, displayed when the user has no bookmarks
 #: editor/bookmarks-list.vala:32
@@ -140,7 +142,7 @@ msgstr "Nie można modyfikować listy zakładek."
 #. Translators: accessible description of the button for opening the bookmarks popover
 #: editor/bookmarks.ui:133
 msgid "Manage your bookmarks"
-msgstr "Zarządzanie zakładkami"
+msgstr "Zarządzaj zakładkami"
 
 #. Translators: label of the switch in the bookmarks popover, when searching
 #: editor/bookmarks.vala:404
@@ -227,7 +229,7 @@ msgid ""
 "settings."
 msgstr ""
 "Edytor dconf jest narzędziem umożliwiającym bezpośrednie modyfikowanie bazy "
-"danych konfiguracji dconf. Jest to przydatne przy rozwijaniu programów "
+"danych konfiguracji dconf. Jest to przydatne przy rozwijaniu aplikacji "
 "używających tych ustawień."
 
 #: editor/ca.desrt.dconf-editor.metainfo.xml.in:17
@@ -236,15 +238,19 @@ msgid ""
 "applications to not work correctly."
 msgstr ""
 "Bezpośrednie modyfikowanie konfiguracji jest funkcją dla zaawansowanych "
-"użytkowników i może spowodować niepoprawne działanie programów."
+"użytkowników i może spowodować niepoprawne działanie aplikacji."
 
-#: editor/ca.desrt.dconf-editor.metainfo.xml.in:36
+#: editor/ca.desrt.dconf-editor.metainfo.xml.in:37
 msgid "Browse the keys used by installed applications"
-msgstr "Klucze używane przez zainstalowane programy"
+msgstr "Klucze używane przez zainstalowane aplikacje"
 
-#: editor/ca.desrt.dconf-editor.metainfo.xml.in:40
+#: editor/ca.desrt.dconf-editor.metainfo.xml.in:41
 msgid "Read keys descriptions and edit their values"
 msgstr "Opisy kluczy i modyfikowanie ich wartości"
+
+#: editor/ca.desrt.dconf-editor.metainfo.xml.in:59
+msgid "The GNOME Project"
+msgstr "Projekt GNOME"
 
 #. see AdaptativeWindow.width-request at data/ui/adaptative-window.ui:22
 #. range min="350"/ FIXME
@@ -329,7 +335,7 @@ msgstr ""
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/show-warning'
 #: editor/ca.desrt.dconf-editor.gschema.xml:152
 msgid "Show initial warning"
-msgstr "Wyświetlenie początkowego ostrzeżenia"
+msgstr "Wyświetlaj początkowe ostrzeżenie"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/show-warning'
 #: editor/ca.desrt.dconf-editor.gschema.xml:154
@@ -397,7 +403,7 @@ msgstr ""
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-use-extra-buttons'
 #: editor/ca.desrt.dconf-editor.gschema.xml:180
 msgid "Use “Back” and “Forward” mouse button events"
-msgstr "Używanie zdarzeń przycisków „Dalej” i „Wstecz” myszy"
+msgstr "Używaj zdarzeń przycisków „Dalej” i „Wstecz” myszy"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-use-extra-buttons'
 #: editor/ca.desrt.dconf-editor.gschema.xml:182
@@ -460,13 +466,13 @@ msgstr ""
 "możliwych położeń. Działa to przez sprawdzanie co trzy sekundy, czy lista "
 "schematów została zmieniona. Jako że nie jest to specjalnie wydajne, ta "
 "funkcja może zostać wyłączona przez ustawienie tej flagi na wartość „false”. "
-"Proszę zauważyć, że ta opcja zostanie usunięta, jeśli znajdziemy lepsze "
-"rozwiązanie."
+"Proszę mieć na uwadze, że ta opcja zostanie usunięta, jeśli znajdziemy "
+"lepsze rozwiązanie."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/relocatable-schemas-enabled-mappings'
 #: editor/ca.desrt.dconf-editor.gschema.xml:210
 msgid "Enabled relocatable schema mapping facilities"
-msgstr "Włączenie funkcji mapowania schematów o zmiennym położeniu"
+msgstr "Włączone funkcje mapowania schematów o zmiennym położeniu"
 
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/relocatable-schemas-enabled-mappings'
 #: editor/ca.desrt.dconf-editor.gschema.xml:212
@@ -1112,7 +1118,7 @@ msgstr "Bez wyświetlania początkowego ostrzeżenia"
 #. Translators: command-line text, description of the application in 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
 #: editor/dconf-editor.vala:215
 msgid "Graphical interface for editing other applications settings."
-msgstr "Graficzny interfejs do modyfikowania ustawień innych programów."
+msgstr "Graficzny interfejs do modyfikowania ustawień innych aplikacji."
 
 #. Translators: command-line text, describes how the application proceeds for editing other applications settings, in 'dconf-editor --help'; try to put that string in 80 characters or less, if possible.
 #: editor/dconf-editor.vala:218
@@ -1205,92 +1211,93 @@ msgid "No unknown schemas."
 msgstr "Brak nieznanych schematów."
 
 #. Translators: command-line error message, when the user requests a specific path while there is already a window opened
-#: editor/dconf-editor.vala:454
+#: editor/dconf-editor.vala:455
 msgid "Only one window can be opened for now.\n"
 msgstr "Na razie tylko jedno okno może być otwarte.\n"
 
 #. Translators: command-line error message, try 'dconf-editor a b c d'
-#: editor/dconf-editor.vala:474
+#: editor/dconf-editor.vala:475
 msgid "Cannot understand: too many arguments.\n"
 msgstr "Nie można przetworzyć: za dużo parametrów.\n"
 
 #. Translators: command-line error message, try 'dconf-editor / a'
-#: editor/dconf-editor.vala:488
+#: editor/dconf-editor.vala:489
 msgid "Cannot understand second argument in this context.\n"
 msgstr "Nie można przetworzyć drugiego parametru w tym kontekście.\n"
 
 #. Translators: command-line error message, try 'dconf-editor org.example /'
-#: editor/dconf-editor.vala:509
+#: editor/dconf-editor.vala:510
 msgid "Cannot understand: slash character in second argument.\n"
 msgstr "Nie można przetworzyć: ukośnik w drugim parametrze.\n"
 
 #. Translators: command-line error message, try 'dconf-editor org.example:a'
-#: editor/dconf-editor.vala:524
+#: editor/dconf-editor.vala:525
 msgid "Schema path should start and end with a “/”.\n"
 msgstr "Ścieżka do schematu musi zaczynać się i kończyć znakiem „/”.\n"
 
 #. Translators: command-line error message, try 'dconf-editor //'
-#: editor/dconf-editor.vala:540
+#: editor/dconf-editor.vala:541
 msgid "Cannot understand: given path contains “//”.\n"
 msgstr "Nie można przetworzyć: podana ścieżka zawiera „//”.\n"
 
 #. Translators: command-line error message, try 'dconf-editor "org example" a'
-#: editor/dconf-editor.vala:548
+#: editor/dconf-editor.vala:549
 msgid "Cannot understand: space character in argument.\n"
 msgstr "Nie można przetworzyć: spacja w parametrze.\n"
 
 #. Translators: notification header, try ctrl-c while in the keys list
-#: editor/dconf-editor.vala:576
+#: editor/dconf-editor.vala:577
 msgid "Copied to clipboard"
 msgstr "Skopiowano do schowka"
 
 #. Translators: about dialog text
-#: editor/dconf-editor.vala:653
+#: editor/dconf-editor.vala:654
 msgid "A graphical viewer and editor of applications’ internal settings."
-msgstr "Graficzna przeglądarka i edytor wewnętrznych ustawień programów."
+msgstr "Graficzna przeglądarka i edytor wewnętrznych ustawień aplikacji."
 
 #. Translators: text crediting a game author, seen in the About dialog
-#: editor/dconf-editor.vala:658
+#: editor/dconf-editor.vala:659
 msgid "Robert Ancell"
 msgstr "Robert Ancell"
 
 #. Translators: text crediting a game author, seen in the About dialog
-#: editor/dconf-editor.vala:662
+#: editor/dconf-editor.vala:663
 msgid "Arnaud Bonatti"
 msgstr "Arnaud Bonatti"
 
 #. Translators: text crediting a maintainer, seen in the About dialog
-#: editor/dconf-editor.vala:666
+#: editor/dconf-editor.vala:667
 msgid "Copyright © 2010-2014 – Canonical Ltd"
 msgstr "Copyright © 2010-2014 Canonical Ltd"
 
 #. Translators: text crediting a maintainer, seen in the About dialog
-#: editor/dconf-editor.vala:670
+#: editor/dconf-editor.vala:671
 msgid "Copyright © 2017-2018 – Davi da Silva Böger"
 msgstr "Copyright © 2017-2018 Davi da Silva Böger"
 
 #. Translators: text crediting a maintainer, seen in the About dialog; the %u are replaced with the years of start and end
-#: editor/dconf-editor.vala:674
+#: editor/dconf-editor.vala:675
 #, c-format
 msgid "Copyright © %u-%u – Arnaud Bonatti"
 msgstr "Copyright © %u-%u Arnaud Bonatti"
 
 #. Translators: about dialog text; this string should be replaced by a text crediting yourselves and your translation team, or should be left empty. Do not translate literally!
-#: editor/dconf-editor.vala:681
+#: editor/dconf-editor.vala:682
 msgid "translator-credits"
 msgstr ""
 "Piotr Drąg <piotrdrag@gmail.com>, 2012-2020\n"
-"Aviary.pl <community-poland@mozilla.org>, 2012-2020"
+"Aviary.pl <community-poland@mozilla.org>, 2012-2020\n"
+"Marcel Mrówka <micro.mail88@gmail.com>, 2026"
 
 #. Translators: about dialog text; label of the website link
-#: editor/dconf-editor.vala:687
+#: editor/dconf-editor.vala:688
 msgid "Page on GNOME wiki"
 msgstr "Strona na wiki projektu GNOME"
 
 #. Translators: usual menu entry of the hamburger menu
 #: editor/dconf-headerbar.vala:53
 msgid "About Dconf Editor"
-msgstr "O programie"
+msgstr "O aplikacji"
 
 #. Translators: when a change is requested, on a small window, entry of the menu of the "delayed settings button" that appears in place of the close button
 #. Translators: when there are pending changes, label of the "apply" button in the bottom bar, on large windows
@@ -1374,7 +1381,7 @@ msgstr "Dziękujemy za używanie edytora dconf do modyfikowania ustawień."
 #: editor/dconf-window.vala:277
 msgid "Don’t forget that some options may break applications, so be careful."
 msgstr ""
-"Prosimy pamiętać, że niektóre opcje mogą uszkodzić inne programy, więc "
+"Prosimy pamiętać, że niektóre opcje mogą uszkodzić inne aplikacje, więc "
 "należy zachować ostrożność."
 
 #. Translators: initial "use at your own risk" dialog, the button label
@@ -1385,7 +1392,7 @@ msgstr "Zachowam ostrożność."
 #. Translators: initial "use at your own risk" dialog, the checkbox label
 #: editor/dconf-window.vala:284
 msgid "Show this dialog next time."
-msgstr "Wyświetlenie tego okna następnym razem."
+msgstr "Wyświetl to okno następnym razem."
 
 #. Translators: notification text, after a user Ctrl+Q keyboard action; same way to spell the shortcut as in the Settings application
 #: editor/dconf-window.vala:305
@@ -1647,7 +1654,7 @@ msgstr "Wyświetlenie tej pomocy"
 #: editor/help-overlay.ui:301
 msgctxt "shortcut window"
 msgid "About"
-msgstr "O programie"
+msgstr "O aplikacji"
 
 #. Translators: header in the shortcut window, for the copy-to-clipboard actions
 #: editor/help-overlay.ui:311
@@ -1788,7 +1795,7 @@ msgstr "Otwórz"
 #: editor/key-list-box-row.vala:478 editor/pathwidget.ui:83
 #: editor/pathwidget.ui:109
 msgid "Search"
-msgstr "Znajdź"
+msgstr "Wyszukaj"
 
 #. Translators: "open parent folder" action in the right-click menu on a folder in a search result
 #: editor/key-list-box-row.vala:481
@@ -2092,23 +2099,23 @@ msgstr[2] " i %u działań dconf."
 #. Translators: accessible name of the "close" button that is linked with the search entry on small windows
 #: editor/pathentry.ui:66
 msgid "Close search"
-msgstr "Zamyka wyszukiwanie"
+msgstr "Zamknij wyszukiwanie"
 
 #. Translators: accessible description of the "close" button that is linked with the search entry on small windows
 #: editor/pathentry.ui:68
 msgid "Close search results"
-msgstr "Zamyka wyniki wyszukiwania"
+msgstr "Zamknij wyniki wyszukiwania"
 
 #. Translators: accessible description of the "refresh" button that is linked with the search entry on large windows
 #: editor/pathentry.ui:92
 msgid "Refresh search results"
-msgstr "Odświeża wyniki wyszukiwania"
+msgstr "Odśwież wyniki wyszukiwania"
 
 #. Translators: accessible description of the enter-search button displayed in small-size windows
 #. Translators: accessible description of the search togglebutton displayed in usual-size windows
 #: editor/pathwidget.ui:85 editor/pathwidget.ui:111
 msgid "Search keys"
-msgstr "Wyszukuje klucze"
+msgstr "Wyszukaj klucze"
 
 #. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/Conflict/warning-similar'
 #: editor/registry-info.ui:49
@@ -2137,8 +2144,8 @@ msgid ""
 "want to erase it."
 msgstr ""
 "Brak dostępnych schematów. Schemat opisuje zastosowanie klucza, a edytor "
-"dconf nie może odnaleźć schematu powiązanego z tym kluczem. Jeśli program, "
-"który używał tego klucza został odinstalowany lub ten klucz jest "
+"dconf nie może odnaleźć schematu powiązanego z tym kluczem. Jeśli aplikacja, "
+"która używała tego klucza została odinstalowana lub ten klucz jest "
 "przestarzały, to można go wyczyścić."
 
 #. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-enum'
@@ -2148,8 +2155,8 @@ msgid ""
 "application that installed this schema. If possible, please open a bug about "
 "it."
 msgstr ""
-"To wyliczenie umożliwia tylko jeden wybór. To prawdopodobnie błąd programu, "
-"który zainstalował ten schemat. Prosimy zgłosić błąd programistom, jeśli to "
+"To wyliczenie umożliwia tylko jeden wybór. To prawdopodobnie błąd aplikacji, "
+"która zainstalowała ten schemat. Prosimy zgłosić błąd programistom, jeśli to "
 "możliwe."
 
 #. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-range'
@@ -2160,8 +2167,8 @@ msgid ""
 "it."
 msgstr ""
 "Ten klucz całkowity przyjmuje tylko jedną wartość. To prawdopodobnie błąd "
-"programu, który zainstalował ten schemat. Prosimy zgłosić błąd programistom, "
-"jeśli to możliwe."
+"aplikacji, która zainstalowała ten schemat. Prosimy zgłosić błąd "
+"programistom, jeśli to możliwe."
 
 #. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-triv'
 #: editor/registry-info.ui:194
@@ -2170,8 +2177,8 @@ msgid ""
 "application that installed this schema. If possible, please open a bug about "
 "it."
 msgstr ""
-"Ten klucz ma specjalny typ „pusta krotka”. To prawdopodobnie błąd programu, "
-"który zainstalował ten schemat. Prosimy zgłosić błąd programistom, jeśli to "
+"Ten klucz ma specjalny typ „pusta krotka”. To prawdopodobnie błąd aplikacji, "
+"która zainstalowała ten schemat. Prosimy zgłosić błąd programistom, jeśli to "
 "możliwe."
 
 #. Translators: field description when displaying folder properties; name of the folder
@@ -2242,7 +2249,7 @@ msgstr "Bieżąca wartość"
 #. Translators: field description when displaying key properties; the field content is a switch widget that allows using or not the default value of the key, as provided by its schema
 #: editor/registry-info.vala:111
 msgid "Use default value"
-msgstr "Użycie domyślnej wartości"
+msgstr "Użyj domyślnej wartości"
 
 #. Translators: field description when displaying key properties; the field content is a widget that allows setting the value of the key (depending of its type, an entry, a switch, etc.)
 #: editor/registry-info.vala:114
@@ -2305,7 +2312,7 @@ msgid ""
 "empty value. Strings, signatures and object paths should be surrounded by "
 "quotation marks."
 msgstr ""
-"Użycie słowa kluczowego „nothing” do ustawienia typu „maybe” (zaczynającego "
+"Użyj słowa kluczowego „nothing” do ustawienia typu „maybe” (zaczynającego "
 "się od „m”) na pustą wartość. Ciągi, podpisy i ścieżki obiektów powinny być "
 "zawarte w cudzysłowie."
 
@@ -2321,7 +2328,7 @@ msgid ""
 "Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
 "empty value."
 msgstr ""
-"Użycie słowa kluczowego „nothing” do ustawienia typu „maybe” (zaczynającego "
+"Użyj słowa kluczowego „nothing” do ustawienia typu „maybe” (zaczynającego "
 "się od „m”) na pustą wartość."
 
 #. Translators: field content when displaying key properties; the field description is "Current value", this text displayed if the key, not defined by a schema, has been erased (and so has no value anymore)
