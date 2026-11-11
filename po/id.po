@@ -7,20 +7,21 @@
 # Kukuh Syafaat <kukuhsyafaat@gnome.org>, 2017-2021.
 # Sucipto <sucipto@pm.me>, 2020.
 #
+# herpiko <herpiko@gmail.com>, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: dconf master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/dconf-editor/issues/\n"
-"POT-Creation-Date: 2025-09-13 04:01+0000\n"
-"PO-Revision-Date: 2026-01-21 12:35+0700\n"
-"Last-Translator: Andika Triwidada <andika@gmail.com>\n"
+"POT-Creation-Date: 2026-10-07 01:27+0000\n"
+"PO-Revision-Date: 2026-11-10 13:53+0000\n"
+"Last-Translator: herpiko <herpiko@gmail.com>\n"
 "Language-Team: Indonesian <gnome-l10n-id@googlegroups.com>\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: pelokalan.blankon.id\n"
 
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the label of one of two buttons that have the same role as the stack switcher in the usual about dialog, the second is "Credits"
 #. Translators: on really small windows, the about dialog is replaced by an in-window view; here is the name of the view, displayed in the headerbar
@@ -251,6 +252,10 @@ msgstr "Ramban kunci yang dipakai oleh aplikasi yang terpasang"
 msgid "Read keys descriptions and edit their values"
 msgstr "Baca deskripsi kunci dan sunting nilai mereka"
 
+#: editor/ca.desrt.dconf-editor.metainfo.xml.in:59
+msgid "The GNOME Project"
+msgstr "Proyek GNOME"
+
 #. see AdaptativeWindow.width-request at data/ui/adaptative-window.ui:22
 #. range min="350"/ FIXME
 #. Translators: summary of a settings key, see 'dconf-editor /org/gnome/iagno/window-width'
@@ -293,8 +298,8 @@ msgstr "Tanda untuk memulihkan tilikan terakhir"
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/restore-view'
 #: editor/ca.desrt.dconf-editor.gschema.xml:133
 msgid ""
-"If “true”, Dconf Editor tries at launch to navigate to the path described in "
-"the “saved-view” key."
+"If “true”, Dconf Editor tries at launch to navigate to the path "
+"described in the “saved-view” key."
 msgstr ""
 "Bila \"true\", Penyunting Dconf mencoba saat diluncurkan untuk menavigasi ke "
 "lokasi yang dideskripsikan di kunci \"saved-view\"."
@@ -307,9 +312,9 @@ msgstr "Path untuk memulihkan keadaan pathbar"
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/saved-pathbar-path'
 #: editor/ca.desrt.dconf-editor.gschema.xml:140
 msgid ""
-"If the “restore-view” key is set to “true”, and if the path requested at "
-"startup is a parent path of this one, Dconf Editor tries to restore the "
-"pathbar state at this path."
+"If the “restore-view” key is set to “true”, and if the path "
+"requested at startup is a parent path of this one, Dconf Editor tries to "
+"restore the pathbar state at this path."
 msgstr ""
 "Jika kunci \"restore-view\" bernilai \"true\", dan jika path yang diminta "
 "saat awal mula adalah path induk dari path ini, Penyunting Dconf mencoba "
@@ -323,8 +328,8 @@ msgstr "Path untuk memulihkan tilikan terakhir"
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/saved-view'
 #: editor/ca.desrt.dconf-editor.gschema.xml:147
 msgid ""
-"If the “restore-view” key is set to “true”, Dconf Editor tries at launch to "
-"navigate to this path."
+"If the “restore-view” key is set to “true”, Dconf Editor tries at "
+"launch to navigate to this path."
 msgstr ""
 "Jika kunci \"restore-view\" bernilai \"true\", Penyunting Dconf mencoba saat "
 "diluncurkan untuk menavigasi ke lokasi ini."
@@ -337,8 +342,8 @@ msgstr "Tmpilkan peringatan awal mula"
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/show-warning'
 #: editor/ca.desrt.dconf-editor.gschema.xml:154
 msgid ""
-"If “true”, Dconf Editor opens a popup when launched reminding the user to be "
-"careful."
+"If “true”, Dconf Editor opens a popup when launched reminding the user "
+"to be careful."
 msgstr ""
 "Bila berisi \"true\", Penyunting Dconf membuka popup ketika diluncurkan, "
 "mengingatkan pengguna agar berhati-hati."
@@ -361,21 +366,22 @@ msgstr "Ubah perilaku dari permintaan perubahan nilai kunci"
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/behaviour'
 #: editor/ca.desrt.dconf-editor.gschema.xml:168
 msgid ""
-"The “unsafe” value is discouraged: for keys that have a non-special-cased "
-"type, it updates the key value each time something changes in the entry, so "
-"including intermediate states. The “safe” value asks for confirmation in "
-"these cases, but allows instant changes for booleans and nullable booleans, "
-"enums and flags. The “always-confirm-implicit” and “always-confirm-explicit” "
-"values always asks for confirmation, but the first applies the change if you "
-"change path whereas the second dismiss it. The “always-delay” value adds "
-"each change in delay mode, allowing to apply multiple keys at once."
+"The “unsafe” value is discouraged: for keys that have a "
+"non-special-cased type, it updates the key value each time something changes "
+"in the entry, so including intermediate states. The “safe” value asks "
+"for confirmation in these cases, but allows instant changes for booleans and "
+"nullable booleans, enums and flags. The “always-confirm-implicit” and "
+"“always-confirm-explicit” values always asks for confirmation, but the "
+"first applies the change if you change path whereas the second dismiss it. "
+"The “always-delay” value adds each change in delay mode, allowing to "
+"apply multiple keys at once."
 msgstr ""
 "Nilai \"unsafe\" (tidak aman) tidak disarankan: untuk kunci yang memiliki "
 "tipe bukan-kasus-khusus, itu memutakhirkan nilai kunci setiap kali terjadi "
 "perubahan dalam entri, sehingga termasuk keadaan antara. Nilai \"safe\" "
 "(aman) meminta konfirmasi dalam kasus ini, namun memungkinkan perubahan "
-"seketika untuk boolean dan boolean nullable, enum, dan flag. Nilai \"always-"
-"confirm-implicit\" dan \"always-confirm-explicit\" selalu meminta "
+"seketika untuk boolean dan boolean nullable, enum, dan flag. Nilai "
+"\"always-confirm-implicit\" dan \"always-confirm-explicit\" selalu meminta "
 "konfirmasi, tapi yang pertama menerapkan perubahan jika Anda mengubah path "
 "sedangkan yang kedua menolaknya. Nilai \"always-delay\" menambahkan setiap "
 "perubahan dalam mode tunda, yang memungkinkan untuk menerapkan beberapa "
@@ -390,8 +396,8 @@ msgstr "Tanda untuk mengurutkan daftar kunci yang peka besar kecil huruf"
 #: editor/ca.desrt.dconf-editor.gschema.xml:175
 msgid ""
 "GSettings doesn’t allow keys to use upper-case in their names, but "
-"installation paths of schemas can. If “true”, the keys list is sorted case-"
-"sensitively, with in usual order upper-case folders first."
+"installation paths of schemas can. If “true”, the keys list is sorted "
+"case-sensitively, with in usual order upper-case folders first."
 msgstr ""
 "GSettings tidak mengizinkan kunci memakai huruf besar dalam nama mereka, "
 "tapi path instalasi skema boleh. Bila berisi \"true\", daftar kunci "
@@ -406,9 +412,9 @@ msgstr "Gunakan kejadian tombol tetikus \"Mundur\" dan \"Maju\""
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-use-extra-buttons'
 #: editor/ca.desrt.dconf-editor.gschema.xml:182
 msgid ""
-"For users with mice that have buttons for “Forward” and “Back”, this key "
-"will determine if any action is taken inside of a browser window when either "
-"is pressed."
+"For users with mice that have buttons for “Forward” and “Back”, this "
+"key will determine if any action is taken inside of a browser window when "
+"either is pressed."
 msgstr ""
 "Bagi pengguna dengan tetikus yang memiliki tombol \"Maju\" serta \"Mundur\", "
 "kunci ini akan menentukan apakah ada tindakan yang diambil di dalam jendela "
@@ -423,9 +429,9 @@ msgstr ""
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-back-buttons'
 #: editor/ca.desrt.dconf-editor.gschema.xml:190
 msgid ""
-"For users with mice that have buttons for “Forward” and “Back”, this key "
-"will set which button activates the “Back” command in a browser window. "
-"Possible values range between 6 and 14."
+"For users with mice that have buttons for “Forward” and “Back”, this "
+"key will set which button activates the “Back” command in a browser "
+"window. Possible values range between 6 and 14."
 msgstr ""
 "Bagi pengguna dengan tetikus yang memiliki tombol \"Maju\" serta \"Mundur\", "
 "kunci ini akan menentukan tombol mana yang membuat perintah \"Mundur\" "
@@ -440,9 +446,9 @@ msgstr ""
 #. Translators: description of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/mouse-forward-buttons'
 #: editor/ca.desrt.dconf-editor.gschema.xml:198
 msgid ""
-"For users with mice that have buttons for “Forward” and “Back”, this key "
-"will set which button activates the “Forward” command in a browser window. "
-"Possible values range between 6 and 14."
+"For users with mice that have buttons for “Forward” and “Back”, this "
+"key will set which button activates the “Forward” command in a browser "
+"window. Possible values range between 6 and 14."
 msgstr ""
 "Bagi pengguna dengan tetikus yang memiliki tombol \"Maju\" serta \"Mundur\", "
 "kunci ini akan menentukan tombol mana yang membuat perintah \"Maju\" menjadi "
@@ -459,8 +465,8 @@ msgid ""
 "Dconf Editor can monitor if schemas are added or removed from the multiple "
 "possible locations. That’s done by checking every three seconds if the "
 "schemas list has changed. As this way to do is suboptimal, this function can "
-"be disabled by setting this flag to “false”. Note that this option will be "
-"removed when a better way to do things is found."
+"be disabled by setting this flag to “false”. Note that this option will "
+"be removed when a better way to do things is found."
 msgstr ""
 "Penyunting Dconf dapat memantau jika skema ditambahkan atau dihapus dari "
 "beberapa kemungkinan lokasi. Itu dilakukan dengan memeriksa setiap tiga "
@@ -478,17 +484,17 @@ msgstr "Fasilitas pemetaan skema yang dapat dipindah diaktifkan"
 #: editor/ca.desrt.dconf-editor.gschema.xml:212
 msgid ""
 "Flags for the relocatable schemas mapping facilities. “User” enables "
-"mappings defined by the “relocatable-schemas-user-paths” key; “Built-in” "
-"enables well-known mappings hardcoded into Dconf Editor; “Internal” is "
-"reserved for Dconf Editor own mappings; “Startup” is for mapping a "
-"relocatable schema from the command-line."
+"mappings defined by the “relocatable-schemas-user-paths” key; "
+"“Built-in” enables well-known mappings hardcoded into Dconf Editor; "
+"“Internal” is reserved for Dconf Editor own mappings; “Startup” is "
+"for mapping a relocatable schema from the command-line."
 msgstr ""
 "Tanda untuk fasilitas pemetaan skema yang dapat dipindah. \"User\" "
-"mengaktifkan pemetaan yang didefinisikan oleh kunci \"relocatable-schemas-"
-"user-paths\"; \"Built-in\" mengaktifkan pemetaan hardcoded yang terkenal ke "
-"Dconf Editor; \"Internal\" disediakan untuk pemetaan Penyunting Dconf "
-"sendiri; \"Startup\" adalah untuk memetakan skema yang dapat dipindah dari "
-"baris perintah."
+"mengaktifkan pemetaan yang didefinisikan oleh kunci "
+"\"relocatable-schemas-user-paths\"; \"Built-in\" mengaktifkan pemetaan "
+"hardcoded yang terkenal ke Dconf Editor; \"Internal\" disediakan untuk "
+"pemetaan Penyunting Dconf sendiri; \"Startup\" adalah untuk memetakan skema "
+"yang dapat dipindah dari baris perintah."
 
 #. Translators: summary of a settings key, see 'dconf-editor /ca/desrt/dconf-editor/relocatable-schemas-user-paths'
 #: editor/ca.desrt.dconf-editor.gschema.xml:217
@@ -500,9 +506,9 @@ msgstr "Pemetaan path ke skema yang terkait secara manual"
 msgid ""
 "A dictionary that maps schema IDs with path specifications. It is used to "
 "allow the user to associate a relocatable schema to certain paths. Path "
-"specifications may contain wildcards in the form of empty segments (e.g. /ca/"
-"desrt/dconf-editor//), defining possibly multiple paths. The same schema ID "
-"may be associated with multiple path specifications."
+"specifications may contain wildcards in the form of empty segments (e.g. "
+"/ca/desrt/dconf-editor//), defining possibly multiple paths. The same schema "
+"ID may be associated with multiple path specifications."
 msgstr ""
 "Kamus yang memetakan ID skema dengan spesifikasi path. Ini digunakan untuk "
 "memungkinkan pengguna mengaitkan skema yang dapat direlokasi ke path "
@@ -570,8 +576,8 @@ msgid ""
 "“true”, “false” and “nothing”."
 msgstr ""
 "GSetting mengijinkan tipe yang dapat di-null-kan, yang mirip dengan tipe "
-"lain tapi bisa menerima nilai \"nothing\". Suatu boolean yang dapat di-null-"
-"kan bisa menerima tiga nilai, \"true\", \"false\", dan \"nothing\"."
+"lain tapi bisa menerima nilai \"nothing\". Suatu boolean yang dapat "
+"di-null-kan bisa menerima tiga nilai, \"true\", \"false\", dan \"nothing\"."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/byte'
 #: editor/ca.desrt.dconf-editor.gschema.xml:282
@@ -660,8 +666,8 @@ msgstr "Suatu larik path objek D-Bus, bertipe \"ao\""
 #: editor/ca.desrt.dconf-editor.gschema.xml:319
 msgid ""
 "An object path array could contain any number of object paths (including "
-"none: “[]”). If you are not interacting with D-Bus, then there is no reason "
-"to make use of this type."
+"none: “[]”). If you are not interacting with D-Bus, then there is no "
+"reason to make use of this type."
 msgstr ""
 "Larik path objek bisa memuat sejumlah berapapun path objek (termasuk nihil: "
 "\"[]\"). Bila Anda tidak berinteraksi dengan D-Bus, maka tidak ada alasan "
@@ -680,8 +686,8 @@ msgid ""
 "make use of this type."
 msgstr ""
 "Suatu tanda tangan D-Bus adalah string yang dipakai sebagai tipe tanda "
-"tangan bagi pesan atau metoda D-Bus. Bila Anda tidak berinteraksi dengan D-"
-"Bus, maka tidak ada alasan untuk memakai tipe ini."
+"tangan bagi pesan atau metoda D-Bus. Bila Anda tidak berinteraksi dengan "
+"D-Bus, maka tidak ada alasan untuk memakai tipe ini."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/dict-entry'
 #: editor/ca.desrt.dconf-editor.gschema.xml:331
@@ -859,8 +865,9 @@ msgstr "Sebuah string, tipe \"s\""
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/string'
 #: editor/ca.desrt.dconf-editor.gschema.xml:426
 msgid ""
-"The string type could accept any utf8 string. Note that an empty string “''” "
-"is not the same as NULL (nothing); see also the “string-nullable” key."
+"The string type could accept any utf8 string. Note that an empty string "
+"“''” is not the same as NULL (nothing); see also the "
+"“string-nullable” key."
 msgstr ""
 "Tipe string dapat menerima sebarang string utf8. Sebagai catatan bahwa "
 "string kosong \"''\" tidak sama dengan NULL (nihil); lihat juga kunci "
@@ -893,9 +900,9 @@ msgid ""
 "including the empty string “''”, or can be NULL (nothing)."
 msgstr ""
 "GSetting mengijinkan tipe yang dapat di-null-kan, yang mirip dengan tipe "
-"lain tapi dapat menerima nilai \"nothing\". Suatu string yang dapat di-null-"
-"kan dapat menerima sebarang string sebagai nilai, termasuk string kosong "
-"\"''\", atau bisa NULL (nihil)."
+"lain tapi dapat menerima nilai \"nothing\". Suatu string yang dapat "
+"di-null-kan dapat menerima sebarang string sebagai nilai, termasuk string "
+"kosong \"''\", atau bisa NULL (nihil)."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/variant'
 #: editor/ca.desrt.dconf-editor.gschema.xml:445
@@ -906,20 +913,22 @@ msgstr "Sebuah varian, tipe ‘v’"
 #: editor/ca.desrt.dconf-editor.gschema.xml:447
 msgid ""
 "Variants could be stored inside variants, and consequently as a GSettings "
-"type. Their representation use the XML brackets (‘<’ and ‘>’ characters, in "
-"a gschema file “&#60;” and “&#62;” respectively), with a parsable "
-"representation of their content inside. If unclear, the type can be given in "
-"the value with a prefix annotation like “@x” (where “x” is the type string) "
-"or “int64”. See https://docs.gtk.org/glib/gvariant-text-format.html for "
-"complete documentation."
+"type. Their representation use the XML brackets (‘<’ and ‘>’ "
+"characters, in a gschema file “&#60;” and “&#62;” respectively), "
+"with a parsable representation of their content inside. If unclear, the type "
+"can be given in the value with a prefix annotation like “@x” (where "
+"“x” is the type string) or “int64”. See "
+"https://docs.gtk.org/glib/gvariant-text-format.html for complete "
+"documentation."
 msgstr ""
 "Varian dapat disimpan di dalam varian, dan akibatnya sebagai tipe GSettings. "
-"Representasinya menggunakan tanda kurung XML (karakter '<' dan '>', masing-"
-"masing dalam berkas gschema \"&#60;\" dan \"&#62;\"), dengan representasi "
-"yang dapat diurai dari konten mereka di dalamnya. Jika tidak jelas, tipe "
-"dapat diberikan dalam nilai dengan anotasi awalan seperti \"@x\" (dimana "
-"\"x\" adalah string tipe) atau \"int64\". Lihat https://docs.gtk.org/glib/"
-"gvariant-text-format.html untuk dokumentasi lengkap."
+"Representasinya menggunakan tanda kurung XML (karakter '<' dan '>', "
+"masing-masing dalam berkas gschema \"&#60;\" dan \"&#62;\"), dengan "
+"representasi yang dapat diurai dari konten mereka di dalamnya. Jika tidak "
+"jelas, tipe dapat diberikan dalam nilai dengan anotasi awalan seperti \"@x\" "
+"(dimana \"x\" adalah string tipe) atau \"int64\". Lihat "
+"https://docs.gtk.org/glib/gvariant-text-format.html untuk dokumentasi "
+"lengkap."
 
 #. Translators: summary of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-enum'
 #: editor/ca.desrt.dconf-editor.gschema.xml:452
@@ -958,8 +967,8 @@ msgstr "Tuple kosong, tipe dan nilai “()”"
 #. Translators: description of a demo key, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-triv'
 #: editor/ca.desrt.dconf-editor.gschema.xml:469
 msgid ""
-"There’s an empty tuple type (called sometimes “triv”) that is a tuple with "
-"no content, and can only take “()” as value."
+"There’s an empty tuple type (called sometimes “triv”) that is a tuple "
+"with no content, and can only take “()” as value."
 msgstr ""
 "Ada jenis tupel kosong (kadang-kadang disebut “triv”) yaitu tupel tanpa "
 "konten, dan hanya dapat mengambil “()” sebagai nilai."
@@ -1135,7 +1144,8 @@ msgstr "path folder atau path kunci"
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:227
 msgid "example: “/org/gnome/” or “/ca/desrt/dconf-editor/Demo/boolean”"
-msgstr "contoh: “/org/gnome/” atau “/ca/desrt/dconf-editor/Demo/boolean”"
+msgstr ""
+"contoh: “/org/gnome/” atau “/ca/desrt/dconf-editor/Demo/boolean”"
 
 #. Translators: command-line argument description, see 'dconf-editor --help'
 #: editor/dconf-editor.vala:231
@@ -1208,78 +1218,78 @@ msgid "No unknown schemas."
 msgstr "Tidak ada skema yang tidak diketahui."
 
 #. Translators: command-line error message, when the user requests a specific path while there is already a window opened
-#: editor/dconf-editor.vala:454
+#: editor/dconf-editor.vala:455
 msgid "Only one window can be opened for now.\n"
 msgstr "Hanya satu jendela yang bisa dibuka untuk saat ini.\n"
 
 #. Translators: command-line error message, try 'dconf-editor a b c d'
-#: editor/dconf-editor.vala:474
+#: editor/dconf-editor.vala:475
 msgid "Cannot understand: too many arguments.\n"
 msgstr "Tidak dapat memahami: terlalu banyak argumen.\n"
 
 #. Translators: command-line error message, try 'dconf-editor / a'
-#: editor/dconf-editor.vala:488
+#: editor/dconf-editor.vala:489
 msgid "Cannot understand second argument in this context.\n"
 msgstr "Tidak dapat memahami argumen kedua dalam konteks ini.\n"
 
 #. Translators: command-line error message, try 'dconf-editor org.example /'
-#: editor/dconf-editor.vala:509
+#: editor/dconf-editor.vala:510
 msgid "Cannot understand: slash character in second argument.\n"
 msgstr "Tidak dapat memahami: karakter slash dalam argumen kedua.\n"
 
 #. Translators: command-line error message, try 'dconf-editor org.example:a'
-#: editor/dconf-editor.vala:524
+#: editor/dconf-editor.vala:525
 msgid "Schema path should start and end with a “/”.\n"
 msgstr "Path skema harus dimulai dan diakhiri dengan \"/\".\n"
 
 #. Translators: command-line error message, try 'dconf-editor //'
-#: editor/dconf-editor.vala:540
+#: editor/dconf-editor.vala:541
 msgid "Cannot understand: given path contains “//”.\n"
 msgstr "Tidak bisa memahami: path yang diberikan mengandung \"//\".\n"
 
 #. Translators: command-line error message, try 'dconf-editor "org example" a'
-#: editor/dconf-editor.vala:548
+#: editor/dconf-editor.vala:549
 msgid "Cannot understand: space character in argument.\n"
 msgstr "Tidak dapat memahami: karakter spasi dalam argumen.\n"
 
 #. Translators: notification header, try ctrl-c while in the keys list
-#: editor/dconf-editor.vala:576
+#: editor/dconf-editor.vala:577
 msgid "Copied to clipboard"
 msgstr "Disalin ke papan klip"
 
 #. Translators: about dialog text
-#: editor/dconf-editor.vala:653
+#: editor/dconf-editor.vala:654
 msgid "A graphical viewer and editor of applications’ internal settings."
 msgstr "Penampil grafis dan penyunting pengaturan internal aplikasi."
 
 #. Translators: text crediting a game author, seen in the About dialog
-#: editor/dconf-editor.vala:658
+#: editor/dconf-editor.vala:659
 msgid "Robert Ancell"
 msgstr "Robert Ancell"
 
 #. Translators: text crediting a game author, seen in the About dialog
-#: editor/dconf-editor.vala:662
+#: editor/dconf-editor.vala:663
 msgid "Arnaud Bonatti"
 msgstr "Arnaud Bonatti"
 
 #. Translators: text crediting a maintainer, seen in the About dialog
-#: editor/dconf-editor.vala:666
+#: editor/dconf-editor.vala:667
 msgid "Copyright © 2010-2014 – Canonical Ltd"
 msgstr "Hak Cipta © 2010-2014 – Canonical Ltd"
 
 #. Translators: text crediting a maintainer, seen in the About dialog
-#: editor/dconf-editor.vala:670
+#: editor/dconf-editor.vala:671
 msgid "Copyright © 2017-2018 – Davi da Silva Böger"
 msgstr "Hak Cipta © 2017-2018 – Davi da Silva Böger"
 
 #. Translators: text crediting a maintainer, seen in the About dialog; the %u are replaced with the years of start and end
-#: editor/dconf-editor.vala:674
+#: editor/dconf-editor.vala:675
 #, c-format
 msgid "Copyright © %u-%u – Arnaud Bonatti"
 msgstr "Hak Cipta © %u-%u – Arnaud Bonatti"
 
 #. Translators: about dialog text; this string should be replaced by a text crediting yourselves and your translation team, or should be left empty. Do not translate literally!
-#: editor/dconf-editor.vala:681
+#: editor/dconf-editor.vala:682
 msgid "translator-credits"
 msgstr ""
 "Dirgita <dirgitadevina@yahoo.co.id>, 2012.\n"
@@ -1288,7 +1298,7 @@ msgstr ""
 "Sucipto <sucipto@pm.me>, 2020."
 
 #. Translators: about dialog text; label of the website link
-#: editor/dconf-editor.vala:687
+#: editor/dconf-editor.vala:688
 msgid "Page on GNOME wiki"
 msgstr "Halaman di wiki GNOME"
 
@@ -2131,8 +2141,8 @@ msgstr ""
 #: editor/registry-info.ui:125
 msgid ""
 "No schema available. A schema is what describes the use of a key, and Dconf "
-"Editor can’t find one associated with this key. If the application that was "
-"using this key has been uninstalled, or if this key is obsolete, you may "
+"Editor can’t find one associated with this key. If the application that "
+"was using this key has been uninstalled, or if this key is obsolete, you may "
 "want to erase it."
 msgstr ""
 "Tidak tersedia skema. Suatu skema adalah apa yang menjelaskan penggunaan "
@@ -2164,9 +2174,9 @@ msgstr ""
 #. Translators: warning text of an infobar, see 'dconf-editor /ca/desrt/dconf-editor/Demo/weird-triv'
 #: editor/registry-info.ui:194
 msgid ""
-"This key has a special “empty tuple” type. That’s probably an error of the "
-"application that installed this schema. If possible, please open a bug about "
-"it."
+"This key has a special “empty tuple” type. That’s probably an error of "
+"the application that installed this schema. If possible, please open a bug "
+"about it."
 msgstr ""
 "Kunci ini memiliki tipe \"tupel kosong\" khusus. Itu mungkin kesalahan "
 "aplikasi yang memasang skema ini. Bila mungkin, bukalah suatu kutu tentang "
@@ -2290,8 +2300,8 @@ msgstr ""
 #: editor/registry-info.vala:622
 #, c-format
 msgid ""
-"Variants content should be surrounded by XML brackets (‘<’ and ‘>’). See %s "
-"for complete documentation."
+"Variants content should be surrounded by XML brackets (‘<’ and ‘>’). "
+"See %s for complete documentation."
 msgstr ""
 "Konten varian harus diapit oleh braket XML ('<' dan '>'). Lihat %s untuk "
 "dokumentasi lengkap."
@@ -2299,9 +2309,9 @@ msgstr ""
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a "maybe type" and with a string type (or similar); neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
 #: editor/registry-info.vala:630
 msgid ""
-"Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
-"empty value. Strings, signatures and object paths should be surrounded by "
-"quotation marks."
+"Use the keyword “nothing” to set a maybe type (beginning with “m”) "
+"to its empty value. Strings, signatures and object paths should be "
+"surrounded by quotation marks."
 msgstr ""
 "Gunakan kata kunci \"nothing\" untuk menata suatu tipe mungkin (diawali "
 "dengan \"m\") ke nilai kosongnya. String, tanda tangan, dan path objek mesti "
@@ -2316,8 +2326,8 @@ msgstr "String, tanda tangan, dan path objek mesti diapit oleh tanda kutip."
 #. Translators: annotation under the entry that allows customizing a key, when displaying key properties; for keys of a type composed with a "maybe type"; neither the "nothing" keyword nor the "m" type should be translated; a "maybe type" is a type of variant that is nullable.
 #: editor/registry-info.vala:638
 msgid ""
-"Use the keyword “nothing” to set a maybe type (beginning with “m”) to its "
-"empty value."
+"Use the keyword “nothing” to set a maybe type (beginning with “m”) "
+"to its empty value."
 msgstr ""
 "Gunakan kata kunci \"nothing\" untuk menata suatu tipe mungkin (diawali "
 "dengan \"m\") ke nilai kosongnya."
